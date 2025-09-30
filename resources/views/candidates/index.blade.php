@@ -63,7 +63,7 @@ $steps = [
             <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
                 <div class="text-center lg:text-left animate-fade-in-left" data-animate="hero-text">
                     <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
-                        Créez un profil pour attirer les{' '}
+                        Créez un profil pour attirer les
                         <span class="text-[#00b6b4]">meilleurs recruteurs</span>
                     </h1>
                     <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">

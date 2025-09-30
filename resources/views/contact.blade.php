@@ -44,7 +44,9 @@ $contactInfo = [
                 Contactez-nous
             </h1>
             <p class="text-xl opacity-90 max-w-2xl mx-auto" data-animate="hero-subtitle">
-                Nous sommes là pour vous aider. N'hésitez pas à nous contacter pour toute question ou demande d'information.
+                Notre équipe est là pour vous aider
+
+
             </p>
         </div>
     </section>

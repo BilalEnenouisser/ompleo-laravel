@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Space Grotesk', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['monospace'],
         display: ['Space Grotesk', 'sans-serif']
       },
@@ -288,6 +288,25 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.glass-badge-highlight': {
+          'border-radius': '9999px',
+          'border-width': '1px',
+          'border-color': 'rgb(0 182 180 / 0.3)',
+          'background-color': 'rgb(0 182 180 / 0.1)',
+          'padding-left': '0.75rem',
+          'padding-right': '0.75rem',
+          'padding-top': '0.25rem',
+          'padding-bottom': '0.25rem',
+          'font-size': '0.75rem',
+          'line-height': '1rem',
+          '--tw-text-opacity': '1',
+          'color': 'rgb(0 182 180 / var(--tw-text-opacity, 1))',
+        },
+      })
+    },
+  ],
 }
 

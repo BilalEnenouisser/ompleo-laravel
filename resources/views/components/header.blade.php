@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center h-20">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex-shrink-0 group">
-                <div class="flex items-center space-x-3 px-4">
+                <div class="flex items-center  px-4">
                     <!-- Light mode logo (default) -->
                     <img src="{{ asset('LOGO OMPLEO LINE.png') }}" alt="OMPLEO" class="h-14 w-auto dark:hidden">
                     <!-- Dark mode logo -->
@@ -44,7 +44,7 @@
                             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
                             <path d="M2 12h20"></path>
                         </svg>
-                        <span>{{ app()->getLocale() === 'fr' ? '🇫🇷' : (app()->getLocale() === 'en' ? '🇬🇧' : '🇩🇿') }}</span>
+                        <span>{{ app()->getLocale() === 'fr' ? '🇫🇷' : (app()->getLocale() === 'en' ? '🇫🇷' : '🇩🇿') }}</span>
                     </button>
                     
                     <!-- Language Menu -->

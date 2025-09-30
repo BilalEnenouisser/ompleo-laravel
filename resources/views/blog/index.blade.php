@@ -77,7 +77,7 @@ $tags = [
 ];
 @endphp
 
-<div class="min-h-screen bg-white dark:bg-[#1f1f1f] relative overflow-hidden">
+<div class="min-h-screen bg-white dark:bg-[#1f1f1f] pt-20 relative overflow-hidden">
     <!-- Background Shapes -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div class="liquid-shape w-96 h-96 bg-[#00b6b4]/10 top-20 -left-20"></div>
@@ -85,13 +85,12 @@ $tags = [
     </div>
 
     <!-- Hero Section -->
-    <section class="bg-[#00b6b4] text-white py-20 relative overflow-hidden">
+    <section class="bg-[#00b6b4] text-white py-20  relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
-            <h1 class="text-4xl lg:text-5xl font-semibold mb-6" data-animate="hero-title">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6" data-animate="hero-title">
                 Conseils emploi, carrière & recrutement
-
             </h1>
-            <p class="text-xl opacity-90 max-w-2xl mx-auto" data-animate="hero-subtitle">
+            <p class="text-base sm:text-lg md:text-xl opacity-90 max-w-2xl mx-auto px-4" data-animate="hero-subtitle">
                 Restez informé des dernières tendances emploi, conseils carrière et actualités du recrutement
             </p>
         </div>
@@ -106,13 +105,15 @@ $tags = [
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Rechercher</h3>
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            <!-- Search icon from Lucide React -->
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
                             </svg>
                             <input
                                 type="text"
                                 placeholder="Rechercher un article..."
-                                class="glass-input w-full pl-10 pr-4 py-3"
+                                class="liquid-glass-input w-full pl-10 pr-4 py-3"
                                 id="search-input"
                             />
                         </div>
@@ -152,9 +153,9 @@ $tags = [
 
             <!-- Main Content -->
             <div class="lg:col-span-3">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="blog-posts">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8" id="blog-posts">
                     @foreach($blogPosts as $post)
-                    <article class="glass-card group hover:-translate-y-2 transition-all duration-300" data-animate="blog-post">
+                    <article class="liquid-glass-card group hover:-translate-y-2 transition-all duration-300" data-animate="blog-post">
                         <div class="relative h-48 overflow-hidden rounded-t-2xl">
                             <img
                                 src="{{ $post['image'] }}"
@@ -168,35 +169,43 @@ $tags = [
                             </div>
                         </div>
                         
-                        <div class="p-6">
+                        <div class="p-4 sm:p-6">
                             <a href="{{ route('blog.show', $post['slug']) }}">
-                                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
+                                <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
                                     {{ $post['title'] }}
                                 </h2>
                             </a>
                             
-                            <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 line-clamp-3">
                                 {{ $post['excerpt'] }}
                             </p>
                             
-                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                                <div class="flex items-center gap-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 gap-2 sm:gap-0">
+                                <div class="flex items-center gap-2 sm:gap-4">
                                     <div class="flex items-center gap-1">
-                                        <svg class="w-4 h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        <!-- User icon from Lucide React -->
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <span>{{ $post['author'] }}</span>
+                                        <span class="truncate">{{ $post['author'] }}</span>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <svg class="w-4 h-4 text-accent-500 dark:text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        <!-- Calendar icon from Lucide React -->
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-accent-500 dark:text-accent-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>
-                                        <span>{{ $post['date'] }}</span>
+                                        <span class="truncate">{{ $post['date'] }}</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <svg class="w-4 h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    <!-- Clock icon from Lucide React -->
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12,6 12,12 16,14"></polyline>
                                     </svg>
                                     <span>{{ $post['readTime'] }}</span>
                                 </div>
@@ -207,8 +216,10 @@ $tags = [
                                 class="flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium group/btn"
                             >
                                 Lire la suite
-                                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                <!-- ArrowRight icon from Lucide React -->
+                                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
                                 </svg>
                             </a>
                         </div>
@@ -218,8 +229,10 @@ $tags = [
 
                 <!-- No Results -->
                 <div class="text-center py-12 glass-card hidden" id="no-results">
-                    <svg class="w-16 h-16 text-primary-500 dark:text-primary-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <!-- Search icon from Lucide React -->
+                    <svg class="w-16 h-16 text-primary-500 dark:text-primary-400 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
                     </svg>
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                         Aucun article trouvé
@@ -231,7 +244,7 @@ $tags = [
 
                 <!-- Load More Button -->
                 <div class="text-center mt-12" data-animate="load-more">
-                    <button class="glass-button-highlight px-8 py-3 hover:scale-105 active:scale-95 transition-transform duration-200">
+                    <button class="glass-button-highlight px-8 py-3">
                         Charger plus d'articles
                     </button>
                 </div>

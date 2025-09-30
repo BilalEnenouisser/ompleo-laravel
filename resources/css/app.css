@@ -24,7 +24,22 @@
   }
   
   .glass-button-highlight {
-    @apply bg-primary-500/20 backdrop-blur-sm border border-primary-400/30 text-primary-700 dark:text-primary-300 hover:bg-primary-500/30 transition-all duration-300;
+    border-radius: 0.75rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 182 180 / var(--tw-bg-opacity, 1));
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  
+  .glass-button-highlight:hover {
+    transform: scale(1.05);
   }
   
   .glass-input {
@@ -36,7 +51,7 @@
   }
   
   .glass-badge-highlight {
-    @apply bg-primary-500/20 backdrop-blur-sm border border-primary-400/30 text-primary-700 dark:text-primary-300;
+    @apply bg-primary-500/20 backdrop-blur-sm border border-primary-400/30 text-primary-700;
   }
   
   /* Button styles */
