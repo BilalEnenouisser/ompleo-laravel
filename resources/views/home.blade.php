@@ -17,11 +17,16 @@
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-                <div class="lg:order-1">
+                <div class="lg:order-1 animate-fade-in-up">
                     <div class="text-left lg:text-left mb-8 lg:mb-0 pl-8">
-                        <div class="inline-flex items-center gap-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full px-4 py-2 mb-6 animate-bounce">
-                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2 2m0 0l2 2m-2-2l-2 2m2-2l2 2M7 7l2 2m0 0l2 2m-2-2l-2 2m2-2l2 2M7 7l2 2m0 0l2 2m-2-2l-2 2m2-2l2 2M7 7l2 2m0 0l2 2m-2-2l-2 2m2-2l2 2"></path>
+                        <div class="inline-flex items-center gap-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full px-4 py-2 mb-6 animate-float-gentle">
+                            <!-- Sparkles icon from Lucide React -->
+                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+                                <path d="M20 3v4"></path>
+                                <path d="M22 5h-4"></path>
+                                <path d="M4 17v2"></path>
+                                <path d="M5 18H3"></path>
                             </svg>
                             <span class="text-sm font-medium text-[#00b6b4]">Plateforme #1 en Algérie</span>
                         </div>
@@ -31,7 +36,7 @@
                             <div class="whitespace-nowrap">ou l'emploi de vos rêves</div>
                         </div>
 
-                        <form class="mt-10 space-y-4">
+                        <form class="mt-10 space-y-4 animate-fade-in-up" style="animation-delay: 0.6s;">
                             <!-- Job Search -->
                             <div class="relative w-full">
                                 <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
@@ -110,26 +115,26 @@
                             <!-- Submit -->
                             <button
                                 type="submit"
-                                class="w-full h-14 text-lg rounded-lg bg-[#00b6b4] text-white font-bold shadow-lg hover:bg-[#009e9c] transition-all duration-300"
+                                class="w-full h-14 text-lg rounded-lg bg-[#00b6b4] text-white font-bold shadow-lg hover:bg-[#009e9c] transition-all duration-300 hover:scale-105 active:scale-95"
                             >
                                 Trouver un emploi
                             </button>
                         </form>
 
                         <!-- Recherches populaires -->
-                        <div class="mt-6">
+                        <div class="mt-6 animate-fade-in-up" style="animation-delay: 0.9s;">
                             <p class="text-white text-shadow mb-3">Recherches populaires :</p>
                             <div class="flex flex-wrap gap-2">
-                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b]">
+                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Développeur
                                 </button>
-                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b]">
+                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Marketing
                                 </button>
-                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b]">
+                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Commercial
                                 </button>
-                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b]">
+                                <button class="px-4 py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Design
                                 </button>
                             </div>
@@ -144,19 +149,29 @@
     </section>
 
     <!-- Featured Articles Section -->
-    @include('components.featured-articles')
+    <div class="animate-on-scroll">
+        @include('components.featured-articles')
+    </div>
 
     <!-- Why Choose Section -->
-    @include('components.why-choose-section')
+    <div class="animate-on-scroll">
+        @include('components.why-choose-section')
+    </div>
 
     <!-- Jobs Section -->
-    @include('components.jobs-section')
+    <div class="animate-on-scroll">
+        @include('components.jobs-section')
+    </div>
 
     <!-- Partners Section -->
-    @include('components.partners-section')
+    <div class="animate-on-scroll">
+        @include('components.partners-section')
+    </div>
 
     <!-- Recruiter CTA Section -->
-    @include('components.recruiter-cta')
+    <div class="animate-on-scroll">
+        @include('components.recruiter-cta')
+    </div>
 </div>
 
 <!-- Footer -->

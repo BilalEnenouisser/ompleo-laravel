@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Candidats - OMPLEO')
-@section('description', 'Créez un profil candidat et trouvez votre emploi idéal sur OMPLEO')
-
 @section('content')
-<!-- Header -->
 @include('components.header')
 
 @php
@@ -65,7 +61,7 @@ $steps = [
     <section class="bg-gradient-to-br from-[#00b6b4]/5 to-[#00b6b4]/10 dark:from-[#00b6b4]/10 dark:to-[#00b6b4]/5 py-20 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
-                <div class="text-center lg:text-left" data-animate="hero-text">
+                <div class="text-center lg:text-left animate-fade-in-left" data-animate="hero-text">
                     <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
                         Créez un profil pour attirer les{' '}
                         <span class="text-[#00b6b4]">meilleurs recruteurs</span>
@@ -74,12 +70,12 @@ $steps = [
                         Rejoignez OMPLEO et donnez un nouvel élan à votre carrière. 
                         Notre plateforme vous connecte avec les meilleures opportunités.
                     </p>
-                    <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95" data-animate="hero-button">
+                    <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95">
                         🔵 JE CRÉE MON COMPTE CANDIDAT
                     </button>
                 </div>
                 
-                <div class="mt-12 lg:mt-0" data-animate="hero-image">
+                <div class="mt-12 lg:mt-0 animate-fade-in-right" data-animate="hero-image" style="animation-delay: 0.2s;">
                     <div class="relative">
                         <img
                             src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -94,9 +90,9 @@ $steps = [
     </section>
 
     <!-- Why Create Account Section -->
-    <section class="py-20 bg-gray-50 dark:bg-[#2b2b2b]">
+    <section class="py-20 bg-gray-50 dark:bg-[#2b2b2b] animate-on-scroll">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-animate="benefits-title">
+            <div class="text-center mb-16 animate-fade-in-up" data-animate="benefits-title">
                 <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                     Pourquoi créer un compte candidat ?
                 </h2>
@@ -107,24 +103,32 @@ $steps = [
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach($benefits as $index => $benefit)
-                <div class="bg-white dark:bg-[#333333] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105" data-animate="benefit-card" data-delay="{{ $index * 0.1 }}">
+                <div class="bg-white dark:bg-[#333333] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 animate-stagger-fade-in" data-animate="benefit-card" data-delay="{{ $index * 0.1 }}" style="animation-delay: {{ $index * 0.1 }}s;">
                     <div class="{{ $benefit['bgColor'] }} {{ $benefit['color'] }} w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
                         @if($index === 0)
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
+                        <!-- User Icon -->
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
                         @elseif($index === 1)
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
+                        <!-- Search Icon -->
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
                         @elseif($index === 2)
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-5a7.5 7.5 0 00-15 0v5h5l-5 5-5-5h5v-5a7.5 7.5 0 0115 0v5z"></path>
-                            </svg>
-                        @else
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                        <!-- Bell Icon -->
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        @elseif($index === 3)
+                        <!-- CheckCircle Icon -->
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
                         @endif
                     </div>
                     
@@ -144,7 +148,7 @@ $steps = [
     <!-- Steps Section -->
     <section class="py-20 bg-white dark:bg-[#1f1f1f]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-animate="steps-title">
+            <div class="text-center mb-16 animate-fade-in-up" data-animate="steps-title">
                 <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                     Comment ça marche ?
                 </h2>
@@ -155,24 +159,30 @@ $steps = [
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($steps as $index => $step)
-                <div class="text-center relative" data-animate="step-card" data-delay="{{ $index * 0.2 }}">
+                <div class="text-center relative animate-stagger-fade-in" data-animate="step-card" data-delay="{{ $index * 0.2 }}" style="animation-delay: {{ $index * 0.2 }}s;">
                     <div class="relative mb-8 group">
-                        <div class="w-20 h-20 bg-[#00b6b4] text-white rounded-full flex items-center justify-center mx-auto shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                        <div class="w-20 h-20 bg-[#00b6b4] text-white rounded-full flex items-center justify-center mx-auto shadow-lg transition-all duration-300 group-hover:scale-110">
                             @if($index === 0)
-                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
+                            <!-- User Icon -->
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
                             @elseif($index === 1)
-                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            @else
-                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-5a7.5 7.5 0 00-15 0v5h5l-5 5-5-5h5v-5a7.5 7.5 0 0115 0v5z"></path>
-                                </svg>
+                            <!-- Search Icon -->
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            @elseif($index === 2)
+                            <!-- Bell Icon -->
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
                             @endif
                         </div>
-                        <div class="absolute -top-2 -right-2 bg-white dark:bg-[#333333] border-2 border-[#00b6b4]/30 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-[#00b6b4]">
+                        <div class="absolute -top-2 -right-2 bg-white dark:bg-[#333333] border-2 border-[#00b6b4]/30 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-[#00b6b4] transition-all duration-300 group-hover:rotate-12">
                             {{ $step['number'] }}
                         </div>
                     </div>
@@ -187,9 +197,9 @@ $steps = [
 
                     <!-- Connection Line -->
                     @if($index < count($steps) - 1)
-                        <div class="hidden md:block absolute top-10 left-1/2 transform translate-x-1/2 w-full h-0.5 bg-gray-300 dark:bg-gray-700 -z-10">
-                            <div class="absolute top-0 left-0 h-full bg-[#00b6b4] w-0 connection-line" data-animate="connection-line" data-delay="{{ $index * 0.2 + 0.5 }}"></div>
-                        </div>
+                    <div class="hidden md:block absolute top-10 left-1/2 transform translate-x-1/2 w-full h-0.5 bg-gray-300 dark:bg-gray-700 -z-10">
+                        <div class="absolute top-0 left-0 h-full bg-[#00b6b4] connection-line" data-delay="{{ $index * 0.5 + 0.5 }}"></div>
+                    </div>
                     @endif
                 </div>
                 @endforeach
@@ -205,37 +215,39 @@ $steps = [
         </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div data-animate="stat-card">
-                    <div class="flex items-center justify-center mb-4" data-animate="stat-icon">
-                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                <div class="animate-fade-in-up" data-animate="stat-1">
+                    <div class="flex items-center justify-center mb-4 animate-bounce-gentle">
+                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"></polyline>
+                            <polyline points="16,7 22,7 22,13"></polyline>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" data-animate="stat-number">
+                    <div class="text-4xl font-bold mb-2 animate-counter">
                         98%
                     </div>
                     <div class="text-white/80">Taux de satisfaction</div>
                 </div>
                 
-                <div data-animate="stat-card" data-delay="0.2">
-                    <div class="flex items-center justify-center mb-4" data-animate="stat-icon">
-                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                <div class="animate-fade-in-up" data-animate="stat-2" style="animation-delay: 0.2s;">
+                    <div class="flex items-center justify-center mb-4 animate-bounce-gentle" style="animation-delay: 0.5s;">
+                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" data-animate="stat-number">
+                    <div class="text-4xl font-bold mb-2 animate-counter" style="animation-delay: 0.4s;">
                         1187+
                     </div>
                     <div class="text-white/80">Offres disponibles</div>
                 </div>
                 
-                <div data-animate="stat-card" data-delay="0.4">
-                    <div class="flex items-center justify-center mb-4" data-animate="stat-icon">
-                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <div class="animate-fade-in-up" data-animate="stat-3" style="animation-delay: 0.4s;">
+                    <div class="flex items-center justify-center mb-4 animate-bounce-gentle" style="animation-delay: 1s;">
+                        <svg class="w-12 h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" data-animate="stat-number">
+                    <div class="text-4xl font-bold mb-2 animate-counter" style="animation-delay: 0.6s;">
                         24h
                     </div>
                     <div class="text-white/80">Temps de réponse moyen</div>
@@ -247,59 +259,18 @@ $steps = [
     <!-- CTA Section -->
     <section class="py-20 bg-gray-50 dark:bg-[#2b2b2b]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
-            <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6" data-animate="cta-title">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6 animate-fade-in-up" data-animate="cta-title">
                 Prêt à donner un nouveau souffle à votre carrière ?
             </h2>
-            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8" data-animate="cta-text">
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 animate-fade-in-up" data-animate="cta-subtitle" style="animation-delay: 0.2s;">
                 Rejoignez des milliers de candidats qui ont trouvé leur emploi idéal sur OMPLEO
             </p>
-            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95" data-animate="cta-button">
+            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 animate-fade-in-up" data-animate="cta-button" style="animation-delay: 0.4s;">
                 Créer mon compte maintenant
             </button>
         </div>
     </section>
 </div>
 
-<!-- Footer -->
 @include('components.footer')
-
-@push('styles')
-<style>
-[data-animate] {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-[data-animate].animate-fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-</style>
-@endpush
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Simple scroll animations using Intersection Observer
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all animated elements
-    document.querySelectorAll('[data-animate]').forEach(el => {
-        observer.observe(el);
-    });
-});
-</script>
-@endpush
 @endsection

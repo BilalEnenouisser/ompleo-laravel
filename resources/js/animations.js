@@ -1,5 +1,3 @@
-import './bootstrap';
-
 // OMPLEO Animations - React to Laravel Animation Migration
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -12,34 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Handle different animation types
-                const animateType = entry.target.dataset.animate;
-                const delay = parseFloat(entry.target.dataset.delay) || 0;
-                
-                if (animateType === 'title') {
-                    // Title animation: opacity 0→1, y: 30→0, duration: 0.7s
-                    entry.target.style.opacity = '0';
-                    entry.target.style.transform = 'translateY(30px)';
-                    entry.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-                    
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, delay * 1000);
-                } else if (animateType === 'card') {
-                    // Card animation: opacity 0→1, y: 40→0, duration: 0.5s, delay: index * 0.1
-                    entry.target.style.opacity = '0';
-                    entry.target.style.transform = 'translateY(40px)';
-                    entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, delay * 1000);
-                } else {
-                    // Default animation
-                    entry.target.classList.add('animate-fade-in');
-                }
+                entry.target.classList.add('animate-fade-in');
                 
                 // Trigger counter animation if element has counter
                 if (entry.target.classList.contains('counter-element')) {
@@ -53,38 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[data-animate]').forEach(el => {
         observer.observe(el);
     });
-
-    // React-style scroll animations for .animate-on-scroll elements
-    const reactObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all React-style animate-on-scroll elements
-            document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                reactObserver.observe(el);
-            });
-
-            // Connection Line Animation
-            const connectionLineObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const delay = parseFloat(entry.target.dataset.delay) || 0;
-                        setTimeout(() => {
-                            entry.target.style.width = '100%';
-                        }, delay * 1000);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            document.querySelectorAll('.connection-line').forEach(el => {
-                el.style.width = '0%';
-                el.style.transition = 'width 1.5s ease';
-                connectionLineObserver.observe(el);
-            });
 
     // Counter Animation (similar to React AnimatedCounter)
     function animateCounter(element) {
@@ -217,62 +156,35 @@ document.addEventListener('DOMContentLoaded', function() {
     fadeInOnScroll();
 });
 
-// CSS Animation Classes
+// CSS Animation Classes (to be added to CSS)
 const animationStyles = `
-    .scroll-animate {
+    .animate-fade-in {
         opacity: 0;
         transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
     }
     
-    .animate-on-scroll {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    .animate-on-scroll.animate {
+    .animate-fade-in.animate-fade-in {
         opacity: 1;
         transform: translateY(0);
-    }
-    
-    .page-transition {
-        animation: fadeInUp 0.6s ease-out;
     }
     
     .hover-lift {
         transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
-    .hover-lift:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 182, 180, 0.1), 0 0 10px rgba(0, 182, 180, 0.1);
+    .scale-on-hover {
+        transition: transform 0.2s ease;
     }
     
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+    .shimmer-loading {
+        position: relative;
+        overflow: hidden;
     }
     
-    .liquid-shape {
-        position: absolute;
-        background: linear-gradient(45deg, rgba(0, 182, 180, 0.2), rgba(0, 182, 180, 0.1));
-        filter: blur(40px);
-        animation: liquid 8s ease-in-out infinite, liquidShift 10s ease-in-out infinite;
-        z-index: 1;
-        pointer-events: none;
-    }
-    
-    @keyframes liquid {
-        0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-        50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-    }
-    
-    @keyframes liquidShift {
-        0% { transform: translateX(0) translateY(0); }
-        25% { transform: translateX(5px) translateY(-5px); }
-        50% { transform: translateX(0) translateY(0); }
-        75% { transform: translateX(-5px) translateY(5px); }
-        100% { transform: translateX(0) translateY(0); }
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
     }
 `;
 

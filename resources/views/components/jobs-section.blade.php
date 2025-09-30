@@ -88,15 +88,23 @@ $jobs = [
                 
                 <div class="flex items-center gap-4 text-gray-600 dark:text-gray-400 mb-3">
                     <div class="flex items-center gap-1">
-                        <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        <!-- Building2 icon from Lucide React -->
+                        <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
+                            <path d="M10 6h4"></path>
+                            <path d="M10 10h4"></path>
+                            <path d="M10 14h4"></path>
+                            <path d="M10 18h4"></path>
                         </svg>
                         <span class="font-medium text-gray-700 dark:text-gray-300">{{ $job['company'] }}</span>
                     </div>
                     <div class="flex items-center gap-1">
-                        <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <!-- MapPin icon from Lucide React -->
+                        <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                         <span>{{ $job['location'] }}</span>
                     </div>
@@ -107,8 +115,10 @@ $jobs = [
                         {{ $job['type'] }}
                     </span>
                     <div class="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <!-- Clock icon from Lucide React -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
                         </svg>
                         <span>{{ $job['postedDate'] }}</span>
                     </div>
@@ -125,8 +135,10 @@ $jobs = [
                     class="w-full bg-[#00b6b4] text-white py-3 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center gap-2 hover:bg-[#009e9c] shadow-sm"
                 >
                     Voir l'offre
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    <!-- ArrowRight icon from Lucide React -->
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
                     </svg>
                 </a>
             </div>
@@ -139,8 +151,10 @@ $jobs = [
                 class="inline-flex items-center gap-2 px-8 py-3 bg-white dark:bg-[#2b2b2b] text-[#00b6b4] rounded-xl font-medium border border-[#00b6b4] hover:bg-[#00b6b4] hover:text-white transition-all duration-300"
             >
                 Voir toutes les offres
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                <!-- ArrowRight icon from Lucide React -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
                 </svg>
             </a>
         </div>

@@ -57,14 +57,20 @@ $articles = [
                         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                             <div class="flex items-center gap-4 mb-3 text-sm">
                                 <div class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    <!-- Calendar icon from Lucide React -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
                                     </svg>
                                     <span>{{ $article['date'] }}</span>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    <!-- User icon from Lucide React -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
                                     <span>{{ $article['author'] }}</span>
                                 </div>
@@ -95,8 +101,9 @@ $articles = [
                 onclick="prevSlide()"
                 class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 dark:bg-[#2b2b2b]/80 hover:bg-white dark:hover:bg-[#333333] text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-lg z-10 transition-all duration-300 hover:scale-110"
             >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                <!-- ChevronLeft icon from Lucide React -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="15,18 9,12 15,6"></polyline>
                 </svg>
             </button>
             
@@ -104,8 +111,9 @@ $articles = [
                 onclick="nextSlide()"
                 class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 dark:bg-[#2b2b2b]/80 hover:bg-white dark:hover:bg-[#333333] text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-lg z-10 transition-all duration-300 hover:scale-110"
             >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                <!-- ChevronRight icon from Lucide React -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="9,18 15,12 9,6"></polyline>
                 </svg>
             </button>
 

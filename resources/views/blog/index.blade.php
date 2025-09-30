@@ -77,18 +77,19 @@ $tags = [
 ];
 @endphp
 
-<div class="min-h-screen bg-white dark:bg-[#1f1f1f] pt-20 relative overflow-hidden">
+<div class="min-h-screen bg-white dark:bg-[#1f1f1f] relative overflow-hidden">
     <!-- Background Shapes -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div class="liquid-shape w-96 h-96 bg-[#00b6b4]/10 top-20 -left-20"></div>
         <div class="liquid-shape w-80 h-80 bg-[#00b6b4]/10 bottom-20 -right-20" style="animation-delay: 2s;"></div>
     </div>
 
     <!-- Hero Section -->
     <section class="bg-[#00b6b4] text-white py-20 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
             <h1 class="text-4xl lg:text-5xl font-semibold mb-6" data-animate="hero-title">
-                Blog
+                Conseils emploi, carrière & recrutement
+
             </h1>
             <p class="text-xl opacity-90 max-w-2xl mx-auto" data-animate="hero-subtitle">
                 Restez informé des dernières tendances emploi, conseils carrière et actualités du recrutement
@@ -394,3 +395,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 @endpush
 @endsection
+
