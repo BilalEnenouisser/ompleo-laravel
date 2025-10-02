@@ -1,4 +1,4 @@
-<header class="w-full z-50 bg-white dark:bg-[#1f1f1f]">
+<header class="w-full z-50 {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'bg-[#1f1f1f]' : 'bg-white dark:bg-[#1f1f1f]' }}">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             <!-- Logo -->
@@ -13,22 +13,25 @@
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-1">
-                <a href="{{ route('home') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('home') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                @php
+                    $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
+                @endphp
+                <a href="{{ route('home') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('home') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Accueil</span>
                 </a>
-                <a href="{{ route('jobs.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('jobs.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                <a href="{{ route('jobs.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('jobs.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Emplois</span>
                 </a>
-                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('companies.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('companies.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Entreprises</span>
                 </a>
-                <a href="{{ route('candidates') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('candidates') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                <a href="{{ route('candidates') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('candidates') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Candidats</span>
                 </a>
-                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('blog.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('blog.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Blog</span>
                 </a>
-                <a href="{{ route('contact') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('contact') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]' }}">
+                <a href="{{ route('contact') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('contact') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
                     <span class="relative z-10">Contact</span>
                 </a>
             </nav>
@@ -37,7 +40,7 @@
             <div class="hidden md:flex items-center space-x-4">
                 <!-- Language Selector -->
                 <div class="relative">
-                    <button onclick="toggleLanguageMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
+                    <button onclick="toggleLanguageMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 {{ $isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-[#2b2b2b]' }}">
                         <!-- Globe icon from Lucide React -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -142,7 +145,7 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 text-[#00b6b4] hover:bg-[#2b2b2b]">
+                    <a href="{{ route('login') }}" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 {{ $isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-[#2b2b2b]' }}">
                         <!-- User icon from Lucide React -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -169,7 +172,7 @@
 
             <!-- Mobile menu button -->
             <div class="md:hidden flex items-center space-x-2">
-                <button onclick="toggleMobileMenu()" class="p-2 rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
+                <button onclick="toggleMobileMenu()" class="p-2 rounded-lg transition-all duration-300 {{ $isDashboard ? 'text-white hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-[#2b2b2b]' }}">
                     <!-- Menu icon from Lucide React -->
                     <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <line x1="4" y1="6" x2="20" y2="6"></line>

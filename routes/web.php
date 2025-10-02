@@ -26,7 +26,26 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    
+    // Redirect old register to signup choice
+    Route::get('/register', function () {
+        return redirect()->route('signup.choice');
+    })->name('register');
+    
+    // Signup Choice Flow
+    Route::get('/signup-choice', function () {
+        return view('auth.signup-choice');
+    })->name('signup.choice');
+    
+    Route::get('/signup-candidate', function () {
+        return view('auth.signup-candidate');
+    })->name('signup.candidate');
+    
+    Route::get('/signup-recruiter', function () {
+        return view('auth.signup-recruiter');
+    })->name('signup.recruiter');
+    
+    // Handle registration form submissions
     Route::post('/register', [RegisterController::class, 'register']);
     
     // Recruiter Registration
@@ -36,6 +55,13 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
+    Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
+});
 
 // Password Reset Routes
 Route::get('/password/reset', function () {

@@ -26,7 +26,18 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             
-            return redirect()->intended(route('dashboard'));
+            // Redirect based on user type
+            $user = Auth::user();
+            switch ($user->user_type) {
+                case 'admin':
+                    return redirect()->intended(route('admin.dashboard'));
+                case 'recruiter':
+                    return redirect()->intended(route('recruiter.dashboard'));
+                case 'candidate':
+                    return redirect()->intended(route('candidate.dashboard'));
+                default:
+                    return redirect()->intended(route('candidate.dashboard'));
+            }
         }
 
         return back()->withErrors([
