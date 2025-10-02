@@ -68,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/partners', function () {
         return view('dashboard.admin.partners');
     })->name('admin.partners');
+                Route::get('/admin/blog', function () {
+                    return view('dashboard.admin.blog');
+                })->name('admin.blog');
+                Route::get('/admin/notifications', function () {
+                    return view('dashboard.admin.notifications');
+                })->name('admin.notifications');
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
 });
