@@ -82,15 +82,15 @@
                             </svg>
                             <span class="font-medium text-sm sm:text-base">Utilisateurs</span>
                         </a>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <a href="{{ route('admin.jobs') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.jobs') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                             </svg>
-                            <span class="font-medium">Offres d'emploi</span>
+                            <span class="font-medium text-sm sm:text-base">Offres d'emploi</span>
                         </a>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <a href="{{ route('admin.partners') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.partners') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                 <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                                 <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -99,7 +99,7 @@
                                 <path d="M10 14h4"/>
                                 <path d="M10 18h4"/>
                             </svg>
-                            <span class="font-medium">Partenaires</span>
+                            <span class="font-medium text-sm sm:text-base">Partenaires</span>
                         </a>
                         <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

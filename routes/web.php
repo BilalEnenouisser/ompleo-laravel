@@ -62,6 +62,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/users', function () {
         return view('dashboard.admin.users');
     })->name('admin.users');
+    Route::get('/admin/jobs', function () {
+        return view('dashboard.admin.jobs');
+    })->name('admin.jobs');
+    Route::get('/admin/partners', function () {
+        return view('dashboard.admin.partners');
+    })->name('admin.partners');
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
 });
