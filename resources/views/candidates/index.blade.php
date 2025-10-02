@@ -157,11 +157,11 @@ $steps = [
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 ">
                 @foreach($steps as $index => $step)
-                <div class="text-center relative animate-stagger-fade-in" data-animate="step-card" data-delay="{{ $index * 0.2 }}" style="animation-delay: {{ $index * 0.2 }}s;">
-                    <div class="relative mb-8 group">
-                        <div class="w-20 h-20 bg-[#00b6b4] text-white rounded-full flex items-center justify-center mx-auto shadow-lg transition-all duration-300 group-hover:scale-110">
+                <div class="text-center relative animate-stagger-fade-in " data-animate="step-card" data-delay="{{ $index * 0.2 }}" style="animation-delay: {{ $index * 0.2 }}s;">
+                    <div class="relative mb-8 group step-icon-hover">
+                        <div class="w-20 h-20 bg-[#00b6b4] text-white rounded-full flex items-center justify-center mx-auto shadow-lg ">
                             @if($index === 0)
                             <!-- User Icon -->
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -182,7 +182,7 @@ $steps = [
                             </svg>
                             @endif
                         </div>
-                        <div class="absolute -top-2 -right-2 bg-white dark:bg-[#333333] border-2 border-[#00b6b4]/30 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-[#00b6b4] transition-all duration-300 group-hover:rotate-12">
+                        <div class="absolute -top-2 -right-2 bg-white dark:bg-[#333333] border-2 border-[#00b6b4]/30 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-[#00b6b4] ">
                             {{ $step['number'] }}
                         </div>
                     </div>

@@ -161,12 +161,12 @@ function getWorkTypeIcon($type) {
     <!-- Jobs List -->
     <section class="py-16 relative z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold text-[#111111] dark:text-[#f5f5f5]">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-[#111111] dark:text-[#f5f5f5]">
                     {{ count($jobs) }} offres trouvées
                 </h2>
                 <div class="flex items-center gap-4">
-                    <select class="px-4 py-2 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                    <select class="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] text-sm sm:text-base">
                         <option>Plus récentes</option>
                         <option>Salaire croissant</option>
                         <option>Salaire décroissant</option>
@@ -177,7 +177,7 @@ function getWorkTypeIcon($type) {
 
             <div class="space-y-6">
                 @foreach($jobs as $job)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border {{ $job['featured'] ? 'border-[#00b6b4]/20 dark:border-[#00b6b4]/30 ring-2 ring-[#00b6b4]/10 dark:ring-[#00b6b4]/20' : 'border-gray-100 dark:border-[#333333]' }} hover:-translate-y-1">
+                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border {{ $job['featured'] ? 'border-[#00b6b4]/20 dark:border-[#00b6b4]/30 ring-2 ring-[#00b6b4]/10 dark:ring-[#00b6b4]/20' : 'border-gray-100 dark:border-[#333333]' }} hover:-translate-y-1">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <div class="flex-1">
                             <div class="flex items-start gap-4">
@@ -186,8 +186,8 @@ function getWorkTypeIcon($type) {
                                 </div>
                                 
                                 <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="text-xl font-bold text-[#111111] dark:text-[#f5f5f5] hover:text-[#00b6b4] cursor-pointer">
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                                        <h3 class="text-lg sm:text-xl font-bold text-[#111111] dark:text-[#f5f5f5] hover:text-[#00b6b4] cursor-pointer">
                                             {{ $job['title'] }}
                                         </h3>
                                         @if($job['featured'])
@@ -200,49 +200,49 @@ function getWorkTypeIcon($type) {
                                         @endif
                                     </div>
                                     
-                                    <div class="flex items-center gap-4 text-[#111111] dark:text-[#cccccc] mb-3">
+                                    <div class="grid grid-cols-2 sm:flex sm:flex-row gap-4 text-[#111111] dark:text-[#cccccc] mb-3">
                                         <div class="flex items-center gap-1">
                                             <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                             </svg>
-                                            <span class="font-medium text-[#111111] dark:text-[#f5f5f5]">{{ $job['company'] }}</span>
+                                            <span class="font-medium text-[#111111] dark:text-[#f5f5f5] text-sm sm:text-base">{{ $job['company'] }}</span>
                                         </div>
                                         <div class="flex items-center gap-1">
                                             <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             </svg>
-                                            <span>{{ $job['location'] }}</span>
+                                            <span class="text-sm sm:text-base">{{ $job['location'] }}</span>
                                         </div>
                                         <div class="flex items-center gap-1">
                                             <span class="text-[#00b6b4]">{{ getWorkTypeIcon($job['workType']) }}</span>
-                                            <span>{{ getWorkTypeLabel($job['workType']) }}</span>
+                                            <span class="text-sm sm:text-base">{{ getWorkTypeLabel($job['workType']) }}</span>
                                         </div>
                                         <div class="flex items-center gap-1">
                                             <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
-                                            <span>{{ $job['experience'] }}</span>
+                                            <span class="text-sm sm:text-base">{{ $job['experience'] }}</span>
                                         </div>
                                     </div>
                                     
-                                    <p class="text-[#111111] dark:text-[#cccccc] mb-4 line-clamp-2">
+                                    <p class="text-sm sm:text-base text-[#111111] dark:text-[#cccccc] mb-4 line-clamp-2">
                                         {{ $job['description'] }}
                                     </p>
                                     
                                     <div class="flex flex-wrap gap-2 mb-4">
                                         @foreach($job['skills'] as $skill)
-                                        <span class="px-3 py-1 bg-[#00b6b4]/10 text-[#00b6b4] rounded-full text-sm font-medium">
+                                        <span class="px-2 sm:px-3 py-1 bg-[#00b6b4]/10 text-[#00b6b4] rounded-full text-xs sm:text-sm font-medium">
                                             {{ $skill }}
                                         </span>
                                         @endforeach
                                     </div>
                                     
-                                    <div class="flex items-center justify-between">
-                                        <div class="text-lg font-bold text-[#111111] dark:text-[#f5f5f5]">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="text-base sm:text-lg font-bold text-[#111111] dark:text-[#f5f5f5]">
                                             {{ $job['salary'] }}
                                         </div>
-                                        <div class="text-sm text-[#111111] dark:text-[#cccccc]">
+                                        <div class="text-xs sm:text-sm text-[#111111] dark:text-[#cccccc]">
                                             Publié il y a 2 jours
                                         </div>
                                     </div>
@@ -250,13 +250,13 @@ function getWorkTypeIcon($type) {
                             </div>
                         </div>
                         
-                        <div class="flex items-center gap-3 lg:flex-col lg:items-end">
+                        <div class="flex items-center justify-between sm:justify-end gap-3 lg:flex-col lg:items-end">
                             <button class="p-2 text-gray-400 hover:text-red-500 transition-colors duration-200 hover:scale-110">
-                                <svg class="w-5 h-5 text-[#111111] dark:text-[#cccccc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#111111] dark:text-[#cccccc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                 </svg>
                             </button>
-                            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105">
+                            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base">
                                 Postuler
                             </button>
                         </div>

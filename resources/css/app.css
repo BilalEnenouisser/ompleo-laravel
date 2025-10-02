@@ -82,4 +82,23 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Custom rotation animation for step icons */
+  .step-icon-hover {
+    transition: all 0.3s ease;
+  }
+
+  .step-icon-hover:hover {
+    transform: scale(1.1) rotate(1deg);
+    animation: step-rotate 0.8s ease-in-out;
+  }
+  
+  @keyframes step-rotate {
+    0% { transform: scale(1.1) rotate(1deg); }
+    20% { transform: scale(1.1) rotate(-3deg); }
+    60% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1.1) rotate(1deg); }
+  }
+  
+ 
 }
