@@ -4,10 +4,9 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex-shrink-0 group">
                 <div class="flex items-center  px-4">
-                    <!-- Light mode logo (default) -->
-                    <img src="{{ asset('LOGO OMPLEO LINE.png') }}" alt="OMPLEO" class="h-14 w-auto dark:hidden">
+                  
                     <!-- Dark mode logo -->
-                    <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto hidden dark:block">
+                    <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto  dark:block">
                 </div>
             </a>
 
@@ -51,7 +50,7 @@
                     </button>
                     
                     <!-- Language Menu -->
-                    <div id="languageMenu" class="hidden absolute right-0 mt-2 w-48 bg-white/90 dark:bg-[#2b2b2b]/90 backdrop-blur-sm py-2 z-50 rounded-lg shadow-lg border border-gray-200 dark:border-[#333333]">
+                    <div id="languageMenu" class="hidden absolute right-0 mt-2 w-48 bg-[#2b2b2b]/90 backdrop-blur-sm py-2 z-50 rounded-lg shadow-lg ">
                         <a href="{{ route('locale', 'fr') }}" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]">
                             <span>🇫🇷</span>
                             <span>Français</span>
@@ -82,7 +81,7 @@
                         </button>
 
                         <!-- User Dropdown Menu -->
-                        <div id="userMenu" class="hidden absolute right-0 mt-2 w-56 bg-white/90 dark:bg-[#2b2b2b]/90 backdrop-blur-sm py-2 z-50 rounded-lg shadow-lg border border-gray-200 dark:border-[#333333]">
+                        <div id="userMenu" class="hidden absolute right-0 mt-2 w-56 bg-[#2b2b2b]/90 backdrop-blur-sm py-2 z-50 rounded-lg shadow-lg">
                             <div class="px-4 py-3 border-b border-gray-200/20 dark:border-[#333333]/20">
                                 <p class="text-sm font-medium text-[#f5f5f5]">
                                     {{ auth()->user()->name }}

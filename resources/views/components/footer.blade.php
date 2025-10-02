@@ -4,10 +4,9 @@
             <!-- Company Info -->
             <div class="lg:col-span-2">
                 <div class="flex items-center space-x-3 mb-6">
-                    <!-- Light mode logo (default) -->
-                    <img src="{{ asset('LOGO OMPLEO LINE.png') }}" alt="OMPLEO" class="h-14 w-auto dark:hidden">
+                  
                     <!-- Dark mode logo -->
-                    <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto hidden dark:block">
+                    <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto  dark:block">
                 </div>
                 <p class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} text-lg leading-relaxed mb-6 max-w-lg">
                     OMPLEO n'est pas une simple plateforme d'offres d'emploi. C'est un espace pensé pour simplifier la rencontre entre les bons talents et les bonnes entreprises dans l'ère numérique.

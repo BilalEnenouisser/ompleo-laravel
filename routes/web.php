@@ -59,6 +59,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Dashboard Routes
 Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', function () {
+        return view('dashboard.admin.users');
+    })->name('admin.users');
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
 });
