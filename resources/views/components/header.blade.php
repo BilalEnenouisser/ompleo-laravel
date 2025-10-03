@@ -68,6 +68,52 @@
 
                 <!-- User Menu or Auth Buttons -->
                 @auth
+                    <!-- Notification Bell -->
+                    <div class="relative mr-2">
+                        <button onclick="toggleNotificationMenu()" class="relative p-2 text-[#cccccc] hover:text-[#00b6b4] rounded-lg hover:bg-[#333333] transition-colors">
+                            <!-- Bell icon from Lucide React -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                            </svg>
+                            <!-- Unread count badge -->
+                            <span id="notificationBadge" class="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center hidden">
+                                0
+                            </span>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div id="notificationMenu" class="hidden absolute right-0 mt-2 w-80 max-h-[70vh] overflow-y-auto bg-[#2b2b2b] rounded-xl shadow-lg border border-[#333333] z-50">
+                            <div class="p-4 border-b border-[#333333] flex items-center justify-between">
+                                <h3 class="font-semibold text-[#f5f5f5]">Notifications</h3>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="markAllAsRead()" class="text-xs text-[#00b6b4] hover:text-[#009e9c] flex items-center gap-1 hidden" id="markAllReadBtn">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M20 6 9 17l-5-5"></path>
+                                        </svg>
+                                        Tout marquer comme lu
+                                    </button>
+                                    <button onclick="toggleNotificationMenu()" class="text-[#9ca3af] hover:text-[#f5f5f5]">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M18 6 6 18"></path>
+                                            <path d="M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="notificationList" class="divide-y divide-[#333333]">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+
+                            <div class="p-3 border-t border-[#333333] text-center">
+                                <a href="{{ route('notifications') }}" class="text-sm text-[#00b6b4] hover:text-[#009e9c] font-medium" onclick="toggleNotificationMenu()">
+                                    Voir toutes les notifications
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="relative">
                         <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
                             <div class="w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
@@ -262,15 +308,201 @@ function toggleUserMenu() {
     menu.classList.toggle('hidden');
 }
 
+function toggleNotificationMenu() {
+    const menu = document.getElementById('notificationMenu');
+    menu.classList.toggle('hidden');
+    
+    // Load notifications when opening
+    if (!menu.classList.contains('hidden')) {
+        loadNotifications();
+    }
+}
+
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('hidden');
 }
 
+// Notification functions
+function loadNotifications() {
+    // Simulate loading notifications (replace with actual API call)
+    const notifications = [
+        {
+            id: 1,
+            title: 'Nouvelle candidature',
+            message: 'Ahmed Benali a postulé pour le poste de Développeur Full Stack',
+            timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
+            isRead: false,
+            link: '/admin/applications'
+        },
+        {
+            id: 2,
+            title: 'Nouveau message',
+            message: 'Vous avez reçu un nouveau message de Sarah Khelil',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+            isRead: true,
+            link: '/messages'
+        },
+        {
+            id: 3,
+            title: 'Rapport mensuel',
+            message: 'Votre rapport mensuel est maintenant disponible',
+            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+            isRead: false,
+            link: '/reports'
+        }
+    ];
+    
+    renderNotifications(notifications);
+    updateNotificationBadge(notifications);
+}
+
+function renderNotifications(notifications) {
+    const container = document.getElementById('notificationList');
+    
+    if (notifications.length === 0) {
+        container.innerHTML = `
+            <div class="p-4 text-center text-[#9ca3af]">
+                <svg class="w-8 h-8 mx-auto mb-2 text-[#666666]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                </svg>
+                <p>Aucune notification</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = notifications.map(notification => `
+        <div class="p-4 hover:bg-[#333333] transition-colors ${!notification.isRead ? 'bg-[#00b6b4]/10' : ''}">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center ${!notification.isRead ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]'}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                    </svg>
+                </div>
+                
+                <div class="flex-1 min-w-0" onclick="handleNotificationClick(${notification.id})">
+                    ${notification.link ? `
+                        <a href="${notification.link}" class="block">
+                            <div class="flex items-start justify-between">
+                                <h4 class="font-medium text-[#f5f5f5] mb-1 pr-6">${notification.title}</h4>
+                                <svg class="w-3 h-3 text-[#9ca3af] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <path d="M15 3h6v6"></path>
+                                    <path d="M10 14 21 3"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
+                        </a>
+                    ` : `
+                        <h4 class="font-medium text-[#f5f5f5] mb-1">${notification.title}</h4>
+                        <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
+                    `}
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-[#9ca3af]">${formatTime(notification.timestamp)}</span>
+                        <div class="flex items-center gap-1">
+                            ${!notification.isRead ? `
+                                <button onclick="event.stopPropagation(); markAsRead(${notification.id})" class="p-1 text-[#00b6b4] hover:text-[#009e9c]">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M20 6 9 17l-5-5"></path>
+                                    </svg>
+                                </button>
+                            ` : ''}
+                            <button onclick="event.stopPropagation(); deleteNotification(${notification.id})" class="p-1 text-[#9ca3af] hover:text-red-500">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateNotificationBadge(notifications) {
+    const badge = document.getElementById('notificationBadge');
+    const markAllBtn = document.getElementById('markAllReadBtn');
+    const unreadCount = notifications.filter(n => !n.isRead).length;
+    
+    if (unreadCount > 0) {
+        badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        badge.classList.remove('hidden');
+        markAllBtn.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+        markAllBtn.classList.add('hidden');
+    }
+}
+
+function formatTime(date) {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (diffInSeconds < 60) {
+        return 'À l\'instant';
+    } else if (diffInSeconds < 3600) {
+        const minutes = Math.floor(diffInSeconds / 60);
+        return `Il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
+    } else if (diffInSeconds < 86400) {
+        const hours = Math.floor(diffInSeconds / 3600);
+        return `Il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+    } else {
+        const days = Math.floor(diffInSeconds / 86400);
+        return `Il y a ${days} jour${days > 1 ? 's' : ''}`;
+    }
+}
+
+function handleNotificationClick(notificationId) {
+    // Mark as read when clicked
+    markAsRead(notificationId);
+}
+
+function markAsRead(notificationId) {
+    // Simulate marking as read (replace with actual API call)
+    console.log(`Marking notification ${notificationId} as read`);
+    // Reload notifications after marking as read
+    loadNotifications();
+}
+
+function markAllAsRead() {
+    // Simulate marking all as read (replace with actual API call)
+    console.log('Marking all notifications as read');
+    // Reload notifications after marking all as read
+    loadNotifications();
+}
+
+function deleteNotification(notificationId) {
+    // Simulate deleting notification (replace with actual API call)
+    console.log(`Deleting notification ${notificationId}`);
+    // Reload notifications after deletion
+    loadNotifications();
+}
+
+// Close notification menu when clicking outside
+document.addEventListener('click', function(event) {
+    const notificationMenu = document.getElementById('notificationMenu');
+    const notificationBell = document.querySelector('[onclick="toggleNotificationMenu()"]');
+    
+    if (notificationMenu && !notificationMenu.classList.contains('hidden')) {
+        // Check if click is outside the notification menu and bell
+        if (!notificationMenu.contains(event.target) && !notificationBell.contains(event.target)) {
+            notificationMenu.classList.add('hidden');
+        }
+    }
+});
+
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {
     const languageMenu = document.getElementById('languageMenu');
     const userMenu = document.getElementById('userMenu');
+    const notificationMenu = document.getElementById('notificationMenu');
     
     if (!event.target.closest('[onclick="toggleLanguageMenu()"]')) {
         languageMenu.classList.add('hidden');
@@ -278,6 +510,10 @@ document.addEventListener('click', function(event) {
     
     if (!event.target.closest('[onclick="toggleUserMenu()"]')) {
         userMenu.classList.add('hidden');
+    }
+    
+    if (!event.target.closest('[onclick="toggleNotificationMenu()"]')) {
+        notificationMenu.classList.add('hidden');
     }
 });
 </script>

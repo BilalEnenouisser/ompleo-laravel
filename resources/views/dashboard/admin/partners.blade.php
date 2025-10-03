@@ -66,12 +66,12 @@
             <table class="w-full">
                 <thead class="bg-[#333333]">
                     <tr>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base hidden md:table-cell">Logo</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Nom</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base hidden lg:table-cell">Site web</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base hidden xl:table-cell">Description</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Mis en avant</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Actions</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Logo</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Nom</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Site web</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Description</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Mis en avant</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="partners-table">
@@ -93,41 +93,36 @@
 
                     @foreach($partners as $partner)
                     <tr class="partner-row border-b border-[#444444] hover:bg-[#333333]" data-featured="{{ $partner['is_featured'] ? 'true' : 'false' }}" data-name="{{ strtolower($partner['name']) }}">
-                        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden md:table-cell">
-                            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
+                        <td class="py-4 px-6 min-w-[340px] sm:min-w-0">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
                                 <img src="{{ $partner['logo'] }}" alt="{{ $partner['name'] }}" class="w-full h-full object-contain p-2" />
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
-                            <div class="flex items-center gap-3 md:hidden mb-2">
-                                <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center flex-shrink-0">
-                                    <img src="{{ $partner['logo'] }}" alt="{{ $partner['name'] }}" class="w-full h-full object-contain p-1" />
-                                </div>
-                            </div>
-                            <div class="font-medium text-[#f5f5f5] text-sm sm:text-base">{{ $partner['name'] }}</div>
+                        <td class="py-4 px-6">
+                            <div class="font-medium text-[#f5f5f5]">{{ $partner['name'] }}</div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden lg:table-cell">
-                            <a href="{{ $partner['website'] }}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm sm:text-base">
+                        <td class="py-4 px-6">
+                            <a href="{{ $partner['website'] }}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm">
                                 {{ $partner['website'] }}
                             </a>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden xl:table-cell">
-                            <div class="text-[#9ca3af] max-w-xs truncate text-sm sm:text-base">
+                        <td class="py-4 px-6">
+                            <div class="text-[#9ca3af] max-w-xs truncate text-sm">
                                 {{ $partner['description'] }}
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
+                        <td class="py-4 px-6">
                             <button 
                                 onclick="toggleFeatured({{ $partner['id'] }}, this)"
-                                class="p-1.5 sm:p-2 rounded-lg {{ $partner['is_featured'] ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]' }}"
+                                class="p-2 rounded-lg {{ $partner['is_featured'] ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]' }}"
                             >
                                 @if($partner['is_featured'])
-                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
                                 @else
-                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
                                         <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/>
                                         <path d="M3 3l18 18"/>
@@ -136,22 +131,22 @@
                                 @endif
                             </button>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
-                            <div class="flex items-center gap-1 sm:gap-2">
+                        <td class="py-4 px-6">
+                            <div class="flex items-center gap-2">
                                 <button 
                                     onclick="editPartner({{ json_encode($partner) }})"
-                                    class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
+                                    class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
                                 >
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                         <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                     </svg>
                                 </button>
                                 <button 
                                     onclick="deletePartner({{ $partner['id'] }}, '{{ $partner['name'] }}')"
-                                    class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
+                                    class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
                                 >
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M3 6h18"/>
                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -475,12 +470,12 @@ function toggleFeatured(id, button) {
     row.setAttribute('data-featured', !isFeatured);
     
     if (isFeatured) {
-        button.className = 'p-1.5 sm:p-2 rounded-lg bg-[#333333] text-[#9ca3af]';
-        button.innerHTML = '<svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
+        button.className = 'p-2 rounded-lg bg-[#333333] text-[#9ca3af]';
+        button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
         showToast('Partenaire retiré', `${partnerName} n'apparaîtra plus sur la page d'accueil`, 'success');
     } else {
-        button.className = 'p-1.5 sm:p-2 rounded-lg bg-green-900/30 text-green-600';
-        button.innerHTML = '<svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        button.className = 'p-2 rounded-lg bg-green-900/30 text-green-600';
+        button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
         showToast('Partenaire mis en avant', `${partnerName} apparaîtra maintenant sur la page d'accueil`, 'success');
     }
     
@@ -629,53 +624,48 @@ function addPartner() {
     newRow.setAttribute('data-id', newId);
     
     newRow.innerHTML = `
-        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden md:table-cell">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
+        <td class="py-4 px-6">
+            <div class="w-16 h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
                 <img src="${logoUrl}" alt="${name}" class="w-full h-full object-contain p-2" />
             </div>
         </td>
-        <td class="py-3 sm:py-4 px-3 sm:px-6">
-            <div class="flex items-center gap-3 md:hidden mb-2">
-                <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center flex-shrink-0">
-                    <img src="${logoUrl}" alt="${name}" class="w-full h-full object-contain p-1" />
-                </div>
-            </div>
-            <div class="font-medium text-[#f5f5f5] text-sm sm:text-base">${name}</div>
+        <td class="py-4 px-6">
+            <div class="font-medium text-[#f5f5f5]">${name}</div>
         </td>
-        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden lg:table-cell">
-            <a href="${website}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm sm:text-base">
+        <td class="py-4 px-6">
+            <a href="${website}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm">
                 ${website}
             </a>
         </td>
-        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden xl:table-cell">
-            <div class="text-[#9ca3af] max-w-xs truncate text-sm sm:text-base">
+        <td class="py-4 px-6">
+            <div class="text-[#9ca3af] max-w-xs truncate text-sm">
                 ${description}
             </div>
         </td>
-        <td class="py-3 sm:py-4 px-3 sm:px-6">
+        <td class="py-4 px-6">
             <button 
                 onclick="toggleFeatured(${newId}, this)"
-                class="p-1.5 sm:p-2 rounded-lg ${featured ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]'}"
+                class="p-2 rounded-lg ${featured ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]'}"
             >
                 ${featured ? 
-                    '<svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' :
-                    '<svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>'
+                    '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' :
+                    '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>'
                 }
             </button>
         </td>
-        <td class="py-3 sm:py-4 px-3 sm:px-6">
-            <div class="flex items-center gap-1 sm:gap-2">
+        <td class="py-4 px-6">
+            <div class="flex items-center gap-2">
                 <button 
                     onclick="editPartner({id: ${newId}, name: '${name}', logo: '${logoUrl}', is_featured: ${featured}, website: '${website}', description: '${description}'})"
-                    class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
+                    class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
                 >
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </button>
                 <button 
                     onclick="deletePartner(${newId}, '${name}')"
-                    class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
+                    class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
                 >
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                 </button>
             </div>
         </td>

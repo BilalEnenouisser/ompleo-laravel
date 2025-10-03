@@ -5,14 +5,14 @@
 @section('page-title', 'Utilisateurs')
 
 @section('content')
-<div class="space-y-8">
+<div class="w-full space-y-4 md:space-y-8">
     <!-- Header -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 md:gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-[#f5f5f5]">
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-[#f5f5f5]">
                 Gestion des Utilisateurs
             </h1>
-            <p class="text-sm sm:text-base text-[#9ca3af] mt-2">
+            <p class="text-sm md:text-base text-[#9ca3af] mt-1 md:mt-2">
                 Gérez tous les utilisateurs de la plateforme
             </p>
         </div>
@@ -38,15 +38,15 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-4 lg:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-xs sm:text-sm text-[#9ca3af]">Total utilisateurs</p>
-                    <p class="text-lg sm:text-2xl font-bold text-[#f5f5f5]">5</p>
+                    <p class="text-xs md:text-sm text-[#9ca3af]">Total utilisateurs</p>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-[#f5f5f5]">5</p>
                 </div>
-                <div class="w-8 h-8 sm:w-12 sm:h-12 bg-[#333333] rounded-lg sm:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-[#333333] rounded-lg md:rounded-xl flex items-center justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -56,14 +56,14 @@
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-4 lg:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-xs sm:text-sm text-[#9ca3af]">Candidats</p>
-                    <p class="text-lg sm:text-2xl font-bold text-blue-600">2</p>
+                    <p class="text-xs md:text-sm text-[#9ca3af]">Candidats</p>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-blue-600">2</p>
                 </div>
-                <div class="w-8 h-8 sm:w-12 sm:h-12 bg-blue-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-blue-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -73,14 +73,14 @@
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-4 lg:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-xs sm:text-sm text-[#9ca3af]">Recruteurs</p>
-                    <p class="text-lg sm:text-2xl font-bold text-green-600">2</p>
+                    <p class="text-xs md:text-sm text-[#9ca3af]">Recruteurs</p>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-green-600">2</p>
                 </div>
-                <div class="w-8 h-8 sm:w-12 sm:h-12 bg-green-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-green-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -90,14 +90,14 @@
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-4 lg:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-xs sm:text-sm text-[#9ca3af]">Certifiés</p>
-                    <p class="text-lg sm:text-2xl font-bold text-yellow-600">3</p>
+                    <p class="text-xs md:text-sm text-[#9ca3af]">Certifiés</p>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-yellow-600">3</p>
                 </div>
-                <div class="w-8 h-8 sm:w-12 sm:h-12 bg-yellow-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-yellow-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         <path d="M9 12l2 2 4-4"/>
                     </svg>
@@ -107,8 +107,8 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl p-3 md:p-4 lg:p-6 shadow-lg">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <div class="relative">
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"/>
@@ -153,49 +153,44 @@
     </div>
 
     <!-- Users Table -->
-    <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl shadow-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-[#333333]">
                     <tr>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Utilisateur</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base hidden sm:table-cell">Contact</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Rôle</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Statut</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base hidden lg:table-cell">Inscription</th>
-                        <th class="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Actions</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Utilisateur</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Contact</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Rôle</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Statut</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Inscription</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- User 1 -->
                     <tr class="border-b border-[#444444] hover:bg-[#333333]">
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
-                            <div class="flex items-center gap-2 sm:gap-3">
+                        <td class="py-4 px-6 min-w-[340px] sm:min-w-0">
+                            <div class="flex items-center gap-3">
                                 <div class="relative">
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold">
                                         AB
                                     </div>
                                 </div>
-                                <div class="min-w-0 flex-1">
-                                    <div class="font-semibold text-[#f5f5f5] text-sm sm:text-base truncate">
+                                <div>
+                                    <div class="font-semibold text-[#f5f5f5]">
                                         Ahmed Belkacem
                                     </div>
-                                    <div class="text-xs sm:text-sm text-[#9ca3af] flex items-center gap-1">
-                                        <svg class="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <div class="text-sm text-[#9ca3af] flex items-center gap-1">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                                             <circle cx="12" cy="10" r="3"/>
                                         </svg>
-                                        <span class="truncate">Alger</span>
-                                    </div>
-                                    <!-- Mobile contact info -->
-                                    <div class="sm:hidden mt-1">
-                                        <div class="text-xs text-[#9ca3af] truncate">ahmed.b@email.com</div>
-                                        <div class="text-xs text-[#9ca3af]">+213 555 123 456</div>
+                                        Alger
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden sm:table-cell">
+                        <td class="py-4 px-6">
                             <div class="space-y-1">
                                 <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -212,19 +207,19 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
+                        <td class="py-4 px-6">
                             <div class="space-y-1">
                                 <span class="px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">
                                     Candidat
                                 </span>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
+                        <td class="py-4 px-6">
                             <span class="px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100">
                                 Actif
                             </span>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6 hidden lg:table-cell">
+                        <td class="py-4 px-6">
                             <div class="space-y-1">
                                 <div class="flex items-center gap-1 text-sm text-[#9ca3af]">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -240,29 +235,29 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-3 sm:px-6">
-                            <div class="flex items-center gap-1 sm:gap-2">
-                                <button class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors duration-200">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <td class="py-4 px-6">
+                            <div class="flex items-center gap-2">
+                                <button class="p-2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors duration-200">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
                                 </button>
-                                <button class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                         <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                     </svg>
                                 </button>
-                                <button class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M3 6h18"/>
                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
                                     </svg>
                                 </button>
-                                <button class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-[#9ca3af] transition-colors duration-200">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button class="p-2 text-[#9ca3af] hover:text-[#9ca3af] transition-colors duration-200">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="12" cy="12" r="1"/>
                                         <circle cx="19" cy="12" r="1"/>
                                         <circle cx="5" cy="12" r="1"/>
@@ -681,12 +676,12 @@
 
     <!-- Pagination -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
-        <p class="text-sm sm:text-base text-[#9ca3af]">
+        <p class="text-xs md:text-sm lg:text-base text-[#9ca3af]">
             Affichage de 5 utilisateur(s)
         </p>
         <div class="flex items-center gap-2">
-            <button class="bg-[#2b2b2b] border border-[#333333] text-[#9ca3af] hover:text-[#00b6b4] px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm sm:text-base">Précédent</button>
-            <button class="bg-[#2b2b2b] border border-[#333333] text-[#9ca3af] hover:text-[#00b6b4] px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm sm:text-base">Suivant</button>
+            <button class="bg-[#2b2b2b] border border-[#333333] text-[#9ca3af] hover:text-[#00b6b4] px-3 md:px-4 py-2 rounded-lg transition-colors text-xs md:text-sm lg:text-base">Précédent</button>
+            <button class="bg-[#2b2b2b] border border-[#333333] text-[#9ca3af] hover:text-[#00b6b4] px-3 md:px-4 py-2 rounded-lg transition-colors text-xs md:text-sm lg:text-base">Suivant</button>
         </div>
     </div>
 </div>

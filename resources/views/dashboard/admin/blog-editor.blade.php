@@ -83,14 +83,31 @@
             <div class="p-4 border-b border-[#333333]">
                 <h3 class="text-lg font-semibold text-[#f5f5f5] mb-4">Image à la une</h3>
                 
-                <div class="border-2 border-dashed border-[#444444] rounded-lg p-4 text-center cursor-pointer" onclick="uploadFeaturedImage()">
-                    <svg class="w-8 h-8 text-[#9ca3af] mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                        <circle cx="9" cy="9" r="2"/>
-                        <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                    </svg>
-                    <p class="text-sm text-[#9ca3af] mb-1">Cliquez pour ajouter une image</p>
-                    <p class="text-xs text-[#666666]">JPG, PNG, GIF jusqu'à 5MB</p>
+                <div class="border-2 border-dashed border-[#444444] rounded-lg p-6 text-center cursor-pointer hover:bg-[#333333] transition-colors" onclick="uploadFeaturedImage()">
+                    <div class="flex flex-col items-center">
+                        <svg class="w-12 h-12 text-[#9ca3af] mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                            <circle cx="9" cy="9" r="2"/>
+                            <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                        </svg>
+                        <p class="text-[#cccccc] font-medium mb-2">
+                            Glissez-déposez une image ici
+                        </p>
+                        <p class="text-[#9ca3af] text-sm mb-4">
+                            ou cliquez pour sélectionner un fichier
+                        </p>
+                        <button
+                            type="button"
+                            class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
+                            onclick="event.stopPropagation(); uploadFeaturedImage()"
+                        >
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                                <circle cx="12" cy="13" r="3"/>
+                            </svg>
+                            Parcourir
+                        </button>
+                    </div>
                     <input type="file" id="featuredImageInput" accept="image/*" style="display: none;" onchange="handleFeaturedImageUpload(this)">
                 </div>
             </div>
@@ -441,14 +458,31 @@ function generateBlockHTML(blockId, type) {
                 // Show upload area
                 blockHTML = `
                     <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
-                        <div class="border-2 border-dashed border-[#444444] rounded-lg p-8 text-center cursor-pointer" onclick="uploadImage('${blockId}')">
-                            <svg class="w-12 h-12 text-[#9ca3af] mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                <circle cx="9" cy="9" r="2"/>
-                                <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                            </svg>
-                            <p class="text-[#9ca3af] mb-2">Cliquez pour ajouter une image</p>
-                            <p class="text-sm text-[#666666]">JPG, PNG, GIF jusqu'à 5MB</p>
+                        <div class="border-2 border-dashed border-[#444444] rounded-lg p-6 text-center cursor-pointer hover:bg-[#333333] transition-colors" onclick="uploadImage('${blockId}')">
+                            <div class="flex flex-col items-center">
+                                <svg class="w-12 h-12 text-[#9ca3af] mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                </svg>
+                                <p class="text-[#cccccc] font-medium mb-2">
+                                    Glissez-déposez une image ici
+                                </p>
+                                <p class="text-[#9ca3af] text-sm mb-4">
+                                    ou cliquez pour sélectionner un fichier
+                                </p>
+                                <button
+                                    type="button"
+                                    class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
+                                    onclick="event.stopPropagation(); uploadImage('${blockId}')"
+                                >
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                                        <circle cx="12" cy="13" r="3"/>
+                                    </svg>
+                                    Parcourir
+                                </button>
+                            </div>
                             <input type="file" id="imageInput_${blockId}" accept="image/*" style="display: none;" onchange="handleImageUpload('${blockId}', this)">
                         </div>
                         <div class="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
@@ -700,7 +734,7 @@ function moveBlock(blockId, direction) {
 let isPreview = false;
 
 // Header button functionality
-document.getElementById('previewBtn').addEventListener('click', function() {
+document.getElementById('previewBtn').addEventListener('click', function(e) {
     isPreview = !isPreview;
     const sidebar = document.querySelector('.w-80');
     
@@ -739,6 +773,7 @@ document.getElementById('previewBtn').addEventListener('click', function() {
             sidebar.style.display = 'flex';
         }
         
+        // Only render blocks if we're switching back to edit mode
         renderAllBlocks();
     }
 });
@@ -752,23 +787,20 @@ function renderPreview() {
     const featuredImage = document.querySelector('#featuredImageInput').parentElement.querySelector('img') ? 
         document.querySelector('#featuredImageInput').parentElement.querySelector('img').src : '';
     
-    // Generate preview content
+    // Generate preview content using stored data instead of DOM queries
     let previewContent = '';
     contentBlocks.forEach(block => {
         switch(block.type) {
             case 'title':
-                const titleContent = document.querySelector(`#${block.id} h1`) ? 
-                    document.querySelector(`#${block.id} h1`).textContent : 'Titre de l\'article';
+                const titleContent = block.content || 'Titre de l\'article';
                 previewContent += `<h1 class="text-4xl font-bold mb-6 text-[#f5f5f5]">${titleContent}</h1>`;
                 break;
             case 'subtitle':
-                const subtitleContent = document.querySelector(`#${block.id} h2`) ? 
-                    document.querySelector(`#${block.id} h2`).textContent : 'Sous-titre';
+                const subtitleContent = block.content || 'Sous-titre';
                 previewContent += `<h2 class="text-2xl font-semibold mb-4 text-[#f5f5f5]">${subtitleContent}</h2>`;
                 break;
             case 'paragraph':
-                const paragraphContent = document.querySelector(`#${block.id} p`) ? 
-                    document.querySelector(`#${block.id} p`).textContent : 'Contenu du paragraphe';
+                const paragraphContent = block.content || 'Contenu du paragraphe';
                 previewContent += `<p class="mb-4 text-[#f5f5f5]">${paragraphContent}</p>`;
                 break;
             case 'image':
@@ -777,28 +809,23 @@ function renderPreview() {
                 }
                 break;
             case 'quote':
-                const quoteContent = document.querySelector(`#${block.id} blockquote`) ? 
-                    document.querySelector(`#${block.id} blockquote`).textContent : 'Citation';
+                const quoteContent = block.content || 'Citation';
                 previewContent += `<blockquote class="border-l-4 border-[#00b6b4] pl-4 italic mb-4 text-[#f5f5f5]">${quoteContent}</blockquote>`;
                 break;
             case 'list':
-                const listContent = document.querySelector(`#${block.id} li`) ? 
-                    document.querySelector(`#${block.id} li`).textContent : 'Élément de liste';
+                const listContent = block.content || 'Élément de liste';
                 previewContent += `<ul class="list-disc list-inside mb-4 text-[#f5f5f5]"><li>${listContent}</li></ul>`;
                 break;
             case 'code':
-                const codeContent = document.querySelector(`#${block.id} code`) ? 
-                    document.querySelector(`#${block.id} code`).textContent : 'Code';
+                const codeContent = block.content || 'Code';
                 previewContent += `<pre class="bg-[#333333] p-4 rounded-lg text-[#f5f5f5] mb-4 overflow-x-auto"><code>${codeContent}</code></pre>`;
                 break;
             case 'separator':
                 previewContent += `<hr class="border-[#444444] my-8">`;
                 break;
             case 'columns':
-                const col1Content = document.querySelector(`#${block.id} .grid > div:first-child`) ? 
-                    document.querySelector(`#${block.id} .grid > div:first-child`).textContent : 'Colonne 1';
-                const col2Content = document.querySelector(`#${block.id} .grid > div:last-child`) ? 
-                    document.querySelector(`#${block.id} .grid > div:last-child`).textContent : 'Colonne 2';
+                const col1Content = block.col1Content || 'Colonne 1';
+                const col2Content = block.col2Content || 'Colonne 2';
                 previewContent += `<div class="grid grid-cols-2 gap-4 mb-4"><div class="p-4 border border-[#444444] rounded-lg text-[#f5f5f5]">${col1Content}</div><div class="p-4 border border-[#444444] rounded-lg text-[#f5f5f5]">${col2Content}</div></div>`;
                 break;
         }
@@ -815,6 +842,38 @@ function renderPreview() {
             </div>
         </div>
     `;
+}
+
+function renderAllBlocks() {
+    const editorContent = document.getElementById('editorContent');
+    editorContent.innerHTML = '';
+    
+    contentBlocks.forEach(block => {
+        const blockHTML = generateBlockHTML(block.id, block.type);
+        if (blockHTML && typeof blockHTML === 'string') {
+            editorContent.innerHTML += blockHTML;
+        }
+    });
+    
+    // Re-attach event listeners after re-rendering
+    attachEventListeners();
+}
+
+function updateBlockContent(blockId, content) {
+    const blockIndex = contentBlocks.findIndex(block => block.id === blockId);
+    if (blockIndex !== -1) {
+        contentBlocks[blockIndex].content = content;
+    }
+}
+
+function attachEventListeners() {
+    // Add blur event listeners to all contenteditable elements
+    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+        element.addEventListener('blur', function() {
+            const blockId = this.closest('.block-item').id;
+            updateBlockContent(blockId, this.textContent);
+        });
+    });
 }
 
 document.getElementById('fullscreenBtn').addEventListener('click', function() {
