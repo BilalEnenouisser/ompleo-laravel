@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('page-title', 'Gestion des Notifications')
+@section('page-title', 'Notifications')
 @section('description', 'Créez et envoyez des notifications aux utilisateurs')
 
 @section('content')
@@ -35,10 +35,7 @@
                         class="p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                         title="Modèles"
                     >
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panels-top-left w-5 h-5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
                     </button>
                     <button
                         onclick="togglePreview()"
@@ -57,12 +54,7 @@
                             class="p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                             title="Zoom arrière"
                         >
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M8 3v3"/>
-                                <path d="M8 21v-3"/>
-                                <path d="M3 8h3"/>
-                                <path d="M21 8h-3"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minimize w-5 h-5"><path d="M8 3v3a2 2 0 0 1-2 2H3"></path><path d="M21 8h-3a2 2 0 0 1-2-2V3"></path><path d="M3 16h3a2 2 0 0 1 2 2v3"></path><path d="M16 21v-3a2 2 0 0 1 2-2h3"></path></svg>
                         </button>
                         <span class="text-sm text-[#9ca3af]" id="zoom-level">100%</span>
                         <button
@@ -70,13 +62,7 @@
                             class="p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                             title="Zoom avant"
                         >
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M8 3v3"/>
-                                <path d="M8 21v-3"/>
-                                <path d="M3 8h3"/>
-                                <path d="M21 8h-3"/>
-                                <path d="M12 8v8"/>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize w-5 h-5"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
                         </button>
                     </div>
                 </div>
@@ -91,10 +77,7 @@
                         class="p-2 rounded text-[#9ca3af] hover:bg-[#444444] hover:text-[#00b6b4]"
                         title="Ajouter un titre"
                     >
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
-                            <path d="M6 12h9"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heading1 w-4 h-4"><path d="M4 12h8"></path><path d="M4 18V6"></path><path d="M12 18V6"></path><path d="m17 12 3-2v8"></path></svg>
                     </button>
                     <button
                         type="button"
@@ -147,18 +130,6 @@
                             <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
                             <line x1="9" x2="9.01" y1="9" y2="9"/>
                             <line x1="15" x2="15.01" y1="9" y2="9"/>
-                        </svg>
-                    </button>
-                    <button
-                        type="button"
-                        onclick="addIconElement()"
-                        class="p-2 rounded text-[#9ca3af] hover:bg-[#444444] hover:text-[#00b6b4]"
-                        title="Ajouter une icône"
-                    >
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
                         </svg>
                     </button>
                 </div>
@@ -239,22 +210,21 @@
                 </div>
             </div>
             
-            {{-- Color Picker Dropdown --}}
-            <div id="color-picker" class="mb-4 hidden">
-                <div class="bg-[#333333] border border-[#444444] rounded-lg p-4">
-                    <h3 class="font-medium text-[#f5f5f5] mb-4" id="color-picker-title">Sélectionner une couleur</h3>
-                    <div class="grid grid-cols-5 gap-2">
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #00b6b4;" onclick="selectColor('#00b6b4')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #111111;" onclick="selectColor('#111111')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #f5f5f5;" onclick="selectColor('#f5f5f5')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #ff4757;" onclick="selectColor('#ff4757')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #2ed573;" onclick="selectColor('#2ed573')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #1e90ff;" onclick="selectColor('#1e90ff')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #ffa502;" onclick="selectColor('#ffa502')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #5352ed;" onclick="selectColor('#5352ed')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #ffffff;" onclick="selectColor('#ffffff')"></div>
-                        <div class="w-8 h-8 rounded cursor-pointer border-2 border-[#444444] hover:border-[#00b6b4]" style="background-color: #2b2b2b;" onclick="selectColor('#2b2b2b')"></div>
-                    </div>
+            {{-- Color Picker Popup --}}
+            <div id="color-picker" class="absolute  bg-[#333333] rounded-lg shadow-lg border border-[#444444] p-2 z-10 hidden" style="opacity: 1; transform: none;">
+                <div class="flex flex-wrap gap-2 p-2">
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(0, 182, 180);" onclick="selectColor('#00b6b4')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(17, 17, 17);" onclick="selectColor('#111111')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(245, 245, 245);" onclick="selectColor('#f5f5f5')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 71, 87);" onclick="selectColor('#ff4757')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(46, 213, 115);" onclick="selectColor('#2ed573')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(30, 144, 255);" onclick="selectColor('#1e90ff')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 165, 2);" onclick="selectColor('#ffa502')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(83, 82, 237);" onclick="selectColor('#5352ed')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 255, 255);" onclick="selectColor('#ffffff')"></button>
+                    <button type="button" class="w-6 h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(43, 43, 43);" onclick="selectColor('#2b2b2b')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-white"><path d="M20 6 9 17l-5-5"></path></svg>
+                    </button>
                 </div>
             </div>
             
@@ -457,7 +427,7 @@
                     </div>
                 </div>
                 
-                <div class="p-4 bg-[#333333] text-[#f5f5f5] min-h-[200px] flex items-center justify-center">
+                <div class="p-4 bg-[#333333] text-[#f5f5f5] min-h-[400px] flex items-center justify-center">
                     <div id="notification-preview" class="text-center text-[#9ca3af] w-full">
                         <svg class="w-12 h-12 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
@@ -465,6 +435,11 @@
                         </svg>
                         <p>Aperçu de la notification</p>
                     </div>
+                </div>
+                
+                {{-- Preview Information --}}
+                <div id="preview-info" class="text-sm text-[#9ca3af]">
+                    <p>Cette notification sera envoyée à : <span class="text-[#00b6b4] font-medium">Tous les utilisateurs</span></p>
                 </div>
             </div>
             
@@ -699,6 +674,14 @@ let dragPosition = { x: 0, y: 0 };
 // Initialize visual editor
 document.addEventListener('DOMContentLoaded', function() {
     updateCanvas();
+    
+    // Add event listener for recipient dropdown
+    const recipientSelect = document.getElementById('notification-recipients');
+    if (recipientSelect) {
+        recipientSelect.addEventListener('change', function() {
+            updatePreviewInfo();
+        });
+    }
 });
 
 function updateCanvas() {
@@ -773,6 +756,9 @@ function updateCanvas() {
             });
         }, 50);
     }
+    
+    // Update preview whenever canvas is updated
+    updatePreview();
 }
 
 function renderElement(element, index) {
@@ -949,7 +935,7 @@ function getIconSVG(iconName) {
         'AlertTriangle': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
         'Info': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
         'CheckCircle': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>',
-        'Gift': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><path d="M12 6v12"/><path d="M12 6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2"/><path d="M12 6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>',
+        'Gift': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift w-6 h-6"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>',
         'Clock': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
         'Star': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
         'Heart': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>',
@@ -1131,40 +1117,58 @@ function toggleTemplateGallery() {
 function applyTemplate(templateType) {
     clearCanvas();
     
+    // Get canvas element to change background
+    const canvas = document.getElementById('notification-canvas');
+    
     switch(templateType) {
         case 'alert':
+            // Change canvas background
+            canvas.style.backgroundColor = '#fff3f3';
             elements = [
-                { type: 'title', content: 'Alerte importante', x: 20, y: 20, color: '#e53e3e', fontSize: 18 },
-                { type: 'text', content: 'Une action est requise de votre part.', x: 20, y: 50, color: '#f5f5f5', fontSize: 14 },
-                { type: 'button', content: 'Agir maintenant', x: 20, y: 80, color: '#ffffff', backgroundColor: '#e53e3e' }
+                { type: 'icon', content: 'AlertTriangle', x: 20, y: 20, color: '#e53e3e' },
+                { type: 'title', content: 'Alerte importante', x: 50, y: 20, color: '#e53e3e', fontSize: 18 },
+                { type: 'text', content: 'Une action est requise de votre part.', x: 20, y: 60, color: '#e53e3e', fontSize: 14 },
+                { type: 'button', content: 'Agir maintenant', x: 20, y: 90, color: '#ffffff', backgroundColor: '#e53e3e' }
             ];
             break;
         case 'info':
+            // Change canvas background
+            canvas.style.backgroundColor = '#ebf8ff';
             elements = [
-                { type: 'title', content: 'Information', x: 20, y: 20, color: '#3182ce', fontSize: 18 },
-                { type: 'text', content: 'Voici une information importante pour vous.', x: 20, y: 50, color: '#f5f5f5', fontSize: 14 },
-                { type: 'button', content: 'En savoir plus', x: 20, y: 80, color: '#ffffff', backgroundColor: '#3182ce' }
+                { type: 'icon', content: 'Info', x: 20, y: 20, color: '#3182ce' },
+                { type: 'title', content: 'Information', x: 50, y: 20, color: '#3182ce', fontSize: 18 },
+                { type: 'text', content: 'Voici une information importante pour vous.', x: 20, y: 60, color: '#3182ce', fontSize: 14 },
+                { type: 'button', content: 'En savoir plus', x: 20, y: 90, color: '#ffffff', backgroundColor: '#3182ce' }
             ];
             break;
         case 'success':
+            // Change canvas background
+            canvas.style.backgroundColor = '#f0fff4';
             elements = [
-                { type: 'title', content: 'Succès !', x: 20, y: 20, color: '#38a169', fontSize: 18 },
-                { type: 'text', content: 'Votre action a été effectuée avec succès.', x: 20, y: 50, color: '#f5f5f5', fontSize: 14 },
-                { type: 'button', content: 'Continuer', x: 20, y: 80, color: '#ffffff', backgroundColor: '#38a169' }
+                { type: 'icon', content: 'CheckCircle', x: 20, y: 20, color: '#38a169' },
+                { type: 'title', content: 'Succès !', x: 50, y: 20, color: '#38a169', fontSize: 18 },
+                { type: 'text', content: 'Votre action a été effectuée avec succès.', x: 20, y: 60, color: '#38a169', fontSize: 14 },
+                { type: 'button', content: 'Continuer', x: 20, y: 90, color: '#ffffff', backgroundColor: '#38a169' }
             ];
             break;
         case 'promo':
+            // Change canvas background
+            canvas.style.backgroundColor = '#faf5ff';
             elements = [
-                { type: 'title', content: 'Offre spéciale', x: 20, y: 20, color: '#805ad5', fontSize: 18 },
-                { type: 'text', content: 'Profitez de cette offre limitée dans le temps.', x: 20, y: 50, color: '#f5f5f5', fontSize: 14 },
-                { type: 'button', content: 'En profiter', x: 20, y: 80, color: '#ffffff', backgroundColor: '#805ad5' }
+                { type: 'icon', content: 'Gift', x: 20, y: 20, color: '#805ad5' },
+                { type: 'title', content: 'Offre spéciale', x: 50, y: 20, color: '#805ad5', fontSize: 18 },
+                { type: 'text', content: 'Profitez de cette offre limitée dans le temps.', x: 20, y: 60, color: '#805ad5', fontSize: 14 },
+                { type: 'button', content: 'En profiter', x: 20, y: 90, color: '#ffffff', backgroundColor: '#805ad5' }
             ];
             break;
         case 'reminder':
+            // Change canvas background
+            canvas.style.backgroundColor = '#fffaf0';
             elements = [
-                { type: 'title', content: 'Rappel important', x: 20, y: 20, color: '#dd6b20', fontSize: 18 },
-                { type: 'text', content: 'N\'oubliez pas cet événement important.', x: 20, y: 50, color: '#f5f5f5', fontSize: 14 },
-                { type: 'button', content: 'Voir détails', x: 20, y: 80, color: '#ffffff', backgroundColor: '#dd6b20' }
+                { type: 'icon', content: 'Clock', x: 20, y: 20, color: '#dd6b20' },
+                { type: 'title', content: 'Rappel important', x: 50, y: 20, color: '#dd6b20', fontSize: 18 },
+                { type: 'text', content: 'N\'oubliez pas cet événement important.', x: 20, y: 60, color: '#dd6b20', fontSize: 14 },
+                { type: 'button', content: 'Voir détails', x: 20, y: 90, color: '#ffffff', backgroundColor: '#dd6b20' }
             ];
             break;
     }
@@ -1243,38 +1247,46 @@ function updateFormData() {
 }
 
 function updatePreview() {
-    const title = document.getElementById('form-title').value;
-    const message = document.getElementById('form-message').value;
-    const recipients = document.getElementById('notification-recipients').value;
     const preview = document.getElementById('notification-preview');
+    const canvas = document.getElementById('canvas-content');
+    const canvasBackground = document.getElementById('notification-canvas').style.backgroundColor;
     
-    if (title || message) {
-        let recipientText = '';
-        switch(recipients) {
-            case 'all':
-                recipientText = 'Tous les utilisateurs';
-                break;
-            case 'candidate':
-                recipientText = 'Candidats';
-                break;
-            case 'recruiter':
-                recipientText = 'Recruteurs';
-                break;
-        }
+    if (elements.length > 0) {
+        // Create a preview version of the canvas content
+        let previewContent = '';
+        
+        // Set the background color for preview
+        const backgroundStyle = canvasBackground ? `background-color: ${canvasBackground};` : 'background-color: #2b2b2b;';
+        
+        elements.forEach((element, index) => {
+            const baseStyle = `position: absolute; left: ${element.x}px; top: ${element.y}px; color: ${element.color || '#f5f5f5'}; font-size: ${element.fontSize || 14}px; font-family: ${element.fontFamily || 'inherit'};`;
+            
+            switch(element.type) {
+                case 'title':
+                    previewContent += `<div style="${baseStyle} font-weight: bold; font-size: ${element.fontSize || 18}px;">${element.content}</div>`;
+                    break;
+                case 'text':
+                    previewContent += `<div style="${baseStyle}">${element.content}</div>`;
+                    break;
+                case 'button':
+                    const buttonStyle = `${baseStyle} background-color: ${element.backgroundColor || '#00b6b4'}; color: ${element.color || '#ffffff'}; padding: 8px 16px; border-radius: 4px; display: inline-block; cursor: pointer;`;
+                    previewContent += `<div style="${buttonStyle}">${element.content}</div>`;
+                    break;
+                case 'image':
+                    previewContent += `<img src="${element.content}" style="${baseStyle} max-width: 200px; max-height: 100px; object-fit: contain;" alt="Image" />`;
+                    break;
+                case 'emoji':
+                    previewContent += `<div style="${baseStyle} font-size: ${element.fontSize || 24}px;">${element.content}</div>`;
+                    break;
+                case 'icon':
+                    previewContent += `<div style="${baseStyle}">${getIconSVG(element.content)}</div>`;
+                    break;
+            }
+        });
         
         preview.innerHTML = `
-            <div class="w-full text-left">
-                ${title ? `<div class="text-lg font-bold text-[#f5f5f5] mb-2">${title}</div>` : ''}
-                ${message ? `<div class="text-sm text-[#9ca3af] mb-3">${message}</div>` : ''}
-                <div class="text-xs text-[#9ca3af] flex items-center gap-1">
-                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    ${recipientText}
-                </div>
+            <div class="relative" style="min-height: 400px; ${backgroundStyle} border-radius: 8px; padding: 20px; overflow: hidden;">
+                ${previewContent}
             </div>
         `;
     } else {
@@ -1286,6 +1298,34 @@ function updatePreview() {
                 </svg>
                 <p>Aperçu de la notification</p>
             </div>
+        `;
+    }
+    
+    // Update preview info section
+    updatePreviewInfo();
+}
+
+function updatePreviewInfo() {
+    const recipients = document.getElementById('notification-recipients').value;
+    let recipientText = '';
+    switch(recipients) {
+        case 'all':
+            recipientText = 'Tous les utilisateurs';
+            break;
+        case 'candidate':
+            recipientText = 'Candidats';
+            break;
+        case 'recruiter':
+            recipientText = 'Recruteurs';
+            break;
+        default:
+            recipientText = 'Tous les utilisateurs';
+    }
+    
+    const previewInfo = document.getElementById('preview-info');
+    if (previewInfo) {
+        previewInfo.innerHTML = `
+            <p>Cette notification sera envoyée à : <span class="text-[#00b6b4] font-medium">${recipientText}</span></p>
         `;
     }
 }

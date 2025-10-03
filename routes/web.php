@@ -71,9 +71,21 @@ Route::middleware('auth')->group(function () {
                 Route::get('/admin/blog', function () {
                     return view('dashboard.admin.blog');
                 })->name('admin.blog');
-                Route::get('/admin/notifications', function () {
-                    return view('dashboard.admin.notifications');
-                })->name('admin.notifications');
+Route::get('/admin/notifications', function () {
+    return view('dashboard.admin.notifications');
+})->name('admin.notifications');
+
+Route::get('/admin/reports', function () {
+    return view('dashboard.admin.reports');
+})->name('admin.reports');
+
+Route::get('/admin/payments', function () {
+    return view('dashboard.admin.payments');
+})->name('admin.payments');
+
+Route::get('/admin/blog/editor', function () {
+    return view('dashboard.admin.blog-editor');
+})->name('admin.blog.editor');
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
 });

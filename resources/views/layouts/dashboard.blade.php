@@ -73,7 +73,7 @@
                             </svg>
                             <span class="font-medium text-sm sm:text-base">Tableau de bord</span>
                         </a>
-                        <a href="{{ route('admin.users') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.users') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                        <a href="{{ route('admin.users') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
@@ -82,14 +82,14 @@
                             </svg>
                             <span class="font-medium text-sm sm:text-base">Utilisateurs</span>
                         </a>
-                        <a href="{{ route('admin.jobs') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.jobs') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                        <a href="{{ route('admin.jobs') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.jobs') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                             </svg>
                             <span class="font-medium text-sm sm:text-base">Offres d'emploi</span>
                         </a>
-                        <a href="{{ route('admin.partners') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.partners') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                        <a href="{{ route('admin.partners') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.partners') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                 <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
@@ -101,41 +101,36 @@
                             </svg>
                             <span class="font-medium text-sm sm:text-base">Partenaires</span>
                         </a>
-                <a href="{{ route('admin.blog') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.blog') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
+                <a href="{{ route('admin.blog') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.blog') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                         <path d="M7 7h.01"/>
                     </svg>
                     <span class="font-medium text-sm sm:text-base">Blog</span>
                 </a>
-                <a href="{{ route('admin.notifications') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4] {{ request()->routeIs('admin.notifications') ? 'bg-[#333333] text-[#00b6b4]' : '' }}">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
-                    </svg>
-                    <span class="font-medium text-sm sm:text-base">Notifications</span>
-                </a>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                            </svg>
-                            <span class="font-medium">Notifications</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-                                <path d="M4 22v-7"/>
-                            </svg>
-                            <span class="font-medium">Signalements</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" x2="12" y1="2" y2="22"/>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                            </svg>
-                            <span class="font-medium">Paiements</span>
-                        </a>
+        <a href="{{ route('admin.notifications') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.notifications') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+            </svg>
+            <span class="font-medium text-sm sm:text-base">Notifications</span>
+        </a>
+        <a href="{{ route('admin.reports') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.reports') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                <line x1="4" x2="4" y1="22" y2="15"/>
+            </svg>
+            <span class="font-medium text-sm sm:text-base">Signalements</span>
+        </a>
+        <a href="{{ route('admin.payments') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#9ca3af] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart3 w-5 h-5">
+                <path d="M3 3v18h18"/>
+                <path d="M18 17V9"/>
+                <path d="M13 17V5"/>
+                <path d="M8 17v-3"/>
+            </svg>
+            <span class="font-medium text-sm sm:text-base">Paiements</span>
+        </a>
                     @endif
                 </nav>
 

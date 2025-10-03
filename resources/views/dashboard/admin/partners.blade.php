@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('page-title', 'Gestion des Partenaires')
+@section('page-title', 'Partenaires')
 @section('description', 'Gérez les entreprises partenaires affichées sur la page d\'accueil')
 
 @section('content')

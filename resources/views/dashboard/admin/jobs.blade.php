@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Gestion des Offres d\'Emploi - OMPLEO')
+@section('title', 'Offres d\'Emploi - OMPLEO')
 @section('description', 'Modérez et gérez toutes les offres d\'emploi de la plateforme OMPLEO.')
-@section('page-title', 'Gestion des Offres d\'Emploi')
+@section('page-title', 'Offres d\'Emploi')
 
 @section('content')
 <div class="space-y-6 sm:space-y-8">

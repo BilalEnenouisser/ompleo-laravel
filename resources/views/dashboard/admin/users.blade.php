@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Gestion des Utilisateurs - OMPLEO')
+@section('title', 'Utilisateurs - OMPLEO')
 @section('description', 'Gérez tous les utilisateurs de la plateforme OMPLEO.')
-@section('page-title', 'Gestion des Utilisateurs')
+@section('page-title', 'Utilisateurs')
 
 @section('content')
 <div class="space-y-8">

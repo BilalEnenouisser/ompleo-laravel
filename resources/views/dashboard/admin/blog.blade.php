@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('page-title', 'Gestion du Blog')
+@section('page-title', 'Blog')
 @section('description', 'Créez et gérez les articles du blog')
 
 @section('content')
@@ -15,8 +15,8 @@
                 Créez et gérez les articles du blog
             </p>
         </div>
-        <button 
-            onclick="showNewArticleModal()"
+        <a 
+            href="{{ route('admin.blog.editor') }}"
             class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 flex items-center gap-2 rounded-lg transition-colors"
         >
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -24,7 +24,7 @@
                 <path d="M12 5v14"/>
             </svg>
             Nouvel article
-        </button>
+        </a>
     </div>
 
     {{-- Stats --}}
