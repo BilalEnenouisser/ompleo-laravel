@@ -1,0 +1,461 @@
+@extends('layouts.dashboard')
+
+@section('content')
+<div class="space-y-8">
+    {{-- Header --}}
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-[#f5f5f5]">
+                Rapports & Analytics
+            </h1>
+            <p class="text-[#9ca3af] mt-2">
+                Analysez les performances de vos recrutements
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <select class="px-4 py-2 border border-[#444444] rounded-lg bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                <option value="7">7 derniers jours</option>
+                <option value="30" selected>30 derniers jours</option>
+                <option value="90">3 derniers mois</option>
+                <option value="365">12 derniers mois</option>
+            </select>
+            <button class="px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                Actualiser
+            </button>
+            <button class="bg-[#00b6b4] hover:bg-[#009999] text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Exporter
+            </button>
+        </div>
+    </div>
+
+    {{-- Report Type Tabs --}}
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button id="overviewTab" class="px-4 py-2 rounded-lg font-medium transition-colors bg-[#00b6b4] text-white">
+                Vue d'ensemble
+            </button>
+            <button id="jobsTab" class="px-4 py-2 rounded-lg font-medium transition-colors text-[#9ca3af] hover:bg-[#333333]">
+                Performance des offres
+            </button>
+            <button id="candidatesTab" class="px-4 py-2 rounded-lg font-medium transition-colors text-[#9ca3af] hover:bg-[#333333]">
+                Analyse candidats
+            </button>
+            <button id="trendsTab" class="px-4 py-2 rounded-lg font-medium transition-colors text-[#9ca3af] hover:bg-[#333333]">
+                Tendances
+            </button>
+        </div>
+    </div>
+
+    {{-- Overview Stats --}}
+    <div id="overviewContent" class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-400/20 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-sm font-medium text-green-400">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
+                        +3
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-[#f5f5f5] mb-1">12</h3>
+                <p class="text-[#9ca3af] text-sm">Offres publiées</p>
+            </div>
+
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-400/20 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-sm font-medium text-green-400">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
+                        +23
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-[#f5f5f5] mb-1">89</h3>
+                <p class="text-[#9ca3af] text-sm">Candidatures reçues</p>
+            </div>
+
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-purple-400/20 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-sm font-medium text-green-400">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
+                        +156
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-[#f5f5f5] mb-1">1,247</h3>
+                <p class="text-[#9ca3af] text-sm">Vues des offres</p>
+            </div>
+
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-orange-400/20 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-sm font-medium text-green-400">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
+                        +1.2%
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-[#f5f5f5] mb-1">7.1%</h3>
+                <p class="text-[#9ca3af] text-sm">Taux de conversion</p>
+            </div>
+        </div>
+
+        {{-- Charts Section --}}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {{-- Application Trends --}}
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
+                    Évolution des candidatures
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
+                                <span class="font-bold text-[#00b6b4]">Oct</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">45 candidatures</p>
+                                <p class="text-sm text-[#9ca3af]">890 vues</p>
+                            </div>
+                        </div>
+                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 64%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
+                                <span class="font-bold text-[#00b6b4]">Nov</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">52 candidatures</p>
+                                <p class="text-sm text-[#9ca3af]">1020 vues</p>
+                            </div>
+                        </div>
+                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 74%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
+                                <span class="font-bold text-[#00b6b4]">Déc</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">38 candidatures</p>
+                                <p class="text-sm text-[#9ca3af]">780 vues</p>
+                            </div>
+                        </div>
+                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 54%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
+                                <span class="font-bold text-[#00b6b4]">Jan</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">67 candidatures</p>
+                                <p class="text-sm text-[#9ca3af]">1340 vues</p>
+                            </div>
+                        </div>
+                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 96%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Candidate Sources --}}
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
+                    Sources des candidats
+                </h2>
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-[#f5f5f5]">Recherche directe</span>
+                            <span class="text-sm text-[#9ca3af]">40 candidats</span>
+                        </div>
+                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 45%"></div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-[#9ca3af]">45%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-[#f5f5f5]">Profils recommandés</span>
+                            <span class="text-sm text-[#9ca3af]">27 candidats</span>
+                        </div>
+                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 30%"></div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-[#9ca3af]">30%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-[#f5f5f5]">Candidatures spontanées</span>
+                            <span class="text-sm text-[#9ca3af]">13 candidats</span>
+                        </div>
+                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 15%"></div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-[#9ca3af]">15%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-[#f5f5f5]">Réseaux sociaux</span>
+                            <span class="text-sm text-[#9ca3af]">9 candidats</span>
+                        </div>
+                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 10%"></div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-[#9ca3af]">10%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Job Performance --}}
+    <div id="jobsContent" class="hidden">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
+                Performance des offres d'emploi
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-[#333333]">
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Offre</th>
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Vues</th>
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Candidatures</th>
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Taux conversion</th>
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Statut</th>
+                            <th class="text-left py-3 px-4 font-semibold text-[#f5f5f5]">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
+                            <td class="py-4 px-4">
+                                <div class="font-medium text-[#f5f5f5]">Développeur Frontend React</div>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">234</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">18</td>
+                            <td class="py-4 px-4">
+                                <span class="font-medium text-[#f5f5f5]">7.7%</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
+                                    Actif
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-10</td>
+                        </tr>
+                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
+                            <td class="py-4 px-4">
+                                <div class="font-medium text-[#f5f5f5]">Designer UX/UI</div>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">189</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">12</td>
+                            <td class="py-4 px-4">
+                                <span class="font-medium text-[#f5f5f5]">6.3%</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
+                                    Actif
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-12</td>
+                        </tr>
+                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
+                            <td class="py-4 px-4">
+                                <div class="font-medium text-[#f5f5f5]">Community Manager</div>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">156</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">15</td>
+                            <td class="py-4 px-4">
+                                <span class="font-medium text-[#f5f5f5]">9.6%</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium text-red-400 bg-red-400/20">
+                                    Expiré
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-08</td>
+                        </tr>
+                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
+                            <td class="py-4 px-4">
+                                <div class="font-medium text-[#f5f5f5]">Data Analyst</div>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">98</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">8</td>
+                            <td class="py-4 px-4">
+                                <span class="font-medium text-[#f5f5f5]">8.2%</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
+                                    Actif
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{-- Candidate Analysis --}}
+    <div id="candidatesContent" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
+                    Statut des candidatures
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-blue-400/20 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-8 h-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">En cours</p>
+                                <p class="text-sm text-[#9ca3af]">Candidatures en attente</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-blue-400">23</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-green-400/20 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-8 h-8 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">Acceptées</p>
+                                <p class="text-sm text-[#9ca3af]">Candidatures retenues</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-green-400">12</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-red-400/20 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-8 h-8 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                            <div>
+                                <p class="font-semibold text-[#f5f5f5]">Refusées</p>
+                                <p class="text-sm text-[#9ca3af]">Candidatures non retenues</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-red-400">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
+                    Temps de réponse moyen
+                </h2>
+                <div class="space-y-6">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-[#00b6b4] mb-2">2.3 jours</div>
+                        <p class="text-[#9ca3af]">Temps moyen de première réponse</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-[#333333] rounded-lg">
+                            <div class="text-2xl font-bold text-[#f5f5f5]">1.8j</div>
+                            <p class="text-sm text-[#9ca3af]">Le plus rapide</p>
+                        </div>
+                        <div class="text-center p-4 bg-[#333333] rounded-lg">
+                            <div class="text-2xl font-bold text-[#f5f5f5]">4.2j</div>
+                            <p class="text-sm text-[#9ca3af]">Le plus lent</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Trends --}}
+    <div id="trendsContent" class="hidden">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg">
+            <div class="text-center py-12">
+                <svg class="w-16 h-16 text-[#9ca3af] mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+                <h3 class="text-xl font-semibold text-[#f5f5f5] mb-2">
+                    Analyse des tendances
+                </h3>
+                <p class="text-[#9ca3af]">
+                    Les graphiques détaillés des tendances seront disponibles prochainement
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = {
+        overview: document.getElementById('overviewTab'),
+        jobs: document.getElementById('jobsTab'),
+        candidates: document.getElementById('candidatesTab'),
+        trends: document.getElementById('trendsTab')
+    };
+    
+    const contents = {
+        overview: document.getElementById('overviewContent'),
+        jobs: document.getElementById('jobsContent'),
+        candidates: document.getElementById('candidatesContent'),
+        trends: document.getElementById('trendsContent')
+    };
+
+    function setActiveTab(activeTab) {
+        // Reset all tabs
+        Object.values(tabs).forEach(tab => {
+            tab.classList.remove('bg-[#00b6b4]', 'text-white');
+            tab.classList.add('text-[#9ca3af]', 'hover:bg-[#333333]');
+        });
+        
+        // Hide all contents
+        Object.values(contents).forEach(content => {
+            content.classList.add('hidden');
+        });
+        
+        // Set active tab
+        tabs[activeTab].classList.add('bg-[#00b6b4]', 'text-white');
+        tabs[activeTab].classList.remove('text-[#9ca3af]', 'hover:bg-[#333333]');
+        
+        // Show active content
+        contents[activeTab].classList.remove('hidden');
+    }
+
+    // Add event listeners
+    Object.keys(tabs).forEach(tabKey => {
+        tabs[tabKey].addEventListener('click', () => setActiveTab(tabKey));
+    });
+
+    // Set initial tab
+    setActiveTab('overview');
+});
+</script>
+@endsection

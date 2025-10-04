@@ -86,7 +86,9 @@ Route::get('/admin/payments', function () {
 Route::get('/admin/blog/editor', function () {
     return view('dashboard.admin.blog-editor');
 })->name('admin.blog.editor');
-    Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
+    Route::get('/recruiter/dashboard', function () {
+        return view('dashboard.recruiter.index');
+    })->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
 });
 
@@ -157,4 +159,45 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', function () {
         return view('notifications');
     })->name('notifications');
+    
+    // Recruiter Routes
+    Route::get('/recruiter/dashboard', function () {
+        return view('dashboard.recruiter.index');
+    })->name('recruiter.dashboard');
+    
+    Route::get('/recruiter/jobs', function () {
+        return view('dashboard.recruiter.jobs');
+    })->name('recruiter.jobs');
+    
+    Route::get('/recruiter/create-offer', function () {
+        return view('dashboard.recruiter.create-offer');
+    })->name('recruiter.create-offer');
+    
+    Route::get('/recruiter/candidates', function () {
+        return view('dashboard.recruiter.candidates');
+    })->name('recruiter.candidates');
+    
+    Route::get('/recruiter/interviews', function () {
+        return view('dashboard.recruiter.interviews');
+    })->name('recruiter.interviews');
+    
+    Route::get('/recruiter/reports', function () {
+        return view('dashboard.recruiter.reports');
+    })->name('recruiter.reports');
+    
+    Route::get('/candidate/dashboard', function () {
+        return view('dashboard.candidate.index');
+    })->name('candidate.dashboard');
+    
+    Route::get('/candidate/profile', function () {
+        return view('dashboard.candidate.profile');
+    })->name('candidate.profile');
+    
+    Route::get('/candidate/applications', function () {
+        return view('dashboard.candidate.applications');
+    })->name('candidate.applications');
+    
+    Route::get('/candidate/referrals', function () {
+        return view('dashboard.candidate.referrals');
+    })->name('candidate.referrals');
 });

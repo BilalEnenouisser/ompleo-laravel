@@ -131,6 +131,55 @@
             </svg>
             <span class="font-medium text-sm sm:text-base">Paiements</span>
         </a>
+                    @elseif(Auth::user()->user_type === 'recruiter')
+                        <a href="{{ route('recruiter.dashboard') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.dashboard') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <path d="M9 22V12h6v10"/>
+                            </svg>
+                            <span class="font-medium text-sm sm:text-base">Tableau de bord</span>
+                        </a>
+                        <a href="{{ route('recruiter.jobs') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.jobs') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 20V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16"/>
+                                <rect width="8" height="6" x="8" y="6" rx="1"/>
+                            </svg>
+                            <span class="font-medium text-sm sm:text-base">Mes Offres</span>
+                        </a>
+                        <a href="{{ route('recruiter.candidates') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.candidates') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            <span class="font-medium text-sm sm:text-base">Candidats</span>
+                        </a>
+                        <a href="{{ route('recruiter.interviews') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.interviews') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Entretiens</span>
+                        </a>
+                        <a href="{{ route('recruiter.reports') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.reports') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Rapports</span>
+                        </a>
+                    @elseif(Auth::user()->user_type === 'candidate')
+                        <a href="{{ route('candidate.dashboard') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('candidate.dashboard') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Tableau de bord</span>
+                        </a>
+                        <a href="{{ route('candidate.profile') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('candidate.profile') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Mon Profil</span>
+                        </a>
+                        <a href="{{ route('candidate.applications') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('candidate.applications') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16"/><rect width="8" height="6" x="8" y="6" rx="1"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Mes Candidatures</span>
+                        </a>
+                        <a href="{{ route('candidate.referrals') }}" class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('candidate.referrals') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span class="font-medium text-sm sm:text-base">Parrainer un ami</span>
+                        </a>
                     @endif
                 </nav>
 
