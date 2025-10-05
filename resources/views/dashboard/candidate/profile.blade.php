@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-
+@section('page-title', 'Mon profil')
 @section('content')
 <div class="space-y-8">
     {{-- Header --}}
@@ -43,28 +43,35 @@
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Prénom
                         </label>
-                        <input id="firstName" type="text" value="Ahmed" class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" readonly />
+                        <div id="firstNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">Ahmed</div>
+                        <input id="firstName" type="text" value="Ahmed" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Nom
                         </label>
-                        <input id="lastName" type="text" value="Belkacem" class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" readonly />
+                        <div id="lastNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">Belkacem</div>
+                        <input id="lastName" type="text" value="Belkacem" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Titre professionnel
                         </label>
-                        <input id="title" type="text" value="Développeur Frontend" class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" readonly />
+                        <div id="titleDisplay" class="text-[#00b6b4] font-medium">Développeur Frontend</div>
+                        <input id="title" type="text" value="Développeur Frontend" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Localisation
                         </label>
-                        <input id="location" type="text" value="Alger, Algérie" class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" readonly />
+                        <div id="locationDisplay" class="flex items-center gap-2 text-[#9ca3af]">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Alger, Algérie</span>
+                        </div>
+                        <input id="location" type="text" value="Alger, Algérie" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
                 </div>
 
@@ -72,7 +79,8 @@
                     <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                         À propos
                     </label>
-                    <textarea id="bio" rows="3" class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" readonly>Passionné par le développement web moderne et les nouvelles technologies.</textarea>
+                    <div id="bioDisplay" class="text-[#9ca3af]">Passionné par le développement web moderne et les nouvelles technologies.</div>
+                    <textarea id="bio" rows="3" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">Passionné par le développement web moderne et les nouvelles technologies.</textarea>
                 </div>
             </div>
         </div>
@@ -112,13 +120,13 @@
                 Ajouter
             </button>
         </div>
-        <div class="space-y-6">
+        <div class="space-y-6" id="experienceContainer">
             <div class="border-l-4 border-[#00b6b4] pl-6 relative">
                 <button id="removeExpBtn" class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                 </button>
                 <div class="flex items-center gap-2 mb-2">
-                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16"/><rect width="8" height="6" x="8" y="6" rx="1"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                     <h3 class="font-semibold text-[#f5f5f5]">Développeur Frontend</h3>
                 </div>
                 <p class="text-[#00b6b4] font-medium">TechCorp</p>
@@ -139,7 +147,7 @@
                 Ajouter
             </button>
         </div>
-        <div class="space-y-6">
+        <div class="space-y-6" id="educationContainer">
             <div class="border-l-4 border-[#009999] pl-6 relative">
                 <button id="removeEduBtn" class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
@@ -162,34 +170,34 @@
             <h2 class="text-xl font-bold text-[#f5f5f5] mb-6">
                 Compétences
             </h2>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2" id="skillsContainer">
                 <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                     React
-                    <button class="hidden text-red-500 hover:text-red-700">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('React')">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </span>
                 <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                     TypeScript
-                    <button class="hidden text-red-500 hover:text-red-700">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('TypeScript')">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </span>
                 <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                     Node.js
-                    <button class="hidden text-red-500 hover:text-red-700">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('Node.js')">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </span>
                 <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                     Python
-                    <button class="hidden text-red-500 hover:text-red-700">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('Python')">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </span>
                 <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                     SQL
-                    <button class="hidden text-red-500 hover:text-red-700">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('SQL')">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </span>
@@ -239,7 +247,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const removeEduBtn = document.getElementById('removeEduBtn');
     
     const inputs = document.querySelectorAll('input, textarea');
-    const skillButtons = document.querySelectorAll('.bg-\\[\\#00b6b4\\]\\/20 button');
+    const displays = document.querySelectorAll('[id$="Display"]');
+    const skillButtons = document.querySelectorAll('#skillsContainer button');
     
     let isEditing = false;
     
@@ -256,17 +265,12 @@ document.addEventListener('DOMContentLoaded', function() {
             removeExpBtn.classList.remove('hidden');
             removeEduBtn.classList.remove('hidden');
             
-            // Enable inputs
-            inputs.forEach(input => {
-                input.removeAttribute('readonly');
-                input.classList.remove('bg-[#333333]');
-                input.classList.add('bg-[#2b2b2b]');
-            });
+            // Show inputs, hide displays
+            inputs.forEach(input => input.classList.remove('hidden'));
+            displays.forEach(display => display.classList.add('hidden'));
             
             // Show skill delete buttons
-            skillButtons.forEach(btn => {
-                btn.classList.remove('hidden');
-            });
+            skillButtons.forEach(btn => btn.classList.remove('hidden'));
         } else {
             // Show view mode
             editBtn.classList.remove('hidden');
@@ -277,47 +281,85 @@ document.addEventListener('DOMContentLoaded', function() {
             removeExpBtn.classList.add('hidden');
             removeEduBtn.classList.add('hidden');
             
-            // Disable inputs
-            inputs.forEach(input => {
-                input.setAttribute('readonly', 'readonly');
-                input.classList.add('bg-[#333333]');
-                input.classList.remove('bg-[#2b2b2b]');
-            });
+            // Hide inputs, show displays
+            inputs.forEach(input => input.classList.add('hidden'));
+            displays.forEach(display => display.classList.remove('hidden'));
             
             // Hide skill delete buttons
-            skillButtons.forEach(btn => {
-                btn.classList.add('hidden');
-            });
+            skillButtons.forEach(btn => btn.classList.add('hidden'));
         }
     }
     
     editBtn.addEventListener('click', toggleEditMode);
     cancelBtn.addEventListener('click', toggleEditMode);
     saveBtn.addEventListener('click', function() {
-        // Here you would save the data
+        // Update display values
+        document.getElementById('firstNameDisplay').textContent = document.getElementById('firstName').value;
+        document.getElementById('lastNameDisplay').textContent = document.getElementById('lastName').value;
+        document.getElementById('titleDisplay').textContent = document.getElementById('title').value;
+        document.getElementById('locationDisplay').querySelector('span').textContent = document.getElementById('location').value;
+        document.getElementById('bioDisplay').textContent = document.getElementById('bio').value;
+        
         alert('Profil sauvegardé avec succès!');
         toggleEditMode();
     });
     
     addExperienceBtn.addEventListener('click', function() {
-        alert('Fonctionnalité d\'ajout d\'expérience sera implémentée');
+        const container = document.getElementById('experienceContainer');
+        const newExp = document.createElement('div');
+        newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
+        newExp.innerHTML = `
+            <button class="absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="this.parentElement.remove()">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <input type="text" placeholder="Titre du poste" class="bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full" />
+            </div>
+            <input type="text" placeholder="Entreprise" class="text-[#00b6b4] font-medium bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full mb-2" />
+            <input type="text" placeholder="Période" class="text-sm text-[#9ca3af] bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full mb-2" />
+            <textarea placeholder="Description" class="text-[#9ca3af] bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full" rows="2"></textarea>
+        `;
+        container.appendChild(newExp);
     });
     
     addEducationBtn.addEventListener('click', function() {
-        alert('Fonctionnalité d\'ajout de formation sera implémentée');
+        const container = document.getElementById('educationContainer');
+        const newEdu = document.createElement('div');
+        newEdu.className = 'border-l-4 border-[#009999] pl-6 relative';
+        newEdu.innerHTML = `
+            <button class="absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="this.parentElement.remove()">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                <input type="text" placeholder="Diplôme" class="bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full" />
+            </div>
+            <input type="text" placeholder="École" class="text-[#009999] font-medium bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full mb-2" />
+            <input type="text" placeholder="Période" class="text-sm text-[#9ca3af] bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full mb-2" />
+            <textarea placeholder="Description" class="text-[#9ca3af] bg-[#333333] border border-[#444444] rounded px-3 py-1 text-[#f5f5f5] w-full" rows="2"></textarea>
+        `;
+        container.appendChild(newEdu);
     });
     
     removeExpBtn.addEventListener('click', function() {
         if (confirm('Êtes-vous sûr de vouloir supprimer cette expérience?')) {
-            alert('Expérience supprimée');
+            this.parentElement.remove();
         }
     });
     
     removeEduBtn.addEventListener('click', function() {
         if (confirm('Êtes-vous sûr de vouloir supprimer cette formation?')) {
-            alert('Formation supprimée');
+            this.parentElement.remove();
         }
     });
 });
+
+function removeSkill(skill) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer la compétence "${skill}"?`)) {
+        const skillElement = event.target.closest('span');
+        skillElement.remove();
+    }
+}
 </script>
 @endsection

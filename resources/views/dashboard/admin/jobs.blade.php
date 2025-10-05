@@ -203,11 +203,11 @@
                     <tr class="border-b border-[#444444] hover:bg-[#333333]">
                         <td class="py-4 px-6 min-w-[340px] sm:min-w-0">
                             <div>
-                                <div class="font-semibold text-[#f5f5f5] flex items-center gap-2">
+                                <div class="font-semibold text-[#f5f5f5] flex items-center gap-2 flex-wrap">
                                     <span>Développeur Frontend React</span>
-                                    <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full text-xs font-medium">Vedette</span>
+                                    <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0">Vedette</span>
                                 </div>
-                                <div class="text-sm text-[#9ca3af] flex items-center gap-2 mt-1">
+                                <div class="text-sm text-[#9ca3af] flex items-center gap-2 mt-1 flex-wrap">
                                     <span class="flex items-center gap-1">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
@@ -224,12 +224,12 @@
                             <div class="text-sm text-[#9ca3af]">80,000 - 120,000 DA</div>
                         </td>
                         <td class="py-4 px-6">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100 flex-shrink-0">
                                 Actif
                             </span>
                         </td>
                         <td class="py-4 px-6">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100 flex-shrink-0">
                                 Approuvé
                             </span>
                         </td>

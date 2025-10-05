@@ -1,4 +1,5 @@
 @extends('layouts.dashboard')
+@section('page-title', 'Entretiens')
 
 @section('content')
 <div class="space-y-8">
@@ -17,7 +18,7 @@
                 <button id="listView" class="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#2b2b2b] text-[#f5f5f5] shadow-sm">
                     Liste
                 </button>
-                <button id="calendarView" class="px-4 py-2 rounded-md text-sm font-medium transition-colors text-[#9ca3af]">
+                <button id="calendarViewBtn" class="px-4 py-2 rounded-md text-sm font-medium transition-colors text-[#9ca3af]">
                     Calendrier
                 </button>
             </div>
@@ -36,8 +37,8 @@
                     <p class="text-sm text-[#9ca3af]">Total</p>
                     <p class="text-2xl font-bold text-[#f5f5f5]">5</p>
                 </div>
-                <div class="w-12 h-12 bg-[#333333] rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <div class="w-12 h-12 bg-[#ffffff] rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-6 h-6 text-[#9ca3af]"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
                 </div>
             </div>
         </div>
@@ -46,10 +47,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#9ca3af]">Programmés</p>
-                    <p class="text-2xl font-bold text-blue-400">1</p>
+                    <p class="text-2xl font-bold text-blue-600">1</p>
                 </div>
-                <div class="w-12 h-12 bg-blue-400/20 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-6 h-6 text-blue-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
             </div>
         </div>
@@ -58,10 +59,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#9ca3af]">Confirmés</p>
-                    <p class="text-2xl font-bold text-green-400">1</p>
+                    <p class="text-2xl font-bold text-green-600">1</p>
                 </div>
-                <div class="w-12 h-12 bg-green-400/20 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6 text-green-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
                 </div>
             </div>
         </div>
@@ -70,10 +71,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#9ca3af]">Terminés</p>
-                    <p class="text-2xl font-bold text-[#9ca3af]">1</p>
+                    <p class="text-2xl font-bold text-gray-600">1</p>
                 </div>
-                <div class="w-12 h-12 bg-[#333333] rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6 text-gray-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
                 </div>
             </div>
         </div>
@@ -82,10 +83,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-[#9ca3af]">Annulés</p>
-                    <p class="text-2xl font-bold text-red-400">1</p>
+                    <p class="text-2xl font-bold text-red-600">1</p>
                 </div>
-                <div class="w-12 h-12 bg-red-400/20 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle w-6 h-6 text-red-600"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
                 </div>
             </div>
         </div>
@@ -483,21 +484,33 @@
     <script>
         // View mode toggle
         document.getElementById('listView').addEventListener('click', function() {
+            // Show list view, hide calendar view
             document.getElementById('interviewsList').classList.remove('hidden');
             document.getElementById('calendarView').classList.add('hidden');
+            
+            // Update button styles
             this.classList.add('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
             this.classList.remove('text-[#9ca3af]');
-            document.getElementById('calendarView').classList.remove('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
-            document.getElementById('calendarView').classList.add('text-[#9ca3af]');
+            
+            // Reset calendar button
+            const calendarBtn = document.getElementById('calendarViewBtn');
+            calendarBtn.classList.remove('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
+            calendarBtn.classList.add('text-[#9ca3af]');
         });
 
-        document.getElementById('calendarView').addEventListener('click', function() {
+        document.getElementById('calendarViewBtn').addEventListener('click', function() {
+            // Hide list view, show calendar view
             document.getElementById('interviewsList').classList.add('hidden');
             document.getElementById('calendarView').classList.remove('hidden');
+            
+            // Update button styles
             this.classList.add('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
             this.classList.remove('text-[#9ca3af]');
-            document.getElementById('listView').classList.remove('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
-            document.getElementById('listView').classList.add('text-[#9ca3af]');
+            
+            // Reset list button
+            const listBtn = document.getElementById('listView');
+            listBtn.classList.remove('bg-[#2b2b2b]', 'text-[#f5f5f5]', 'shadow-sm');
+            listBtn.classList.add('text-[#9ca3af]');
         });
     </script>
 </div>

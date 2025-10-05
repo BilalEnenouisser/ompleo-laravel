@@ -2,7 +2,7 @@
 
 @section('title', 'Mes Offres d\'Emploi - OMPLEO')
 @section('description', 'Gérez vos annonces et suivez les candidatures.')
-@section('page-title', 'Mes Offres d\'Emploi')
+@section('page-title', 'Mes Offres')
 
 @section('content')
 <div class="space-y-6 sm:space-y-8">
@@ -35,15 +35,7 @@
                     <p class="text-xl sm:text-2xl font-bold text-[#f5f5f5]">2</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#333333] rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                        <path d="M10 6h4"/>
-                        <path d="M10 10h4"/>
-                        <path d="M10 14h4"/>
-                        <path d="M10 18h4"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 w-5 h-5 sm:w-6 sm:h-6 text-[#9ca3af]"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>
                 </div>
             </div>
         </div>
@@ -56,10 +48,7 @@
                     <p class="text-xl sm:text-2xl font-bold text-green-400">2</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-900/30 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-5 h-5 sm:w-6 sm:h-6 text-green-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </div>
             </div>
         </div>
@@ -72,10 +61,7 @@
                     <p class="text-xl sm:text-2xl font-bold text-red-400">0</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-900/30 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12,6 12,12 16,14"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-5 h-5 sm:w-6 sm:h-6 text-red-400"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
             </div>
         </div>
@@ -88,10 +74,7 @@
                     <p class="text-xl sm:text-2xl font-bold text-[#9ca3af]">0</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#333333] rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                        <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-line w-5 h-5 sm:w-6 sm:h-6 text-[#9ca3af]"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
                 </div>
             </div>
         </div>
@@ -132,7 +115,7 @@
         <div class="bg-[#2b2b2b] border border-[#00b6b4]/30 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 ring-2 ring-[#00b6b4]/20">
             <div class="flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6">
                 <div class="flex-1">
-                    <div class="flex items-start justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
                         <div class="flex items-center gap-2 sm:gap-3">
                             <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                                 Développeur Frontend React
@@ -144,7 +127,7 @@
                                 Vedette
                             </span>
                         </div>
-                        <span class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-green-400 bg-green-900/30">
+                        <span class="px-2 sm:px-3 ml-4 py-1 rounded-full text-xs sm:text-sm font-medium text-green-600 bg-green-100">
                             Actif
                         </span>
                     </div>
@@ -249,13 +232,13 @@
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
             <div class="flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6">
                 <div class="flex-1">
-                    <div class="flex items-start justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
                         <div class="flex items-center gap-2 sm:gap-3">
                             <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                                 Designer UX/UI
                             </h3>
                         </div>
-                        <span class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-green-400 bg-green-900/30">
+                        <span class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-green-600 bg-green-100">
                             Actif
                         </span>
                     </div>
