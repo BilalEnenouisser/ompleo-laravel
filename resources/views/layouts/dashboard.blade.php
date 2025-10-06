@@ -8,6 +8,9 @@
     <title>@yield('title', 'Dashboard - OMPLEO')</title>
     <meta name="description" content="@yield('description', 'Tableau de bord OMPLEO')">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -27,7 +30,7 @@
                     <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#00b6b4] flex items-center justify-center p-1.5 sm:p-2">
                             <img 
-                                src="{{ asset('fgehr.png') }}" 
+                                src="{{ asset('icon.png') }}" 
                                 alt="OMPLEO" 
                                 class="w-full h-full object-contain filter brightness-0 invert"
                             />

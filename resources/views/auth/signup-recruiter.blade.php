@@ -20,7 +20,7 @@
             <div class="flex items-center justify-center space-x-3 mb-6">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0058f0] to-[#00f0a8] flex items-center justify-center p-2">
                     <img 
-                        src="{{ asset('fgehr.png') }}" 
+                        src="{{ asset('icon.png') }}" 
                         alt="OMPLEO" 
                         class="w-full h-full object-contain filter brightness-0 invert"
                     />

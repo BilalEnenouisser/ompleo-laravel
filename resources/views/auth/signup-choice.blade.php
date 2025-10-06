@@ -19,7 +19,7 @@
             <div class="flex items-center justify-center space-x-3 mb-6">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center p-2 shadow-glass-glow hover:scale-110 transition-transform duration-200">
                     <img 
-                        src="{{ asset('fgehr.png') }}" 
+                        src="{{ asset('icon.png') }}" 
                         alt="OMPLEO" 
                         class="w-full h-full object-contain filter brightness-0 invert"
                     />

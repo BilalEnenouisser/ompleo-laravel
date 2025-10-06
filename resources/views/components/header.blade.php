@@ -137,7 +137,7 @@
                                 </p>
                             </div>
                             
-                            <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
+                            <a href="@if(auth()->user()->user_type === 'admin'){{ route('admin.dashboard') }}@elseif(auth()->user()->user_type === 'recruiter'){{ route('recruiter.dashboard') }}@elseif(auth()->user()->user_type === 'candidate'){{ route('candidate.dashboard') }}@else{{ route('dashboard') }}@endif" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
                                 <!-- User icon from Lucide React -->
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>

@@ -201,3 +201,8 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.candidate.referrals');
     })->name('candidate.referrals');
 });
+
+// Catch-all route for 404 errors - must be at the end
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

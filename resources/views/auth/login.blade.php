@@ -17,7 +17,7 @@
         <div class="text-center animate-fade-in-up">
             <div class="flex items-center justify-center space-x-3 mb-6">
                 <div class="w-12 h-12 rounded-xl bg-[#00b6b4] flex items-center justify-center p-2 shadow-md hover:scale-110 transition-transform duration-200">
-                    <img src="{{ asset('fgehr.png') }}" alt="OMPLEO" class="w-full h-full object-contain filter brightness-0 invert">
+                    <img src="{{ asset('icon.png') }}" alt="OMPLEO" class="w-full h-full object-contain filter brightness-0 invert">
                 </div>
                 <h1 class="text-3xl font-semibold text-[#00b6b4] hover:scale-105 transition-transform duration-200">
                     OMPLEO
