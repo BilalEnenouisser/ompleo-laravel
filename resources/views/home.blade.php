@@ -9,10 +9,10 @@
     @include('components.header')
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#1f1f1f]">
+    <section id="home" class="relative h-[80vh] md:h-screen flex items-center overflow-hidden bg-[#1f1f1f]">
         <div 
-            class="absolute inset-0 bg-cover bg-center opacity-40" 
-            style="background-image: url('{{ asset('NEW HERO PIC copy.png') }}')"
+            class="absolute inset-0 bg-cover bg-center opacity-50" 
+            style="background-image: url('{{ asset('herosection.jpg') }}')"
         ></div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
@@ -148,11 +148,6 @@
         </div>
     </section>
 
-    <!-- Featured Articles Section -->
-    <div class="animate-on-scroll">
-        @include('components.featured-articles')
-    </div>
-
     <!-- Why Choose Section -->
     <div class="animate-on-scroll">
         @include('components.why-choose-section')
@@ -167,6 +162,13 @@
     <div class="animate-on-scroll">
         @include('components.partners-section')
     </div>
+
+
+    <!-- Featured Articles Section -->
+    <div class="animate-on-scroll">
+        @include('components.featured-articles')
+    </div>
+
 
     <!-- Recruiter CTA Section -->
     <div class="animate-on-scroll">
