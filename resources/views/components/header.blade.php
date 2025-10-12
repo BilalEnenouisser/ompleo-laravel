@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
 <header class="w-full z-50 {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'bg-[#1f1f1f]' : 'bg-white dark:bg-[#1f1f1f]' }}">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
@@ -116,9 +119,13 @@
 
                     <div class="relative">
                         <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
-                            <div class="w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
-                                {{ substr(auth()->user()->name, 0, 1) }}
-                            </div>
+                            @if(auth()->user()->candidateProfile && auth()->user()->candidateProfile->avatar)
+                                <img src="{{ Storage::url(auth()->user()->candidateProfile->avatar) }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-[#00b6b4] shadow-md">
+                            @else
+                                <div class="w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
+                                    {{ substr(auth()->user()->name, 0, 1) }}
+                                </div>
+                            @endif
                             <span>{{ auth()->user()->name }}</span>
                             <!-- ChevronDown icon from Lucide React -->
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -52,9 +55,13 @@
                 <!-- User Info -->
                 <div class="p-4 sm:p-6 border-b border-[#333333]">
                     <div class="flex items-center space-x-2 sm:space-x-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
-                            {{ substr(Auth::user()->name, 0, 1) }}{{ substr(Auth::user()->name, -1) }}
-                        </div>
+                        @if(Auth::user()->candidateProfile && Auth::user()->candidateProfile->avatar)
+                            <img src="{{ Storage::url(Auth::user()->candidateProfile->avatar) }}" alt="Avatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#00b6b4]">
+                        @else
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
+                                {{ substr(Auth::user()->name, 0, 1) }}{{ substr(Auth::user()->name, -1) }}
+                            </div>
+                        @endif
                         <div class="flex-1 min-w-0">
                             <p class="text-sm sm:text-base font-medium text-[#f5f5f5] truncate">
                                 {{ Auth::user()->name }}
