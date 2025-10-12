@@ -6,6 +6,29 @@
 
 @section('content')
 <div class="space-y-6 sm:space-y-8">
+    {{-- Success/Error Messages --}}
+    @if(session('success'))
+        <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div id="errorNotification" class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
     {{-- Header --}}
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
         <div>
@@ -16,24 +39,11 @@
                 Créez une offre attractive pour trouver les meilleurs talents
             </p>
         </div>
-        <div class="flex items-center gap-2 sm:gap-3">
-            <button
-                type="button"
-                onclick="saveDraft()"
-                class="px-3 sm:px-4 py-2 sm:py-2.5 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
-            >
-                <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                    <polyline points="17,21 17,13 7,13 7,21"/>
-                    <polyline points="7,3 7,8 15,8"/>
-                </svg>
-                Enregistrer brouillon
-            </button>
-        </div>
     </div>
 
     {{-- Form --}}
-    <form id="createOfferForm" class="space-y-6 sm:space-y-8">
+    <form id="createOfferForm" action="{{ route('recruiter.create-offer.store') }}" method="POST" class="space-y-6 sm:space-y-8">
+        @csrf
         {{-- Basic Information --}}
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
             <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6">
@@ -51,7 +61,6 @@
                         name="title"
                         class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         placeholder="Ex: Développeur Frontend React"
-                        required
                     />
                 </div>
                 
@@ -83,7 +92,6 @@
                             name="location"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                             placeholder="Ex: Alger, Chéraga"
-                            required
                         />
                     </div>
                 </div>
@@ -103,7 +111,6 @@
                             name="experience"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                             placeholder="Ex: 2-5 ans"
-                            required
                         />
                     </div>
                 </div>
@@ -118,7 +125,6 @@
                             id="type"
                             name="type"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
-                            required
                         >
                             <option value="CDI">CDI</option>
                             <option value="CDD">CDD</option>
@@ -147,7 +153,6 @@
                             id="workType"
                             name="workType"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
-                            required
                         >
                             <option value="onsite">Présentiel</option>
                             <option value="remote">Télétravail</option>
@@ -168,10 +173,9 @@
                         <input
                             type="number"
                             id="salaryMin"
-                            name="salaryMin"
+                            name="salary_min"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                             placeholder="Ex: 60000"
-                            required
                         />
                     </div>
                 </div>
@@ -188,10 +192,9 @@
                         <input
                             type="number"
                             id="salaryMax"
-                            name="salaryMax"
+                            name="salary_max"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                             placeholder="Ex: 80000"
-                            required
                         />
                     </div>
                 </div>
@@ -212,7 +215,6 @@
                             id="expiryDate"
                             name="expiryDate"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
-                            required
                         />
                     </div>
                 </div>
@@ -251,7 +253,6 @@
                     rows="6"
                     class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                     placeholder="Décrivez le poste, l'entreprise et le profil recherché..."
-                    required
                 ></textarea>
             </div>
         </div>
@@ -281,7 +282,6 @@
                         name="responsibilities[]"
                         class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         placeholder="Responsabilité 1"
-                        required
                     />
                     <button
                         type="button"
@@ -322,7 +322,6 @@
                         name="requirements[]"
                         class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         placeholder="Exigence 1"
-                        required
                     />
                     <button
                         type="button"
@@ -363,7 +362,6 @@
                         name="benefits[]"
                         class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         placeholder="Avantage 1"
-                        required
                     />
                     <button
                         type="button"
@@ -404,7 +402,6 @@
                         name="skills[]"
                         class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         placeholder="Compétence 1"
-                        required
                     />
                     <button
                         type="button"
@@ -428,6 +425,20 @@
                 class="px-4 sm:px-6 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 text-sm sm:text-base"
             >
                 Annuler
+            </button>
+            
+            <button
+                type="submit"
+                name="save_draft"
+                value="1"
+                class="px-3 sm:px-4 py-2 sm:py-2.5 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+            >
+                <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17,21 17,13 7,13 7,21"/>
+                    <polyline points="7,3 7,8 15,8"/>
+                </svg>
+                Enregistrer brouillon
             </button>
             
             <button
@@ -462,7 +473,6 @@ function addResponsibility() {
             name="responsibilities[]"
             class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
             placeholder="Responsabilité ${responsibilityCount}"
-            required
         />
         <button
             type="button"
@@ -494,7 +504,6 @@ function addRequirement() {
             name="requirements[]"
             class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
             placeholder="Exigence ${requirementCount}"
-            required
         />
         <button
             type="button"
@@ -526,7 +535,6 @@ function addBenefit() {
             name="benefits[]"
             class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
             placeholder="Avantage ${benefitCount}"
-            required
         />
         <button
             type="button"
@@ -558,7 +566,6 @@ function addSkill() {
             name="skills[]"
             class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
             placeholder="Compétence ${skillCount}"
-            required
         />
         <button
             type="button"
@@ -587,16 +594,46 @@ function updateRemoveButtons(containerId) {
     });
 }
 
-function saveDraft() {
-    // Simulate saving draft
-    alert('Brouillon sauvegardé avec succès!');
-}
+// Draft saving is now handled by the form submission
 
-document.getElementById('createOfferForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Simulate form submission
-    alert('Offre publiée avec succès!');
-    window.location.href = '{{ route('recruiter.jobs') }}';
+// Form will submit normally to the server
+
+// Form submission is handled by the server
+
+// Show notification animation
+document.addEventListener('DOMContentLoaded', function() {
+    const successNotification = document.getElementById('successNotification');
+    const errorNotification = document.getElementById('errorNotification');
+    
+    if (successNotification) {
+        // Show notification
+        setTimeout(() => {
+            successNotification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+            successNotification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                successNotification.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    if (errorNotification) {
+        // Show notification
+        setTimeout(() => {
+            errorNotification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto hide after 4 seconds
+        setTimeout(() => {
+            errorNotification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                errorNotification.remove();
+            }, 300);
+        }, 4000);
+    }
 });
 </script>
 @endsection

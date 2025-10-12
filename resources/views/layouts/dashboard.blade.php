@@ -53,25 +53,27 @@ use Illuminate\Support\Facades\Storage;
                 </div>
 
                 <!-- User Info -->
-                <div class="p-4 sm:p-6 border-b border-[#333333]">
-                    <div class="flex items-center space-x-2 sm:space-x-3">
-                        @if(Auth::user()->candidateProfile && Auth::user()->candidateProfile->avatar)
-                            <img src="{{ Storage::url(Auth::user()->candidateProfile->avatar) }}" alt="Avatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#00b6b4]">
-                        @else
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
-                                {{ substr(Auth::user()->name, 0, 1) }}{{ substr(Auth::user()->name, -1) }}
-                            </div>
-                        @endif
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm sm:text-base font-medium text-[#f5f5f5] truncate">
-                                {{ Auth::user()->name }}
-                            </p>
-                            <p class="text-xs sm:text-sm text-[#cccccc] capitalize">
-                                {{ Auth::user()->user_type }}
-                            </p>
-                        </div>
+        <div class="p-4 sm:p-6 border-b border-[#333333]">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                @if(Auth::user()->user_type === 'recruiter' && Auth::user()->recruiterProfile && Auth::user()->recruiterProfile->company && Auth::user()->recruiterProfile->company->logo)
+                    <img src="{{ Storage::url(Auth::user()->recruiterProfile->company->logo) }}" alt="Company Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#00b6b4]">
+                @elseif(Auth::user()->candidateProfile && Auth::user()->candidateProfile->avatar)
+                    <img src="{{ Storage::url(Auth::user()->candidateProfile->avatar) }}" alt="Avatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#00b6b4]">
+                @else
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
+                        {{ substr(Auth::user()->name, 0, 1) }}{{ substr(Auth::user()->name, -1) }}
                     </div>
+                @endif
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm sm:text-base font-medium text-[#f5f5f5] truncate">
+                        {{ Auth::user()->name }}
+                    </p>
+                    <p class="text-xs sm:text-sm text-[#cccccc] capitalize">
+                        {{ Auth::user()->user_type }}
+                    </p>
                 </div>
+            </div>
+        </div>
 
                 <!-- Navigation -->
                 <nav class="flex-1 p-3 sm:p-4 space-y-1 sm:space-y-2">
@@ -149,6 +151,10 @@ use Illuminate\Support\Facades\Storage;
                         <a href="{{ route('recruiter.jobs') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.jobs') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             <span class="font-medium">Mes offres</span>
+                        </a>
+                        <a href="{{ route('recruiter.company-profile') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.company-profile') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building w-5 h-5"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>
+                            <span class="font-medium">Profil entreprise</span>
                         </a>
                         <a href="{{ route('recruiter.candidates') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('recruiter.candidates') ? 'bg-[#333333] text-[#00b6b4] border-r-2 border-[#00b6b4]' : 'text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4]' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-5 h-5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>

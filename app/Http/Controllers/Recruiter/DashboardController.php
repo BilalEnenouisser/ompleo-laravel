@@ -5,24 +5,55 @@ namespace App\Http\Controllers\Recruiter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Job;
+use App\Models\Application;
+use App\Models\Company;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()->user_type !== 'recruiter') {
-                abort(403, 'Accès non autorisé');
-            }
-            return $next($request);
-        });
+        $this->middleware('check.user.type:recruiter');
     }
 
     public function index()
     {
         $user = Auth::user();
+        $recruiterProfile = $user->recruiterProfile;
         
-        return view('dashboard.recruiter.index', compact('user'));
+        // Get company if exists
+        $company = $recruiterProfile ? $recruiterProfile->company : null;
+        
+        // Get recruiter's jobs
+        $jobs = $recruiterProfile && $recruiterProfile->company 
+            ? Job::where('recruiter_id', $user->id)->get()
+            : collect();
+        
+        // Get applications for recruiter's jobs
+        $applications = $jobs->isNotEmpty() 
+            ? Application::whereIn('job_id', $jobs->pluck('id'))->get()
+            : collect();
+        
+        // Calculate statistics
+        $stats = [
+            'active_jobs' => $jobs->where('status', 'active')->count(),
+            'total_applications' => $applications->count(),
+            'recent_applications' => $applications->where('created_at', '>=', now()->subDays(7))->count(),
+            'scheduled_interviews' => 0, // Placeholder for now
+        ];
+        
+        // Get recent applications (last 5)
+        $recentApplications = $applications->take(5);
+        
+        // Get active jobs (last 3)
+        $activeJobs = $jobs->where('status', 'active')->take(3);
+        
+        return view('dashboard.recruiter.index', compact(
+            'stats',
+            'recentApplications', 
+            'activeJobs',
+            'company'
+        ));
     }
 }

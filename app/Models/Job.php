@@ -26,10 +26,12 @@ class Job extends Model
         'salary_max',
         'location',
         'type',
+        'work_type',
         'experience_level',
         'tags',
         'status',
         'application_deadline',
+        'is_featured',
     ];
 
     protected $casts = [

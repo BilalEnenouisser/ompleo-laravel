@@ -86,9 +86,6 @@ Route::get('/admin/payments', function () {
 Route::get('/admin/blog/editor', function () {
     return view('dashboard.admin.blog-editor');
 })->name('admin.blog.editor');
-    Route::get('/recruiter/dashboard', function () {
-        return view('dashboard.recruiter.index');
-    })->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
     Route::get('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
     Route::put('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'update'])->name('candidate.profile.update');
@@ -104,6 +101,12 @@ Route::get('/admin/blog/editor', function () {
 Route::get('/password/reset', function () {
     return view('auth.passwords.email');
 })->name('password.request');
+
+Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('/password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Jobs Routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
@@ -123,6 +126,10 @@ Route::middleware('auth')->group(function () {
 // Companies Routes
 Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
 Route::get('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.show');
+
+// Public Jobs Routes
+Route::get('/jobs', [App\Http\Controllers\JobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{job}', [App\Http\Controllers\JobController::class, 'show'])->name('jobs.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/companies/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('companies.create');
@@ -191,17 +198,18 @@ Route::middleware('auth')->group(function () {
     })->name('notifications');
     
     // Recruiter Routes
-    Route::get('/recruiter/dashboard', function () {
-        return view('dashboard.recruiter.index');
-    })->name('recruiter.dashboard');
+    Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     
-    Route::get('/recruiter/jobs', function () {
-        return view('dashboard.recruiter.jobs');
-    })->name('recruiter.jobs');
+    Route::get('/recruiter/jobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index'])->name('recruiter.jobs');
     
-    Route::get('/recruiter/create-offer', function () {
-        return view('dashboard.recruiter.create-offer');
-    })->name('recruiter.create-offer');
+    Route::get('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'show'])->name('recruiter.create-offer');
+    Route::post('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'store'])->name('recruiter.create-offer.store');
+    
+    // Job management routes
+    Route::get('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\JobsController::class, 'show'])->name('recruiter.jobs.show');
+    Route::get('/recruiter/jobs/{job}/edit', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'edit'])->name('recruiter.jobs.edit');
+    Route::put('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'update'])->name('recruiter.jobs.update');
+    Route::delete('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\JobsController::class, 'destroy'])->name('recruiter.jobs.destroy');
     
     Route::get('/recruiter/candidates', function () {
         return view('dashboard.recruiter.candidates');
@@ -214,6 +222,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/recruiter/reports', function () {
         return view('dashboard.recruiter.reports');
     })->name('recruiter.reports');
+    
+    // Recruiter Company Profile
+    Route::get('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'show'])->name('recruiter.company-profile');
+    Route::put('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'update'])->name('recruiter.company-profile.update');
     
     
     Route::get('/candidate/applications', function () {

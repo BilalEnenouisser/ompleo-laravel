@@ -118,20 +118,22 @@ use Illuminate\Support\Facades\Storage;
                     </div>
 
                     <div class="relative">
-                        <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
-                            @if(auth()->user()->candidateProfile && auth()->user()->candidateProfile->avatar)
-                                <img src="{{ Storage::url(auth()->user()->candidateProfile->avatar) }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-[#00b6b4] shadow-md">
-                            @else
-                                <div class="w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
-                                    {{ substr(auth()->user()->name, 0, 1) }}
-                                </div>
-                            @endif
-                            <span>{{ auth()->user()->name }}</span>
-                            <!-- ChevronDown icon from Lucide React -->
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="m6 9 6 6 6-6"></path>
-                            </svg>
-                        </button>
+            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
+                @if(auth()->user()->user_type === 'recruiter' && auth()->user()->recruiterProfile && auth()->user()->recruiterProfile->company && auth()->user()->recruiterProfile->company->logo)
+                    <img src="{{ Storage::url(auth()->user()->recruiterProfile->company->logo) }}" alt="Company Logo" class="w-8 h-8 rounded-full object-cover border-2 border-[#00b6b4] shadow-md">
+                @elseif(auth()->user()->candidateProfile && auth()->user()->candidateProfile->avatar)
+                    <img src="{{ Storage::url(auth()->user()->candidateProfile->avatar) }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-[#00b6b4] shadow-md">
+                @else
+                    <div class="w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    </div>
+                @endif
+                <span>{{ auth()->user()->name }}</span>
+                <!-- ChevronDown icon from Lucide React -->
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="m6 9 6 6 6-6"></path>
+                </svg>
+            </button>
 
                         <!-- User Dropdown Menu -->
                         <div id="userMenu" class="hidden absolute right-0 mt-2 w-56 bg-[#2b2b2b]/90 backdrop-blur-sm py-2 z-50 rounded-lg shadow-lg">
@@ -153,14 +155,30 @@ use Illuminate\Support\Facades\Storage;
                                 <span>Mon espace</span>
                             </a>
                             
-                            <a href="{{ route('profile') }}" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
-                                <!-- User icon from Lucide React -->
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                                <span>Mon profil</span>
-                            </a>
+                            @if(auth()->user()->user_type === 'recruiter')
+                                <a href="{{ route('recruiter.company-profile') }}" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
+                                    <!-- Building icon from Lucide React -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
+                                        <path d="M10 6h4"></path>
+                                        <path d="M10 10h4"></path>
+                                        <path d="M10 14h4"></path>
+                                        <path d="M10 18h4"></path>
+                                    </svg>
+                                    <span>Profil entreprise</span>
+                                </a>
+                            @else
+                                <a href="{{ route('candidate.profile') }}" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
+                                    <!-- User icon from Lucide React -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <span>Mon profil</span>
+                                </a>
+                            @endif
                             
                             <a href="/settings" class="flex items-center space-x-3 w-full text-left px-4 py-3 text-sm text-[#cccccc] hover:bg-[#333333] hover:text-[#00b6b4] transition-all duration-200">
                                 <!-- Settings icon from Lucide React -->

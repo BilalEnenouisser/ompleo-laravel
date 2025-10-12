@@ -4,52 +4,8 @@
 @include('components.header')
 
 @php
-$companies = [
-    [
-        'id' => 1,
-        'name' => 'IMPACTOME Agency',
-        'description' => 'Agence Marketing Digital qui accompagne les entreprises du monde entier.',
-        'logo' => 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'location' => 'Chéraga, Alger',
-        'size' => '11-50 employés',
-        'sector' => 'Marketing Digital',
-        'jobCount' => 5,
-        'founded' => '2022',
-    ],
-    [
-        'id' => 2,
-        'name' => 'CONDOR Electronics',
-        'description' => 'Leader algérien dans l\'industrie électronique et électroménager.',
-        'logo' => 'https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'location' => 'El Harrach, Alger',
-        'size' => '500+ employés',
-        'sector' => 'Industrie',
-        'jobCount' => 4,
-        'founded' => '1978',
-    ],
-    [
-        'id' => 3,
-        'name' => 'SONATRACH',
-        'description' => 'Compagnie nationale des hydrocarbures, leader énergétique en Afrique.',
-        'logo' => 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'location' => 'El Mouradia, Alger',
-        'size' => '10000+ employés',
-        'sector' => 'Énergie',
-        'jobCount' => 10,
-        'founded' => '1963',
-    ],
-    [
-        'id' => 4,
-        'name' => 'OMPLEO Platform',
-        'description' => 'Plateforme de recrutement innovante connectant talents et entreprises.',
-        'logo' => 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'location' => 'Chéraga, Alger',
-        'size' => '11-50 employés',
-        'sector' => 'Tech',
-        'jobCount' => 5,
-        'founded' => '2024',
-    ],
-];
+use Illuminate\Support\Facades\Storage;
+$companies = \App\Models\Company::where('is_active', true)->get();
 @endphp
 
 <div class="min-h-screen bg-white dark:bg-[#1f1f1f] relative overflow-hidden">
@@ -127,27 +83,33 @@ $companies = [
     <section class="py-16 relative z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($companies as $company)
+                @forelse($companies as $company)
                 <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:transform hover:scale-105 border border-gray-100 dark:border-[#333333] animate-on-scroll" data-animate="company-card">
                     <div class="flex items-start justify-between mb-6">
                         <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
-                            <img
-                                src="{{ $company['logo'] }}"
-                                alt="{{ $company['name'] }}"
-                                class="w-full h-full object-cover"
-                            />
+                            @if($company->logo)
+                                <img
+                                    src="{{ Storage::url($company->logo) }}"
+                                    alt="{{ $company->name }}"
+                                    class="w-full h-full object-cover"
+                                />
+                            @else
+                                <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white text-xl font-bold">
+                                    {{ substr($company->name, 0, 1) }}
+                                </div>
+                            @endif
                         </div>
                         <span class="bg-[#00b6b4]/10 border border-[#00b6b4]/30 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium">
-                            {{ $company['sector'] }}
+                            {{ $company->industry }}
                         </span>
                     </div>
                     
                     <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-[#00b6b4] transition-colors duration-200">
-                        {{ $company['name'] }}
+                        {{ $company->name }}
                     </h3>
                     
                     <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                        {{ $company['description'] }}
+                        {{ $company->description }}
                     </p>
                     
                     <div class="space-y-2 mb-6">
@@ -156,7 +118,7 @@ $companies = [
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                 <circle cx="12" cy="10" r="3"></circle>
                             </svg>
-                            <span>{{ $company['location'] }}</span>
+                            <span>{{ $company->location }}</span>
                         </div>
                         
                         <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
@@ -170,7 +132,7 @@ $companies = [
                                 <path d="M6 18h.01"></path>
                                 <path d="M6 15h.01"></path>
                             </svg>
-                            <span>{{ $company['size'] }}</span>
+                            <span>{{ $company->size }}</span>
                         </div>
                         
                         <div class="flex items-center text-[#00b6b4] text-sm font-medium">
@@ -178,7 +140,7 @@ $companies = [
                                 <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                                 <rect width="20" height="14" x="2" y="6" rx="2"></rect>
                             </svg>
-                            <span>{{ $company['jobCount'] }} postes</span>
+                            <span>{{ $company->jobs()->count() }} postes</span>
                         </div>
                     </div>
                     
@@ -186,7 +148,24 @@ $companies = [
                         Voir les offres
                     </button>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-span-full text-center py-16">
+                    <div class="w-24 h-24 mx-auto mb-6 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
+                            <path d="M10 6h4"></path>
+                            <path d="M10 10h4"></path>
+                            <path d="M10 14h4"></path>
+                            <path d="M6 18h.01"></path>
+                            <path d="M6 15h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Aucune entreprise trouvée</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Aucune entreprise n'est actuellement enregistrée sur la plateforme.</p>
+                </div>
+                @endforelse
             </div>
         </div>
     </section>
