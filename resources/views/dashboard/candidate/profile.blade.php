@@ -26,6 +26,29 @@
         </div>
     </div>
 
+    <!-- Custom Glass Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div class="text-center">
+                <div id="modalIcon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500 bg-opacity-20 backdrop-blur-sm mb-4">
+                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-white mb-2" id="confirmTitle">Confirmer la suppression</h3>
+                <p class="text-white text-opacity-80 mb-6" id="confirmMessage">Êtes-vous sûr de vouloir supprimer cet élément ? Cette action ne peut pas être annulée.</p>
+                <div class="flex gap-3 justify-center">
+                    <button id="confirmCancel" class="bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300 border border-white border-opacity-30">
+                        Annuler
+                    </button>
+                    <button id="confirmOk" class="bg-red-500 bg-opacity-80 hover:bg-opacity-100 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Profile Header --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg">
         <div class="flex flex-col lg:flex-row gap-8">
@@ -36,9 +59,9 @@
                     @else
                         <div id="avatarInitials" class="w-32 h-32 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white text-4xl font-bold">
                             {{ strtoupper(substr($user->name, 0, 1)) }}{{ strtoupper(substr($user->name, strpos($user->name, ' ') + 1, 1)) }}
-                        </div>
+                    </div>
                     @endif
-                    <label for="avatarUpload" class="absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer">
+                    <label for="avatarUpload" id="avatarUploadBtn" class="hidden absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
                     </label>
                     <input id="avatarUpload" type="file" accept="image/*" class="hidden" />
@@ -47,49 +70,49 @@
 
             <div class="flex-1">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div>
-                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
-                             Prénom
-                         </label>
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Prénom
+                        </label>
                          <div id="firstNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $user->name)[0] ?? 'Prénom' }}</div>
                          <input id="firstName" type="text" value="{{ explode(' ', $user->name)[0] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
-                     </div>
+                    </div>
 
-                     <div>
-                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
-                             Nom
-                         </label>
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Nom
+                        </label>
                          <div id="lastNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $user->name)[1] ?? 'Nom' }}</div>
                          <input id="lastName" type="text" value="{{ explode(' ', $user->name)[1] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
-                     </div>
+                    </div>
 
-                     <div>
-                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
-                             Titre professionnel
-                         </label>
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Titre professionnel
+                        </label>
                          <div id="titleDisplay" class="text-[#00b6b4] font-medium">{{ $profile->bio ? 'Développeur' : 'Développeur Frontend' }}</div>
                          <input id="title" type="text" value="{{ $profile->bio ? 'Développeur' : 'Développeur Frontend' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
-                     </div>
+                    </div>
 
-                     <div>
-                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
-                             Localisation
-                         </label>
-                         <div id="locationDisplay" class="flex items-center gap-2 text-[#9ca3af]">
-                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Localisation
+                        </label>
+                        <div id="locationDisplay" class="flex items-center gap-2 text-[#9ca3af]">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                              <span>{{ $profile->city ?? 'Alger, Algérie' }}</span>
-                         </div>
+                        </div>
                          <input id="location" type="text" value="{{ $profile->city ?? 'Alger, Algérie' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
-                     </div>
+                    </div>
                 </div>
 
-                 <div class="mt-6">
-                     <label class="block text-sm font-medium text-[#9ca3af] mb-2">
-                         À propos
-                     </label>
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                        À propos
+                    </label>
                      <div id="bioDisplay" class="text-[#9ca3af]">{{ $profile->bio ?? 'Passionné par le développement web moderne et les nouvelles technologies.' }}</div>
                      <textarea id="bio" rows="3" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">{{ $profile->bio ?? 'Passionné par le développement web moderne et les nouvelles technologies.' }}</textarea>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -100,20 +123,69 @@
             Informations de contact
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{-- Email (Always shown) --}}
             <div class="flex items-center gap-3">
                 <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                 <div>
-                     <p class="text-sm text-[#9ca3af]">Email</p>
-                     <p class="font-medium text-[#f5f5f5]">{{ $user->email }}</p>
-                 </div>
-             </div>
-             <div class="flex items-center gap-3">
-                 <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                 <div>
-                     <p class="text-sm text-[#9ca3af]">Téléphone</p>
-                     <p id="phoneDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->phone ?? '+213 XXX XXX XXX' }}</p>
-                     <input id="phone" type="text" value="{{ $profile->phone ?? '+213 XXX XXX XXX' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
-                 </div>
+                <div>
+                    <p class="text-sm text-[#9ca3af]">Email</p>
+                    <p class="font-medium text-[#f5f5f5]">{{ $user->email }}</p>
+                </div>
+            </div>
+            
+            {{-- Phone --}}
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <div>
+                    <p class="text-sm text-[#9ca3af]">Téléphone</p>
+                    <p id="phoneDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->phone ?? 'Non renseigné' }}</p>
+                    <input id="phone" type="text" value="{{ $profile->phone ?? '' }}" placeholder="Votre numéro de téléphone" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                </div>
+            </div>
+        </div>
+        
+        {{-- Social Media Section --}}
+        <div class="mt-6 pt-6 border-t border-[#444444]">
+            <h3 class="text-lg font-semibold text-[#f5f5f5] mb-4">Réseaux sociaux</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- LinkedIn --}}
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    <div>
+                        <p class="text-sm text-[#9ca3af]">LinkedIn</p>
+                        <p id="linkedinDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->linkedin_url ?? 'Non renseigné' }}</p>
+                        <input id="linkedin" type="url" value="{{ $profile->linkedin_url ?? '' }}" placeholder="https://linkedin.com/in/votre-profil" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                    </div>
+                </div>
+                
+                {{-- Facebook --}}
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    <div>
+                        <p class="text-sm text-[#9ca3af]">Facebook</p>
+                        <p id="facebookDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->facebook_url ?? 'Non renseigné' }}</p>
+                        <input id="facebook" type="url" value="{{ $profile->facebook_url ?? '' }}" placeholder="https://facebook.com/votre-profil" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                    </div>
+                </div>
+                
+                {{-- Portfolio --}}
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    <div>
+                        <p class="text-sm text-[#9ca3af]">Portfolio</p>
+                        <p id="portfolioDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->portfolio_url ?? 'Non renseigné' }}</p>
+                        <input id="portfolio" type="url" value="{{ $profile->portfolio_url ?? '' }}" placeholder="https://votre-portfolio.com" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                    </div>
+                </div>
+                
+                {{-- Twitter --}}
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    <div>
+                        <p class="text-sm text-[#9ca3af]">Twitter</p>
+                        <p id="twitterDisplay" class="font-medium text-[#f5f5f5]">{{ $profile->twitter_url ?? 'Non renseigné' }}</p>
+                        <input id="twitter" type="url" value="{{ $profile->twitter_url ?? '' }}" placeholder="https://twitter.com/votre-profil" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -129,37 +201,32 @@
                 Ajouter
             </button>
         </div>
-         <div class="space-y-6" id="experienceContainer">
-             @if($profile->experience && is_array($profile->experience))
+        <div class="space-y-6" id="experienceContainer">
+             @if($profile->experience && is_array($profile->experience) && count($profile->experience) > 0)
                  @foreach($profile->experience as $index => $exp)
-                     <div class="border-l-4 border-[#00b6b4] pl-6 relative">
-                         <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience({{ $index }})">
-                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                         </button>
-                         <div class="flex items-center gap-2 mb-2">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                             <h3 class="font-semibold text-[#f5f5f5]">{{ $exp['title'] ?? 'Titre du poste' }}</h3>
-                         </div>
-                         <p class="text-[#00b6b4] font-medium">{{ $exp['company'] ?? 'Entreprise' }}</p>
-                         <p class="text-sm text-[#9ca3af] mb-2">{{ $exp['period'] ?? 'Période' }}</p>
-                         <p class="text-[#9ca3af]">{{ $exp['description'] ?? 'Description' }}</p>
-                     </div>
+            <div class="border-l-4 border-[#00b6b4] pl-6 relative">
+                         <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </button>
+                <div class="flex items-center gap-2 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <h3 class="font-semibold text-[#f5f5f5]">{{ $exp['title'] ?? 'Titre du poste' }}</h3>
+                    <input type="text" value="{{ $exp['title'] ?? '' }}" placeholder="Titre du poste" class="hidden bg-transparent border-none text-lg font-semibold text-[#f5f5f5] w-full focus:outline-none" />
+                </div>
+                <p class="text-[#00b6b4] font-medium">{{ $exp['company'] ?? 'Entreprise' }}</p>
+                <input type="text" value="{{ $exp['company'] ?? '' }}" placeholder="Entreprise" class="hidden text-[#00b6b4] font-medium bg-transparent border-none w-full focus:outline-none mb-2" />
+                <p class="text-sm text-[#9ca3af] mb-2">{{ $exp['period'] ?? 'Période' }}</p>
+                <input type="text" value="{{ $exp['period'] ?? '' }}" placeholder="Période (ex: 2022 - Présent)" class="hidden text-sm text-[#9ca3af] bg-transparent border-none w-full focus:outline-none mb-2" />
+                <p class="text-[#9ca3af]">{{ $exp['description'] ?? 'Description' }}</p>
+                <textarea placeholder="Description" class="hidden text-[#9ca3af] bg-transparent border-none w-full focus:outline-none" rows="2">{{ $exp['description'] ?? '' }}</textarea>
+                </div>
                  @endforeach
              @else
-                 <div class="border-l-4 border-[#00b6b4] pl-6 relative">
-                     <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600">
-                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                     </button>
-                     <div class="flex items-center gap-2 mb-2">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                         <h3 class="font-semibold text-[#f5f5f5]">Développeur Frontend</h3>
-                     </div>
-                     <p class="text-[#00b6b4] font-medium">TechCorp</p>
-                     <p class="text-sm text-[#9ca3af] mb-2">2022 - Présent</p>
-                     <p class="text-[#9ca3af]">Développement d'applications React et Vue.js</p>
-                 </div>
+                 <div class="text-center py-8">
+                     <p class="text-[#9ca3af]">Aucune expérience professionnelle ajoutée</p>
+            </div>
              @endif
-         </div>
+        </div>
     </div>
 
     {{-- Education --}}
@@ -173,37 +240,32 @@
                 Ajouter
             </button>
         </div>
-         <div class="space-y-6" id="educationContainer">
-             @if($profile->education && is_array($profile->education))
+        <div class="space-y-6" id="educationContainer">
+             @if($profile->education && is_array($profile->education) && count($profile->education) > 0)
                  @foreach($profile->education as $index => $edu)
-                     <div class="border-l-4 border-[#009999] pl-6 relative">
-                         <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation({{ $index }})">
-                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                         </button>
-                         <div class="flex items-center gap-2 mb-2">
-                             <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                             <h3 class="font-semibold text-[#f5f5f5]">{{ $edu['degree'] ?? 'Diplôme' }}</h3>
-                         </div>
-                         <p class="text-[#009999] font-medium">{{ $edu['school'] ?? 'École' }}</p>
-                         <p class="text-sm text-[#9ca3af] mb-2">{{ $edu['period'] ?? 'Période' }}</p>
-                         <p class="text-[#9ca3af]">{{ $edu['description'] ?? 'Description' }}</p>
-                     </div>
+            <div class="border-l-4 border-[#009999] pl-6 relative">
+                         <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </button>
+                <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    <h3 class="font-semibold text-[#f5f5f5]">{{ $edu['degree'] ?? 'Diplôme' }}</h3>
+                    <input type="text" value="{{ $edu['degree'] ?? '' }}" placeholder="Diplôme" class="hidden bg-transparent border-none text-lg font-semibold text-[#f5f5f5] w-full focus:outline-none" />
+                </div>
+                <p class="text-[#009999] font-medium">{{ $edu['school'] ?? 'École' }}</p>
+                <input type="text" value="{{ $edu['school'] ?? '' }}" placeholder="École/Université" class="hidden text-[#009999] font-medium bg-transparent border-none w-full focus:outline-none mb-2" />
+                <p class="text-sm text-[#9ca3af] mb-2">{{ $edu['period'] ?? 'Période' }}</p>
+                <input type="text" value="{{ $edu['period'] ?? '' }}" placeholder="Période (ex: 2020 - 2024)" class="hidden text-sm text-[#9ca3af] bg-transparent border-none w-full focus:outline-none mb-2" />
+                <p class="text-[#9ca3af]">{{ $edu['description'] ?? 'Description' }}</p>
+                <textarea placeholder="Description" class="hidden text-[#9ca3af] bg-transparent border-none w-full focus:outline-none" rows="2">{{ $edu['description'] ?? '' }}</textarea>
+                </div>
                  @endforeach
              @else
-                 <div class="border-l-4 border-[#009999] pl-6 relative">
-                     <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600">
-                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                     </button>
-                     <div class="flex items-center gap-2 mb-2">
-                         <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                         <h3 class="font-semibold text-[#f5f5f5]">Master en Informatique</h3>
-                     </div>
-                     <p class="text-[#009999] font-medium">Université d'Alger</p>
-                     <p class="text-sm text-[#9ca3af] mb-2">2020 - 2022</p>
-                     <p class="text-[#9ca3af]">Spécialisation en développement web</p>
-                 </div>
+                 <div class="text-center py-8">
+                     <p class="text-[#9ca3af]">Aucune formation ajoutée</p>
+            </div>
              @endif
-         </div>
+        </div>
     </div>
 
     {{-- Skills & Languages --}}
@@ -212,94 +274,61 @@
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-bold text-[#f5f5f5]">
-                    Compétences
-                </h2>
+                Compétences
+            </h2>
                 <button id="addSkillBtn" class="hidden bg-[#00b6b4] hover:bg-[#009999] text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                     Ajouter
                 </button>
             </div>
-             <div class="flex flex-wrap gap-2" id="skillsContainer">
-                 @if($profile->skills && is_array($profile->skills))
+            <div class="flex flex-wrap gap-2" id="skillsContainer">
+                 @if($profile->skills && is_array($profile->skills) && count($profile->skills) > 0)
                      @foreach($profile->skills as $skill)
-                         <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
+                <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
                              {{ $skill }}
-                             <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('{{ $skill }}')">
-                                 <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                             </button>
-                         </span>
+                             <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill(this)">
+                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                    </button>
+                </span>
                      @endforeach
                  @else
-                     <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
-                         React
-                         <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('React')">
-                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                         </button>
-                     </span>
-                     <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
-                         TypeScript
-                         <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('TypeScript')">
-                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                         </button>
-                     </span>
-                     <span class="px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2">
-                         Node.js
-                         <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('Node.js')">
-                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                         </button>
-                     </span>
+                     <div class="text-center py-8 w-full">
+                         <p class="text-[#9ca3af]">Aucune compétence ajoutée</p>
+                     </div>
                  @endif
-             </div>
+            </div>
         </div>
 
         {{-- Languages --}}
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-bold text-[#f5f5f5]">
-                    Langues
-                </h2>
+                Langues
+            </h2>
                 <button id="addLanguageBtn" class="hidden bg-[#00b6b4] hover:bg-[#009999] text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                     Ajouter
                 </button>
             </div>
             <div class="space-y-3" id="languagesContainer">
-                @if($profile->languages && is_array($profile->languages))
+                @if($profile->languages && is_array($profile->languages) && count($profile->languages) > 0)
                     @foreach($profile->languages as $index => $language)
-                        <div class="flex items-center justify-between border border-[#444444] rounded-lg p-3">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                                 <span class="font-medium text-[#f5f5f5]">{{ $language['name'] ?? 'Langue' }}</span>
-                            </div>
-                            <div class="flex items-center gap-2">
+                </div>
+                    <div class="flex items-center gap-2">
                                 <span class="text-sm text-[#9ca3af]">{{ $language['level'] ?? 'Niveau' }}</span>
-                                <button class="hidden text-red-500 hover:text-red-700" onclick="removeLanguage({{ $index }})">
+                                <button class="hidden text-red-500 hover:text-red-700" onclick="removeLanguage(this)">
                                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                                 </button>
-                            </div>
-                        </div>
+                    </div>
+                </div>
                     @endforeach
                 @else
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            <span class="font-medium text-[#f5f5f5]">Français</span>
-                        </div>
-                        <span class="text-sm text-[#9ca3af]">Natif</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            <span class="font-medium text-[#f5f5f5]">Anglais</span>
-                        </div>
-                        <span class="text-sm text-[#9ca3af]">Avancé</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            <span class="font-medium text-[#f5f5f5]">Arabe</span>
-                        </div>
-                        <span class="text-sm text-[#9ca3af]">Natif</span>
+                    <div class="text-center py-8">
+                        <p class="text-[#9ca3af]">Aucune langue ajoutée</p>
                     </div>
                 @endif
             </div>
@@ -308,12 +337,12 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const editBtn = document.getElementById('editBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const saveBtn = document.getElementById('saveBtn');
-        const addExperienceBtn = document.getElementById('addExperienceBtn');
-        const addEducationBtn = document.getElementById('addEducationBtn');
+document.addEventListener('DOMContentLoaded', function() {
+    const editBtn = document.getElementById('editBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const addExperienceBtn = document.getElementById('addExperienceBtn');
+    const addEducationBtn = document.getElementById('addEducationBtn');
         const addSkillBtn = document.getElementById('addSkillBtn');
         const addLanguageBtn = document.getElementById('addLanguageBtn');
         const avatarUpload = document.getElementById('avatarUpload');
@@ -342,8 +371,34 @@
             inputs.forEach(input => input.classList.remove('hidden'));
             displays.forEach(display => display.classList.add('hidden'));
             
-            // Show skill delete buttons
+            // Show avatar upload button
+            document.getElementById('avatarUploadBtn').classList.remove('hidden');
+            
+            // Show social media inputs
+            document.getElementById('linkedin').classList.remove('hidden');
+            document.getElementById('facebook').classList.remove('hidden');
+            document.getElementById('portfolio').classList.remove('hidden');
+            document.getElementById('twitter').classList.remove('hidden');
+            
+            // Hide social media displays
+            document.getElementById('linkedinDisplay').classList.add('hidden');
+            document.getElementById('facebookDisplay').classList.add('hidden');
+            document.getElementById('portfolioDisplay').classList.add('hidden');
+            document.getElementById('twitterDisplay').classList.add('hidden');
+            
+            // Show delete buttons for all sections
             skillButtons.forEach(btn => btn.classList.remove('hidden'));
+            document.querySelectorAll('#experienceContainer button').forEach(btn => btn.classList.remove('hidden'));
+            document.querySelectorAll('#educationContainer button').forEach(btn => btn.classList.remove('hidden'));
+            document.querySelectorAll('#languagesContainer button').forEach(btn => btn.classList.remove('hidden'));
+            
+            // Show input fields for existing experience and education items
+            document.querySelectorAll('#experienceContainer input, #experienceContainer textarea').forEach(input => input.classList.remove('hidden'));
+            document.querySelectorAll('#educationContainer input, #educationContainer textarea').forEach(input => input.classList.remove('hidden'));
+            
+            // Hide display text for existing experience and education items
+            document.querySelectorAll('#experienceContainer h3, #experienceContainer p').forEach(text => text.classList.add('hidden'));
+            document.querySelectorAll('#educationContainer h3, #educationContainer p').forEach(text => text.classList.add('hidden'));
         } else {
             // Show view mode
             editBtn.classList.remove('hidden');
@@ -358,14 +413,39 @@
             inputs.forEach(input => input.classList.add('hidden'));
             displays.forEach(display => display.classList.remove('hidden'));
             
-            // Hide skill delete buttons
+            // Hide avatar upload button
+            document.getElementById('avatarUploadBtn').classList.add('hidden');
+            
+            // Hide social media inputs, show displays
+            document.getElementById('linkedin').classList.add('hidden');
+            document.getElementById('facebook').classList.add('hidden');
+            document.getElementById('portfolio').classList.add('hidden');
+            document.getElementById('twitter').classList.add('hidden');
+            
+            document.getElementById('linkedinDisplay').classList.remove('hidden');
+            document.getElementById('facebookDisplay').classList.remove('hidden');
+            document.getElementById('portfolioDisplay').classList.remove('hidden');
+            document.getElementById('twitterDisplay').classList.remove('hidden');
+            
+            // Hide delete buttons for all sections
             skillButtons.forEach(btn => btn.classList.add('hidden'));
+            document.querySelectorAll('#experienceContainer button').forEach(btn => btn.classList.add('hidden'));
+            document.querySelectorAll('#educationContainer button').forEach(btn => btn.classList.add('hidden'));
+            document.querySelectorAll('#languagesContainer button').forEach(btn => btn.classList.add('hidden'));
+            
+            // Hide input fields for existing experience and education items
+            document.querySelectorAll('#experienceContainer input, #experienceContainer textarea').forEach(input => input.classList.add('hidden'));
+            document.querySelectorAll('#educationContainer input, #educationContainer textarea').forEach(input => input.classList.add('hidden'));
+            
+            // Show display text for existing experience and education items
+            document.querySelectorAll('#experienceContainer h3, #experienceContainer p').forEach(text => text.classList.remove('hidden'));
+            document.querySelectorAll('#educationContainer h3, #educationContainer p').forEach(text => text.classList.remove('hidden'));
         }
     }
     
     editBtn.addEventListener('click', toggleEditMode);
     cancelBtn.addEventListener('click', toggleEditMode);
-     saveBtn.addEventListener('click', function() {
+    saveBtn.addEventListener('click', function() {
          // Collect form data
          const formData = new FormData();
          formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
@@ -379,6 +459,24 @@
          console.log('Phone value:', phoneValue);
          formData.append('phone', phoneValue);
          
+         // Add social media fields
+         const linkedinValue = document.getElementById('linkedin').value;
+         const facebookValue = document.getElementById('facebook').value;
+         const portfolioValue = document.getElementById('portfolio').value;
+         const twitterValue = document.getElementById('twitter').value;
+         
+         console.log('Social media values:', {
+             linkedin: linkedinValue,
+             facebook: facebookValue,
+             portfolio: portfolioValue,
+             twitter: twitterValue
+         });
+         
+         formData.append('linkedin_url', linkedinValue);
+         formData.append('facebook_url', facebookValue);
+         formData.append('portfolio_url', portfolioValue);
+         formData.append('twitter_url', twitterValue);
+         
          // Add avatar file if selected
          if (avatarUpload.files[0]) {
              formData.append('avatar', avatarUpload.files[0]);
@@ -388,6 +486,7 @@
          const experienceData = [];
          const experienceItems = document.querySelectorAll('#experienceContainer .border-l-4');
          experienceItems.forEach(item => {
+             // Look for input fields first (new entries or edit mode)
              const titleInput = item.querySelector('input[placeholder="Titre du poste"]');
              const companyInput = item.querySelector('input[placeholder="Entreprise"]');
              const periodInput = item.querySelector('input[placeholder*="Période"]');
@@ -395,18 +494,23 @@
              
              let title, company, period, description;
              
-             if (titleInput) {
+             if (titleInput && titleInput.value.trim()) {
                  // New entry with input fields
                  title = titleInput.value.trim();
                  company = companyInput?.value?.trim() || '';
                  period = periodInput?.value?.trim() || '';
                  description = descriptionInput?.value?.trim() || '';
              } else {
-                 // Existing entry with text content
-                 title = item.querySelector('h3')?.textContent?.trim() || '';
-                 company = item.querySelector('.text-\\[\\#00b6b4\\]')?.textContent?.trim() || '';
-                 period = item.querySelector('.text-sm')?.textContent?.trim() || '';
-                 description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+                 // Existing entry - try to get from text content or input values
+                 const titleElement = item.querySelector('h3');
+                 const companyElement = item.querySelector('p.text-\\[\\#00b6b4\\]');
+                 const periodElement = item.querySelector('p.text-sm');
+                 const descriptionElement = item.querySelector('p.text-\\[\\#9ca3af\\]');
+                 
+                 title = titleElement?.textContent?.trim() || '';
+                 company = companyElement?.textContent?.trim() || '';
+                 period = periodElement?.textContent?.trim() || '';
+                 description = descriptionElement?.textContent?.trim() || '';
              }
              
              if (title && company) {
@@ -424,6 +528,7 @@
          const educationData = [];
          const educationItems = document.querySelectorAll('#educationContainer .border-l-4');
          educationItems.forEach(item => {
+             // Look for input fields first (new entries or edit mode)
              const degreeInput = item.querySelector('input[placeholder="Diplôme"]');
              const schoolInput = item.querySelector('input[placeholder="École/Université"]');
              const periodInput = item.querySelector('input[placeholder*="Période"]');
@@ -431,18 +536,23 @@
              
              let degree, school, period, description;
              
-             if (degreeInput) {
+             if (degreeInput && degreeInput.value.trim()) {
                  // New entry with input fields
                  degree = degreeInput.value.trim();
                  school = schoolInput?.value?.trim() || '';
                  period = periodInput?.value?.trim() || '';
                  description = descriptionInput?.value?.trim() || '';
              } else {
-                 // Existing entry with text content
-                 degree = item.querySelector('h3')?.textContent?.trim() || '';
-                 school = item.querySelector('.text-\\[\\#009999\\]')?.textContent?.trim() || '';
-                 period = item.querySelector('.text-sm')?.textContent?.trim() || '';
-                 description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+                 // Existing entry - try to get from text content
+                 const degreeElement = item.querySelector('h3');
+                 const schoolElement = item.querySelector('p.text-\\[\\#009999\\]');
+                 const periodElement = item.querySelector('p.text-sm');
+                 const descriptionElement = item.querySelector('p.text-\\[\\#9ca3af\\]');
+                 
+                 degree = degreeElement?.textContent?.trim() || '';
+                 school = schoolElement?.textContent?.trim() || '';
+                 period = periodElement?.textContent?.trim() || '';
+                 description = descriptionElement?.textContent?.trim() || '';
              }
              
              if (degree && school) {
@@ -483,24 +593,26 @@
              const nameInput = item.querySelector('input[placeholder="Nom de la langue"]');
              const levelElement = item.querySelector('select');
              
-             if (nameInput && levelElement) {
-                 const name = nameInput.value.trim();
-                 const level = levelElement.value;
-                 if (name) {
-                     languagesData.push({
-                         name: name,
-                         level: level
-                     });
-                 }
+             let name, level;
+             
+             if (nameInput && nameInput.value.trim()) {
+                 // New entry with input fields
+                 name = nameInput.value.trim();
+                 level = levelElement?.value || 'Débutant';
              } else {
-                 // Handle existing languages (not input fields)
+                 // Existing entry - try to get from text content
                  const nameElement = item.querySelector('span.font-medium');
-                 if (nameElement && levelElement) {
-                     languagesData.push({
-                         name: nameElement.textContent.trim(),
-                         level: levelElement.value
-                     });
-                 }
+                 const levelSpan = item.querySelector('span.text-sm');
+                 
+                 name = nameElement?.textContent?.trim() || '';
+                 level = levelSpan?.textContent?.trim() || levelElement?.value || 'Débutant';
+             }
+             
+             if (name) {
+                 languagesData.push({
+                     name: name,
+                     level: level
+                 });
              }
          });
          formData.append('languages', JSON.stringify(languagesData));
@@ -537,52 +649,57 @@
          })
          .then(data => {
              if (data.success) {
-                 // Update display values
-                 document.getElementById('firstNameDisplay').textContent = document.getElementById('firstName').value;
-                 document.getElementById('lastNameDisplay').textContent = document.getElementById('lastName').value;
-                 document.getElementById('titleDisplay').textContent = document.getElementById('title').value;
-                 document.getElementById('locationDisplay').querySelector('span').textContent = document.getElementById('location').value;
-                 document.getElementById('bioDisplay').textContent = document.getElementById('bio').value;
-                 document.getElementById('phoneDisplay').textContent = document.getElementById('phone').value;
-                 
-                 alert('Profil sauvegardé avec succès!');
-                 toggleEditMode();
+                 showSuccessModal();
              } else {
                  console.error('Server error:', data);
-                 alert('Erreur lors de la sauvegarde: ' + (data.message || data.debug || 'Erreur inconnue'));
+                 showErrorModal('Erreur lors de la sauvegarde: ' + (data.message || data.debug || 'Erreur inconnue'));
              }
          })
          .catch(error => {
              console.error('Error:', error);
-             alert('Erreur lors de la sauvegarde: ' + error.message);
+             showErrorModal('Erreur lors de la sauvegarde: ' + error.message);
          });
-     });
+    });
     
-        addExperienceBtn.addEventListener('click', function() {
-            const container = document.getElementById('experienceContainer');
-            const newExp = document.createElement('div');
-            newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
-            newExp.innerHTML = `
-                <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(${container.children.length})">
-                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                </button>
-                <div class="flex items-center gap-2 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+    addExperienceBtn.addEventListener('click', function() {
+        const container = document.getElementById('experienceContainer');
+        
+        // Hide empty message if it exists
+        const emptyMessage = container.querySelector('.text-center');
+        if (emptyMessage) {
+            emptyMessage.style.display = 'none';
+        }
+        
+        const newExp = document.createElement('div');
+        newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
+        newExp.innerHTML = `
+                <button class="absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                     <input type="text" placeholder="Titre du poste" class="bg-transparent border-none text-lg font-semibold text-[#f5f5f5] w-full focus:outline-none" />
-                </div>
+            </div>
                 <input type="text" placeholder="Entreprise" class="text-[#00b6b4] font-medium bg-transparent border-none w-full focus:outline-none mb-2" />
                 <input type="text" placeholder="Période (ex: 2022 - Présent)" class="text-sm text-[#9ca3af] bg-transparent border-none w-full focus:outline-none mb-2" />
                 <textarea placeholder="Description" class="text-[#9ca3af] bg-transparent border-none w-full focus:outline-none" rows="2"></textarea>
-            `;
-            container.appendChild(newExp);
-        });
+        `;
+        container.appendChild(newExp);
+    });
     
     addEducationBtn.addEventListener('click', function() {
         const container = document.getElementById('educationContainer');
+        
+        // Hide empty message if it exists
+        const emptyMessage = container.querySelector('.text-center');
+        if (emptyMessage) {
+            emptyMessage.style.display = 'none';
+        }
+        
         const newEdu = document.createElement('div');
         newEdu.className = 'border-l-4 border-[#009999] pl-6 relative';
         newEdu.innerHTML = `
-            <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(${container.children.length})">
+            <button class="absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
                 <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </button>
             <div class="flex items-center gap-2 mb-2">
@@ -598,6 +715,13 @@
     
     addSkillBtn.addEventListener('click', function() {
         const container = document.getElementById('skillsContainer');
+        
+        // Hide empty message if it exists
+        const emptyMessage = container.querySelector('.text-center');
+        if (emptyMessage) {
+            emptyMessage.style.display = 'none';
+        }
+        
         const newSkill = document.createElement('span');
         newSkill.className = 'px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2';
         newSkill.innerHTML = `
@@ -611,6 +735,13 @@
     
         addLanguageBtn.addEventListener('click', function() {
             const container = document.getElementById('languagesContainer');
+            
+            // Hide empty message if it exists
+            const emptyMessage = container.querySelector('.text-center');
+            if (emptyMessage) {
+                emptyMessage.style.display = 'none';
+            }
+            
             const newLanguage = document.createElement('div');
             newLanguage.className = 'flex items-center justify-between border border-[#444444] rounded-lg p-3';
             newLanguage.innerHTML = `
@@ -675,37 +806,179 @@
 });
 
  function removeSkill(button) {
-     if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence?')) {
-         const skillElement = button.closest('span');
-         skillElement.remove();
-     }
- }
+     showConfirmModal(
+         'Supprimer la compétence',
+         'Êtes-vous sûr de vouloir supprimer cette compétence ?',
+         () => {
+             const skillElement = button.closest('span');
+             if (skillElement) {
+        skillElement.remove();
+    }
+}
+     );
+}
 
-    function removeExperience(index) {
-        if (confirm('Êtes-vous sûr de vouloir supprimer cette expérience?')) {
-            const container = document.getElementById('experienceContainer');
-            const items = container.querySelectorAll('.border-l-4');
-            if (items[index]) {
-                items[index].remove();
+    function removeExperience(button) {
+        showConfirmModal(
+            'Supprimer l\'expérience',
+            'Êtes-vous sûr de vouloir supprimer cette expérience ?',
+            () => {
+                const experienceElement = button.closest('.border-l-4');
+                if (experienceElement) {
+                    experienceElement.remove();
+                }
             }
-        }
+        );
     }
 
-    function removeEducation(index) {
-        if (confirm('Êtes-vous sûr de vouloir supprimer cette formation?')) {
-            const container = document.getElementById('educationContainer');
-            const items = container.querySelectorAll('.border-l-4');
-            if (items[index]) {
-                items[index].remove();
+    function removeEducation(button) {
+        showConfirmModal(
+            'Supprimer la formation',
+            'Êtes-vous sûr de vouloir supprimer cette formation ?',
+            () => {
+                const educationElement = button.closest('.border-l-4');
+                if (educationElement) {
+                    educationElement.remove();
+                }
             }
-        }
+        );
     }
 
  function removeLanguage(button) {
-     if (confirm('Êtes-vous sûr de vouloir supprimer cette langue?')) {
-         const languageElement = button.closest('.flex.items-center.justify-between');
-         languageElement.remove();
-     }
- }
+     showConfirmModal(
+         'Supprimer la langue',
+         'Êtes-vous sûr de vouloir supprimer cette langue ?',
+         () => {
+             const languageElement = button.closest('.flex.items-center.justify-between');
+             languageElement.remove();
+         }
+     );
+}
+
+// Custom confirmation modal functions
+let confirmCallback = null;
+
+function showConfirmModal(title, message, callback) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').textContent = message;
+    confirmCallback = callback;
+    
+    // Update icon for delete confirmation
+    const iconDiv = document.getElementById('modalIcon');
+    iconDiv.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500 bg-opacity-20 backdrop-blur-sm mb-4';
+    iconDiv.innerHTML = `
+        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+    `;
+    
+    // Ensure buttons are visible for delete confirmations
+    document.getElementById('confirmCancel').classList.remove('hidden');
+    document.getElementById('confirmOk').classList.remove('hidden');
+    
+    // Reset button styles for delete confirmation
+    const okButton = document.getElementById('confirmOk');
+    okButton.className = 'bg-red-500 bg-opacity-80 hover:bg-opacity-100 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300';
+    okButton.textContent = 'Supprimer';
+    
+    const cancelButton = document.getElementById('confirmCancel');
+    cancelButton.className = 'bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300 border border-white border-opacity-30';
+    cancelButton.textContent = 'Annuler';
+    
+    document.getElementById('confirmModal').classList.remove('hidden');
+}
+
+function hideConfirmModal() {
+    document.getElementById('confirmModal').classList.add('hidden');
+    confirmCallback = null;
+    
+    // Reset modal for next use (delete confirmation) with glass effects
+    const iconDiv = document.getElementById('modalIcon');
+    iconDiv.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500 bg-opacity-20 backdrop-blur-sm mb-4';
+    iconDiv.innerHTML = `
+        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+    `;
+    
+    const okButton = document.getElementById('confirmOk');
+    okButton.className = 'bg-red-500 bg-opacity-80 hover:bg-opacity-100 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300';
+    okButton.textContent = 'Supprimer';
+    
+    document.getElementById('confirmCancel').classList.remove('hidden');
+    document.getElementById('confirmOk').classList.remove('hidden');
+}
+
+// Success modal function
+function showSuccessModal() {
+    // Update icon to green checkmark with glass effect
+    const iconDiv = document.getElementById('modalIcon');
+    iconDiv.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-500 bg-opacity-20 backdrop-blur-sm mb-4';
+    iconDiv.innerHTML = `
+        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+    `;
+    
+    document.getElementById('confirmTitle').textContent = 'Succès !';
+    document.getElementById('confirmMessage').textContent = 'Profil sauvegardé avec succès !';
+    
+    // Hide all buttons for notification style
+    document.getElementById('confirmCancel').classList.add('hidden');
+    document.getElementById('confirmOk').classList.add('hidden');
+    
+    document.getElementById('confirmModal').classList.remove('hidden');
+    
+    // Auto close after 3 seconds and reload
+    setTimeout(() => {
+        hideConfirmModal();
+        window.location.reload();
+    }, 3000);
+}
+
+// Error modal function
+function showErrorModal(message) {
+    // Update icon to red X with glass effect
+    const iconDiv = document.getElementById('modalIcon');
+    iconDiv.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500 bg-opacity-20 backdrop-blur-sm mb-4';
+    iconDiv.innerHTML = `
+        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    `;
+    
+    // Update button to glass style
+    const okButton = document.getElementById('confirmOk');
+    okButton.className = 'bg-red-500 bg-opacity-80 hover:bg-opacity-100 backdrop-blur-sm text-white px-6 py-2 rounded-xl transition-all duration-300';
+    okButton.textContent = 'OK';
+    
+    document.getElementById('confirmTitle').textContent = 'Erreur';
+    document.getElementById('confirmMessage').textContent = message;
+    document.getElementById('confirmCancel').classList.add('hidden');
+    document.getElementById('confirmModal').classList.remove('hidden');
+}
+
+// Modal event handlers
+document.getElementById('confirmCancel').addEventListener('click', hideConfirmModal);
+document.getElementById('confirmOk').addEventListener('click', function() {
+    if (confirmCallback) {
+        confirmCallback();
+    }
+    hideConfirmModal();
+});
+
+// Close modal when clicking outside
+document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideConfirmModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !document.getElementById('confirmModal').classList.contains('hidden')) {
+        hideConfirmModal();
+    }
+});
 </script>
 @endsection

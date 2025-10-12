@@ -78,6 +78,8 @@ class ProfileController extends Controller
             'languages' => 'nullable|string', // Added for languages JSON
             'linkedin_url' => 'nullable|url|max:255',
             'portfolio_url' => 'nullable|url|max:255',
+            'facebook_url' => 'nullable|url|max:255',
+            'twitter_url' => 'nullable|url|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ], [
@@ -106,7 +108,15 @@ class ProfileController extends Controller
 
             $data = $request->only([
                 'phone', 'address', 'city', 'date_of_birth', 'bio', 
-                'linkedin_url', 'portfolio_url'
+                'linkedin_url', 'portfolio_url', 'facebook_url', 'twitter_url'
+            ]);
+            
+            // Debug social media fields
+            \Log::info('Social media fields received:', [
+                'linkedin_url' => $request->linkedin_url,
+                'portfolio_url' => $request->portfolio_url,
+                'facebook_url' => $request->facebook_url,
+                'twitter_url' => $request->twitter_url
             ]);
 
             // Handle experience and education JSON data
