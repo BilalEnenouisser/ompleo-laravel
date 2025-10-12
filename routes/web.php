@@ -90,6 +90,14 @@ Route::get('/admin/blog/editor', function () {
         return view('dashboard.recruiter.index');
     })->name('recruiter.dashboard');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
+    Route::get('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
+    Route::put('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'update'])->name('candidate.profile.update');
+    
+    // Test route for debugging
+    Route::post('/test-profile-update', function(\Illuminate\Http\Request $request) {
+        \Log::info('Test profile update called', $request->all());
+        return response()->json(['success' => true, 'message' => 'Test successful']);
+    });
 });
 
 // Password Reset Routes
@@ -101,6 +109,28 @@ Route::get('/password/reset', function () {
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+
+// Applications Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/jobs/{job}/apply', [App\Http\Controllers\ApplicationController::class, 'create'])->name('applications.create');
+    Route::post('/applications', [App\Http\Controllers\ApplicationController::class, 'store'])->name('applications.store');
+    Route::get('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'show'])->name('applications.show');
+    Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+    Route::delete('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'withdraw'])->name('applications.withdraw');
+});
+
+// Companies Routes
+Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
+Route::get('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.show');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/companies/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('companies.create');
+    Route::post('/companies', [App\Http\Controllers\CompanyController::class, 'store'])->name('companies.store');
+    Route::get('/companies/{company}/edit', [App\Http\Controllers\CompanyController::class, 'edit'])->name('companies.edit');
+    Route::put('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'update'])->name('companies.update');
+    Route::delete('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'destroy'])->name('companies.destroy');
+});
 
 // About Page
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -185,13 +215,6 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.recruiter.reports');
     })->name('recruiter.reports');
     
-    Route::get('/candidate/dashboard', function () {
-        return view('dashboard.candidate.index');
-    })->name('candidate.dashboard');
-    
-    Route::get('/candidate/profile', function () {
-        return view('dashboard.candidate.profile');
-    })->name('candidate.profile');
     
     Route::get('/candidate/applications', function () {
         return view('dashboard.candidate.applications');

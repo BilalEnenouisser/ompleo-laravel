@@ -25,6 +25,62 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the candidate profile for the user.
+     */
+    public function candidateProfile()
+    {
+        return $this->hasOne(CandidateProfile::class);
+    }
+
+    /**
+     * Get the recruiter profile for the user.
+     */
+    public function recruiterProfile()
+    {
+        return $this->hasOne(RecruiterProfile::class);
+    }
+
+    /**
+     * Get the applications for the user (as candidate).
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'candidate_id');
+    }
+
+    /**
+     * Get the jobs created by the user (as recruiter).
+     */
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'recruiter_id');
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin()
+    {
+        return $this->user_type === 'admin';
+    }
+
+    /**
+     * Check if the user is a recruiter.
+     */
+    public function isRecruiter()
+    {
+        return $this->user_type === 'recruiter';
+    }
+
+    /**
+     * Check if the user is a candidate.
+     */
+    public function isCandidate()
+    {
+        return $this->user_type === 'candidate';
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

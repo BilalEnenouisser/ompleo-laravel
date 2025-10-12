@@ -67,7 +67,7 @@
 
             <form method="POST" action="{{ route('register') }}" class="space-y-6">
                 @csrf
-                <input type="hidden" name="role" value="recruiter">
+                <input type="hidden" name="user_type" value="recruiter">
                 
                 <!-- Name Fields -->
                 <div class="grid grid-cols-2 gap-4">
@@ -205,7 +205,7 @@
                         </svg>
                         <input
                             id="confirmPassword"
-                            name="confirmPassword"
+                            name="password_confirmation"
                             type="password"
                             required
                             class="w-full pl-10 pr-12 py-3 border border-gray-200 dark:border-dark-700 rounded-lg focus:ring-2 focus:ring-[#0058f0] focus:border-[#0058f0] outline-none transition-all duration-300 bg-white dark:bg-dark-700 text-gray-900 dark:text-gray-100"
@@ -240,11 +240,11 @@
                         class="w-4 h-4 text-[#0058f0] border-gray-300 rounded focus:ring-[#0058f0] mt-1"
                     />
                     <label for="acceptTerms" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                        J'accepte les{' '}
+                        J'accepte les 
                         <a href="#" class="text-[#0058f0] hover:text-[#0050e0] dark:text-[#00f0a8] dark:hover:text-[#00e0a0]">
                             conditions d'utilisation
-                        </a>{' '}
-                        et la{' '}
+                        </a> 
+                        et la 
                         <a href="#" class="text-[#0058f0] hover:text-[#0050e0] dark:text-[#00f0a8] dark:hover:text-[#00e0a0]">
                             politique de confidentialité
                         </a>
@@ -267,7 +267,7 @@
 
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                    Déjà un compte ?{' '}
+                    Déjà un compte ? 
                     <a href="{{ route('login') }}" class="font-medium text-[#0058f0] hover:text-[#0050e0] dark:text-[#00f0a8] dark:hover:text-[#00e0a0]">
                         Se connecter
                     </a>

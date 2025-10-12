@@ -9,7 +9,7 @@
         <div class="flex items-center justify-between">
             <div class="flex-1 min-w-0">
                 <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">
-                    Bonjour Ahmed ! 👋
+                    Bonjour {{ $user->name }} ! 👋
                 </h1>
                 <p class="text-white/80 text-sm sm:text-base lg:text-lg">
                     Voici un aperçu de votre activité récente
@@ -32,9 +32,9 @@
                 </div>
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">12</h3>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['total_applications'] }}</h3>
             <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Candidatures envoyées</p>
-            <p class="text-green-400 text-xs font-medium">+3 cette semaine</p>
+            <p class="text-green-400 text-xs font-medium">{{ $stats['pending_applications'] }} en attente</p>
         </div>
 
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -44,9 +44,9 @@
                 </div>
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">47</h3>
-            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Profil consulté</p>
-            <p class="text-green-400 text-xs font-medium">+12 cette semaine</p>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['reviewed_applications'] }}</h3>
+            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Candidatures examinées</p>
+            <p class="text-green-400 text-xs font-medium">{{ $stats['shortlisted_applications'] }} présélectionnées</p>
         </div>
 
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -56,9 +56,9 @@
                 </div>
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">8</h3>
-            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Offres sauvegardées</p>
-            <p class="text-green-400 text-xs font-medium">+2 cette semaine</p>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['success_rate'] }}%</h3>
+            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Taux de réussite</p>
+            <p class="text-green-400 text-xs font-medium">Performance</p>
         </div>
 
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -68,9 +68,9 @@
                 </div>
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">5</h3>
-            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Messages reçus</p>
-            <p class="text-green-400 text-xs font-medium">+1 aujourd'hui</p>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $recentApplications->count() }}</h3>
+            <p class="text-[#9ca3af] text-xs sm:text-sm mb-2">Candidatures récentes</p>
+            <p class="text-green-400 text-xs font-medium">Dernières activités</p>
         </div>
     </div>
 

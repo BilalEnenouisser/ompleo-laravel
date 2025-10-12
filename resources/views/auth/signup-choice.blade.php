@@ -167,7 +167,7 @@
 
         <div class="text-center mt-8 animate-fade-in-up" style="animation-delay: 0.6s;">
             <p class="text-gray-600 dark:text-gray-400">
-                Vous avez déjà un compte ?{' '}
+                Vous avez déjà un compte ? 
                 <a href="{{ route('login') }}" class="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors duration-200">
                     Se connecter
                 </a>

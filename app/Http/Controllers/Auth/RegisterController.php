@@ -18,14 +18,15 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'user_type' => 'required|in:candidate,recruiter',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->firstName . ' ' . $request->lastName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'user_type' => $request->user_type,
@@ -33,7 +34,17 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        // Redirect based on user type
+        switch ($user->user_type) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+            case 'recruiter':
+                return redirect()->route('recruiter.dashboard');
+            case 'candidate':
+                return redirect()->route('candidate.dashboard');
+            default:
+                return redirect()->route('candidate.dashboard');
+        }
     }
 }
 
