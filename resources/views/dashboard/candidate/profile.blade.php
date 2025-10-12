@@ -1,6 +1,9 @@
 @extends('layouts.dashboard')
 @section('page-title', 'Mon profil')
 @section('content')
+@php
+    use Illuminate\Support\Facades\Storage;
+@endphp
 <div class="space-y-8">
     {{-- Header --}}
     <div class="flex items-center justify-between">
@@ -28,12 +31,17 @@
         <div class="flex flex-col lg:flex-row gap-8">
             <div class="flex flex-col items-center lg:items-start">
                 <div class="relative">
-                    <div class="w-32 h-32 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white text-4xl font-bold">
-                        AB
-                    </div>
-                    <button class="absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors">
+                    @if($profile->avatar)
+                        <img id="avatarImage" src="{{ Storage::url($profile->avatar) }}" alt="Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]">
+                    @else
+                        <div id="avatarInitials" class="w-32 h-32 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white text-4xl font-bold">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}{{ strtoupper(substr($user->name, strpos($user->name, ' ') + 1, 1)) }}
+                        </div>
+                    @endif
+                    <label for="avatarUpload" class="absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-                    </button>
+                    </label>
+                    <input id="avatarUpload" type="file" accept="image/*" class="hidden" />
                 </div>
             </div>
 
@@ -300,14 +308,15 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const editBtn = document.getElementById('editBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const addExperienceBtn = document.getElementById('addExperienceBtn');
-    const addEducationBtn = document.getElementById('addEducationBtn');
-    const addSkillBtn = document.getElementById('addSkillBtn');
-    const addLanguageBtn = document.getElementById('addLanguageBtn');
+    document.addEventListener('DOMContentLoaded', function() {
+        const editBtn = document.getElementById('editBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const addExperienceBtn = document.getElementById('addExperienceBtn');
+        const addEducationBtn = document.getElementById('addEducationBtn');
+        const addSkillBtn = document.getElementById('addSkillBtn');
+        const addLanguageBtn = document.getElementById('addLanguageBtn');
+        const avatarUpload = document.getElementById('avatarUpload');
     
     const inputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
     const displays = document.querySelectorAll('[id$="Display"]');
@@ -370,14 +379,35 @@ document.addEventListener('DOMContentLoaded', function() {
          console.log('Phone value:', phoneValue);
          formData.append('phone', phoneValue);
          
+         // Add avatar file if selected
+         if (avatarUpload.files[0]) {
+             formData.append('avatar', avatarUpload.files[0]);
+         }
+         
          // Collect experience data
          const experienceData = [];
          const experienceItems = document.querySelectorAll('#experienceContainer .border-l-4');
          experienceItems.forEach(item => {
-             const title = item.querySelector('h3')?.textContent?.trim() || '';
-             const company = item.querySelector('.text-\\[\\#00b6b4\\]')?.textContent?.trim() || '';
-             const period = item.querySelector('.text-sm')?.textContent?.trim() || '';
-             const description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+             const titleInput = item.querySelector('input[placeholder="Titre du poste"]');
+             const companyInput = item.querySelector('input[placeholder="Entreprise"]');
+             const periodInput = item.querySelector('input[placeholder*="Période"]');
+             const descriptionInput = item.querySelector('textarea[placeholder="Description"]');
+             
+             let title, company, period, description;
+             
+             if (titleInput) {
+                 // New entry with input fields
+                 title = titleInput.value.trim();
+                 company = companyInput?.value?.trim() || '';
+                 period = periodInput?.value?.trim() || '';
+                 description = descriptionInput?.value?.trim() || '';
+             } else {
+                 // Existing entry with text content
+                 title = item.querySelector('h3')?.textContent?.trim() || '';
+                 company = item.querySelector('.text-\\[\\#00b6b4\\]')?.textContent?.trim() || '';
+                 period = item.querySelector('.text-sm')?.textContent?.trim() || '';
+                 description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+             }
              
              if (title && company) {
                  experienceData.push({
@@ -394,10 +424,26 @@ document.addEventListener('DOMContentLoaded', function() {
          const educationData = [];
          const educationItems = document.querySelectorAll('#educationContainer .border-l-4');
          educationItems.forEach(item => {
-             const degree = item.querySelector('h3')?.textContent?.trim() || '';
-             const school = item.querySelector('.text-\\[\\#009999\\]')?.textContent?.trim() || '';
-             const period = item.querySelector('.text-sm')?.textContent?.trim() || '';
-             const description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+             const degreeInput = item.querySelector('input[placeholder="Diplôme"]');
+             const schoolInput = item.querySelector('input[placeholder="École/Université"]');
+             const periodInput = item.querySelector('input[placeholder*="Période"]');
+             const descriptionInput = item.querySelector('textarea[placeholder="Description"]');
+             
+             let degree, school, period, description;
+             
+             if (degreeInput) {
+                 // New entry with input fields
+                 degree = degreeInput.value.trim();
+                 school = schoolInput?.value?.trim() || '';
+                 period = periodInput?.value?.trim() || '';
+                 description = descriptionInput?.value?.trim() || '';
+             } else {
+                 // Existing entry with text content
+                 degree = item.querySelector('h3')?.textContent?.trim() || '';
+                 school = item.querySelector('.text-\\[\\#009999\\]')?.textContent?.trim() || '';
+                 period = item.querySelector('.text-sm')?.textContent?.trim() || '';
+                 description = item.querySelector('.text-\\[\\#9ca3af\\]')?.textContent?.trim() || '';
+             }
              
              if (degree && school) {
                  educationData.push({
@@ -414,9 +460,18 @@ document.addEventListener('DOMContentLoaded', function() {
          const skillsData = [];
          const skillItems = document.querySelectorAll('#skillsContainer span');
          skillItems.forEach(item => {
-             const skillText = item.textContent.trim();
-             if (skillText && !skillText.includes('×') && !skillText.includes('Ajouter')) { // Exclude delete buttons and add button
-                 skillsData.push(skillText);
+             const skillInput = item.querySelector('input[placeholder="Nouvelle compétence"]');
+             if (skillInput) {
+                 const skillText = skillInput.value.trim();
+                 if (skillText) {
+                     skillsData.push(skillText);
+                 }
+             } else {
+                 // Handle existing skills (not input fields)
+                 const skillText = item.textContent.trim();
+                 if (skillText && !skillText.includes('×') && !skillText.includes('Ajouter')) {
+                     skillsData.push(skillText);
+                 }
              }
          });
          formData.append('skills', JSON.stringify(skillsData));
@@ -425,13 +480,27 @@ document.addEventListener('DOMContentLoaded', function() {
          const languagesData = [];
          const languageItems = document.querySelectorAll('#languagesContainer .flex.items-center.justify-between');
          languageItems.forEach(item => {
-             const nameElement = item.querySelector('span.font-medium');
+             const nameInput = item.querySelector('input[placeholder="Nom de la langue"]');
              const levelElement = item.querySelector('select');
-             if (nameElement && levelElement) {
-                 languagesData.push({
-                     name: nameElement.textContent.trim(),
-                     level: levelElement.value
-                 });
+             
+             if (nameInput && levelElement) {
+                 const name = nameInput.value.trim();
+                 const level = levelElement.value;
+                 if (name) {
+                     languagesData.push({
+                         name: name,
+                         level: level
+                     });
+                 }
+             } else {
+                 // Handle existing languages (not input fields)
+                 const nameElement = item.querySelector('span.font-medium');
+                 if (nameElement && levelElement) {
+                     languagesData.push({
+                         name: nameElement.textContent.trim(),
+                         level: levelElement.value
+                     });
+                 }
              }
          });
          formData.append('languages', JSON.stringify(languagesData));
@@ -442,6 +511,8 @@ document.addEventListener('DOMContentLoaded', function() {
          console.log('Experience data:', experienceData);
          console.log('Education data:', educationData);
          console.log('Languages data:', languagesData);
+         console.log('Experience items found:', document.querySelectorAll('#experienceContainer .border-l-4').length);
+         console.log('Education items found:', document.querySelectorAll('#educationContainer .border-l-4').length);
          
          // Send to backend
          fetch('{{ route("candidate.profile.update") }}', {
@@ -488,87 +559,64 @@ document.addEventListener('DOMContentLoaded', function() {
      });
     
         addExperienceBtn.addEventListener('click', function() {
-            const title = prompt('Titre du poste:');
-            if (title && title.trim()) {
-                const company = prompt('Entreprise:');
-                if (company && company.trim()) {
-                    const period = prompt('Période (ex: 2022 - Présent):');
-                    const description = prompt('Description:');
-                    
-                    const container = document.getElementById('experienceContainer');
-                    const newExp = document.createElement('div');
-                    newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
-                    newExp.innerHTML = `
-                        <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(${container.children.length})">
-                            <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                        </button>
-                        <div class="flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <h3 class="font-semibold text-[#f5f5f5]">${title.trim()}</h3>
-                        </div>
-                        <p class="text-[#00b6b4] font-medium">${company.trim()}</p>
-                        <p class="text-sm text-[#9ca3af] mb-2">${period || 'Période'}</p>
-                        <p class="text-[#9ca3af]">${description || 'Description'}</p>
-                    `;
-                    container.appendChild(newExp);
-                }
-            }
+            const container = document.getElementById('experienceContainer');
+            const newExp = document.createElement('div');
+            newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
+            newExp.innerHTML = `
+                <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(${container.children.length})">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </button>
+                <div class="flex items-center gap-2 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5 text-[#00b6b4]"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <input type="text" placeholder="Titre du poste" class="bg-transparent border-none text-lg font-semibold text-[#f5f5f5] w-full focus:outline-none" />
+                </div>
+                <input type="text" placeholder="Entreprise" class="text-[#00b6b4] font-medium bg-transparent border-none w-full focus:outline-none mb-2" />
+                <input type="text" placeholder="Période (ex: 2022 - Présent)" class="text-sm text-[#9ca3af] bg-transparent border-none w-full focus:outline-none mb-2" />
+                <textarea placeholder="Description" class="text-[#9ca3af] bg-transparent border-none w-full focus:outline-none" rows="2"></textarea>
+            `;
+            container.appendChild(newExp);
         });
     
     addEducationBtn.addEventListener('click', function() {
-        const degree = prompt('Diplôme:');
-        if (degree && degree.trim()) {
-            const school = prompt('École/Université:');
-            if (school && school.trim()) {
-                const period = prompt('Période (ex: 2020 - 2022):');
-                const description = prompt('Description:');
-                
-                const container = document.getElementById('educationContainer');
-                const newEdu = document.createElement('div');
-                newEdu.className = 'border-l-4 border-[#009999] pl-6 relative';
-                newEdu.innerHTML = `
-                    <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(${container.children.length})">
-                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                    </button>
-                    <div class="flex items-center gap-2 mb-2">
-                        <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                        <h3 class="font-semibold text-[#f5f5f5]">${degree.trim()}</h3>
-                    </div>
-                    <p class="text-[#009999] font-medium">${school.trim()}</p>
-                    <p class="text-sm text-[#9ca3af] mb-2">${period || 'Période'}</p>
-                    <p class="text-[#9ca3af]">${description || 'Description'}</p>
-                `;
-                container.appendChild(newEdu);
-            }
-        }
+        const container = document.getElementById('educationContainer');
+        const newEdu = document.createElement('div');
+        newEdu.className = 'border-l-4 border-[#009999] pl-6 relative';
+        newEdu.innerHTML = `
+            <button class="hidden absolute -left-2 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(${container.children.length})">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <svg class="w-5 h-5 text-[#009999]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                <input type="text" placeholder="Diplôme" class="bg-transparent border-none text-lg font-semibold text-[#f5f5f5] w-full focus:outline-none" />
+            </div>
+            <input type="text" placeholder="École/Université" class="text-[#009999] font-medium bg-transparent border-none w-full focus:outline-none mb-2" />
+            <input type="text" placeholder="Période (ex: 2020 - 2022)" class="text-sm text-[#9ca3af] bg-transparent border-none w-full focus:outline-none mb-2" />
+            <textarea placeholder="Description" class="text-[#9ca3af] bg-transparent border-none w-full focus:outline-none" rows="2"></textarea>
+        `;
+        container.appendChild(newEdu);
     });
     
     addSkillBtn.addEventListener('click', function() {
-        const skillName = prompt('Entrez le nom de la compétence:');
-        if (skillName && skillName.trim()) {
-            const container = document.getElementById('skillsContainer');
-            const newSkill = document.createElement('span');
-            newSkill.className = 'px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2';
-            newSkill.innerHTML = `
-                ${skillName.trim()}
-                <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill('${skillName.trim()}')">
-                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                </button>
-            `;
-            container.appendChild(newSkill);
-        }
+        const container = document.getElementById('skillsContainer');
+        const newSkill = document.createElement('span');
+        newSkill.className = 'px-3 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-sm font-medium flex items-center gap-2';
+        newSkill.innerHTML = `
+            <input type="text" placeholder="Nouvelle compétence" class="bg-transparent border-none text-[#00b6b4] text-sm font-medium w-32 focus:outline-none" />
+            <button class="hidden text-red-500 hover:text-red-700" onclick="removeSkill(this)">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        `;
+        container.appendChild(newSkill);
     });
     
-    addLanguageBtn.addEventListener('click', function() {
-        const languageName = prompt('Entrez le nom de la langue:');
-        if (languageName && languageName.trim()) {
+        addLanguageBtn.addEventListener('click', function() {
             const container = document.getElementById('languagesContainer');
             const newLanguage = document.createElement('div');
             newLanguage.className = 'flex items-center justify-between border border-[#444444] rounded-lg p-3';
             newLanguage.innerHTML = `
                 <div class="flex items-center gap-2">
                     <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    <span class="font-medium text-[#f5f5f5]">${languageName.trim()}</span>
+                    <input type="text" placeholder="Nom de la langue" class="bg-transparent border-none font-medium text-[#f5f5f5] w-32 focus:outline-none" />
                 </div>
                 <div class="flex items-center gap-2">
                     <select class="bg-[#333333] border border-[#444444] rounded px-2 py-1 text-[#f5f5f5] text-sm">
@@ -577,20 +625,58 @@ document.addEventListener('DOMContentLoaded', function() {
                         <option value="Avancé">Avancé</option>
                         <option value="Natif">Natif</option>
                     </select>
-                    <button class="hidden text-red-500 hover:text-red-700" onclick="this.parentElement.parentElement.remove()">
+                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeLanguage(this)">
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                     </button>
                 </div>
             `;
             container.appendChild(newLanguage);
-        }
-    });
+        });
+        
+        // Avatar upload functionality
+        avatarUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    alert('Veuillez sélectionner un fichier image valide.');
+                    return;
+                }
+                
+                // Validate file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('La taille du fichier ne doit pas dépasser 2MB.');
+                    return;
+                }
+                
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarContainer = document.querySelector('.relative');
+                    const existingImage = document.getElementById('avatarImage');
+                    const existingInitials = document.getElementById('avatarInitials');
+                    
+                    if (existingImage) {
+                        existingImage.src = e.target.result;
+                    } else if (existingInitials) {
+                        // Replace initials with image
+                        const newImage = document.createElement('img');
+                        newImage.id = 'avatarImage';
+                        newImage.src = e.target.result;
+                        newImage.alt = 'Avatar';
+                        newImage.className = 'w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]';
+                        existingInitials.parentNode.replaceChild(newImage, existingInitials);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     
 });
 
- function removeSkill(skill) {
-     if (confirm(`Êtes-vous sûr de vouloir supprimer la compétence "${skill}"?`)) {
-         const skillElement = event.target.closest('span');
+ function removeSkill(button) {
+     if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence?')) {
+         const skillElement = button.closest('span');
          skillElement.remove();
      }
  }
@@ -615,12 +701,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
- function removeLanguage(index) {
+ function removeLanguage(button) {
      if (confirm('Êtes-vous sûr de vouloir supprimer cette langue?')) {
-         const languageItems = document.querySelectorAll('#languagesContainer .flex.items-center.justify-between');
-         if (languageItems[index]) {
-             languageItems[index].remove();
-         }
+         const languageElement = button.closest('.flex.items-center.justify-between');
+         languageElement.remove();
      }
  }
 </script>

@@ -52,6 +52,9 @@ class DashboardController extends Controller
             ->limit(6)
             ->get();
         
+        // Get profile completion percentage
+        $profileCompletion = $profile ? $profile->getCompletionPercentage() : 0;
+        
         // Statistics for dashboard
         $stats = [
             'total_applications' => $applicationsCount,
@@ -59,6 +62,7 @@ class DashboardController extends Controller
             'reviewed_applications' => $reviewedApplications,
             'shortlisted_applications' => $shortlistedApplications,
             'success_rate' => $applicationsCount > 0 ? round(($shortlistedApplications / $applicationsCount) * 100, 1) : 0,
+            'profile_completion' => $profileCompletion,
         ];
         
         return view('dashboard.candidate.index', compact(

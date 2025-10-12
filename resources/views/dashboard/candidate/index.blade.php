@@ -207,15 +207,20 @@
             Actions rapides
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            <button class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-dashed border-[#444444] rounded-xl hover:border-[#00b6b4] hover:bg-[#00b6b4]/10 transition-all duration-200 group">
+            <a href="{{ route('candidate.profile') }}" class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-dashed border-[#444444] rounded-xl hover:border-[#00b6b4] hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-8 h-8 sm:w-10 sm:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
                 <div class="text-left min-w-0">
                     <div class="font-medium text-[#f5f5f5] text-sm sm:text-base">Compléter mon profil</div>
-                    <div class="text-xs sm:text-sm text-[#9ca3af]">85% complété</div>
+                    <div class="text-xs sm:text-sm {{ $stats['profile_completion'] == 100 ? 'text-green-400' : 'text-[#9ca3af]' }}">
+                        {{ $stats['profile_completion'] }}% complété
+                        @if($stats['profile_completion'] == 100)
+                            ✅
+                        @endif
+                    </div>
                 </div>
-            </button>
+            </a>
 
             <button class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-2 border-dashed border-[#444444] rounded-xl hover:border-[#00b6b4] hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-400/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">

@@ -82,4 +82,30 @@ class CandidateProfile extends Model
     {
         return $query->whereJsonContains('skills', $skills);
     }
+
+    /**
+     * Calculate profile completion percentage
+     */
+    public function getCompletionPercentage()
+    {
+        $fields = [
+            'phone' => !empty($this->phone),
+            'address' => !empty($this->address),
+            'city' => !empty($this->city),
+            'date_of_birth' => !empty($this->date_of_birth),
+            'bio' => !empty($this->bio),
+            'skills' => !empty($this->skills) && is_array($this->skills) && count($this->skills) > 0,
+            'experience' => !empty($this->experience) && is_array($this->experience) && count($this->experience) > 0,
+            'education' => !empty($this->education) && is_array($this->education) && count($this->education) > 0,
+            'languages' => !empty($this->languages) && is_array($this->languages) && count($this->languages) > 0,
+            'linkedin_url' => !empty($this->linkedin_url),
+            'portfolio_url' => !empty($this->portfolio_url),
+        ];
+
+        $completedFields = array_filter($fields);
+        $totalFields = count($fields);
+        $completedCount = count($completedFields);
+
+        return round(($completedCount / $totalFields) * 100);
+    }
 }

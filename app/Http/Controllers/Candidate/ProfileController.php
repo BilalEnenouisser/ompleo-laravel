@@ -169,7 +169,9 @@ class ProfileController extends Controller
                 'skills' => $request->skills,
                 'experience' => $request->experience,
                 'education' => $request->education,
-                'languages' => $request->languages
+                'languages' => $request->languages,
+                'experience_decoded' => json_decode($request->experience, true),
+                'education_decoded' => json_decode($request->education, true)
             ]);
             $profile->update($data);
             \Log::info('Profile updated successfully');
