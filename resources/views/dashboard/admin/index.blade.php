@@ -4,6 +4,10 @@
 @section('description', 'Tableau de bord administrateur pour gérer la plateforme OMPLEO.')
 @section('page-title', 'Tableau de bord')
 
+@php
+    use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
 <div class="w-full space-y-4 md:space-y-8">
             <!-- Welcome Section -->
@@ -99,9 +103,9 @@
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">2,847</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_users']) }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Utilisateurs totaux</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+127 ce mois</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['candidates'] + $stats['recruiters'] }} ce mois</p>
                 </div>
 
                 <!-- Offres d'emploi -->
@@ -115,9 +119,9 @@
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">1,187</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_jobs']) }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Offres d'emploi</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+89 cette semaine</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['published_jobs'] }} cette semaine</p>
                 </div>
 
                 <!-- Revenus -->
@@ -131,9 +135,9 @@
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">847,500 DA</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_applications'] * 50) }} DA</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Revenus</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+12.5% ce mois</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ round(($stats['pending_applications'] / max($stats['total_applications'], 1)) * 100, 1) }}% ce mois</p>
                 </div>
 
                 <!-- Actions aujourd'hui -->
@@ -146,7 +150,7 @@
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">5</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['pending_applications'] }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Actions aujourd'hui</p>
                     <p class="text-[#00b6b4] text-xs font-medium">Temps réel</p>
                 </div>
@@ -215,6 +219,7 @@
 
                 <!-- Liste des événements de tracking -->
                 <div class="space-y-2 md:space-y-3 max-h-80 md:max-h-96 overflow-y-auto">
+                    @forelse($recentApplications as $application)
                     <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
                         <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30 flex-shrink-0">
                             <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -227,16 +232,16 @@
                         
                         <div class="flex-1 min-w-0">
                             <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">Ahmed Belkacem</span>
+                                <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">{{ $application->candidate->name }}</span>
                                 <span class="px-2 py-1 rounded-full text-xs font-medium text-blue-400 bg-blue-900/30 w-fit">candidate</span>
                             </div>
                             <p class="text-xs md:text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Connexion</strong> - Connexion réussie depuis Chrome
+                                <strong class="text-[#00b6b4]">Candidature envoyée</strong> - Candidature pour "{{ $application->job->title }}" chez {{ $application->job->company->name }}
                             </p>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-[#999999]">
-                                <span class="hidden sm:inline">/login</span>
+                                <span class="hidden sm:inline">/jobs/{{ $application->job->slug }}</span>
                                 <span class="hidden sm:inline">•</span>
-                                <span>Il y a 5 minutes</span>
+                                <span>{{ $application->created_at->diffForHumans() }}</span>
                                 <span class="hidden sm:inline">•</span>
                                 <span class="text-green-400">Succès</span>
                             </div>
@@ -250,154 +255,12 @@
                             </svg>
                         </button>
                     </div>
-
-                    <div class="flex items-center gap-4 p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-green-400 bg-green-900/30">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                <path d="M10 6h4"/>
-                                <path d="M10 10h4"/>
-                                <path d="M10 14h4"/>
-                                <path d="M10 18h4"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5]">Recruiter User</span>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-900/30">recruiter</span>
-                            </div>
-                            <p class="text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Publication offre</strong> - Nouvelle offre "Développeur React" publiée
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-[#999999]">
-                                <span>/recruiter/create-offer</span>
-                                <span>•</span>
-                                <span>Il y a 17 minutes</span>
-                                <span>•</span>
-                                <span class="text-green-400">Succès</span>
-                            </div>
-                        </div>
-                        
-                        <button class="p-2 text-[#cccccc] hover:text-[#00b6b4] transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <path d="M15 3h6v6"/>
-                                <path d="M10 14L21 3"/>
-                            </svg>
-                        </button>
+                    @empty
+                    <div class="text-center py-8">
+                        <p class="text-[#cccccc]">Aucune activité récente</p>
                     </div>
+                    @endforelse
 
-                    <div class="flex items-center gap-4 p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5]">Ahmed Belkacem</span>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-blue-400 bg-blue-900/30">candidate</span>
-                            </div>
-                            <p class="text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Candidature envoyée</strong> - Candidature pour "Développeur Frontend React" chez IMPACTOME
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-[#999999]">
-                                <span>/job/developpeur-frontend-react</span>
-                                <span>•</span>
-                                <span>Il y a 32 minutes</span>
-                                <span>•</span>
-                                <span class="text-green-400">Succès</span>
-                            </div>
-                        </div>
-                        
-                        <button class="p-2 text-[#cccccc] hover:text-[#00b6b4] transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <path d="M15 3h6v6"/>
-                                <path d="M10 14L21 3"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-green-400 bg-green-900/30">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                <path d="M10 6h4"/>
-                                <path d="M10 10h4"/>
-                                <path d="M10 14h4"/>
-                                <path d="M10 18h4"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5]">Recruiter User</span>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-900/30">recruiter</span>
-                            </div>
-                            <p class="text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Consultation CV</strong> - Téléchargement CV de Ahmed Belkacem
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-[#999999]">
-                                <span>/recruiter/candidates</span>
-                                <span>•</span>
-                                <span>Il y a 47 minutes</span>
-                                <span>•</span>
-                                <span class="text-green-400">Succès</span>
-                            </div>
-                        </div>
-                        
-                        <button class="p-2 text-[#cccccc] hover:text-[#00b6b4] transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <path d="M15 3h6v6"/>
-                                <path d="M10 14L21 3"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 bg-purple-900/30">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                <path d="M9 12l2 2 4-4"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5]">Admin User</span>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-purple-400 bg-purple-900/30">admin</span>
-                            </div>
-                            <p class="text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Création article blog</strong> - Nouvel article "Comment rédiger un CV"
-                            </p>
-                            <div class="flex items-center gap-4 text-xs text-[#999999]">
-                                <span>/admin/blog</span>
-                                <span>•</span>
-                                <span>Il y a 1 heure</span>
-                                <span>•</span>
-                                <span class="text-green-400">Succès</span>
-                            </div>
-                        </div>
-                        
-                        <button class="p-2 text-[#cccccc] hover:text-[#00b6b4] transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <path d="M15 3h6v6"/>
-                                <path d="M10 14L21 3"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -416,12 +279,12 @@
                                     <path d="M12 17h.01"/>
                                 </svg>
                             </div>
-                            <span class="px-2 py-1 rounded-full text-xs font-medium text-red-400 bg-red-900/30">3</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium text-red-400 bg-red-900/30">{{ $stats['pending_applications'] }}</span>
                         </div>
-                        <h3 class="font-semibold text-[#f5f5f5] mb-2">Signalements à traiter</h3>
-                        <button class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors">
+                        <h3 class="font-semibold text-[#f5f5f5] mb-2">Candidatures en attente</h3>
+                        <a href="{{ route('admin.jobs') }}" class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors block text-center">
                             Traiter
-                        </button>
+                        </a>
                     </div>
 
                     <div class="border border-[#444444] rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:transform hover:scale-105 bg-[#333333]">
@@ -432,12 +295,12 @@
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
                             </div>
-                            <span class="px-2 py-1 rounded-full text-xs font-medium text-yellow-400 bg-yellow-900/30">5</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium text-yellow-400 bg-yellow-900/30">{{ $stats['draft_jobs'] }}</span>
                         </div>
                         <h3 class="font-semibold text-[#f5f5f5] mb-2">Offres à modérer</h3>
-                        <button class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors">
+                        <a href="{{ route('admin.jobs') }}" class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors block text-center">
                             Modérer
-                        </button>
+                        </a>
                     </div>
 
                     <div class="border border-[#444444] rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:transform hover:scale-105 bg-[#333333]">
@@ -453,12 +316,12 @@
                                     <path d="M10 18h4"/>
                                 </svg>
                             </div>
-                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-900/30">2</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-900/30">{{ $stats['total_companies'] }}</span>
                         </div>
-                        <h3 class="font-semibold text-[#f5f5f5] mb-2">Nouveaux partenaires</h3>
-                        <button class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors">
-                            Valider
-                        </button>
+                        <h3 class="font-semibold text-[#f5f5f5] mb-2">Entreprises actives</h3>
+                        <a href="{{ route('admin.companies') }}" class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2 rounded-lg text-sm font-medium transition-colors block text-center">
+                            Gérer
+                        </a>
                     </div>
                 </div>
             </div>
@@ -475,89 +338,27 @@
                         </button>
                     </div>
                     <div class="space-y-3 md:space-y-4">
+                        @forelse($recentActivities as $activity)
                         <div class="flex items-start md:items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-[#333333] rounded-lg transition-colors">
                             <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30 flex-shrink-0">
                                 <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                     <circle cx="9" cy="7" r="4"/>
                                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-medium text-[#f5f5f5] text-sm md:text-base">Connexion</p>
-                                <p class="text-xs md:text-sm text-[#cccccc] truncate">Ahmed Belkacem - Connexion réussie depuis Chrome</p>
+                                <p class="font-medium text-[#f5f5f5] text-sm md:text-base">{{ $activity['title'] }}</p>
+                                <p class="text-xs md:text-sm text-[#cccccc] truncate">{{ $activity['description'] }}</p>
                             </div>
-                            <span class="text-xs text-[#999999] flex-shrink-0">Il y a 7 minutes</span>
+                            <span class="text-xs text-[#999999] flex-shrink-0">{{ $activity['time'] }}</span>
                         </div>
-
-                        <div class="flex items-center gap-4 p-3 hover:bg-[#333333] rounded-lg transition-colors">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-green-400 bg-green-900/30">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                    <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                    <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                    <path d="M10 6h4"/>
-                                    <path d="M10 10h4"/>
-                                    <path d="M10 14h4"/>
-                                    <path d="M10 18h4"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-medium text-[#f5f5f5]">Publication offre</p>
-                                <p class="text-sm text-[#cccccc]">Recruiter User - Nouvelle offre "Développeur React" publiée</p>
-                            </div>
-                            <span class="text-xs text-[#999999]">Il y a 17 minutes</span>
+                        @empty
+                        <div class="text-center py-8">
+                            <p class="text-[#cccccc]">Aucune activité récente</p>
                         </div>
-
-                        <div class="flex items-center gap-4 p-3 hover:bg-[#333333] rounded-lg transition-colors">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-medium text-[#f5f5f5]">Candidature envoyée</p>
-                                <p class="text-sm text-[#cccccc]">Ahmed Belkacem - Candidature pour "Développeur Frontend React" chez IMPACTOME</p>
-                            </div>
-                            <span class="text-xs text-[#999999]">Il y a 32 minutes</span>
-                        </div>
-
-                        <div class="flex items-center gap-4 p-3 hover:bg-[#333333] rounded-lg transition-colors">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-green-400 bg-green-900/30">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                    <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                    <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                    <path d="M10 6h4"/>
-                                    <path d="M10 10h4"/>
-                                    <path d="M10 14h4"/>
-                                    <path d="M10 18h4"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-medium text-[#f5f5f5]">Consultation CV</p>
-                                <p class="text-sm text-[#cccccc]">Recruiter User - Téléchargement CV de Ahmed Belkacem</p>
-                            </div>
-                            <span class="text-xs text-[#999999]">Il y a 47 minutes</span>
-                        </div>
-
-                        <div class="flex items-center gap-4 p-3 hover:bg-[#333333] rounded-lg transition-colors">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 bg-purple-900/30">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                    <path d="M9 12l2 2 4-4"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-medium text-[#f5f5f5]">Création article blog</p>
-                                <p class="text-sm text-[#cccccc]">Admin User - Nouvel article "Comment rédiger un CV"</p>
-                            </div>
-                            <span class="text-xs text-[#999999]">Il y a 1 heure</span>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
 
@@ -572,101 +373,39 @@
                         </button>
                     </div>
                     <div class="space-y-3 md:space-y-4">
+                        @forelse($topCompanies as $company)
                         <div class="flex items-center justify-between p-3 md:p-4 border border-[#444444] rounded-lg md:rounded-xl hover:bg-[#333333] transition-colors">
                             <div class="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
                                 <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-5 h-5 md:w-6 md:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                        <path d="M10 6h4"/>
-                                        <path d="M10 10h4"/>
-                                        <path d="M10 14h4"/>
-                                        <path d="M10 18h4"/>
-                                    </svg>
+                                    @if($company->logo)
+                                        <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-full h-full rounded-full object-cover">
+                                    @else
+                                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
+                                            <path d="M10 6h4"/>
+                                            <path d="M10 10h4"/>
+                                            <path d="M10 14h4"/>
+                                            <path d="M10 18h4"/>
+                                        </svg>
+                                    @endif
                                 </div>
                                 <div class="min-w-0 flex-1">
-                                    <h3 class="font-semibold text-[#f5f5f5] text-sm md:text-base truncate">IMPACTOME</h3>
-                                    <p class="text-xs md:text-sm text-[#cccccc]">12 offres • 89 candidatures</p>
+                                    <h3 class="font-semibold text-[#f5f5f5] text-sm md:text-base truncate">{{ $company->name }}</h3>
+                                    <p class="text-xs md:text-sm text-[#cccccc]">{{ $company->jobs_count }} offres • {{ $company->applications_count }} candidatures</p>
                                 </div>
                             </div>
                             <div class="text-right flex-shrink-0 ml-2">
-                                <p class="font-bold text-[#f5f5f5] text-sm md:text-base">45,000 DA</p>
+                                <p class="font-bold text-[#f5f5f5] text-sm md:text-base">{{ number_format($company->applications_count * 50) }} DA</p>
                                 <p class="text-xs text-[#999999]">Revenus</p>
                             </div>
                         </div>
-
-                        <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                        <path d="M10 6h4"/>
-                                        <path d="M10 10h4"/>
-                                        <path d="M10 14h4"/>
-                                        <path d="M10 18h4"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-[#f5f5f5]">CONDOR</h3>
-                                    <p class="text-sm text-[#cccccc]">8 offres • 67 candidatures</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-[#f5f5f5]">32,000 DA</p>
-                                <p class="text-xs text-[#999999]">Revenus</p>
-                            </div>
+                        @empty
+                        <div class="text-center py-8">
+                            <p class="text-[#cccccc]">Aucune entreprise trouvée</p>
                         </div>
-
-                        <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                        <path d="M10 6h4"/>
-                                        <path d="M10 10h4"/>
-                                        <path d="M10 14h4"/>
-                                        <path d="M10 18h4"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-[#f5f5f5]">SONATRACH</h3>
-                                    <p class="text-sm text-[#cccccc]">15 offres • 134 candidatures</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-[#f5f5f5]">78,000 DA</p>
-                                <p class="text-xs text-[#999999]">Revenus</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                                        <path d="M10 6h4"/>
-                                        <path d="M10 10h4"/>
-                                        <path d="M10 14h4"/>
-                                        <path d="M10 18h4"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-[#f5f5f5]">OMPLEO</h3>
-                                    <p class="text-sm text-[#cccccc]">6 offres • 45 candidatures</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-[#f5f5f5]">24,000 DA</p>
-                                <p class="text-xs text-[#999999]">Revenus</p>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>

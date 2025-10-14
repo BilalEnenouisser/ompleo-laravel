@@ -113,6 +113,33 @@ Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 
+// Admin Routes
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.user.type:admin'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Jobs Management
+    Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('jobs');
+    Route::get('/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'show'])->name('jobs.show');
+    Route::patch('/jobs/{job}/status', [App\Http\Controllers\Admin\JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
+    Route::delete('/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'destroy'])->name('jobs.destroy');
+    
+    // Users Management
+    Route::get('/users', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users');
+    Route::get('/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [App\Http\Controllers\Admin\UsersController::class, 'edit'])->name('users.edit');
+    Route::patch('/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'destroy'])->name('users.destroy');
+    
+    // Companies Management
+    Route::get('/companies', [App\Http\Controllers\Admin\CompaniesController::class, 'index'])->name('companies');
+    Route::get('/companies/create', [App\Http\Controllers\Admin\CompaniesController::class, 'create'])->name('companies.create');
+    Route::post('/companies', [App\Http\Controllers\Admin\CompaniesController::class, 'store'])->name('companies.store');
+    Route::get('/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'show'])->name('companies.show');
+    Route::get('/companies/{company}/edit', [App\Http\Controllers\Admin\CompaniesController::class, 'edit'])->name('companies.edit');
+    Route::patch('/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'update'])->name('companies.update');
+    Route::delete('/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'destroy'])->name('companies.destroy');
+});
+
 // Applications Routes
 Route::middleware('auth')->group(function () {
     Route::get('/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('applications.index');
