@@ -15,6 +15,8 @@ class RecruiterProfile extends Model
         'company_id',
         'position',
         'phone',
+        'city',
+        'status',
     ];
 
     /**

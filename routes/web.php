@@ -59,9 +59,23 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Dashboard Routes
 Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', function () {
-        return view('dashboard.admin.users');
-    })->name('admin.users');
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users');
+    Route::post('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'show'])->name('admin.users.show');
+    Route::put('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'destroy'])->name('admin.users.destroy');
+
+// Test route for debugging dates
+Route::get('/test-dates', function() {
+    $user = App\Models\User::latest()->first();
+    return response()->json([
+        'user_name' => $user->name,
+        'created_at' => $user->created_at,
+        'updated_at' => $user->updated_at,
+        'created_at_formatted' => $user->created_at->format('Y-m-d H:i:s'),
+        'updated_at_formatted' => $user->updated_at->format('Y-m-d H:i:s'),
+    ]);
+});
     Route::get('/admin/jobs', function () {
         return view('dashboard.admin.jobs');
     })->name('admin.jobs');

@@ -27,6 +27,7 @@ class CandidateProfile extends Model
         'portfolio_url',
         'facebook_url',
         'twitter_url',
+        'status',
     ];
 
     protected $casts = [

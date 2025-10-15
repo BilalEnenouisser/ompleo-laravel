@@ -105,7 +105,7 @@
                     </div>
                     <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_users']) }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Utilisateurs totaux</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['candidates'] + $stats['recruiters'] }} ce mois</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['users_this_month'] }} ce mois</p>
                 </div>
 
                 <!-- Offres d'emploi -->
@@ -121,7 +121,7 @@
                     </div>
                     <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_jobs']) }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Offres d'emploi</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['published_jobs'] }} cette semaine</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['jobs_this_week'] }} cette semaine</p>
                 </div>
 
                 <!-- Revenus -->
@@ -137,7 +137,7 @@
                     </div>
                     <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_applications'] * 50) }} DA</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Revenus</p>
-                    <p class="text-[#00b6b4] text-xs font-medium">+{{ round(($stats['pending_applications'] / max($stats['total_applications'], 1)) * 100, 1) }}% ce mois</p>
+                    <p class="text-[#00b6b4] text-xs font-medium">+{{ $stats['applications_this_month'] }} ce mois</p>
                 </div>
 
                 <!-- Actions aujourd'hui -->
@@ -150,7 +150,7 @@
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['pending_applications'] }}</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['actions_today'] }}</h3>
                     <p class="text-[#cccccc] text-sm mb-2">Actions aujourd'hui</p>
                     <p class="text-[#00b6b4] text-xs font-medium">Temps réel</p>
                 </div>
@@ -167,13 +167,17 @@
                         <span class="sm:hidden">Tracking</span>
                     </h2>
                     <div class="flex items-center gap-2 md:gap-3">
-                        <select class="px-2 md:px-3 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] text-xs md:text-sm">
-                            <option value="1h">1h</option>
+                        <!-- Time Filter Dropdown -->
+                        <select id="timeFilter" class="px-2 md:px-3 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] text-xs md:text-sm focus:outline-none focus:border-[#00b6b4] transition-colors">
+                            <option value="all">Tout</option>
+                            <option value="1h" selected>1h</option>
                             <option value="24h">24h</option>
                             <option value="7d">7j</option>
                             <option value="30d">30j</option>
                         </select>
-                        <button class="p-2 bg-[#333333] border border-[#444444] rounded-lg text-[#cccccc] hover:text-[#00b6b4] transition-colors">
+                        
+                        <!-- Refresh Button -->
+                        <button id="refreshTracking" class="p-2 bg-[#333333] border border-[#444444] rounded-lg text-[#cccccc] hover:text-[#00b6b4] transition-colors">
                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
                                 <path d="M21 3v5h-5"/>
@@ -191,14 +195,14 @@
                             <circle cx="11" cy="11" r="8"/>
                             <path d="m21 21-4.35-4.35"/>
                         </svg>
-                        <input type="text" placeholder="Rechercher..." class="w-full pl-10 pr-4 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] placeholder-[#cccccc] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none text-sm">
+                        <input type="text" id="activitySearch" placeholder="Rechercher..." class="w-full pl-10 pr-4 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] placeholder-[#cccccc] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none text-sm">
                     </div>
                     
                     <div class="relative">
                         <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#cccccc] w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
                         </svg>
-                        <select class="w-full pl-10 pr-4 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none text-sm">
+                        <select id="userTypeFilter" class="w-full pl-10 pr-4 py-2 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none text-sm">
                             <option value="">Tous les utilisateurs</option>
                             <option value="candidate">Candidats</option>
                             <option value="recruiter">Recruteurs</option>
@@ -206,7 +210,7 @@
                         </select>
                     </div>
 
-                    <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-3 md:px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 text-sm">
+                    <button id="exportLogs" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-3 md:px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 text-sm">
                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <path d="M7 10l5 5 5-5"/>
@@ -218,32 +222,66 @@
                 </div>
 
                 <!-- Liste des événements de tracking -->
-                <div class="space-y-2 md:space-y-3 max-h-80 md:max-h-96 overflow-y-auto">
-                    @forelse($recentApplications as $application)
-                    <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30 flex-shrink-0">
+                <div id="trackingContainer" class="space-y-2 md:space-y-3 max-h-96 md:max-h-[500px] overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: #4a5568 #2d3748;">
+                    <!-- Debug: Activities count: {{ is_array($recentActivities) ? count($recentActivities) : $recentActivities->count() }} -->
+                    <!-- Debug: First activity keys: {{ json_encode(array_keys($recentActivities->first() ?? [])) }} -->
+                    @forelse($recentActivities as $activity)
+                    <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors"
+                         data-activity="true"
+                         data-user-name="{{ $activity['user_name'] ?? '' }}"
+                         data-activity="{{ $activity['activity'] ?? '' }}"
+                         data-description="{{ $activity['description'] ?? '' }}"
+                         data-user-type="{{ $activity['user_type'] ?? '' }}"
+                         data-time="{{ isset($activity['time']) ? $activity['time']->toISOString() : '' }}"
+                         data-type="{{ $activity['type'] ?? '' }}">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center 
+                            @if(isset($activity['icon_color']) && $activity['icon_color'] == 'blue') text-blue-400 bg-blue-900/30
+                            @elseif(isset($activity['icon_color']) && $activity['icon_color'] == 'green') text-green-400 bg-green-900/30
+                            @else text-purple-400 bg-purple-900/30
+                            @endif flex-shrink-0">
+                            @if(isset($activity['type']) && $activity['type'] == 'application')
                             <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
+                            @elseif(isset($activity['type']) && $activity['type'] == 'job')
+                            <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                                <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                                <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
+                                <path d="M10 6h4"/>
+                                <path d="M10 10h4"/>
+                                <path d="M10 14h4"/>
+                                <path d="M10 18h4"/>
+                            </svg>
+                            @else
+                            <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            @endif
                         </div>
                         
                         <div class="flex-1 min-w-0">
                             <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                                <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">{{ $application->candidate->name }}</span>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-blue-400 bg-blue-900/30 w-fit">candidate</span>
+                                <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">{{ $activity['user_name'] ?? 'Utilisateur inconnu' }}</span>
+                                <span class="px-2 py-1 rounded-full text-xs font-medium 
+                                    @if(isset($activity['user_type']) && $activity['user_type'] == 'candidate') text-blue-400 bg-blue-900/30
+                                    @elseif(isset($activity['user_type']) && $activity['user_type'] == 'recruiter') text-green-400 bg-green-900/30
+                                    @else text-purple-400 bg-purple-900/30
+                                    @endif w-fit">{{ $activity['user_type'] ?? 'admin' }}</span>
                             </div>
                             <p class="text-xs md:text-sm text-[#cccccc] mb-1">
-                                <strong class="text-[#00b6b4]">Candidature envoyée</strong> - Candidature pour "{{ $application->job->title }}" chez {{ $application->job->company->name }}
+                                <strong class="text-[#00b6b4]">{{ $activity['activity'] ?? 'Activité' }}</strong> - {{ $activity['description'] ?? 'Description non disponible' }}
                             </p>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-[#999999]">
-                                <span class="hidden sm:inline">/jobs/{{ $application->job->slug }}</span>
+                                <span class="hidden sm:inline">{{ $activity['url'] ?? '/' }}</span>
                                 <span class="hidden sm:inline">•</span>
-                                <span>{{ $application->created_at->diffForHumans() }}</span>
+                                <span>{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
                                 <span class="hidden sm:inline">•</span>
-                                <span class="text-green-400">Succès</span>
+                                <span class="text-green-400">{{ $activity['status'] ?? 'Succès' }}</span>
                             </div>
                         </div>
                         
@@ -333,7 +371,7 @@
                         <h2 class="text-lg md:text-xl font-bold text-[#f5f5f5]">
                             Activités récentes
                         </h2>
-                        <button class="text-[#00b6b4] hover:text-[#009e9c] text-xs md:text-sm font-medium">
+                        <button id="showAllActivities" class="text-[#00b6b4] hover:text-[#009e9c] text-xs md:text-sm font-medium">
                             Voir tout
                         </button>
                     </div>
@@ -349,10 +387,10 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-medium text-[#f5f5f5] text-sm md:text-base">{{ $activity['title'] }}</p>
-                                <p class="text-xs md:text-sm text-[#cccccc] truncate">{{ $activity['description'] }}</p>
+                                <p class="font-medium text-[#f5f5f5] text-sm md:text-base">{{ $activity['activity'] ?? 'Activité' }}</p>
+                                <p class="text-xs md:text-sm text-[#cccccc] truncate">{{ $activity['description'] ?? 'Description non disponible' }}</p>
                             </div>
-                            <span class="text-xs text-[#999999] flex-shrink-0">{{ $activity['time'] }}</span>
+                            <span class="text-xs text-[#999999] flex-shrink-0">{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
                         </div>
                         @empty
                         <div class="text-center py-8">
@@ -368,7 +406,7 @@
                         <h2 class="text-lg md:text-xl font-bold text-[#f5f5f5]">
                             Top entreprises
                         </h2>
-                        <button class="text-[#00b6b4] hover:text-[#009e9c] text-xs md:text-sm font-medium">
+                        <button id="showAllCompanies" class="text-[#00b6b4] hover:text-[#009e9c] text-xs md:text-sm font-medium">
                             Voir tout
                         </button>
                     </div>
@@ -451,6 +489,369 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-</div>
+
+    <!-- Activities Popup Modal -->
+    <div id="activitiesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-6 max-w-4xl w-full mx-4 max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-[#f5f5f5]">Toutes les activités</h2>
+                <button id="closeActivitiesModal" class="text-[#cccccc] hover:text-[#f5f5f5] text-2xl">&times;</button>
+            </div>
+            <div class="overflow-y-auto flex-1 space-y-3">
+                @forelse($allRecentActivities as $activity)
+                <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center 
+                        @if(isset($activity['icon_color']) && $activity['icon_color'] == 'blue') text-blue-400 bg-blue-900/30
+                        @elseif(isset($activity['icon_color']) && $activity['icon_color'] == 'green') text-green-400 bg-green-900/30
+                        @else text-purple-400 bg-purple-900/30
+                        @endif flex-shrink-0">
+                        @if(isset($activity['type']) && $activity['type'] == 'application')
+                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        @elseif(isset($activity['type']) && $activity['type'] == 'job')
+                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
+                            <path d="M10 6h4"/>
+                            <path d="M10 10h4"/>
+                            <path d="M10 14h4"/>
+                            <path d="M10 18h4"/>
+                        </svg>
+                        @else
+                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        @endif
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                            <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">{{ $activity['user_name'] ?? 'Utilisateur inconnu' }}</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium 
+                                @if(isset($activity['user_type']) && $activity['user_type'] == 'candidate') text-blue-400 bg-blue-900/30
+                                @elseif(isset($activity['user_type']) && $activity['user_type'] == 'recruiter') text-green-400 bg-green-900/30
+                                @else text-purple-400 bg-purple-900/30
+                                @endif w-fit">{{ $activity['user_type'] ?? 'admin' }}</span>
+                        </div>
+                        <p class="text-xs md:text-sm text-[#cccccc] mb-1">
+                            <strong class="text-[#00b6b4]">{{ $activity['activity'] ?? 'Activité' }}</strong> - {{ $activity['description'] ?? 'Description non disponible' }}
+                        </p>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-[#999999]">
+                            <span class="hidden sm:inline">{{ $activity['url'] ?? '/' }}</span>
+                            <span class="hidden sm:inline">•</span>
+                            <span>{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
+                            <span class="hidden sm:inline">•</span>
+                            <span class="text-green-400">{{ $activity['status'] ?? 'Succès' }}</span>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="text-center py-8">
+                    <p class="text-[#cccccc]">Aucune activité récente</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <!-- Companies Popup Modal -->
+    <div id="companiesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-6 max-w-4xl w-full mx-4 max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-[#f5f5f5]">Toutes les entreprises</h2>
+                <button id="closeCompaniesModal" class="text-[#cccccc] hover:text-[#f5f5f5] text-2xl">&times;</button>
+            </div>
+            <div class="overflow-y-auto flex-1 space-y-3">
+                @forelse(\App\Models\Company::withCount(['jobs', 'applications'])->orderBy('applications_count', 'desc')->get() as $company)
+                <div class="flex items-center justify-between p-4 border border-[#444444] rounded-lg hover:bg-[#333333] transition-colors">
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center flex-shrink-0">
+                            @if($company->logo)
+                                <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-full h-full rounded-full object-cover">
+                            @else
+                                <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                                    <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                                    <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
+                                    <path d="M10 6h4"/>
+                                    <path d="M10 10h4"/>
+                                    <path d="M10 14h4"/>
+                                    <path d="M10 18h4"/>
+                                </svg>
+                            @endif
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <h3 class="font-semibold text-[#f5f5f5] text-sm md:text-base truncate">{{ $company->name }}</h3>
+                            <p class="text-xs md:text-sm text-[#cccccc] truncate">{{ $company->description ?? 'Aucune description' }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 text-xs md:text-sm">
+                        <div class="text-center">
+                            <p class="font-semibold text-[#f5f5f5]">{{ $company->jobs_count }}</p>
+                            <p class="text-[#cccccc]">Offres</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-semibold text-[#f5f5f5]">{{ $company->applications_count }}</p>
+                            <p class="text-[#cccccc]">Candidatures</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-semibold text-[#00b6b4]">{{ number_format($company->applications_count * 50) }} DA</p>
+                            <p class="text-[#cccccc]">Revenus</p>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="text-center py-8">
+                    <p class="text-[#cccccc]">Aucune entreprise trouvée</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('activitySearch');
+    const userTypeFilter = document.getElementById('userTypeFilter');
+    const timeFilter = document.getElementById('timeFilter');
+    const refreshButton = document.getElementById('refreshTracking');
+    const exportButton = document.getElementById('exportLogs');
+    const trackingContainer = document.getElementById('trackingContainer');
+    
+    let allActivities = [];
+    
+    // Store all activities on page load
+    function storeActivities() {
+        const activityElements = trackingContainer.querySelectorAll('[data-activity]');
+        allActivities = Array.from(activityElements).map(element => ({
+            element: element,
+            user_name: element.dataset.userName || '',
+            activity: element.dataset.activity || '',
+            description: element.dataset.description || '',
+            user_type: element.dataset.userType || '',
+            time: element.dataset.time || '',
+            type: element.dataset.type || ''
+        }));
+    }
+    
+    // Filter activities based on search, user type, and time
+    function filterActivities() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const userTypeValue = userTypeFilter.value;
+        const timeFilterValue = timeFilter.value;
+        
+        allActivities.forEach(activity => {
+            let show = true;
+            
+            // Search filter
+            if (searchTerm) {
+                const searchableText = `${activity.user_name} ${activity.activity} ${activity.description} ${activity.user_type}`.toLowerCase();
+                if (!searchableText.includes(searchTerm)) {
+                    show = false;
+                }
+            }
+            
+            // User type filter
+            if (userTypeValue && activity.user_type !== userTypeValue) {
+                show = false;
+            }
+            
+            // Time filter - only apply if not "all"
+            if (timeFilterValue !== 'all') {
+                let activityTime;
+                
+                // Handle different time formats
+                if (activity.time) {
+                    try {
+                        activityTime = new Date(activity.time);
+                    } catch (e) {
+                        console.log('Invalid time format:', activity.time);
+                        activityTime = new Date(); // Use current time as fallback
+                    }
+                } else {
+                    activityTime = new Date(); // Use current time as fallback
+                }
+                
+                const now = new Date();
+                const timeDiff = now - activityTime;
+                
+                let timeLimit;
+                switch(timeFilterValue) {
+                    case '1h':
+                        timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+                        break;
+                    case '24h':
+                        timeLimit = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+                        break;
+                    case '7d':
+                        timeLimit = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+                        break;
+                    case '30d':
+                        timeLimit = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+                        break;
+                    default:
+                        timeLimit = Infinity;
+                }
+                
+                // Debug logging for each activity
+                console.log('=== TIME FILTER DEBUG ===');
+                console.log('Activity:', activity.activity);
+                console.log('Raw time data:', activity.time);
+                console.log('Parsed activity time:', activityTime);
+                console.log('Current time:', now);
+                console.log('Time difference (ms):', timeDiff);
+                console.log('Time difference (hours):', timeDiff / (60 * 60 * 1000));
+                console.log('Time limit (ms):', timeLimit);
+                console.log('Time limit (hours):', timeLimit / (60 * 60 * 1000));
+                console.log('Should show (timeDiff <= timeLimit):', timeDiff <= timeLimit);
+                console.log('========================');
+                
+                if (timeDiff > timeLimit) {
+                    show = false;
+                }
+            }
+            
+            // Show/hide activity
+            activity.element.style.display = show ? 'flex' : 'none';
+        });
+        
+        // Update activity count display
+        const visibleCount = allActivities.filter(activity => 
+            activity.element.style.display !== 'none'
+        ).length;
+        
+        console.log(`Total activities: ${allActivities.length}, Visible: ${visibleCount}, Filter: ${timeFilterValue}`);
+    }
+    
+    // Export filtered activities to CSV
+    function exportToCSV() {
+        const visibleActivities = allActivities.filter(activity => 
+            activity.element.style.display !== 'none'
+        );
+        
+        if (visibleActivities.length === 0) {
+            alert('Aucune activité à exporter');
+            return;
+        }
+        
+        // Create CSV content
+        let csvContent = 'Nom Utilisateur,Type Utilisateur,Activité,Description,Date,Type\n';
+        
+        visibleActivities.forEach(activity => {
+            const date = new Date(activity.time).toLocaleString('fr-FR');
+            csvContent += `"${activity.user_name}","${activity.user_type}","${activity.activity}","${activity.description}","${date}","${activity.type}"\n`;
+        });
+        
+        // Create and download file
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `tracking_logs_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    // Refresh tracking data
+    function refreshTracking() {
+        refreshButton.innerHTML = `
+            <svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+        `;
+        
+        // Simulate refresh (in real implementation, this would fetch new data)
+        setTimeout(() => {
+            // Reload the page to get fresh data
+            window.location.reload();
+        }, 1000);
+    }
+    
+    // Event listeners
+    searchInput.addEventListener('input', filterActivities);
+    userTypeFilter.addEventListener('change', filterActivities);
+    timeFilter.addEventListener('change', filterActivities);
+    refreshButton.addEventListener('click', refreshTracking);
+    exportButton.addEventListener('click', exportToCSV);
+    
+    // Initialize
+    storeActivities();
+    
+    // Apply default filter (1h) on page load
+    filterActivities();
+    
+    // Auto-refresh every 30 seconds
+    setInterval(() => {
+        if (document.visibilityState === 'visible') {
+            refreshTracking();
+        }
+    }, 30000);
+    
+    // Popup Modal Functionality
+    const showAllActivitiesBtn = document.getElementById('showAllActivities');
+    const showAllCompaniesBtn = document.getElementById('showAllCompanies');
+    const activitiesModal = document.getElementById('activitiesModal');
+    const companiesModal = document.getElementById('companiesModal');
+    const closeActivitiesModal = document.getElementById('closeActivitiesModal');
+    const closeCompaniesModal = document.getElementById('closeCompaniesModal');
+    
+    // Show activities modal
+    showAllActivitiesBtn.addEventListener('click', () => {
+        activitiesModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Show companies modal
+    showAllCompaniesBtn.addEventListener('click', () => {
+        companiesModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Close activities modal
+    closeActivitiesModal.addEventListener('click', () => {
+        activitiesModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+    
+    // Close companies modal
+    closeCompaniesModal.addEventListener('click', () => {
+        companiesModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+    
+    // Close modals when clicking outside
+    activitiesModal.addEventListener('click', (e) => {
+        if (e.target === activitiesModal) {
+            activitiesModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    companiesModal.addEventListener('click', (e) => {
+        if (e.target === companiesModal) {
+            companiesModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close modals with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            activitiesModal.classList.add('hidden');
+            companiesModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+</script>
