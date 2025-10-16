@@ -32,12 +32,14 @@ class Job extends Model
         'status',
         'application_deadline',
         'is_featured',
+        'responsibilities',
     ];
 
     protected $casts = [
         'requirements' => 'array',
         'benefits' => 'array',
         'tags' => 'array',
+        'responsibilities' => 'array',
         'salary_min' => 'decimal:2',
         'salary_max' => 'decimal:2',
         'application_deadline' => 'date',

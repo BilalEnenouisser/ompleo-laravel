@@ -97,6 +97,31 @@ Route::get('/admin/payments', function () {
     return view('dashboard.admin.payments');
 })->name('admin.payments');
 
+Route::get('/test-jobs', function() {
+    echo "Total jobs: " . \App\Models\Job::count() . "\n";
+    $job = \App\Models\Job::first();
+    if ($job) {
+        echo "First job: " . $job->title . "\n";
+        echo "Company ID: " . $job->company_id . "\n";
+        echo "Recruiter ID: " . $job->recruiter_id . "\n";
+        
+        // Test relationships
+        try {
+            $company = $job->company;
+            echo "Company: " . ($company ? $company->name : 'NULL') . "\n";
+        } catch (Exception $e) {
+            echo "Company relationship error: " . $e->getMessage() . "\n";
+        }
+        
+        try {
+            $recruiter = $job->recruiter;
+            echo "Recruiter: " . ($recruiter ? $recruiter->name : 'NULL') . "\n";
+        } catch (Exception $e) {
+            echo "Recruiter relationship error: " . $e->getMessage() . "\n";
+        }
+    }
+});
+
 Route::get('/admin/blog/editor', function () {
     return view('dashboard.admin.blog-editor');
 })->name('admin.blog.editor');
@@ -134,6 +159,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.user.type:adm
     // Jobs Management
     Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('jobs');
     Route::get('/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'show'])->name('jobs.show');
+    Route::put('/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'update'])->name('jobs.update');
     Route::patch('/jobs/{job}/status', [App\Http\Controllers\Admin\JobsController::class, 'updateStatus'])->name('jobs.updateStatus');
     Route::delete('/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'destroy'])->name('jobs.destroy');
     

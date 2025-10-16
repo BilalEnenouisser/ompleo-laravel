@@ -360,5 +360,7 @@ use Illuminate\Support\Facades\Storage;
             }
         });
     </script>
+    
+    @yield('scripts')
 </body>
 </html>
