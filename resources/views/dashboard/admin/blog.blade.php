@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
 
+@php use Illuminate\Support\Facades\Storage; @endphp
+
 @section('page-title', 'Blog')
 @section('description', 'Créez et gérez les articles du blog')
 
@@ -34,7 +36,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-xs sm:text-sm text-[#9ca3af]">Total articles</p>
-                    <p class="text-xl sm:text-2xl font-bold text-[#f5f5f5]">2</p>
+                    <p class="text-xl sm:text-2xl font-bold text-[#f5f5f5]">{{ $totalBlogs }}</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(0 86 84 / 0.3);">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: rgb(80 178 255 / var(--tw-text-opacity, 1));" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,7 +51,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-xs sm:text-sm text-[#9ca3af]">Publiés</p>
-                    <p class="text-xl sm:text-2xl font-bold" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1));">2</p>
+                    <p class="text-xl sm:text-2xl font-bold" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1));">{{ $publishedBlogs }}</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(20 83 45 / 0.3);">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1));" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -64,7 +66,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-xs sm:text-sm text-[#9ca3af]">Brouillons</p>
-                    <p class="text-xl sm:text-2xl font-bold" style="color: rgb(202 138 4 / var(--tw-text-opacity, 1));">0</p>
+                    <p class="text-xl sm:text-2xl font-bold" style="color: rgb(202 138 4 / var(--tw-text-opacity, 1));">{{ $draftBlogs }}</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(113 63 18 / 0.3);">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: rgb(202 138 4 / var(--tw-text-opacity, 1));" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -79,7 +81,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-xs sm:text-sm text-[#9ca3af]">Vues totales</p>
-                    <p class="text-xl sm:text-2xl font-bold text-blue-600">288</p>
+                    <p class="text-xl sm:text-2xl font-bold text-blue-600">{{ $totalViews }}</p>
                 </div>
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-900/30 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -143,49 +145,26 @@
 
     {{-- Blog Posts List --}}
     <div class="space-y-6">
-        @php
-        $posts = [
-            [
-                'id' => 1,
-                'title' => 'Comment rédiger un CV qui attire l\'attention des recruteurs',
-                'excerpt' => 'Découvrez les secrets pour créer un CV percutant qui vous démarque de la concurrence et attire l\'œil des recruteurs.',
-                'image' => 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=1200',
-                'category' => 'Conseils',
-                'date' => '15 Janvier 2024',
-                'author' => 'Sarah Benali',
-                'readTime' => '5 min',
-                'slug' => 'comment-rediger-cv-attire-attention-recruteurs',
-                'tags' => ['CV', 'Recrutement', 'Conseils'],
-                'status' => 'draft',
-                'views' => 156,
-            ],
-            [
-                'id' => 2,
-                'title' => 'Les compétences digitales les plus recherchées en 2024',
-                'excerpt' => 'Explorez les compétences numériques essentielles que les entreprises recherchent activement cette année.',
-                'image' => 'https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?auto=compress&cs=tinysrgb&w=1200',
-                'category' => 'Formation',
-                'date' => '12 Janvier 2024',
-                'author' => 'Ahmed Belkacem',
-                'readTime' => '7 min',
-                'slug' => 'competences-digitales-recherchees-2024',
-                'tags' => ['Compétences', 'Digital', 'Tendances'],
-                'status' => 'published',
-                'views' => 132,
-            ],
-        ];
-        @endphp
-
-        @foreach($posts as $post)
-        <div class="article-card bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300" data-status="{{ $post['status'] }}" data-category="{{ $post['category'] }}" data-title="{{ strtolower($post['title']) }}" data-excerpt="{{ strtolower($post['excerpt']) }}" data-author="{{ strtolower($post['author']) }}">
+        @forelse($blogs as $post)
+        <div class="article-card bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300" data-status="{{ $post->status }}" data-category="{{ $post->category }}" data-title="{{ strtolower($post->title) }}" data-excerpt="{{ strtolower($post->excerpt) }}" data-author="{{ strtolower($post->author_name) }}">
             <div class="flex flex-col lg:flex-row gap-4 sm:gap-6">
                 {{-- Featured Image --}}
                 <div class="lg:w-48 h-32 sm:h-40 rounded-xl overflow-hidden flex-shrink-0">
-                    <img
-                        src="{{ $post['image'] }}"
-                        alt="{{ $post['title'] }}"
-                        class="w-full h-full object-cover"
-                    />
+                    @if($post->featured_image)
+                        {{-- Debug: Log featured image info --}}
+                        <img
+                            src="{{ asset('storage/' . $post->featured_image) }}"
+                            alt="{{ $post->title }}"
+                            class="w-full h-full object-cover"
+                            onerror="this.src='https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=1200'"
+                        />
+                    @else
+                        <img
+                            src="https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                            alt="{{ $post->title }}"
+                            class="w-full h-full object-cover"
+                        />
+                    @endif
                 </div>
                 
                 {{-- Content --}}
@@ -193,7 +172,7 @@
                     <div class="flex items-start justify-between mb-2">
                         <div class="flex-1">
                             <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5] hover:text-[#00b6b4] transition-colors">
-                                {{ $post['title'] }}
+                                {{ $post->title }}
                             </h3>
                             <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-[#9ca3af] mt-1">
                                 <div class="flex items-center gap-1">
@@ -201,7 +180,7 @@
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                         <circle cx="12" cy="7" r="4"/>
                                     </svg>
-                                    <span>{{ $post['author'] }}</span>
+                                    <span>{{ $post->author_name }}</span>
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -210,32 +189,34 @@
                                         <line x1="8" x2="8" y1="2" y2="6"/>
                                         <line x1="3" x2="21" y1="10" y2="10"/>
                                     </svg>
-                                    <span>{{ $post['date'] }}</span>
+                                    <span>{{ $post->created_at->format('d M Y') }}</span>
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                                         <path d="M7 7h.01"/>
                                     </svg>
-                                    <span>{{ $post['category'] }}</span>
+                                    <span>{{ $post->category }}</span>
                                 </div>
                             </div>
                         </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 {{ $post['status'] === 'published' ? '' : '' }}" style="{{ $post['status'] === 'published' ? 'background-color: rgb(20 83 45 / 0.3); color: rgb(22 163 74 / var(--tw-text-opacity, 1));' : 'background-color: rgb(113 63 18 / 0.3); color: rgb(202 138 4 / var(--tw-text-opacity, 1));' }}">
-                            {{ $post['status'] === 'published' ? 'Publié' : 'Brouillon' }}
+                        <span class="px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 {{ $post->status === 'published' ? '' : '' }}" style="{{ $post->status === 'published' ? 'background-color: rgb(20 83 45 / 0.3); color: rgb(22 163 74 / var(--tw-text-opacity, 1));' : 'background-color: rgb(113 63 18 / 0.3); color: rgb(202 138 4 / var(--tw-text-opacity, 1));' }}">
+                            {{ $post->status === 'published' ? 'Publié' : 'Brouillon' }}
                         </span>
                     </div>
                     
                     <p class="text-sm sm:text-base text-[#9ca3af] mb-3 sm:mb-4 line-clamp-2">
-                        {{ $post['excerpt'] }}
+                        {{ $post->excerpt }}
                     </p>
                     
                     <div class="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
-                        @foreach($post['tags'] as $tag)
-                        <span class="px-2 py-1 bg-[#333333] text-[#9ca3af] rounded-full text-xs">
-                            {{ $tag }}
-                        </span>
-                        @endforeach
+                        @if($post->tags)
+                            @foreach($post->tags as $tag)
+                            <span class="px-2 py-1 bg-[#333333] text-[#9ca3af] rounded-full text-xs">
+                                {{ $tag }}
+                            </span>
+                            @endforeach
+                        @endif
                     </div>
                     
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -245,21 +226,21 @@
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
-                                <span>{{ $post['views'] }} vues</span>
+                                <span>{{ $post->views }} vues</span>
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10"/>
                                     <polyline points="12 6 12 12 16 14"/>
                                 </svg>
-                                <span>{{ $post['readTime'] }}</span>
+                                <span>{{ $post->reading_time }} min</span>
                             </div>
                         </div>
                         
                         {{-- Actions --}}
                         <div class="flex items-center gap-2 sm:gap-3">
                             <button
-                                onclick="editArticle({{ json_encode($post) }})"
+                                onclick="editArticle({{ $post->id }})"
                                 class="p-2 rounded-lg border border-[#333333] bg-[#2b2b2b] text-[#f5f5f5] hover:bg-[#333333] transition-colors duration-200"
                             >
                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -269,11 +250,11 @@
                             </button>
                             
                             <button
-                                onclick="toggleArticleStatus({{ $post['id'] }}, this)"
+                                onclick="toggleArticleStatus({{ $post->id }}, this)"
                                 class="p-2 rounded-lg"
-                                style="{{ $post['status'] === 'published' ? 'background-color: rgb(113 63 18 / 0.3); color: rgb(202 138 4 / var(--tw-text-opacity, 1));' : 'background-color: rgb(20 83 45 / 0.3); color: rgb(22 163 74 / var(--tw-text-opacity, 1));' }}"
+                                style="{{ $post->status === 'published' ? 'background-color: rgb(113 63 18 / 0.3); color: rgb(202 138 4 / var(--tw-text-opacity, 1));' : 'background-color: rgb(20 83 45 / 0.3); color: rgb(22 163 74 / var(--tw-text-opacity, 1));' }}"
                             >
-                                @if($post['status'] === 'published')
+                                @if($post->status === 'published')
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
                                         <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/>
@@ -289,7 +270,7 @@
                             </button>
                             
                             <button
-                                onclick="deleteArticle({{ $post['id'] }}, '{{ $post['title'] }}')"
+                                onclick="deleteArticle({{ $post->id }}, '{{ $post->title }}')"
                                 class="p-2 rounded-lg transition-colors duration-200 text-[#9ca3af] hover:bg-red-900/20 hover:text-red-600"
                             >
                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -302,7 +283,7 @@
                             </button>
                             
                             <button
-                                onclick="viewArticle('{{ $post['slug'] }}')"
+                                onclick="viewArticle('{{ $post->slug }}')"
                                 class="p-2 rounded-lg bg-[#00b6b4] text-white hover:bg-[#009e9c] transition-colors duration-200"
                             >
                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -315,7 +296,20 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="text-center py-12">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                <path d="M7 7h.01"/>
+            </svg>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                Aucun article trouvé
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                Commencez par créer votre premier article
+            </p>
+        </div>
+        @endforelse
         
         <div id="no-results" class="text-center py-12 hidden">
             <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -447,6 +441,406 @@ function showToast(title, message, type = 'success') {
             toast.remove();
         }
     }, 5000);
+}
+
+
+// Edit Article Functions
+function editArticle(id) {
+    fetch(`/admin/blog/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        // Populate edit form with data
+        document.getElementById('edit-title').value = data.title;
+        document.getElementById('edit-excerpt').value = data.excerpt;
+        document.getElementById('edit-content').value = data.content;
+        document.getElementById('edit-author').value = data.author_name;
+        document.getElementById('edit-category').value = data.category;
+        document.getElementById('edit-status').value = data.status;
+        document.getElementById('edit-tags').value = data.tags ? data.tags.join(', ') : '';
+        
+        // Show current image if exists
+        if (data.featured_image) {
+            document.getElementById('current-edit-image').src = `/storage/${data.featured_image}`;
+            document.getElementById('current-edit-image').classList.remove('hidden');
+        }
+        
+        document.getElementById('edit-modal').classList.remove('hidden');
+        document.getElementById('edit-form').setAttribute('data-id', id);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
+    });
+}
+
+function hideEditModal() {
+    document.getElementById('edit-modal').classList.add('hidden');
+    document.getElementById('edit-form').reset();
+    document.getElementById('current-edit-image').classList.add('hidden');
+}
+
+function saveEditArticle() {
+    const form = document.getElementById('edit-form');
+    const id = form.getAttribute('data-id');
+    const formData = new FormData(form);
+    formData.append('_method', 'PUT');
+    
+    fetch(`/admin/blog/${id}`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('Succès', data.message, 'success');
+            hideEditModal();
+            location.reload(); // Reload to show updated article
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de la modification de l\'article', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Erreur', 'Erreur lors de la modification de l\'article', 'error');
+    });
+}
+
+// Delete Article Functions
+function deleteArticle(id, title) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer l'article "${title}" ?`)) {
+        fetch(`/admin/blog/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast('Succès', data.message, 'success');
+                location.reload(); // Reload to remove deleted article
+            } else {
+                showToast('Erreur', data.error || 'Erreur lors de la suppression de l\'article', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast('Erreur', 'Erreur lors de la suppression de l\'article', 'error');
+        });
+    }
+}
+
+// Toggle Status Functions
+function toggleArticleStatus(id, button) {
+    fetch(`/admin/blog/${id}/toggle-status`, {
+        method: 'PATCH',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('Succès', data.message, 'success');
+            location.reload(); // Reload to show updated status
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors du changement de statut', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Erreur', 'Erreur lors du changement de statut', 'error');
+    });
+}
+
+// View Article Functions
+function viewArticle(slug) {
+    // Fetch blog details and show in popup
+    fetch(`/admin/blog/${slug}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            showViewModal(data);
+        } else {
+            showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
+    });
+}
+
+// Edit Article Functions
+function editArticle(id) {
+    // Redirect to blog editor with the blog ID
+    window.location.href = `/admin/blog/editor/${id}`;
+}
+
+// Delete Article Functions
+function deleteArticle(id, title) {
+    // Show delete confirmation modal
+    showDeleteModal(id, title);
+}
+
+function showViewModal(blog) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-[#2b2b2b] rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-[#f5f5f5]">Détails de l'article</h2>
+                    <button onclick="this.closest('.fixed').remove()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6L6 18"/>
+                            <path d="M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="space-y-6">
+                    ${blog.featured_image ? `
+                        <div class="w-full h-64 rounded-lg overflow-hidden">
+                            <img src="${blog.featured_image}" alt="${blog.title}" class="w-full h-full object-cover">
+                        </div>
+                    ` : ''}
+                    
+                    <div>
+                        <h3 class="text-3xl font-bold text-[#f5f5f5] mb-4">${blog.title}</h3>
+                        <p class="text-lg text-[#cccccc] mb-4">${blog.excerpt}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-[#9ca3af]">Auteur:</span>
+                            <span class="text-[#f5f5f5] ml-2">${blog.author_name}</span>
+                        </div>
+                        <div>
+                            <span class="text-[#9ca3af]">Catégorie:</span>
+                            <span class="text-[#f5f5f5] ml-2">${blog.category}</span>
+                        </div>
+                        <div>
+                            <span class="text-[#9ca3af]">Statut:</span>
+                            <span class="text-[#f5f5f5] ml-2">${blog.status === 'published' ? 'Publié' : 'Brouillon'}</span>
+                        </div>
+                        <div>
+                            <span class="text-[#9ca3af]">Vues:</span>
+                            <span class="text-[#f5f5f5] ml-2">${blog.views || 0}</span>
+                        </div>
+                        <div>
+                            <span class="text-[#9ca3af]">Temps de lecture:</span>
+                            <span class="text-[#f5f5f5] ml-2">${blog.reading_time || 0} min</span>
+                        </div>
+                        <div>
+                            <span class="text-[#9ca3af]">Créé le:</span>
+                            <span class="text-[#f5f5f5] ml-2">${new Date(blog.created_at).toLocaleDateString('fr-FR')}</span>
+                        </div>
+                    </div>
+                    
+                    ${blog.tags && blog.tags.length > 0 ? `
+                        <div>
+                            <span class="text-[#9ca3af] block mb-2">Tags:</span>
+                            <div class="flex flex-wrap gap-2">
+                                ${blog.tags.map(tag => `
+                                    <span class="px-3 py-1 bg-[#333333] text-[#9ca3af] rounded-full text-sm">${tag}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div>
+                        <span class="text-[#9ca3af] block mb-2">Contenu:</span>
+                        <div class="prose prose-invert max-w-none bg-[#333333] p-4 rounded-lg">
+                            ${blog.content}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <button onclick="this.closest('.fixed').remove()" class="px-4 py-2 bg-[#666666] hover:bg-[#555555] text-white rounded-lg transition-colors">
+                        Fermer
+                    </button>
+                    <button onclick="editArticle(${blog.id})" class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg transition-colors">
+                        Modifier
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function showDeleteModal(id, title) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-[#2b2b2b] rounded-xl max-w-md w-full">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-red-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 6h18"/>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-[#f5f5f5]">Supprimer l'article</h3>
+                        <p class="text-sm text-[#9ca3af]">Cette action est irréversible</p>
+                    </div>
+                </div>
+                
+                <p class="text-[#cccccc] mb-6">
+                    Êtes-vous sûr de vouloir supprimer l'article <strong>"${title}"</strong> ?
+                </p>
+                
+                <div class="flex justify-end gap-3">
+                    <button onclick="this.closest('.fixed').remove()" class="px-4 py-2 bg-[#666666] hover:bg-[#555555] text-white rounded-lg transition-colors">
+                        Annuler
+                    </button>
+                    <button onclick="confirmDelete(${id})" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function confirmDelete(id) {
+    fetch(`/admin/blog/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('Succès', data.message, 'success');
+            // Close modal
+            document.querySelector('.fixed').remove();
+            // Reload page to refresh the list
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de la suppression', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Erreur', 'Erreur lors de la suppression', 'error');
+    });
+}
+</script>
+
+
+{{-- Edit Article Modal --}}
+<div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-[#f5f5f5]">Modifier l'article</h2>
+                    <button onclick="hideEditModal()" class="text-[#9ca3af] hover:text-[#f5f5f5]">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6L6 18"/>
+                            <path d="M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="edit-form" enctype="multipart/form-data">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Titre de l'article *</label>
+                                <input type="text" id="edit-title" name="title" required class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Auteur *</label>
+                                <input type="text" id="edit-author" name="author_name" required class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Catégorie *</label>
+                                <select id="edit-category" name="category" required class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                                    <option value="">Sélectionner une catégorie</option>
+                                    <option value="Conseils">Conseils</option>
+                                    <option value="Formation">Formation</option>
+                                    <option value="Actualités">Actualités</option>
+                                    <option value="Tendances">Tendances</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Statut *</label>
+                                <select id="edit-status" name="status" required class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                                    <option value="draft">Brouillon</option>
+                                    <option value="published">Publié</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Tags (séparés par des virgules)</label>
+                                <input type="text" id="edit-tags" name="tags" placeholder="CV, Recrutement, Conseils" class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Image de couverture</label>
+                                <input type="file" name="featured_image" accept="image/*" onchange="previewImage(this, 'current-edit-image')" class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                                <img id="current-edit-image" class="mt-2 w-full h-32 object-cover rounded-lg hidden">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Extrait *</label>
+                                <textarea id="edit-excerpt" name="excerpt" required rows="4" class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none" placeholder="Résumé de l'article..."></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-[#f5f5f5] mb-2">Contenu *</label>
+                                <textarea id="edit-content" name="content" required rows="12" class="w-full px-4 py-3 bg-[#333333] border border-[#444444] rounded-lg text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none" placeholder="Contenu de l'article..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button type="button" onclick="hideEditModal()" class="px-6 py-3 bg-[#666666] hover:bg-[#555555] text-white rounded-lg transition-colors">
+                            Annuler
+                        </button>
+                        <button type="button" onclick="saveEditArticle()" class="px-6 py-3 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg transition-colors">
+                            Sauvegarder
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function previewImage(input, imageId) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const image = document.getElementById(imageId);
+            image.src = e.target.result;
+            image.classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }
 </script>
 @endsection

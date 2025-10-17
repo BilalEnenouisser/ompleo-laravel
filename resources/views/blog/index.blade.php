@@ -8,76 +8,33 @@
 @include('components.header')
 
 @php
-$blogPosts = [
-    [
-        'id' => 1,
-        'title' => 'Comment rédiger un CV qui attire l\'attention des recruteurs',
-        'excerpt' => 'Découvrez les secrets pour créer un CV percutant qui vous démarque de la concurrence et attire l\'œil des recruteurs.',
-        'content' => '<p>Dans le monde compétitif d\'aujourd\'hui, votre CV est souvent votre première impression auprès des recruteurs. Il est crucial de le rendre mémorable et efficace.</p><h2>1. Structure claire et professionnelle</h2><p>Un CV bien structuré facilite la lecture et permet aux recruteurs de trouver rapidement les informations importantes.</p>',
-        'image' => 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'category' => 'Conseils',
-        'date' => '15 Janvier 2024',
-        'author' => 'Sarah Benali',
-        'authorRole' => 'Experte en Recrutement',
-        'authorAvatar' => 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'readTime' => '5 min',
-        'slug' => 'comment-rediger-cv-attire-attention-recruteurs',
-        'tags' => ['CV', 'Recrutement', 'Conseils'],
-        'status' => 'published',
-    ],
-    [
-        'id' => 2,
-        'title' => 'Les compétences digitales les plus recherchées en 2024',
-        'excerpt' => 'Explorez les compétences numériques essentielles que les entreprises recherchent activement cette année.',
-        'content' => '<p>Le marché du travail évolue rapidement et les compétences digitales sont de plus en plus demandées. Voici les compétences les plus recherchées en 2024.</p><h2>1. Intelligence artificielle et Machine Learning</h2><p>Les professionnels capables de travailler avec l\'IA et le ML sont très demandés dans tous les secteurs.</p>',
-        'image' => 'https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'category' => 'Formation',
-        'date' => '12 Janvier 2024',
-        'author' => 'Ahmed Belkacem',
-        'authorRole' => 'Consultant Digital',
-        'authorAvatar' => 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'readTime' => '7 min',
-        'slug' => 'competences-digitales-recherchees-2024',
-        'tags' => ['Compétences', 'Digital', 'Tendances'],
-        'status' => 'published',
-    ],
-    [
-        'id' => 3,
-        'title' => 'Préparer son entretien d\'embauche : guide complet',
-        'excerpt' => 'Un guide détaillé pour réussir votre entretien d\'embauche, de la préparation aux questions fréquentes.',
-        'content' => '<p>L\'entretien d\'embauche est une étape cruciale dans votre recherche d\'emploi. Voici comment vous y préparer efficacement.</p><h2>1. Recherchez l\'entreprise</h2><p>Renseignez-vous sur l\'entreprise, sa culture, ses produits et services, et ses valeurs.</p>',
-        'image' => 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'category' => 'Emploi',
-        'date' => '10 Janvier 2024',
-        'author' => 'Fatima Zohra',
-        'authorRole' => 'Responsable RH',
-        'authorAvatar' => 'https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'readTime' => '6 min',
-        'slug' => 'preparer-entretien-embauche-guide-complet',
-        'tags' => ['Entretien', 'Emploi', 'Conseils'],
-        'status' => 'published',
-    ],
-];
+// Get dynamic categories from database
+$categories = \App\Models\Blog::where('status', 'published')
+    ->select('category')
+    ->distinct()
+    ->pluck('category')
+    ->filter()
+    ->map(function($category) {
+        return ['name' => $category, 'value' => $category];
+    })
+    ->prepend(['name' => 'Tous', 'value' => ''])
+    ->toArray();
 
-$categories = [
-    ['name' => 'Tous', 'value' => ''],
-    ['name' => 'Formation', 'value' => 'Formation'],
-    ['name' => 'Emploi', 'value' => 'Emploi'],
-    ['name' => 'Conseils', 'value' => 'Conseils'],
-];
-
-$tags = [
-    ['name' => 'Tous', 'value' => ''],
-    ['name' => 'CV', 'value' => 'CV'],
-    ['name' => 'Entretien', 'value' => 'Entretien'],
-    ['name' => 'Compétences', 'value' => 'Compétences'],
-    ['name' => 'Carrière', 'value' => 'Carrière'],
-    ['name' => 'Télétravail', 'value' => 'Télétravail'],
-    ['name' => 'Formation', 'value' => 'Formation'],
-];
+// Get dynamic tags from database
+$allTags = \App\Models\Blog::where('status', 'published')
+    ->whereNotNull('tags')
+    ->pluck('tags')
+    ->flatten()
+    ->unique()
+    ->filter()
+    ->map(function($tag) {
+        return ['name' => $tag, 'value' => $tag];
+    })
+    ->prepend(['name' => 'Tous', 'value' => ''])
+    ->toArray();
 @endphp
 
-<div class="min-h-screen bg-white dark:bg-[#1f1f1f] pt-20 relative overflow-hidden">
+<div class="min-h-screen bg-[#1f1f1f] pt-20 relative overflow-hidden">
     <!-- Background Shapes -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div class="liquid-shape w-96 h-96 bg-[#00b6b4]/10 top-20 -left-20"></div>
@@ -138,7 +95,7 @@ $tags = [
                     <div>
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Tags</h3>
                         <div class="flex flex-wrap gap-2">
-                            @foreach($tags as $tag)
+                            @foreach($allTags as $tag)
                             <button
                                 class="tag-filter px-3 py-1 rounded-full text-sm transition-colors duration-200 {{ request('tag') == $tag['value'] ? 'bg-primary-50/50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 font-medium border border-primary-200/30 dark:border-primary-700/30' : 'glass-badge hover:bg-primary-50/50 hover:text-primary-600 dark:hover:bg-primary-900/30 dark:hover:text-primary-400' }}"
                                 data-tag="{{ $tag['value'] }}"
@@ -154,30 +111,38 @@ $tags = [
             <!-- Main Content -->
             <div class="lg:col-span-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8" id="blog-posts">
-                    @foreach($blogPosts as $post)
+                    @foreach($posts as $post)
                     <article class="liquid-glass-card group hover:-translate-y-2 transition-all duration-300" data-animate="blog-post">
                         <div class="relative h-48 overflow-hidden rounded-t-2xl">
-                            <img
-                                src="{{ $post['image'] }}"
-                                alt="{{ $post['title'] }}"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
+                            @if($post->featured_image)
+                                <img
+                                    src="{{ asset('storage/' . $post->featured_image) }}"
+                                    alt="{{ $post->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                            @else
+                                <img
+                                    src="https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400"
+                                    alt="{{ $post->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                            @endif
                             <div class="absolute top-4 left-4">
                                 <span class="glass-badge-highlight">
-                                    {{ $post['category'] }}
+                                    {{ $post->category }}
                                 </span>
                             </div>
                         </div>
                         
                         <div class="p-4 sm:p-6">
-                            <a href="{{ route('blog.show', $post['slug']) }}">
+                            <a href="{{ route('blog.show', $post->slug) }}">
                                 <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
-                                    {{ $post['title'] }}
+                                    {{ $post->title }}
                                 </h2>
                             </a>
                             
                             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 line-clamp-3">
-                                {{ $post['excerpt'] }}
+                                {{ $post->excerpt }}
                             </p>
                             
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 gap-2 sm:gap-0">
@@ -188,7 +153,7 @@ $tags = [
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <span class="truncate">{{ $post['author'] }}</span>
+                                        <span class="truncate">{{ $post->author_name }}</span>
                                     </div>
                                     <div class="flex items-center gap-1">
                                         <!-- Calendar icon from Lucide React -->
@@ -198,7 +163,7 @@ $tags = [
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
                                             <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>
-                                        <span class="truncate">{{ $post['date'] }}</span>
+                                        <span class="truncate">{{ $post->created_at->format('d M Y') }}</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
@@ -207,12 +172,12 @@ $tags = [
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12,6 12,12 16,14"></polyline>
                                     </svg>
-                                    <span>{{ $post['readTime'] }}</span>
+                                    <span>{{ $post->reading_time }} min</span>
                                 </div>
                             </div>
                             
                             <a 
-                                href="{{ route('blog.show', $post['slug']) }}"
+                                href="{{ route('blog.show', $post->slug) }}"
                                 class="flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium group/btn"
                             >
                                 Lire la suite
@@ -225,6 +190,22 @@ $tags = [
                         </div>
                     </article>
                     @endforeach
+                    
+                    @if($posts->isEmpty())
+                    <div class="col-span-full text-center py-12 glass-card">
+                        <!-- Search icon from Lucide React -->
+                        <svg class="w-16 h-16 text-primary-500 dark:text-primary-400 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            Aucun article trouvé
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Aucun article n'est disponible pour le moment.
+                        </p>
+                    </div>
+                    @endif
                 </div>
 
                 <!-- No Results -->

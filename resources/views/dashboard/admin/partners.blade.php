@@ -3,6 +3,10 @@
 @section('page-title', 'Partenaires')
 @section('description', 'Gérez les entreprises partenaires affichées sur la page d\'accueil')
 
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
 <div class="space-y-6 sm:space-y-8">
     {{-- Header --}}
@@ -75,48 +79,36 @@
                     </tr>
                 </thead>
                 <tbody id="partners-table">
-                    @php
-                    $partners = [
-                        ['id' => 1, 'name' => 'Mobilis', 'logo' => '/partners/mobilis.png', 'is_featured' => true, 'website' => 'https://www.mobilis.dz', 'description' => 'Opérateur de téléphonie mobile'],
-                        ['id' => 2, 'name' => 'Sonelgaz', 'logo' => '/partners/sonelgaz.png', 'is_featured' => true, 'website' => 'https://www.sonelgaz.dz', 'description' => 'Société nationale d\'électricité et de gaz'],
-                        ['id' => 3, 'name' => 'Algérie Télécom', 'logo' => '/partners/algerie-telecom.png', 'is_featured' => true, 'website' => 'https://www.algerietelecom.dz', 'description' => 'Opérateur de télécommunications'],
-                        ['id' => 4, 'name' => 'Cevital', 'logo' => '/partners/cevital.png', 'is_featured' => true, 'website' => 'https://www.cevital.com', 'description' => 'Groupe agroalimentaire et industriel'],
-                        ['id' => 5, 'name' => 'Ooredoo', 'logo' => '/partners/ooredoo.png', 'is_featured' => true, 'website' => 'https://www.ooredoo.dz', 'description' => 'Opérateur de téléphonie mobile'],
-                        ['id' => 6, 'name' => 'Air Algérie', 'logo' => '/partners/air-algerie.png', 'is_featured' => true, 'website' => 'https://www.airalgerie.dz', 'description' => 'Compagnie aérienne nationale'],
-                        ['id' => 7, 'name' => 'BNA', 'logo' => '/partners/bna.png', 'is_featured' => true, 'website' => 'https://www.bna.dz', 'description' => 'Banque Nationale d\'Algérie'],
-                        ['id' => 8, 'name' => 'Djezzy', 'logo' => '/partners/djezzy.png', 'is_featured' => true, 'website' => 'https://www.djezzy.dz', 'description' => 'Opérateur de téléphonie mobile'],
-                        ['id' => 9, 'name' => 'ENTP', 'logo' => '/partners/entp.png', 'is_featured' => true, 'website' => 'https://www.entp.dz', 'description' => 'Entreprise Nationale des Travaux aux Puits'],
-                        ['id' => 10, 'name' => 'Benamor', 'logo' => '/partners/benamor.png', 'is_featured' => true, 'website' => 'https://www.benamor.dz', 'description' => 'Groupe agroalimentaire'],
-                        ['id' => 11, 'name' => 'Entreprise Test', 'logo' => '/partners/default.png', 'is_featured' => false, 'website' => 'https://www.example.com', 'description' => 'Description de test'],
-                    ];
-                    @endphp
-
-                    @foreach($partners as $partner)
-                    <tr class="partner-row border-b border-[#444444] hover:bg-[#333333]" data-featured="{{ $partner['is_featured'] ? 'true' : 'false' }}" data-name="{{ strtolower($partner['name']) }}">
+                    @forelse($partners as $partner)
+                    <tr class="partner-row border-b border-[#444444] hover:bg-[#333333]" data-featured="{{ $partner->is_featured ? 'true' : 'false' }}" data-name="{{ strtolower($partner->name) }}" data-id="{{ $partner->id }}">
                         <td class="py-4 px-6 min-w-[340px] sm:min-w-0">
                             <div class="w-16 h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
-                                <img src="{{ $partner['logo'] }}" alt="{{ $partner['name'] }}" class="w-full h-full object-contain p-2" />
+                                <img src="{{ $partner->logo ? Storage::url($partner->logo) : '/partners/default.png' }}" alt="{{ $partner->name }}" class="w-full h-full object-contain p-2" />
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            <div class="font-medium text-[#f5f5f5]">{{ $partner['name'] }}</div>
+                            <div class="font-medium text-[#f5f5f5]">{{ $partner->name }}</div>
                         </td>
                         <td class="py-4 px-6">
-                            <a href="{{ $partner['website'] }}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm">
-                                {{ $partner['website'] }}
-                            </a>
+                            @if($partner->website)
+                                <a href="{{ $partner->website }}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm">
+                                    {{ $partner->website }}
+                                </a>
+                            @else
+                                <span class="text-[#9ca3af] text-sm">Non renseigné</span>
+                            @endif
                         </td>
                         <td class="py-4 px-6">
                             <div class="text-[#9ca3af] max-w-xs truncate text-sm">
-                                {{ $partner['description'] }}
+                                {{ $partner->description ?: 'Aucune description' }}
                             </div>
                         </td>
                         <td class="py-4 px-6">
                             <button 
-                                onclick="toggleFeatured({{ $partner['id'] }}, this)"
-                                class="p-2 rounded-lg {{ $partner['is_featured'] ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]' }}"
+                                onclick="toggleFeatured({{ $partner->id }}, this)"
+                                class="p-2 rounded-lg {{ $partner->is_featured ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]' }}"
                             >
-                                @if($partner['is_featured'])
+                                @if($partner->is_featured)
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
@@ -134,7 +126,7 @@
                         <td class="py-4 px-6">
                             <div class="flex items-center gap-2">
                                 <button 
-                                    onclick="editPartner({{ json_encode($partner) }})"
+                                    onclick="editPartner({{ $partner->id }})"
                                     class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
                                 >
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -143,7 +135,7 @@
                                     </svg>
                                 </button>
                                 <button 
-                                    onclick="deletePartner({{ $partner['id'] }}, '{{ $partner['name'] }}')"
+                                    onclick="deletePartner({{ $partner->id }}, '{{ $partner->name }}')"
                                     class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
                                 >
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -155,7 +147,22 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-12">
+                            <div class="text-[#9ca3af]">
+                                <svg class="w-12 h-12 mx-auto mb-4 text-[#666666]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucun partenaire</h3>
+                                <p class="text-sm">Commencez par ajouter votre premier partenaire</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -434,6 +441,69 @@
     </div>
 </div>
 
+{{-- Delete Confirmation Modal --}}
+<div id="delete-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl max-w-md w-full shadow-2xl">
+        <div class="p-4 sm:p-6 border-b border-[#444444]">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl sm:text-2xl font-bold text-[#f5f5f5]">
+                    Confirmer la suppression
+                </h2>
+                <button
+                    onclick="hideDeleteModal()"
+                    class="text-[#9ca3af] hover:text-[#f5f5f5]"
+                >
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6L6 18"/>
+                        <path d="M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="p-4 sm:p-6">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-red-900/30 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-red-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="m15 9-6 6"/>
+                        <path d="m9 9 6 6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-[#f5f5f5]">Êtes-vous sûr ?</h3>
+                    <p class="text-sm text-[#9ca3af]">Cette action ne peut pas être annulée.</p>
+                </div>
+            </div>
+            
+            <div class="bg-[#333333] rounded-lg p-4 mb-6">
+                <p class="text-[#cccccc] text-sm">
+                    Vous êtes sur le point de supprimer le partenaire 
+                    <span id="delete-partner-name" class="font-semibold text-[#f5f5f5]"></span>.
+                </p>
+                <p class="text-[#9ca3af] text-xs mt-2">
+                    Toutes les données associées à ce partenaire seront définitivement supprimées.
+                </p>
+            </div>
+        </div>
+        
+        <div class="p-4 sm:p-6 border-t border-[#444444] flex justify-end gap-3">
+            <button
+                onclick="hideDeleteModal()"
+                class="px-4 sm:px-6 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#cccccc] hover:bg-[#333333] transition-colors duration-200 text-sm sm:text-base"
+            >
+                Annuler
+            </button>
+            <button
+                onclick="confirmDelete()"
+                class="bg-red-600 hover:bg-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
+            >
+                Supprimer
+            </button>
+        </div>
+    </div>
+</div>
+
 {{-- Toast Notifications --}}
 <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
@@ -444,12 +514,24 @@ function filterPartners() {
     const rows = document.querySelectorAll('.partner-row');
     let visibleCount = 0;
 
+        searchValue: searchValue,
+        featuredOnly: featuredOnly,
+        totalRows: rows.length
+    });
+
     rows.forEach(row => {
         const name = row.getAttribute('data-name');
         const isFeatured = row.getAttribute('data-featured') === 'true';
         
         const matchesSearch = name.includes(searchValue);
         const matchesFeatured = !featuredOnly || isFeatured;
+        
+            name: name,
+            isFeatured: isFeatured,
+            matchesSearch: matchesSearch,
+            matchesFeatured: matchesFeatured,
+            willShow: matchesSearch && matchesFeatured
+        });
         
         if (matchesSearch && matchesFeatured) {
             row.style.display = '';
@@ -464,32 +546,92 @@ function filterPartners() {
 
 function toggleFeatured(id, button) {
     const row = button.closest('tr');
-    const isFeatured = row.getAttribute('data-featured') === 'true';
     const partnerName = row.querySelector('td:nth-child(2) .font-medium').textContent;
     
-    row.setAttribute('data-featured', !isFeatured);
-    
-    if (isFeatured) {
-        button.className = 'p-2 rounded-lg bg-[#333333] text-[#9ca3af]';
-        button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
-        showToast('Partenaire retiré', `${partnerName} n'apparaîtra plus sur la page d'accueil`, 'success');
-    } else {
-        button.className = 'p-2 rounded-lg bg-green-900/30 text-green-600';
-        button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-        showToast('Partenaire mis en avant', `${partnerName} apparaîtra maintenant sur la page d'accueil`, 'success');
-    }
-    
-    filterPartners();
+    fetch(`/admin/partners/${id}/toggle-featured`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            row.setAttribute('data-featured', data.is_featured);
+            
+            if (data.is_featured) {
+                button.className = 'p-2 rounded-lg bg-green-900/30 text-green-600';
+                button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            } else {
+                button.className = 'p-2 rounded-lg bg-[#333333] text-[#9ca3af]';
+                button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
+            }
+            
+            showToast('Succès', data.message, 'success');
+            // Update the data-featured attribute
+            row.setAttribute('data-featured', data.is_featured);
+            // Reapply filters
+            filterPartners();
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de la modification', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error toggling featured:', error);
+        showToast('Erreur', 'Erreur lors de la modification', 'error');
+    });
 }
 
+let currentDeleteId = null;
+let currentDeleteName = null;
+
 function deletePartner(id, name) {
-    if (confirm(`Êtes-vous sûr de vouloir supprimer ${name} ?`)) {
-        const row = document.querySelector(`tr[data-name="${name.toLowerCase()}"]`);
-        if (row) {
-            row.remove();
-            filterPartners();
+    currentDeleteId = id;
+    currentDeleteName = name;
+    
+    // Set the partner name in the modal
+    document.getElementById('delete-partner-name').textContent = name;
+    
+    // Show the delete modal
+    document.getElementById('delete-modal').classList.remove('hidden');
+}
+
+function hideDeleteModal() {
+    document.getElementById('delete-modal').classList.add('hidden');
+    currentDeleteId = null;
+    currentDeleteName = null;
+}
+
+function confirmDelete() {
+    if (!currentDeleteId) return;
+    
+    fetch(`/admin/partners/${currentDeleteId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
-    }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const row = document.querySelector(`tr[data-id="${currentDeleteId}"]`);
+            if (row) {
+                row.remove();
+            }
+            showToast('Partenaire supprimé', data.message, 'success');
+            hideDeleteModal();
+            // Reapply filters after deletion
+            filterPartners();
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de la suppression', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting partner:', error);
+        showToast('Erreur', 'Erreur lors de la suppression', 'error');
+    });
 }
 
 // Modal Functions
@@ -509,12 +651,16 @@ function hideAddModal() {
 
 function showEditModal(partner) {
     document.getElementById('edit-modal').classList.remove('hidden');
+    
     // Fill form with partner data
     document.getElementById('edit-partner-name').value = partner.name;
     document.getElementById('edit-partner-website').value = partner.website || '';
     document.getElementById('edit-partner-description').value = partner.description || '';
     document.getElementById('edit-partner-featured').checked = partner.is_featured;
-    document.getElementById('current-logo').src = partner.logo;
+    
+    // Set current logo
+    const logoUrl = partner.logo ? `/storage/${partner.logo}` : '/partners/default.png';
+    document.getElementById('current-logo').src = logoUrl;
     clearEditLogo();
 }
 
@@ -603,6 +749,13 @@ function addPartner() {
     const description = document.getElementById('partner-description').value.trim();
     const featured = document.getElementById('partner-featured').checked;
     
+        name: name,
+        website: website,
+        description: description,
+        featured: featured,
+        selectedLogoFile: selectedLogoFile
+    });
+    
     if (!name) {
         showToast('Erreur', 'Le nom du partenaire est requis', 'error');
         return;
@@ -613,77 +766,127 @@ function addPartner() {
         return;
     }
     
-    // Create new partner row
-    const newId = Math.max(...Array.from(document.querySelectorAll('.partner-row')).map(row => parseInt(row.getAttribute('data-id') || '0'))) + 1;
-    const logoUrl = URL.createObjectURL(selectedLogoFile);
+    // Create FormData for file upload
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('logo', selectedLogoFile);
+    formData.append('website', website);
+    formData.append('description', description);
+    formData.append('is_featured', featured ? '1' : '0');
     
-    const newRow = document.createElement('tr');
-    newRow.className = 'partner-row border-b border-[#444444] hover:bg-[#333333]';
-    newRow.setAttribute('data-featured', featured);
-    newRow.setAttribute('data-name', name.toLowerCase());
-    newRow.setAttribute('data-id', newId);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    formData.append('_token', csrfToken);
     
-    newRow.innerHTML = `
-        <td class="py-4 px-6">
-            <div class="w-16 h-16 rounded-lg overflow-hidden bg-[#333333] flex items-center justify-center">
-                <img src="${logoUrl}" alt="${name}" class="w-full h-full object-contain p-2" />
-            </div>
-        </td>
-        <td class="py-4 px-6">
-            <div class="font-medium text-[#f5f5f5]">${name}</div>
-        </td>
-        <td class="py-4 px-6">
-            <a href="${website}" target="_blank" rel="noopener noreferrer" class="text-[#00b6b4] hover:text-[#009e9c] text-sm">
-                ${website}
-            </a>
-        </td>
-        <td class="py-4 px-6">
-            <div class="text-[#9ca3af] max-w-xs truncate text-sm">
-                ${description}
-            </div>
-        </td>
-        <td class="py-4 px-6">
-            <button 
-                onclick="toggleFeatured(${newId}, this)"
-                class="p-2 rounded-lg ${featured ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]'}"
-            >
-                ${featured ? 
-                    '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' :
-                    '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>'
-                }
-            </button>
-        </td>
-        <td class="py-4 px-6">
-            <div class="flex items-center gap-2">
-                <button 
-                    onclick="editPartner({id: ${newId}, name: '${name}', logo: '${logoUrl}', is_featured: ${featured}, website: '${website}', description: '${description}'})"
-                    class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
-                >
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                </button>
-                <button 
-                    onclick="deletePartner(${newId}, '${name}')"
-                    class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
-                >
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                </button>
-            </div>
-        </td>
-    `;
-    
-    document.getElementById('partners-table').appendChild(newRow);
-    hideAddModal();
-    showToast('Partenaire ajouté', `${name} a été ajouté avec succès`, 'success');
-    filterPartners();
+        name: name,
+        website: website,
+        description: description,
+        featured: featured,
+        hasLogo: !!selectedLogoFile
+    });
+
+    fetch('/admin/partners', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            hideAddModal();
+            showToast('Partenaire ajouté', data.message, 'success');
+            // Reload to show new partner and reapply filters
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de l\'ajout du partenaire', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error adding partner:', error);
+        showToast('Erreur', 'Erreur lors de l\'ajout du partenaire', 'error');
+    });
 }
 
-function editPartner(partner) {
-    showEditModal(partner);
+let currentEditId = null;
+
+function editPartner(id) {
+    currentEditId = id;
+    
+    fetch(`/admin/partners/${id}`)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        showEditModal(data);
+    })
+    .catch(error => {
+        console.error('Error loading partner:', error);
+        showToast('Erreur', 'Erreur lors du chargement du partenaire', 'error');
+    });
 }
 
 function saveEditPartner() {
-    showToast('Partenaire modifié', 'Le partenaire a été modifié avec succès', 'success');
-    hideEditModal();
+    if (!currentEditId) {
+        return;
+    }
+    
+    const name = document.getElementById('edit-partner-name').value.trim();
+    const website = document.getElementById('edit-partner-website').value.trim();
+    const description = document.getElementById('edit-partner-description').value.trim();
+    const featured = document.getElementById('edit-partner-featured').checked;
+    
+        id: currentEditId,
+        name: name,
+        website: website,
+        description: description,
+        featured: featured,
+        hasNewLogo: !!selectedEditLogoFile
+    });
+    
+    if (!name) {
+        showToast('Erreur', 'Le nom du partenaire est requis', 'error');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('website', website);
+    formData.append('description', description);
+    formData.append('is_featured', featured ? '1' : '0');
+    formData.append('_method', 'PUT');
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    
+    // Add logo if new one selected
+    if (selectedEditLogoFile) {
+        formData.append('logo', selectedEditLogoFile);
+    }
+    
+    fetch(`/admin/partners/${currentEditId}`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            hideEditModal();
+            showToast('Partenaire modifié', data.message, 'success');
+            location.reload(); // Reload to show updated partner
+        } else {
+            showToast('Erreur', data.error || 'Erreur lors de la modification', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating partner:', error);
+        showToast('Erreur', 'Erreur lors de la modification', 'error');
+    });
 }
 
 // Toast notifications
@@ -723,6 +926,11 @@ function showToast(title, message, type = 'success') {
         }
     }, 5000);
 }
+
+// Initialize filters when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    filterPartners();
+});
 </script>
 @endsection
 

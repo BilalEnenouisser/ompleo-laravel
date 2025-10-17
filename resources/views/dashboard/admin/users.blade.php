@@ -619,7 +619,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Users page JavaScript loaded successfully');
     const searchInput = document.getElementById('userSearch');
     const userTypeFilter = document.getElementById('userTypeFilter');
     const userStatusFilter = document.getElementById('userStatusFilter');
@@ -628,7 +627,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterUsers() {
         // Prevent multiple simultaneous filter requests
         if (isFiltering) {
-            console.log('Filter already in progress, skipping...');
             return;
         }
         
@@ -636,7 +634,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const userTypeValue = userTypeFilter.value;
         const userStatusValue = userStatusFilter.value;
         
-        console.log('Filtering with:', { searchTerm, userTypeValue, userStatusValue });
         
         // Check if we're already on a filtered page to avoid infinite loops
         const currentUrl = new URL(window.location);
@@ -670,7 +667,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Only redirect if URL is actually different
             if (url.toString() !== window.location.href) {
-                console.log('Redirecting to:', url.toString());
                 window.location.href = url.toString();
             } else {
                 isFiltering = false;
@@ -683,7 +679,6 @@ document.addEventListener('DOMContentLoaded', function() {
             row.style.display = '';
         });
         
-        console.log('No filters applied, showing all rows on current page');
     }
     
     // Debounce function to prevent too many requests
@@ -767,13 +762,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form submission debugging
     document.getElementById('addUserForm').addEventListener('submit', function(e) {
-        console.log('Form submitted');
         
         // Get form data
         const formData = new FormData(this);
-        console.log('Form data entries:');
         for (let [key, value] of formData.entries()) {
-            console.log(key + ': ' + value);
         }
         
         // Clear company name if not recruiter
@@ -805,7 +797,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // View User Modal
     window.viewUser = function(userId) {
-        console.log('View user called with ID:', userId);
         currentUserId = userId;
         fetch(`/admin/users/${userId}`, {
             headers: {
@@ -814,7 +805,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
             .then(response => {
-                console.log('View response:', response);
                 return response.json();
             })
             .then(data => {
@@ -893,7 +883,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Edit User Modal
     window.editUser = function(userId) {
-        console.log('Edit user called with ID:', userId);
         currentUserId = userId;
         fetch(`/admin/users/${userId}`, {
             headers: {
@@ -902,7 +891,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
             .then(response => {
-                console.log('Edit response:', response);
                 return response.json();
             })
             .then(data => {
@@ -936,7 +924,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Delete User Modal
     window.deleteUser = function(userId, userName) {
-        console.log('Delete user called with ID:', userId, 'Name:', userName);
         currentUserId = userId;
         document.getElementById('deleteUserMessage').textContent = 
             `Êtes-vous sûr de vouloir supprimer l'utilisateur "${userName}" ?`;
@@ -1046,7 +1033,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // CSV Export Function
 function exportUsersCSV() {
-    console.log('Starting CSV export...');
     
     // Get all user data from the table
     const tableRows = document.querySelectorAll('tbody tr');
@@ -1123,6 +1109,5 @@ function exportUsersCSV() {
     link.click();
     document.body.removeChild(link);
     
-    console.log('CSV export completed!');
 }
 </script>

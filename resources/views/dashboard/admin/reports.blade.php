@@ -449,8 +449,6 @@ function executeAction() {
     }
     
     // Here you would normally send the action to the server
-    console.log(`Action: ${actionDescription} for ${currentUserName}`);
-    console.log(`Notes: ${notes}`);
     
     // Show success message (you can replace this with actual notification)
     alert(`${actionDescription} pour ${currentUserName}`);

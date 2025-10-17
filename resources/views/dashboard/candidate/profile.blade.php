@@ -456,7 +456,6 @@ document.addEventListener('DOMContentLoaded', function() {
          formData.append('location', document.getElementById('location').value);
          formData.append('bio', document.getElementById('bio').value);
          const phoneValue = document.getElementById('phone').value;
-         console.log('Phone value:', phoneValue);
          formData.append('phone', phoneValue);
          
          // Add social media fields
@@ -465,7 +464,6 @@ document.addEventListener('DOMContentLoaded', function() {
          const portfolioValue = document.getElementById('portfolio').value;
          const twitterValue = document.getElementById('twitter').value;
          
-         console.log('Social media values:', {
              linkedin: linkedinValue,
              facebook: facebookValue,
              portfolio: portfolioValue,
@@ -617,14 +615,6 @@ document.addEventListener('DOMContentLoaded', function() {
          });
          formData.append('languages', JSON.stringify(languagesData));
          
-         console.log('Sending profile update request...');
-         console.log('Form data:', Object.fromEntries(formData));
-         console.log('Skills data:', skillsData);
-         console.log('Experience data:', experienceData);
-         console.log('Education data:', educationData);
-         console.log('Languages data:', languagesData);
-         console.log('Experience items found:', document.querySelectorAll('#experienceContainer .border-l-4').length);
-         console.log('Education items found:', document.querySelectorAll('#educationContainer .border-l-4').length);
          
          // Send to backend
          fetch('{{ route("candidate.profile.update") }}', {
@@ -636,8 +626,6 @@ document.addEventListener('DOMContentLoaded', function() {
              }
          })
          .then(response => {
-             console.log('Response status:', response.status);
-             console.log('Response headers:', response.headers);
              
              if (!response.ok) {
                  return response.text().then(text => {

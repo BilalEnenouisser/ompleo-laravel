@@ -1062,8 +1062,6 @@ window.editJob = function(jobId) {
             return response.json();
         })
         .then(data => {
-            console.log('Job data loaded:', data);
-            console.log('Responsibilities:', data.responsibilities);
             
             // Basic Information
             document.getElementById('editTitle').value = data.title || '';

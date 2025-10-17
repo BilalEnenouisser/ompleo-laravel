@@ -674,7 +674,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     try {
                         activityTime = new Date(activity.time);
                     } catch (e) {
-                        console.log('Invalid time format:', activity.time);
                         activityTime = new Date(); // Use current time as fallback
                     }
                 } else {
@@ -703,17 +702,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Debug logging for each activity
-                console.log('=== TIME FILTER DEBUG ===');
-                console.log('Activity:', activity.activity);
-                console.log('Raw time data:', activity.time);
-                console.log('Parsed activity time:', activityTime);
-                console.log('Current time:', now);
-                console.log('Time difference (ms):', timeDiff);
-                console.log('Time difference (hours):', timeDiff / (60 * 60 * 1000));
-                console.log('Time limit (ms):', timeLimit);
-                console.log('Time limit (hours):', timeLimit / (60 * 60 * 1000));
-                console.log('Should show (timeDiff <= timeLimit):', timeDiff <= timeLimit);
-                console.log('========================');
                 
                 if (timeDiff > timeLimit) {
                     show = false;
@@ -729,7 +717,6 @@ document.addEventListener('DOMContentLoaded', function() {
             activity.element.style.display !== 'none'
         ).length;
         
-        console.log(`Total activities: ${allActivities.length}, Visible: ${visibleCount}, Filter: ${timeFilterValue}`);
     }
     
     // Export filtered activities to CSV

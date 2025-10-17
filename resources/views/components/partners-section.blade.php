@@ -1,68 +1,54 @@
 @php
-$partners = [
-    [
-        'id' => 1,
-        'name' => 'Air Algérie',
-        'logo' => asset('partners/air-algerie.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 2,
-        'name' => 'Algérie Télécom',
-        'logo' => asset('partners/algerie-telecom.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 3,
-        'name' => 'Benamor',
-        'logo' => asset('partners/benamor.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 4,
-        'name' => 'BNA',
-        'logo' => asset('partners/bna.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 5,
-        'name' => 'Cevital',
-        'logo' => asset('partners/cevital.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 6,
-        'name' => 'Djezzy',
-        'logo' => asset('partners/djezzy.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 7,
-        'name' => 'ENTP',
-        'logo' => asset('partners/entp.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 8,
-        'name' => 'Mobilis',
-        'logo' => asset('partners/mobilis.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 9,
-        'name' => 'Ooredoo',
-        'logo' => asset('partners/ooredoo.png'),
-        'is_featured' => true,
-    ],
-    [
-        'id' => 10,
-        'name' => 'Sonelgaz',
-        'logo' => asset('partners/sonelgaz.png'),
-        'is_featured' => true,
-    ],
-];
+use App\Models\Partner;
+use Illuminate\Support\Facades\Storage;
+
+// Get featured partners from database
+$partners = Partner::where('is_featured', true)
+    ->orderBy('sort_order')
+    ->orderBy('name')
+    ->get()
+    ->map(function($partner) {
+        return [
+            'id' => $partner->id,
+            'name' => $partner->name,
+            'logo' => $partner->logo ? Storage::url($partner->logo) : asset('partners/default.png'),
+            'is_featured' => $partner->is_featured,
+        ];
+    })
+    ->toArray();
+
+// Fallback partners if no featured partners exist
+if (empty($partners)) {
+    $partners = [
+        [
+            'id' => 1,
+            'name' => 'Air Algérie',
+            'logo' => asset('partners/air-algerie.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Algérie Télécom',
+            'logo' => asset('partners/algerie-telecom.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 3,
+            'name' => 'Mobilis',
+            'logo' => asset('partners/mobilis.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 4,
+            'name' => 'Sonelgaz',
+            'logo' => asset('partners/sonelgaz.png'),
+            'is_featured' => true,
+        ],
+    ];
+}
 @endphp
 
+@if(!empty($partners))
 <section class="relative py-16 overflow-hidden bg-[#e0e3df] dark:bg-[#1f1f1f]">
     <div class="absolute inset-0 bg-[#00b6b4]/5 dark:bg-[#00b6b4]/5 mix-blend-overlay animate-pulse-slow"></div>
     <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
@@ -203,3 +189,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+@endif

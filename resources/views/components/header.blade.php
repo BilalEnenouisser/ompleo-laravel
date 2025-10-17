@@ -491,21 +491,18 @@ function handleNotificationClick(notificationId) {
 
 function markAsRead(notificationId) {
     // Simulate marking as read (replace with actual API call)
-    console.log(`Marking notification ${notificationId} as read`);
     // Reload notifications after marking as read
     loadNotifications();
 }
 
 function markAllAsRead() {
     // Simulate marking all as read (replace with actual API call)
-    console.log('Marking all notifications as read');
     // Reload notifications after marking all as read
     loadNotifications();
 }
 
 function deleteNotification(notificationId) {
     // Simulate deleting notification (replace with actual API call)
-    console.log(`Deleting notification ${notificationId}`);
     // Reload notifications after deletion
     loadNotifications();
 }

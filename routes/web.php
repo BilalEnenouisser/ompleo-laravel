@@ -65,26 +65,23 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'destroy'])->name('admin.users.destroy');
 
-// Test route for debugging dates
-Route::get('/test-dates', function() {
-    $user = App\Models\User::latest()->first();
-    return response()->json([
-        'user_name' => $user->name,
-        'created_at' => $user->created_at,
-        'updated_at' => $user->updated_at,
-        'created_at_formatted' => $user->created_at->format('Y-m-d H:i:s'),
-        'updated_at_formatted' => $user->updated_at->format('Y-m-d H:i:s'),
-    ]);
-});
     Route::get('/admin/jobs', function () {
         return view('dashboard.admin.jobs');
     })->name('admin.jobs');
-    Route::get('/admin/partners', function () {
-        return view('dashboard.admin.partners');
-    })->name('admin.partners');
-                Route::get('/admin/blog', function () {
-                    return view('dashboard.admin.blog');
-                })->name('admin.blog');
+    Route::get('/admin/partners', [App\Http\Controllers\Admin\PartnersController::class, 'index'])->name('admin.partners');
+    Route::post('/admin/partners', [App\Http\Controllers\Admin\PartnersController::class, 'store'])->name('admin.partners.store');
+    Route::get('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'show'])->name('admin.partners.show');
+    Route::put('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'update'])->name('admin.partners.update');
+    Route::delete('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'destroy'])->name('admin.partners.destroy');
+    Route::patch('/admin/partners/{partner}/toggle-featured', [App\Http\Controllers\Admin\PartnersController::class, 'toggleFeatured'])->name('admin.partners.toggle-featured');
+    Route::get('/admin/blog', [App\Http\Controllers\Admin\BlogController::class, 'index'])->name('admin.blog');
+    Route::get('/admin/blog/editor', [App\Http\Controllers\Admin\BlogController::class, 'editor'])->name('admin.blog.editor');
+    Route::get('/admin/blog/editor/{id}', [App\Http\Controllers\Admin\BlogController::class, 'editor'])->name('admin.blog.editor.edit');
+    Route::post('/admin/blog', [App\Http\Controllers\Admin\BlogController::class, 'store'])->name('admin.blog.store');
+    Route::get('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'show'])->name('admin.blog.show');
+    Route::put('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
+    Route::delete('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
+    Route::patch('/admin/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])->name('admin.blog.toggle-status');
 Route::get('/admin/notifications', function () {
     return view('dashboard.admin.notifications');
 })->name('admin.notifications');
@@ -97,30 +94,6 @@ Route::get('/admin/payments', function () {
     return view('dashboard.admin.payments');
 })->name('admin.payments');
 
-Route::get('/test-jobs', function() {
-    echo "Total jobs: " . \App\Models\Job::count() . "\n";
-    $job = \App\Models\Job::first();
-    if ($job) {
-        echo "First job: " . $job->title . "\n";
-        echo "Company ID: " . $job->company_id . "\n";
-        echo "Recruiter ID: " . $job->recruiter_id . "\n";
-        
-        // Test relationships
-        try {
-            $company = $job->company;
-            echo "Company: " . ($company ? $company->name : 'NULL') . "\n";
-        } catch (Exception $e) {
-            echo "Company relationship error: " . $e->getMessage() . "\n";
-        }
-        
-        try {
-            $recruiter = $job->recruiter;
-            echo "Recruiter: " . ($recruiter ? $recruiter->name : 'NULL') . "\n";
-        } catch (Exception $e) {
-            echo "Recruiter relationship error: " . $e->getMessage() . "\n";
-        }
-    }
-});
 
 Route::get('/admin/blog/editor', function () {
     return view('dashboard.admin.blog-editor');
@@ -129,11 +102,6 @@ Route::get('/admin/blog/editor', function () {
     Route::get('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
     Route::put('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'update'])->name('candidate.profile.update');
     
-    // Test route for debugging
-    Route::post('/test-profile-update', function(\Illuminate\Http\Request $request) {
-        \Log::info('Test profile update called', $request->all());
-        return response()->json(['success' => true, 'message' => 'Test successful']);
-    });
 });
 
 // Password Reset Routes
@@ -221,10 +189,12 @@ Route::post('/contact', function () {
 
 // Blog Routes
 Route::get('/blog', function () {
-    return view('blog.index');
+    $posts = \App\Models\Blog::where('status', 'published')->orderBy('created_at', 'desc')->get();
+    return view('blog.index', compact('posts'));
 })->name('blog.index');
 
 Route::get('/blog/{post}', function ($post) {
+    $post = \App\Models\Blog::where('slug', $post)->where('status', 'published')->firstOrFail();
     return view('blog.show', compact('post'));
 })->name('blog.show');
 

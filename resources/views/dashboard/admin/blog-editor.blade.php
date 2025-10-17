@@ -277,6 +277,9 @@ function addBlock(type) {
     
     // Re-render all content (like React does)
     renderAllBlocks();
+    
+    // Attach event listeners to the newly rendered blocks
+    attachEventListeners();
 }
 
 // Test function to clear all blocks
@@ -325,20 +328,20 @@ function renderAllBlocks() {
     editorContent.innerHTML = '';
     
     contentBlocks.forEach((block, index) => {
-        const blockHTML = generateBlockHTML(block.id, block.type);
+        const blockHTML = generateBlockHTML(block.id, block.type, block.content);
         if (blockHTML && typeof blockHTML === 'string') {
             editorContent.insertAdjacentHTML('beforeend', blockHTML);
         }
     });
 }
 
-function generateBlockHTML(blockId, type) {
+function generateBlockHTML(blockId, type, content = '') {
     let blockHTML = '';
-    let defaultContent = '';
+    let defaultContent = content || '';
     
     switch(type) {
         case 'title':
-            defaultContent = 'Nouveau titre';
+            if (!defaultContent) defaultContent = 'Nouveau titre';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <h1 contenteditable="true" class="text-3xl font-bold text-[#f5f5f4] mb-4 focus:outline-none cursor-pointer" data-placeholder="Titre de l'article">${defaultContent}</h1>
@@ -366,7 +369,7 @@ function generateBlockHTML(blockId, type) {
             break;
             
         case 'subtitle':
-            defaultContent = 'Nouveau sous-titre';
+            if (!defaultContent) defaultContent = 'Nouveau sous-titre';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <h2 contenteditable="true" class="text-2xl font-semibold text-[#f5f5f4] mb-4 focus:outline-none cursor-pointer" data-placeholder="Sous-titre">${defaultContent}</h2>
@@ -394,7 +397,7 @@ function generateBlockHTML(blockId, type) {
             break;
             
         case 'paragraph':
-            defaultContent = 'Nouveau paragraphe. Cliquez pour modifier le contenu.';
+            if (!defaultContent) defaultContent = 'Nouveau paragraphe. Cliquez pour modifier le contenu.';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <p contenteditable="true" class="text-[#f5f5f4] mb-4 focus:outline-none cursor-pointer" data-placeholder="Contenu du paragraphe">${defaultContent}</p>
@@ -511,7 +514,7 @@ function generateBlockHTML(blockId, type) {
             break;
             
         case 'quote':
-            defaultContent = 'Citation inspirante';
+            if (!defaultContent) defaultContent = 'Citation inspirante';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <blockquote contenteditable="true" class="border-l-4 border-[#00b6b4] pl-4 italic text-[#f5f5f4] mb-4 focus:outline-none cursor-pointer" data-placeholder="Citation">${defaultContent}</blockquote>
@@ -539,7 +542,7 @@ function generateBlockHTML(blockId, type) {
             break;
             
         case 'list':
-            defaultContent = 'Élément de liste';
+            if (!defaultContent) defaultContent = 'Élément de liste';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <ul class="list-disc list-inside text-[#f5f5f4] mb-4">
@@ -569,7 +572,7 @@ function generateBlockHTML(blockId, type) {
             break;
             
         case 'code':
-            defaultContent = 'console.log("Hello World");';
+            if (!defaultContent) defaultContent = '// Your code here';
             blockHTML = `
                 <div id="${blockId}" class="block-item relative group hover:bg-[#333333] p-2 rounded-lg transition-colors">
                     <pre class="bg-[#333333] p-4 rounded-lg text-[#f5f5f4] mb-4 overflow-x-auto"><code contenteditable="true" class="focus:outline-none cursor-pointer" data-placeholder="Code">${defaultContent}</code></pre>
@@ -691,16 +694,11 @@ function uploadFeaturedImage() {
 
 function handleFeaturedImageUpload(input) {
     const file = input.files[0];
+    
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const uploadArea = input.parentElement;
-            uploadArea.innerHTML = `
-                <img src="${e.target.result}" alt="Featured image" class="max-w-full h-auto rounded-lg mb-2">
-                <p class="text-sm text-[#9ca3af] mb-1">Image à la une ajoutée</p>
-                <p class="text-xs text-[#666666]">Cliquez pour changer</p>
-                <input type="file" id="featuredImageInput" accept="image/*" style="display: none;" onchange="handleFeaturedImageUpload(this)">
-            `;
+            updateFeaturedImageDisplay(e.target.result);
         };
         reader.readAsDataURL(file);
     }
@@ -845,25 +843,29 @@ function renderPreview() {
     `;
 }
 
-function renderAllBlocks() {
-    const editorContent = document.getElementById('editorContent');
-    editorContent.innerHTML = '';
-    
-    contentBlocks.forEach(block => {
-        const blockHTML = generateBlockHTML(block.id, block.type);
-        if (blockHTML && typeof blockHTML === 'string') {
-            editorContent.innerHTML += blockHTML;
-        }
-    });
-    
-    // Re-attach event listeners after re-rendering
-    attachEventListeners();
-}
 
 function updateBlockContent(blockId, content) {
     const blockIndex = contentBlocks.findIndex(block => block.id === blockId);
     if (blockIndex !== -1) {
         contentBlocks[blockIndex].content = content;
+        
+        // Also update the DOM element to reflect the change
+        const blockElement = document.getElementById(blockId);
+        if (blockElement) {
+            const contenteditableElement = blockElement.querySelector('[contenteditable="true"]');
+            if (contenteditableElement && contenteditableElement.textContent !== content) {
+                contenteditableElement.textContent = content;
+            }
+        }
+        
+        // Force a re-render of the block to ensure the content is displayed
+        if (blockElement) {
+            const contenteditableElement = blockElement.querySelector('[contenteditable="true"]');
+            if (contenteditableElement) {
+                contenteditableElement.textContent = content;
+                contenteditableElement.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
     }
 }
 
@@ -874,8 +876,54 @@ function attachEventListeners() {
             const blockId = this.closest('.block-item').id;
             updateBlockContent(blockId, this.textContent);
         });
+        
+        // Also capture content on input for real-time updates
+        element.addEventListener('input', function() {
+            const blockId = this.closest('.block-item').id;
+            updateBlockContent(blockId, this.textContent);
+        });
     });
 }
+
+function forceRefreshAllBlocks() {
+    contentBlocks.forEach((block, index) => {
+        const blockElement = document.getElementById(block.id);
+        if (blockElement) {
+            const contenteditableElement = blockElement.querySelector('[contenteditable="true"]');
+            if (contenteditableElement) {
+                contenteditableElement.textContent = block.content;
+                contenteditableElement.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+    });
+}
+
+// Function to update featured image display
+function updateFeaturedImageDisplay(imageUrl) {
+    const uploadArea = document.querySelector('div[onclick="uploadFeaturedImage()"]');
+    if (uploadArea) {
+        uploadArea.innerHTML = `
+            <div class="flex flex-col items-center">
+                <img src="${imageUrl}" alt="Featured image" class="max-w-full h-auto rounded-lg mb-2">
+                <p class="text-sm text-[#9ca3af] mb-1">Image à la une ajoutée</p>
+                <p class="text-xs text-[#666666] mb-4">Cliquez pour changer</p>
+                <button
+                    type="button"
+                    class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
+                    onclick="uploadFeaturedImage()"
+                >
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                        <circle cx="12" cy="13" r="3"/>
+                    </svg>
+                    Changer l'image
+                </button>
+            </div>
+            <input type="file" id="featuredImageInput" accept="image/*" style="display: none;" onchange="handleFeaturedImageUpload(this)">
+        `;
+    }
+}
+
 
 document.getElementById('fullscreenBtn').addEventListener('click', function() {
     if (document.fullscreenElement) {
@@ -885,12 +933,396 @@ document.getElementById('fullscreenBtn').addEventListener('click', function() {
     }
 });
 
+// Initialize form with existing blog data if editing
+@if(isset($blog) && $blog)
+document.addEventListener('DOMContentLoaded', function() {
+    // Populate form fields
+    document.getElementById('articleTitle').value = '{{ $blog->title }}';
+    document.getElementById('articleExcerpt').value = '{{ $blog->excerpt }}';
+    document.getElementById('articleStatus').value = '{{ $blog->status }}';
+    document.getElementById('articleTags').value = '{{ $blog->tags ? implode(", ", $blog->tags) : "" }}';
+    document.getElementById('metaTitle').value = '{{ $blog->title }}';
+    document.getElementById('metaDescription').value = '{{ $blog->excerpt }}';
+    
+    // Show featured image if exists
+    @if($blog->featured_image)
+    updateFeaturedImageDisplay('{{ asset('storage/' . $blog->featured_image) }}');
+    @endif
+    
+    // Parse and load content blocks from existing blog content
+    loadContentBlocks({!! json_encode($blog->content) !!});
+    
+    // Update page title
+    document.querySelector('h1').textContent = 'Modifier l\'article';
+});
+
+// Function to load content blocks from existing blog content
+function loadContentBlocks(htmlContent) {
+    
+    // Clear existing blocks
+    contentBlocks = [];
+    blockIdCounter = 0;
+    
+    // If content is empty, return
+    if (!htmlContent || htmlContent.trim() === '') {
+        renderAllBlocks();
+        attachEventListeners();
+        return;
+    }
+    
+    // Create a temporary DOM element to parse the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    
+    
+    // Parse different block types from HTML
+    const elements = tempDiv.children;
+    
+    for (let element of elements) {
+        let blockType = '';
+        let blockContent = '';
+        
+        if (element.tagName === 'H1') {
+            blockType = 'title';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'H2') {
+            blockType = 'subtitle';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'P') {
+            blockType = 'paragraph';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'IMG') {
+            blockType = 'image';
+            blockContent = element.src;
+        } else if (element.tagName === 'BLOCKQUOTE') {
+            blockType = 'quote';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'UL') {
+            blockType = 'list';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'PRE') {
+            blockType = 'code';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'HR') {
+            blockType = 'separator';
+            blockContent = '';
+        } else if (element.style.display === 'grid' || element.classList.contains('grid')) {
+            blockType = 'columns';
+            blockContent = element.textContent;
+        } else if (element.tagName === 'DIV' && element.textContent.trim()) {
+            // Handle div elements that might contain content
+            blockType = 'paragraph';
+            blockContent = element.textContent;
+        }
+        
+        if (blockType) {
+            const blockId = 'block_' + (++blockIdCounter);
+            const newBlock = { 
+                id: blockId, 
+                type: blockType, 
+                content: blockContent 
+            };
+            
+            // Special handling for images
+            if (blockType === 'image' && element.src) {
+                newBlock.imageData = element.src;
+                newBlock.imageAlt = element.alt || 'Image';
+                // If it's a data URL, we need to handle it differently
+                if (element.src.startsWith('data:')) {
+                    newBlock.imageData = element.src;
+                } else {
+                    // Convert relative URLs to absolute
+                    newBlock.imageData = element.src.startsWith('http') ? element.src : window.location.origin + '/' + element.src;
+                }
+            }
+            
+            contentBlocks.push(newBlock);
+        }
+    }
+    
+    // If no blocks were found, try to parse as plain text and create a paragraph
+    if (contentBlocks.length === 0 && htmlContent.trim()) {
+        const blockId = 'block_' + (++blockIdCounter);
+        contentBlocks.push({
+            id: blockId,
+            type: 'paragraph',
+            content: htmlContent.replace(/<[^>]*>/g, '') // Strip HTML tags
+        });
+    }
+    
+    
+    
+        // Re-render all blocks
+        renderAllBlocks();
+
+        // Attach event listeners to the newly rendered blocks
+        attachEventListeners();
+        
+        // Force refresh all blocks to ensure content is displayed correctly
+        forceRefreshAllBlocks();
+}
+@endif
+
 document.getElementById('saveBtn').addEventListener('click', function() {
-    alert('Article sauvegardé!');
+    saveArticle('draft');
 });
 
 document.getElementById('publishBtn').addEventListener('click', function() {
-    alert('Article publié avec succès!');
+    saveArticle('published');
 });
+
+function saveArticle(status) {
+    // Get form data
+    const title = document.getElementById('articleTitle').value;
+    const excerpt = document.getElementById('articleExcerpt').value;
+    const formStatus = document.getElementById('articleStatus').value;
+    const tags = document.getElementById('articleTags').value;
+    const metaTitle = document.getElementById('metaTitle').value;
+    const metaDescription = document.getElementById('metaDescription').value;
+    // Get featured image - either from file input or from displayed image
+    let featuredImage = document.getElementById('featuredImageInput').files[0];
+    
+    // If no file is selected, check if there's a displayed image
+    if (!featuredImage) {
+        const displayedImage = document.querySelector('#featuredImageInput').parentElement.querySelector('img');
+        if (displayedImage && displayedImage.src && displayedImage.src.startsWith('data:')) {
+            // Convert base64 data URL to file synchronously
+            const base64Data = displayedImage.src.split(',')[1];
+            const byteCharacters = atob(base64Data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'image/png' });
+            featuredImage = new File([blob], 'featured-image.png', { type: 'image/png' });
+        }
+    }
+    
+    // Debug: Log form field values
+    
+    // Validate required fields
+    if (!title.trim()) {
+        showNotification('Le titre est requis', 'error');
+        return;
+    }
+    
+    if (!excerpt.trim()) {
+        showNotification('L\'extrait est requis', 'error');
+        return;
+    }
+    
+    // Get featured image (already defined above)
+    // const featuredImage = document.getElementById('featuredImageInput').files[0];
+    
+    // Generate content from blocks
+    let content = '';
+    
+    contentBlocks.forEach((block, index) => {
+        switch(block.type) {
+            case 'title':
+                const titleContent = block.content || 'Titre de l\'article';
+                content += `<h1>${titleContent}</h1>`;
+                break;
+            case 'subtitle':
+                const subtitleContent = block.content || 'Sous-titre';
+                content += `<h2>${subtitleContent}</h2>`;
+                break;
+            case 'paragraph':
+                const paragraphContent = block.content || 'Contenu du paragraphe';
+                content += `<p>${paragraphContent}</p>`;
+                break;
+            case 'image':
+                if (block.imageData) {
+                    content += `<img src="${block.imageData}" alt="${block.imageAlt || 'Image'}" style="max-width: 100%; height: auto;">`;
+                }
+                break;
+            case 'quote':
+                const quoteContent = block.content || 'Citation';
+                content += `<blockquote style="border-left: 4px solid #00b6b4; padding-left: 16px; font-style: italic;">${quoteContent}</blockquote>`;
+                break;
+            case 'list':
+                const listContent = block.content || 'Élément de liste';
+                content += `<ul><li>${listContent}</li></ul>`;
+                break;
+            case 'code':
+                const codeContent = block.content || 'Code';
+                content += `<pre><code>${codeContent}</code></pre>`;
+                break;
+            case 'separator':
+                content += `<hr>`;
+                break;
+            case 'columns':
+                const col1Content = block.col1Content || 'Colonne 1';
+                const col2Content = block.col2Content || 'Colonne 2';
+                content += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;"><div>${col1Content}</div><div>${col2Content}</div></div>`;
+                break;
+        }
+    });
+    
+    // Create FormData
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('excerpt', excerpt);
+    formData.append('content', content);
+    formData.append('author_name', 'Admin'); // Default author
+    formData.append('category', 'Conseils'); // Default category
+    formData.append('status', status); // Use the parameter passed to the function
+    formData.append('tags', tags);
+    
+    // Debug: Log form data
+    
+    if (featuredImage) {
+        formData.append('featured_image', featuredImage);
+    }
+    
+    // Add CSRF token
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    
+    // Determine if we're creating or updating
+    const isEditing = {{ isset($blog) && $blog ? 'true' : 'false' }};
+    const blogId = {{ isset($blog) && $blog ? $blog->id : 'null' }};
+    const url = isEditing ? `/admin/blog/${blogId}` : '/admin/blog';
+    const method = 'POST'; // Always use POST with _method override
+    
+    // Add method override for PUT requests
+    if (isEditing) {
+        formData.append('_method', 'PUT');
+    }
+    
+    // Show loading state
+    const publishBtn = document.getElementById('publishBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const originalPublishText = publishBtn.innerHTML;
+    const originalSaveText = saveBtn.innerHTML;
+    
+    if (status === 'published') {
+        publishBtn.innerHTML = '<svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Publication...';
+        publishBtn.disabled = true;
+    } else {
+        saveBtn.innerHTML = '<svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Sauvegarde...';
+        saveBtn.disabled = true;
+    }
+    
+    // Submit to server
+    fetch(url, {
+        method: method,
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            // Try to get error details
+            return response.text().then(errorText => {
+                console.error('Error response text:', errorText);
+                try {
+                    const errorData = JSON.parse(errorText);
+                    console.error('Error response JSON:', errorData);
+                    throw new Error(`Server error: ${errorData.message || errorData.error || 'Unknown error'}`);
+                } catch (e) {
+                    console.error('Error parsing response:', e);
+                    throw new Error(`Server error: ${response.status} ${response.statusText}`);
+                }
+            });
+        }
+    })
+    .then(data => {
+        
+        if (data.success) {
+            // Show success message
+            if (isEditing) {
+                if (status === 'published') {
+                    showNotification('Article modifié et publié avec succès!', 'success');
+                } else {
+                    showNotification('Article modifié et sauvegardé comme brouillon!', 'success');
+                }
+            } else {
+                if (status === 'published') {
+                    showNotification('Article publié avec succès!', 'success');
+                } else {
+                    showNotification('Article sauvegardé comme brouillon!', 'success');
+                }
+            }
+            
+            // Redirect to blog list after a short delay
+            setTimeout(() => {
+                window.location.href = '/admin/blog';
+            }, 1500);
+        } else {
+            showNotification('Erreur: ' + (data.error || 'Erreur lors de la sauvegarde'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Erreur lors de la sauvegarde', 'error');
+    })
+    .finally(() => {
+        // Reset button states
+        publishBtn.innerHTML = originalPublishText;
+        publishBtn.disabled = false;
+        saveBtn.innerHTML = originalSaveText;
+        saveBtn.disabled = false;
+    });
+}
+
+// Notification system
+function showNotification(message, type = 'success') {
+    // Create notification container if it doesn't exist
+    let container = document.getElementById('notification-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container';
+        container.className = 'fixed top-4 right-4 z-50 space-y-2';
+        document.body.appendChild(container);
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    const bgColor = type === 'success' ? 'bg-green-900/90' : 'bg-red-900/90';
+    const borderColor = type === 'success' ? 'border-green-500' : 'border-red-500';
+    const iconColor = type === 'success' ? 'text-green-400' : 'text-red-400';
+    
+    notification.className = `${bgColor} border ${borderColor} rounded-lg p-4 max-w-sm shadow-lg backdrop-blur-sm transform transition-all duration-300 translate-x-full`;
+    notification.innerHTML = `
+        <div class="flex items-start gap-3">
+            <div class="flex-shrink-0">
+                ${type === 'success' ? 
+                    '<svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                    '<svg class="w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                }
+            </div>
+            <div class="flex-1">
+                <p class="text-sm font-medium text-white">${message}</p>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="text-gray-300 hover:text-white">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </div>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 300);
+    }, 5000);
+}
 </script>
 @endsection
+
