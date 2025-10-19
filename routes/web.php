@@ -82,9 +82,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
     Route::delete('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
     Route::patch('/admin/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])->name('admin.blog.toggle-status');
-Route::get('/admin/notifications', function () {
-    return view('dashboard.admin.notifications');
-})->name('admin.notifications');
+Route::get('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'index'])->name('admin.notifications');
+Route::post('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'store'])->name('admin.notifications.store');
+Route::post('/admin/notifications/{notification}/send', [App\Http\Controllers\Admin\NotificationsController::class, 'send'])->name('admin.notifications.send');
+Route::delete('/admin/notifications/{notification}', [App\Http\Controllers\Admin\NotificationsController::class, 'destroy'])->name('admin.notifications.destroy');
+Route::get('/admin/notifications/stats', [App\Http\Controllers\Admin\NotificationsController::class, 'stats'])->name('admin.notifications.stats');
 
 Route::get('/admin/reports', function () {
     return view('dashboard.admin.reports');
@@ -230,9 +232,12 @@ Route::middleware('auth')->group(function () {
         return view('profile');
     })->name('profile');
     
-    Route::get('/notifications', function () {
-        return view('notifications');
-    })->name('notifications');
+    Route::get('/notifications', [App\Http\Controllers\UserNotificationController::class, 'index'])->name('notifications');
+    Route::get('/api/notifications', [App\Http\Controllers\UserNotificationController::class, 'getNotifications'])->name('notifications.api');
+    Route::post('/notifications/{id}/read', [App\Http\Controllers\UserNotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [App\Http\Controllers\UserNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::delete('/notifications/{id}', [App\Http\Controllers\UserNotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::delete('/notifications', [App\Http\Controllers\UserNotificationController::class, 'destroyAll'])->name('notifications.destroy-all');
     
     // Recruiter Routes
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');

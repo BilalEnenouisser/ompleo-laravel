@@ -350,36 +350,33 @@ function toggleMobileMenu() {
 
 // Notification functions
 function loadNotifications() {
-    // Simulate loading notifications (replace with actual API call)
-    const notifications = [
-        {
-            id: 1,
-            title: 'Nouvelle candidature',
-            message: 'Ahmed Benali a postulé pour le poste de Développeur Full Stack',
-            timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
-            isRead: false,
-            link: '/admin/applications'
-        },
-        {
-            id: 2,
-            title: 'Nouveau message',
-            message: 'Vous avez reçu un nouveau message de Sarah Khelil',
-            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-            isRead: true,
-            link: '/messages'
-        },
-        {
-            id: 3,
-            title: 'Rapport mensuel',
-            message: 'Votre rapport mensuel est maintenant disponible',
-            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-            isRead: false,
-            link: '/reports'
+    // Load real notifications from API
+    fetch('/api/notifications', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
         }
-    ];
-    
-    renderNotifications(notifications);
-    updateNotificationBadge(notifications);
+    })
+    .then(response => response.json())
+    .then(data => {
+        const notifications = data.notifications.map(notification => ({
+            id: notification.id,
+            title: notification.title,
+            message: notification.message,
+            timestamp: new Date(notification.created_at),
+            isRead: notification.is_read,
+            type: notification.type
+        }));
+        
+        renderNotifications(notifications);
+        updateNotificationBadge(notifications);
+    })
+    .catch(error => {
+        console.error('Error loading notifications:', error);
+        // Show empty state on error
+        renderNotifications([]);
+        updateNotificationBadge([]);
+    });
 }
 
 function renderNotifications(notifications) {
@@ -490,21 +487,62 @@ function handleNotificationClick(notificationId) {
 }
 
 function markAsRead(notificationId) {
-    // Simulate marking as read (replace with actual API call)
-    // Reload notifications after marking as read
-    loadNotifications();
+    fetch(`/notifications/${notificationId}/read`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadNotifications();
+        }
+    })
+    .catch(error => {
+        console.error('Error marking notification as read:', error);
+    });
 }
 
 function markAllAsRead() {
-    // Simulate marking all as read (replace with actual API call)
-    // Reload notifications after marking all as read
-    loadNotifications();
+    fetch('/notifications/read-all', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadNotifications();
+        }
+    })
+    .catch(error => {
+        console.error('Error marking all notifications as read:', error);
+    });
 }
 
 function deleteNotification(notificationId) {
-    // Simulate deleting notification (replace with actual API call)
-    // Reload notifications after deletion
-    loadNotifications();
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
+        fetch(`/notifications/${notificationId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadNotifications();
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting notification:', error);
+        });
+    }
 }
 
 // Close notification menu when clicking outside

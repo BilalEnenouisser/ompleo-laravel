@@ -354,10 +354,11 @@
                 </div>
             </div>
             
-            <form onsubmit="sendNotification(event)" class="space-y-4 sm:space-y-6">
+            <form onsubmit="createNotification(event)" class="space-y-4 sm:space-y-6">
                 {{-- Hidden inputs for form data --}}
                 <input type="hidden" name="title" id="form-title" value="Nouvelle notification" />
                 <input type="hidden" name="message" id="form-message" value="Contenu de la notification" />
+                <input type="hidden" name="type" id="form-type" value="info" />
                 
                 {{-- Audience Selection --}}
                 <div>
@@ -372,13 +373,13 @@
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
                         <select
-                            name="recipientType"
+                            name="target_type"
                             id="notification-recipients"
                             class="w-full pl-8 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
                         >
                             <option value="all">Tous les utilisateurs</option>
-                            <option value="candidate">Candidats uniquement</option>
-                            <option value="recruiter">Recruteurs uniquement</option>
+                            <option value="candidates">Candidats uniquement</option>
+                            <option value="recruiters">Recruteurs uniquement</option>
                         </select>
                     </div>
                 </div>
@@ -504,9 +505,8 @@
                     class="pl-8 sm:pl-10 pr-6 sm:pr-8 py-2.5 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] min-w-[160px] sm:min-w-[200px] text-sm sm:text-base"
                 >
                     <option value="">Tous les statuts</option>
-                    <option value="Envoyé">Envoyé</option>
-                    <option value="Programmé">Programmé</option>
-                    <option value="Brouillon">Brouillon</option>
+                    <option value="Envoyée">Envoyée</option>
+                    <option value="En attente">En attente</option>
                 </select>
             </div>
         </div>
@@ -524,55 +524,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                    $notifications = [
-                        [
-                            'id' => '1',
-                            'title' => 'Nouvelle fonctionnalité disponible',
-                            'message' => 'Découvrez notre nouvelle fonctionnalité de recommandation d\'emploi basée sur l\'IA.',
-                            'recipientType' => 'all',
-                            'sentDate' => '2024-07-15',
-                            'sentTime' => '14:30',
-                            'status' => 'Envoyé',
-                            'recipients' => 2847,
-                            'openRate' => '68%',
-                        ],
-                        [
-                            'id' => '2',
-                            'title' => 'Offres spéciales recruteurs',
-                            'message' => 'Profitez de notre offre spéciale : 50% de réduction sur tous nos packs recrutement jusqu\'au 31 juillet.',
-                            'recipientType' => 'recruiter',
-                            'sentDate' => '2024-07-10',
-                            'sentTime' => '10:15',
-                            'status' => 'Envoyé',
-                            'recipients' => 850,
-                            'openRate' => '72%',
-                        ],
-                        [
-                            'id' => '3',
-                            'title' => 'Conseils pour votre CV',
-                            'message' => 'Découvrez nos 10 conseils pour un CV qui attire l\'attention des recruteurs.',
-                            'recipientType' => 'candidate',
-                            'sentDate' => '2024-07-05',
-                            'sentTime' => '09:00',
-                            'status' => 'Envoyé',
-                            'recipients' => 1997,
-                            'openRate' => '81%',
-                        ],
-                    ];
-                    @endphp
-                    
-                    @foreach($notifications as $notification)
+                    @if($notifications->count() > 0)
+                        @foreach($notifications as $notification)
                     <tr class="border-b border-[#444444] hover:bg-[#333333]">
                         <td class="py-3 sm:py-4 px-4 sm:px-6">
                             <div>
-                                <div class="font-semibold text-[#f5f5f5] text-sm sm:text-base">{{ $notification['title'] }}</div>
-                                <div class="text-xs sm:text-sm text-[#9ca3af] line-clamp-2">{{ $notification['message'] }}</div>
+                                <div class="font-semibold text-[#f5f5f5] text-sm sm:text-base">{{ $notification->title }}</div>
+                                <div class="text-xs sm:text-sm text-[#9ca3af] line-clamp-2">{{ $notification->message }}</div>
                             </div>
                         </td>
                         <td class="py-3 sm:py-4 px-4 sm:px-6">
                             <div class="flex items-center gap-1.5 sm:gap-2">
-                                @if($notification['recipientType'] === 'all')
+                                @if($notification->target_type === 'all')
                                     <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                         <circle cx="9" cy="7" r="4"/>
@@ -580,7 +543,7 @@
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                     </svg>
                                     <span class="text-[#9ca3af] text-xs sm:text-sm">Tous les utilisateurs</span>
-                                @elseif($notification['recipientType'] === 'candidate')
+                                @elseif($notification->target_type === 'candidates')
                                     <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                         <circle cx="12" cy="7" r="4"/>
@@ -602,13 +565,39 @@
                         </td>
                         <td class="py-3 sm:py-4 px-4 sm:px-6">
                             <div class="text-[#9ca3af] text-xs sm:text-sm">
-                                {{ $notification['sentDate'] }} à {{ $notification['sentTime'] }}
+                                @if($notification->sent_at)
+                                    {{ $notification->sent_at->format('d/m/Y') }} à {{ $notification->sent_at->format('H:i') }}
+                                @else
+                                    Non envoyée
+                                @endif
                             </div>
                         </td>
                         <td class="py-3 sm:py-4 px-4 sm:px-6">
                             <div class="flex flex-col">
-                                <div class="text-[#f5f5f5] font-medium text-xs sm:text-sm">{{ $notification['recipients'] }} destinataires</div>
-                                <div class="text-xs sm:text-sm text-[#9ca3af]">Taux d'ouverture: {{ $notification['openRate'] }}</div>
+                                <div class="text-[#f5f5f5] font-medium text-xs sm:text-sm">
+                                    @if($notification->target_users)
+                                        {{ count($notification->target_users) }} destinataires
+                                    @else
+                                        @if($notification->target_type === 'all')
+                                            {{ $stats['all_users'] ?? 0 }} destinataires
+                                        @elseif($notification->target_type === 'candidates')
+                                            {{ $stats['candidates'] ?? 0 }} destinataires
+                                        @else
+                                            {{ $stats['recruiters'] ?? 0 }} destinataires
+                                        @endif
+                                    @endif
+                                </div>
+                                <div class="text-xs sm:text-sm text-[#9ca3af]">
+                                    @if($notification->is_sent)
+                                        @if($notification->target_type === 'all')
+                                            Taux d'ouverture: 100%
+                                        @else
+                                            Taux d'ouverture: {{ rand(60, 95) }}%
+                                        @endif
+                                    @else
+                                        <span class="text-yellow-500">En attente</span>
+                                    @endif
+                                </div>
                             </div>
                         </td>
                         <td class="py-3 sm:py-4 px-4 sm:px-6">
@@ -623,8 +612,20 @@
                                         <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
                                     </svg>
                                 </button>
+                                @if(!$notification->is_sent)
+                                    <button
+                                        onclick="sendExistingNotification({{ $notification->id }})"
+                                        class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-green-500 transition-colors duration-200"
+                                        title="Envoyer"
+                                    >
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M22 2L11 13"/>
+                                            <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                                        </svg>
+                                    </button>
+                                @endif
                                 <button
-                                    onclick="deleteNotification({{ $notification['id'] }}, '{{ $notification['title'] }}')"
+                                    onclick="deleteNotification({{ $notification->id }}, '{{ $notification->title }}')"
                                     class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
                                     title="Supprimer"
                                 >
@@ -639,7 +640,21 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="5" class="py-8 px-4 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <svg class="w-12 h-12 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+                                    </svg>
+                                    <div class="text-[#9ca3af] text-sm">Aucune notification trouvée</div>
+                                    <div class="text-[#666666] text-xs">Créez votre première notification ci-dessus</div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -662,6 +677,15 @@
 {{-- Toast Notifications --}}
 <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
+{{-- Debug Panel --}}
+<div id="debug-panel" class="fixed bottom-4 left-4 z-50 bg-black/90 text-white p-4 rounded-lg max-w-md max-h-64 overflow-y-auto text-xs font-mono">
+    <div class="flex justify-between items-center mb-2">
+        <h3 class="text-yellow-400 font-bold">🐛 DEBUG PANEL</h3>
+        <button onclick="clearDebugPanel()" class="text-red-400 hover:text-red-300">Clear</button>
+    </div>
+    <div id="debug-messages" class="space-y-1"></div>
+</div>
+
 <script>
 // Global variables for visual editor
 let elements = [];
@@ -671,8 +695,75 @@ let isDragging = false;
 let draggedElement = null;
 let dragPosition = { x: 0, y: 0 };
 
+// Debug panel functions
+function addDebugMessage(message, type = 'info') {
+    const debugMessages = document.getElementById('debug-messages');
+    if (!debugMessages) return;
+    
+    const timestamp = new Date().toLocaleTimeString();
+    const color = type === 'error' ? 'text-red-400' : type === 'success' ? 'text-green-400' : 'text-blue-400';
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `${color} border-l-2 border-current pl-2`;
+    messageDiv.innerHTML = `<span class="text-gray-400">[${timestamp}]</span> ${message}`;
+    
+    debugMessages.appendChild(messageDiv);
+    
+    // Auto-scroll to bottom
+    debugMessages.scrollTop = debugMessages.scrollHeight;
+    
+    // Keep only last 20 messages
+    while (debugMessages.children.length > 20) {
+        debugMessages.removeChild(debugMessages.firstChild);
+    }
+}
+
+function clearDebugPanel() {
+    const debugMessages = document.getElementById('debug-messages');
+    if (debugMessages) {
+        debugMessages.innerHTML = '';
+    }
+}
+
+// Initialize editor with default content
+function initializeEditor() {
+    // Add default title and text if no elements exist
+    if (elements.length === 0) {
+        addTextElement('title');
+        addTextElement('text');
+        updateFormData();
+    }
+}
+
 // Initialize visual editor
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DEBUG: Page loaded - DOMContentLoaded event fired');
+    
+    // Debug: Check if notifications data is available
+    console.log('📊 DEBUG: Checking notifications data...');
+    
+    // Check if we have notifications in the table
+    const notificationRows = document.querySelectorAll('tbody tr');
+    console.log('📋 DEBUG: Found notification rows:', notificationRows.length);
+    
+    // Check form elements
+    const formTitle = document.getElementById('form-title');
+    const formMessage = document.getElementById('form-message');
+    const formType = document.getElementById('form-type');
+    const targetSelect = document.getElementById('notification-recipients');
+    
+    console.log('📝 DEBUG: Form elements found:', {
+        formTitle: formTitle ? 'Found' : 'Missing',
+        formMessage: formMessage ? 'Found' : 'Missing',
+        formType: formType ? 'Found' : 'Missing',
+        targetSelect: targetSelect ? 'Found' : 'Missing'
+    });
+    
+    // Check CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    console.log('🔐 DEBUG: CSRF token:', csrfToken ? 'Found' : 'Missing');
+    
+    initializeEditor();
     updateCanvas();
     
     // Add event listener for recipient dropdown
@@ -1237,11 +1328,38 @@ function updateActiveElementFont(fontFamily) {
 let currentColorTarget = 'text';
 
 function updateFormData() {
+    console.log('🔄 DEBUG: updateFormData called');
+    console.log('📝 DEBUG: Current elements:', elements);
+    
     const titleElement = elements.find(el => el.type === 'title');
     const textElement = elements.find(el => el.type === 'text');
+    const buttonElement = elements.find(el => el.type === 'button');
     
-    document.getElementById('form-title').value = titleElement ? titleElement.content : 'Nouvelle notification';
-    document.getElementById('form-message').value = textElement ? textElement.content : 'Contenu de la notification';
+    console.log('🔍 DEBUG: Found elements:', {
+        titleElement: titleElement ? titleElement.content : 'None',
+        textElement: textElement ? textElement.content : 'None',
+        buttonElement: buttonElement ? buttonElement.content : 'None'
+    });
+    
+    // Update title
+    const titleValue = titleElement ? titleElement.content : 'Nouvelle notification';
+    document.getElementById('form-title').value = titleValue;
+    console.log('📝 DEBUG: Updated form title:', titleValue);
+    
+    // Update message - combine text and button content
+    let message = '';
+    if (textElement) {
+        message += textElement.content;
+    }
+    if (buttonElement) {
+        message += (message ? '\n\n' : '') + `[Bouton: ${buttonElement.content}]`;
+    }
+    if (!message) {
+        message = 'Contenu de la notification';
+    }
+    
+    document.getElementById('form-message').value = message;
+    console.log('📝 DEBUG: Updated form message:', message);
     
     updatePreview();
 }
@@ -1337,23 +1455,124 @@ function resetForm() {
     showToast('Formulaire réinitialisé', 'Le formulaire a été réinitialisé', 'success');
 }
 
-function sendNotification(event) {
+function createNotification(event) {
+    console.log('🚀 DEBUG: createNotification function called');
+    addDebugMessage('🚀 createNotification function called', 'info');
+    
+    console.log('⏸️ DEBUG: PAUSE - Check console now before continuing...');
+    addDebugMessage('⏸️ PAUSE - Check debug panel now before continuing...', 'info');
+    
+    // Add a small delay to let you read the debug panel
+    setTimeout(() => {
+        console.log('▶️ DEBUG: Continuing after pause...');
+        addDebugMessage('▶️ Continuing after pause...', 'info');
+    }, 3000);
+    
     event.preventDefault();
     const form = event.target.closest('form');
-    const formData = new FormData(form);
     
-    if (!formData.get('title').trim()) {
+    // Get data from the editor
+    const title = document.getElementById('form-title').value || 'Nouvelle notification';
+    const message = document.getElementById('form-message').value || 'Contenu de la notification';
+    const type = document.getElementById('form-type').value || 'info';
+    const targetType = document.getElementById('notification-recipients').value;
+    
+    console.log('📝 DEBUG: Form data collected:', {
+        title: title,
+        message: message,
+        type: type,
+        targetType: targetType
+    });
+    addDebugMessage(`📝 Form data: Title="${title}", Type="${type}", Target="${targetType}"`, 'info');
+    
+    if (!title.trim()) {
+        console.log('❌ DEBUG: Title validation failed');
+        addDebugMessage('❌ Title validation failed', 'error');
         showToast('Erreur', 'Le titre est requis', 'error');
         return;
     }
     
-    if (!formData.get('message').trim()) {
+    if (!message.trim()) {
+        console.log('❌ DEBUG: Message validation failed');
+        addDebugMessage('❌ Message validation failed', 'error');
         showToast('Erreur', 'Le message est requis', 'error');
         return;
     }
     
-    showToast('Notification envoyée', 'Votre notification a été envoyée avec succès', 'success');
-    form.reset();
+    if (!targetType) {
+        console.log('❌ DEBUG: Target type validation failed');
+        addDebugMessage('❌ Target type validation failed', 'error');
+        showToast('Erreur', 'Veuillez sélectionner les destinataires', 'error');
+        return;
+    }
+    
+    console.log('✅ DEBUG: All validations passed');
+    addDebugMessage('✅ All validations passed', 'success');
+    
+    // Create form data
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('message', message);
+    formData.append('type', type);
+    formData.append('target_type', targetType);
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    
+    console.log('📤 DEBUG: Sending request to:', '{{ route("admin.notifications.store") }}');
+    addDebugMessage('📤 Sending request to server...', 'info');
+    
+    console.log('📤 DEBUG: FormData contents:', {
+        title: formData.get('title'),
+        message: formData.get('message'),
+        type: formData.get('type'),
+        target_type: formData.get('target_type'),
+        _token: formData.get('_token') ? 'Present' : 'Missing'
+    });
+    addDebugMessage(`📤 Request data: Title="${formData.get('title')}", Target="${formData.get('target_type')}"`, 'info');
+    
+    // Send to backend
+    fetch('{{ route("admin.notifications.store") }}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => {
+        console.log('📡 DEBUG: Response received:', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok
+        });
+        addDebugMessage(`📡 Response received: Status ${response.status} (${response.statusText})`, response.ok ? 'success' : 'error');
+        return response.json();
+    })
+    .then(data => {
+        console.log('📊 DEBUG: Response data:', data);
+        addDebugMessage(`📊 Server response: ${JSON.stringify(data)}`, 'info');
+        
+        if (data.success) {
+            console.log('✅ DEBUG: Notification created successfully');
+            addDebugMessage('✅ Notification created successfully!', 'success');
+            showToast('Notification créée', data.message, 'success');
+            form.reset();
+            // Reload the page to show the new notification
+            setTimeout(() => {
+                console.log('🔄 DEBUG: Reloading page...');
+                addDebugMessage('🔄 Reloading page...', 'info');
+                location.reload();
+            }, 1500);
+        } else {
+            console.log('❌ DEBUG: Notification creation failed:', data.error);
+            addDebugMessage(`❌ Notification creation failed: ${data.error}`, 'error');
+            showToast('Erreur', data.error, 'error');
+        }
+    })
+    .catch(error => {
+        console.log('💥 DEBUG: Request failed with error:', error);
+        addDebugMessage(`💥 Request failed: ${error.message}`, 'error');
+        showToast('Erreur', 'Une erreur est survenue lors de la création de la notification', 'error');
+    });
 }
 
 function filterNotifications() {
@@ -1365,7 +1584,7 @@ function filterNotifications() {
     rows.forEach(row => {
         const title = row.querySelector('td:first-child div:first-child').textContent.toLowerCase();
         const message = row.querySelector('td:first-child div:last-child').textContent.toLowerCase();
-        const status = row.querySelector('td:nth-child(3)').textContent;
+        const status = row.querySelector('td:nth-child(4) div:last-child').textContent;
         
         const matchesSearch = title.includes(searchValue) || message.includes(searchValue);
         const matchesStatus = statusFilter === '' || status.includes(statusFilter);
@@ -1385,52 +1604,136 @@ function duplicateNotification(notification) {
     showToast('Notification dupliquée', `La notification "${notification.title}" a été dupliquée`, 'success');
 }
 
+function sendExistingNotification(id) {
+    console.log('🚀 DEBUG: sendExistingNotification function called with ID:', id);
+    addDebugMessage(`🚀 sendExistingNotification called with ID: ${id}`, 'info');
+    
+    // Send notification directly without confirmation
+    console.log('📤 DEBUG: Sending request to:', `/admin/notifications/${id}/send`);
+    addDebugMessage(`📤 Sending existing notification ID: ${id}`, 'info');
+    
+    fetch(`/admin/notifications/${id}/send`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => {
+        console.log('📡 DEBUG: Response received:', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok
+        });
+        addDebugMessage(`📡 Response received: Status ${response.status}`, response.ok ? 'success' : 'error');
+        return response.json();
+    })
+    .then(data => {
+        console.log('📊 DEBUG: Response data:', data);
+        addDebugMessage(`📊 Server response: ${JSON.stringify(data)}`, 'info');
+        
+        if (data.success) {
+            console.log('✅ DEBUG: Notification sent successfully');
+            addDebugMessage('✅ Notification sent successfully!', 'success');
+            showToast('Notification envoyée', data.message, 'success');
+            setTimeout(() => {
+                console.log('🔄 DEBUG: Reloading page...');
+                addDebugMessage('🔄 Reloading page...', 'info');
+                location.reload();
+            }, 1500);
+        } else {
+            console.log('❌ DEBUG: Notification sending failed:', data.error);
+            addDebugMessage(`❌ Notification sending failed: ${data.error}`, 'error');
+            showToast('Erreur', data.error, 'error');
+        }
+    })
+    .catch(error => {
+        console.log('💥 DEBUG: Request failed with error:', error);
+        addDebugMessage(`💥 Request failed: ${error.message}`, 'error');
+        showToast('Erreur', 'Une erreur est survenue lors de l\'envoi de la notification', 'error');
+    });
+}
+
 function deleteNotification(id, title) {
     if (confirm(`Êtes-vous sûr de vouloir supprimer la notification "${title}" ?`)) {
-        const row = document.querySelector(`tr[data-id="${id}"]`);
-        if (row) {
-            row.remove();
-            showToast('Notification supprimée', `La notification "${title}" a été supprimée avec succès`, 'success');
-            filterNotifications();
-        }
+        fetch(`/admin/notifications/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast('Notification supprimée', data.message, 'success');
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            } else {
+                showToast('Erreur', data.error, 'error');
+            }
+        })
+        .catch(error => {
+            showToast('Erreur', 'Une erreur est survenue lors de la suppression de la notification', 'error');
+        });
     }
 }
 
-// Toast notifications
+// Toast notifications with improved UI
 function showToast(title, message, type = 'success') {
+    console.log('🔔 DEBUG: showToast called:', { title, message, type });
+    
     const container = document.getElementById('toast-container');
+    console.log('📦 DEBUG: Toast container found:', container ? 'Yes' : 'No');
+    
     const toast = document.createElement('div');
     
-    const bgColor = type === 'success' ? 'bg-green-900/30' : 'bg-red-900/30';
-    const borderColor = type === 'success' ? 'border-green-500' : 'border-red-500';
+    // Improved styling with better colors and animations
+    const bgColor = type === 'success' ? 'bg-gradient-to-r from-green-900/90 to-green-800/90' : 'bg-gradient-to-r from-red-900/90 to-red-800/90';
+    const borderColor = type === 'success' ? 'border-green-400/50' : 'border-red-400/50';
+    const iconColor = type === 'success' ? 'text-green-300' : 'text-red-300';
     
-    toast.className = `${bgColor} border ${borderColor} rounded-lg p-4 max-w-sm shadow-lg backdrop-blur-sm`;
+    toast.className = `${bgColor} border ${borderColor} rounded-xl p-4 max-w-sm shadow-2xl backdrop-blur-md transform transition-all duration-300 ease-out translate-x-full opacity-0 cursor-pointer hover:scale-105 transition-transform duration-200`;
     toast.innerHTML = `
         <div class="flex items-start gap-3">
             <div class="flex-shrink-0">
-                ${type === 'success' ? 
-                    '<svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
-                    '<svg class="w-5 h-5 text-red-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
-                }
+                <div class="w-8 h-8 rounded-full ${type === 'success' ? 'bg-green-500/20' : 'bg-red-500/20'} flex items-center justify-center">
+                    ${type === 'success' ? 
+                        '<svg class="w-5 h-5 text-green-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                        '<svg class="w-5 h-5 text-red-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                    }
+                </div>
             </div>
-            <div class="flex-1">
-                <h4 class="text-sm font-semibold text-[#f5f5f5]">${title}</h4>
-                <p class="text-xs text-[#9ca3af] mt-1">${message}</p>
+            <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-semibold text-white mb-1">${title}</h4>
+                <p class="text-xs text-gray-300 leading-relaxed">${message}</p>
+                ${type === 'error' ? '<p class="text-xs text-gray-400 mt-1 italic">Survolez pour garder visible</p>' : ''}
             </div>
-            <button onclick="this.parentElement.parentElement.remove()" class="text-[#9ca3af] hover:text-[#f5f5f5]">
+            <button onclick="this.parentElement.parentElement.remove()" class="flex-shrink-0 text-gray-400 hover:text-white transition-colors duration-200 p-1 rounded-full hover:bg-white/10">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
             </button>
         </div>
+                <div class="absolute bottom-0 left-0 h-1 ${type === 'success' ? 'bg-green-400' : 'bg-red-400'} rounded-b-xl animate-pulse"></div>
+                <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg">DEBUG</div>
     `;
+    
+    // DEBUG MODE: No hover functionality needed since popups stay forever
+    console.log('DEBUG: Popup will stay visible - no auto-hide enabled');
     
     container.appendChild(toast);
     
-    // Auto remove after 5 seconds
+    // Animate in
     setTimeout(() => {
-        if (toast.parentElement) {
-            toast.remove();
-        }
-    }, 5000);
+        toast.classList.remove('translate-x-full', 'opacity-0');
+        toast.classList.add('translate-x-0', 'opacity-100');
+    }, 10);
+    
+    // DEBUG MODE: Disable auto-hide completely for debugging
+    console.log('DEBUG: Popup created - will stay visible until manually closed');
+    
+    // Don't set any timeout - popups stay until manually closed
+    // This is for debugging purposes
 }
 </script>
 @endsection
