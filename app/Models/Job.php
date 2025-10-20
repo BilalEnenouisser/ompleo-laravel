@@ -33,6 +33,7 @@ class Job extends Model
         'application_deadline',
         'is_featured',
         'responsibilities',
+        'views',
     ];
 
     protected $casts = [
@@ -107,6 +108,14 @@ class Job extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Increment the view count for this job.
+     */
+    public function incrementViews()
+    {
+        $this->increment('views');
     }
 
     /**

@@ -19,6 +19,8 @@ class Company extends Model
         'website',
         'size',
         'industry',
+        'specialisation',
+        'years_experience',
         'location',
         'is_active',
     ];

@@ -144,6 +144,72 @@ use Illuminate\Support\Facades\Storage;
                 </div>
             </div>
 
+            <!-- Specialisation and Experience -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Specialisation -->
+                <div>
+                    <label for="specialisation" class="block text-sm font-medium text-[#9ca3af] mb-2">
+                        Spécialisation *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="specialisation" 
+                        name="specialisation" 
+                        value="{{ old('specialisation', $company->specialisation ?? '') }}"
+                        class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]"
+                        placeholder="Ex: Développement web, Marketing digital, IA..."
+                        required
+                    />
+                    @error('specialisation')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Years of Experience -->
+                <div>
+                    <label for="years_experience" class="block text-sm font-medium text-[#9ca3af] mb-2">
+                        Années d'expérience *
+                    </label>
+                    <select 
+                        id="years_experience" 
+                        name="years_experience" 
+                        class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]"
+                        required
+                    >
+                        <option value="">Sélectionnez les années d'expérience</option>
+                        <option value="0" {{ old('years_experience', $company->years_experience ?? '') == '0' ? 'selected' : '' }}>0 ans</option>
+                        <option value="1" {{ old('years_experience', $company->years_experience ?? '') == '1' ? 'selected' : '' }}>1 an</option>
+                        <option value="2" {{ old('years_experience', $company->years_experience ?? '') == '2' ? 'selected' : '' }}>2 ans</option>
+                        <option value="3" {{ old('years_experience', $company->years_experience ?? '') == '3' ? 'selected' : '' }}>3 ans</option>
+                        <option value="4" {{ old('years_experience', $company->years_experience ?? '') == '4' ? 'selected' : '' }}>4 ans</option>
+                        <option value="5" {{ old('years_experience', $company->years_experience ?? '') == '5' ? 'selected' : '' }}>5 ans</option>
+                        <option value="6" {{ old('years_experience', $company->years_experience ?? '') == '6' ? 'selected' : '' }}>6 ans</option>
+                        <option value="7" {{ old('years_experience', $company->years_experience ?? '') == '7' ? 'selected' : '' }}>7 ans</option>
+                        <option value="8" {{ old('years_experience', $company->years_experience ?? '') == '8' ? 'selected' : '' }}>8 ans</option>
+                        <option value="9" {{ old('years_experience', $company->years_experience ?? '') == '9' ? 'selected' : '' }}>9 ans</option>
+                        <option value="10" {{ old('years_experience', $company->years_experience ?? '') == '10' ? 'selected' : '' }}>10 ans</option>
+                        <option value="11" {{ old('years_experience', $company->years_experience ?? '') == '11' ? 'selected' : '' }}>11 ans</option>
+                        <option value="12" {{ old('years_experience', $company->years_experience ?? '') == '12' ? 'selected' : '' }}>12 ans</option>
+                        <option value="13" {{ old('years_experience', $company->years_experience ?? '') == '13' ? 'selected' : '' }}>13 ans</option>
+                        <option value="14" {{ old('years_experience', $company->years_experience ?? '') == '14' ? 'selected' : '' }}>14 ans</option>
+                        <option value="15" {{ old('years_experience', $company->years_experience ?? '') == '15' ? 'selected' : '' }}>15 ans</option>
+                        <option value="16" {{ old('years_experience', $company->years_experience ?? '') == '16' ? 'selected' : '' }}>16 ans</option>
+                        <option value="17" {{ old('years_experience', $company->years_experience ?? '') == '17' ? 'selected' : '' }}>17 ans</option>
+                        <option value="18" {{ old('years_experience', $company->years_experience ?? '') == '18' ? 'selected' : '' }}>18 ans</option>
+                        <option value="19" {{ old('years_experience', $company->years_experience ?? '') == '19' ? 'selected' : '' }}>19 ans</option>
+                        <option value="20" {{ old('years_experience', $company->years_experience ?? '') == '20' ? 'selected' : '' }}>20 ans</option>
+                        <option value="25" {{ old('years_experience', $company->years_experience ?? '') == '25' ? 'selected' : '' }}>25 ans</option>
+                        <option value="30" {{ old('years_experience', $company->years_experience ?? '') == '30' ? 'selected' : '' }}>30 ans</option>
+                        <option value="35" {{ old('years_experience', $company->years_experience ?? '') == '35' ? 'selected' : '' }}>35 ans</option>
+                        <option value="40" {{ old('years_experience', $company->years_experience ?? '') == '40' ? 'selected' : '' }}>40 ans</option>
+                        <option value="50" {{ old('years_experience', $company->years_experience ?? '') == '50' ? 'selected' : '' }}>50+ ans</option>
+                    </select>
+                    @error('years_experience')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
             <!-- Description -->
             <div>
                 <label for="description" class="block text-sm font-medium text-[#9ca3af] mb-2">

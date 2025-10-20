@@ -34,8 +34,11 @@ class CompanyController extends Controller
         }
 
         $companies = $query->orderBy('created_at', 'desc')->paginate(12);
+        
+        // Get candidate count for stats
+        $candidateCount = \App\Models\User::where('user_type', 'candidate')->count();
 
-        return view('companies.index', compact('companies'));
+        return view('companies.index', compact('companies', 'candidateCount'));
     }
 
     public function search(Request $request)

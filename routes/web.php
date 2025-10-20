@@ -254,9 +254,7 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.recruiter.interviews');
     })->name('recruiter.interviews');
     
-    Route::get('/recruiter/reports', function () {
-        return view('dashboard.recruiter.reports');
-    })->name('recruiter.reports');
+    Route::get('/recruiter/reports', [App\Http\Controllers\Recruiter\ReportsController::class, 'index'])->name('recruiter.reports');
     
     // Recruiter Company Profile
     Route::get('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'show'])->name('recruiter.company-profile');

@@ -66,10 +66,18 @@ use Illuminate\Support\Facades\Storage;
                 @endif
                 <div class="flex-1 min-w-0">
                     <p class="text-sm sm:text-base font-medium text-[#f5f5f5] truncate">
-                        {{ Auth::user()->name }}
+                        @if(Auth::user()->user_type === 'recruiter' && Auth::user()->recruiterProfile && Auth::user()->recruiterProfile->company)
+                            {{ Auth::user()->recruiterProfile->company->name }}
+                        @else
+                            {{ Auth::user()->name }}
+                        @endif
                     </p>
                     <p class="text-xs sm:text-sm text-[#cccccc] capitalize">
-                        {{ Auth::user()->user_type }}
+                        @if(Auth::user()->user_type === 'recruiter' && Auth::user()->recruiterProfile && Auth::user()->recruiterProfile->company)
+                            {{ Auth::user()->recruiterProfile->company->industry ?? 'Entreprise' }}
+                        @else
+                            {{ Auth::user()->user_type }}
+                        @endif
                     </p>
                 </div>
             </div>

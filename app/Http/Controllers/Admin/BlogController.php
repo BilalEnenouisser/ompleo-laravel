@@ -190,7 +190,6 @@ class BlogController extends Controller
                 'blog' => $blog
             ]);
         } catch (\Exception $e) {
-            \Log::error('Blog update error: ' . $e->getMessage());
             
             return response()->json([
                 'success' => false,

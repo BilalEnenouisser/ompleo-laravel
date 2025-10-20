@@ -87,13 +87,15 @@ class CompaniesController extends Controller
             'website' => 'nullable|url|max:255',
             'size' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'specialisation' => 'nullable|string|max:255',
+            'years_experience' => 'nullable|integer|min:0|max:50',
             'location' => 'nullable|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'is_active' => 'boolean',
         ]);
 
         $data = $request->only([
-            'name', 'description', 'website', 'size', 'industry', 'location', 'is_active'
+            'name', 'description', 'website', 'size', 'industry', 'specialisation', 'years_experience', 'location', 'is_active'
         ]);
 
         // Handle logo upload
@@ -125,13 +127,15 @@ class CompaniesController extends Controller
             'website' => 'nullable|url|max:255',
             'size' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'specialisation' => 'nullable|string|max:255',
+            'years_experience' => 'nullable|integer|min:0|max:50',
             'location' => 'nullable|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'is_active' => 'boolean',
         ]);
 
         $data = $request->only([
-            'name', 'description', 'website', 'size', 'industry', 'location', 'is_active'
+            'name', 'description', 'website', 'size', 'industry', 'specialisation', 'years_experience', 'location', 'is_active'
         ]);
 
         // Handle logo upload

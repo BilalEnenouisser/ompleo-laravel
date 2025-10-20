@@ -28,25 +28,10 @@ class CreateOfferController extends Controller
 
     public function store(Request $request)
     {
-        // Debug logging
-        \Log::info('Job creation form submitted', [
-            'all_data' => $request->all(),
-            'has_save_draft' => $request->has('save_draft'),
-            'save_draft_value' => $request->input('save_draft'),
-            'method' => $request->method(),
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'location' => $request->input('location')
-        ]);
         
         // Check if it's a draft save
         $isDraft = $request->has('save_draft');
         
-        \Log::info('Processing job creation', [
-            'is_draft' => $isDraft,
-            'has_save_draft' => $request->has('save_draft'),
-            'save_draft_value' => $request->input('save_draft')
-        ]);
         
         if ($isDraft) {
             // More relaxed validation for drafts
@@ -82,10 +67,6 @@ class CreateOfferController extends Controller
                     'skills' => 'nullable|array',
                 ]);
             } catch (\Illuminate\Validation\ValidationException $e) {
-                \Log::error('Validation failed for job creation', [
-                    'errors' => $e->errors(),
-                    'request_data' => $request->all()
-                ]);
                 throw $e;
             }
         }
@@ -118,20 +99,7 @@ class CreateOfferController extends Controller
         try {
             $job->save();
             
-            \Log::info('Job saved successfully', [
-                'job_id' => $job->id,
-                'job_title' => $job->title,
-                'job_status' => $job->status,
-                'is_draft' => $isDraft,
-                'company_id' => $job->company_id,
-                'recruiter_id' => $job->recruiter_id
-            ]);
         } catch (\Exception $e) {
-            \Log::error('Job save failed', [
-                'error' => $e->getMessage(),
-                'job_data' => $job->toArray(),
-                'is_draft' => $isDraft
-            ]);
             throw $e;
         }
 

@@ -38,7 +38,6 @@ class CompanyProfileController extends Controller
     public function update(Request $request)
     {
         // Debug: Log incoming request data
-        \Log::info('Company profile update request:', $request->all());
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,6 +45,8 @@ class CompanyProfileController extends Controller
             'industry' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'size' => 'required|string|max:255',
+            'specialisation' => 'required|string|max:255',
+            'years_experience' => 'required|integer|min:0|max:50',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -76,6 +77,8 @@ class CompanyProfileController extends Controller
         $company->industry = $request->industry;
         $company->location = $request->city;
         $company->size = $request->size;
+        $company->specialisation = $request->specialisation;
+        $company->years_experience = $request->years_experience;
         $company->is_active = true;
 
         // Handle logo upload
@@ -97,15 +100,6 @@ class CompanyProfileController extends Controller
             $recruiterProfile->save();
         }
 
-        // Debug: Log the saved data
-        \Log::info('Company saved:', [
-            'id' => $company->id,
-            'name' => $company->name,
-            'industry' => $company->industry,
-            'location' => $company->location,
-            'size' => $company->size,
-            'logo' => $company->logo,
-        ]);
 
         return back()->with('success', 'Informations de l\'entreprise mises à jour avec succès!');
     }

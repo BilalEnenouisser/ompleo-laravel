@@ -146,6 +146,38 @@
                                 </div>
                                 @endif
 
+                                @if($company->specialisation)
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
+                                        <path d="M10 6h4"></path>
+                                        <path d="M10 10h4"></path>
+                                        <path d="M10 14h4"></path>
+                                        <path d="M6 18h.01"></path>
+                                        <path d="M6 15h.01"></path>
+                                    </svg>
+                                    <div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">Spécialisation</div>
+                                        <div class="font-medium text-gray-900 dark:text-gray-100">{{ $company->specialisation }}</div>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if($company->years_experience)
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                        <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+                                    </svg>
+                                    <div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">Années d'expérience</div>
+                                        <div class="font-medium text-gray-900 dark:text-gray-100">{{ $company->years_experience }} ans</div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 @if($company->phone)
                                 <div class="flex items-center gap-3">
                                     <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

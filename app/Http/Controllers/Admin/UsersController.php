@@ -29,7 +29,6 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         try {
-            \Log::info('Store method called with data:', $request->all());
             
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -42,7 +41,6 @@ class UsersController extends Controller
                 'company_name' => 'nullable|string|max:255',
             ]);
 
-            \Log::info('Validation passed');
 
             // Create user
             $user = User::create([
@@ -53,7 +51,6 @@ class UsersController extends Controller
                 'email_verified_at' => now(), // Auto-verify for admin-created users
             ]);
 
-            \Log::info('User created:', $user->toArray());
 
             // Create profile based on user type
             if ($request->user_type === 'candidate') {
@@ -62,7 +59,6 @@ class UsersController extends Controller
                     'city' => $request->city,
                     'status' => $request->status,
                 ]);
-                \Log::info('Created candidate profile:', $profile->toArray());
             } elseif ($request->user_type === 'recruiter') {
                 // Validate company name for recruiters
                 if (empty($request->company_name)) {
@@ -81,13 +77,11 @@ class UsersController extends Controller
                     'status' => $request->status,
                     'company_id' => $company->id,
                 ]);
-                \Log::info('Created recruiter profile:', $profile->toArray());
             }
 
             return redirect()->route('admin.users')->with('success', 'Utilisateur créé avec succès!');
             
         } catch (\Exception $e) {
-            \Log::error('Error creating user: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Erreur lors de la création de l\'utilisateur: ' . $e->getMessage())->withInput();
         }
     }
@@ -123,15 +117,6 @@ class UsersController extends Controller
 
         $users = $query->orderBy('created_at', 'desc')->paginate(7);
         
-        // Debug: Log user data to see dates
-        \Log::info('Users data:', [
-            'count' => $users->count(),
-            'first_user' => $users->first() ? [
-                'name' => $users->first()->name,
-                'created_at' => $users->first()->created_at,
-                'updated_at' => $users->first()->updated_at,
-            ] : null
-        ]);
         
         // Statistics
         $stats = [
@@ -267,7 +252,6 @@ class UsersController extends Controller
             return redirect()->route('admin.users.show', $user)->with('success', 'Utilisateur mis à jour avec succès!');
             
         } catch (\Exception $e) {
-            \Log::error('Error updating user: ' . $e->getMessage());
             
             if (request()->wantsJson() || request()->ajax()) {
                 return response()->json(['success' => false, 'message' => 'Erreur lors de la mise à jour: ' . $e->getMessage()], 500);
@@ -301,7 +285,6 @@ class UsersController extends Controller
             return redirect()->route('admin.users')->with('success', 'Utilisateur supprimé avec succès!');
             
         } catch (\Exception $e) {
-            \Log::error('Error deleting user: ' . $e->getMessage());
             
             if (request()->wantsJson() || request()->ajax()) {
                 return response()->json(['success' => false, 'message' => 'Erreur lors de la suppression: ' . $e->getMessage()], 500);

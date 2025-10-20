@@ -64,7 +64,7 @@
                         +3
                     </div>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">12</h3>
+                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['total_jobs'] }}</h3>
                 <p class="text-[#9ca3af] text-xs sm:text-sm">Offres publiées</p>
             </div>
 
@@ -78,7 +78,7 @@
                         +23
                     </div>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">89</h3>
+                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['total_applications'] }}</h3>
                 <p class="text-[#9ca3af] text-xs sm:text-sm">Candidatures reçues</p>
             </div>
 
@@ -92,7 +92,7 @@
                         +156
                     </div>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">1,247</h3>
+                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ number_format($stats['total_views']) }}</h3>
                 <p class="text-[#9ca3af] text-xs sm:text-sm">Vues des offres</p>
             </div>
 
@@ -106,7 +106,7 @@
                         +1.2%
                     </div>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">7.1%</h3>
+                <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">{{ $stats['conversion_rate'] }}%</h3>
                 <p class="text-[#9ca3af] text-xs sm:text-sm">Taux de conversion</p>
             </div>
         </div>
@@ -119,65 +119,22 @@
                     Évolution des candidatures
                 </h2>
                 <div class="space-y-4">
+                    @foreach($stats['applications_trend'] as $trend)
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
-                                <span class="font-bold text-[#00b6b4]">Oct</span>
+                                <span class="font-bold text-[#00b6b4]">{{ $trend['month'] }}</span>
                             </div>
                             <div>
-                                <p class="font-semibold text-[#f5f5f5]">45 candidatures</p>
-                                <p class="text-sm text-[#9ca3af]">890 vues</p>
+                                <p class="font-semibold text-[#f5f5f5]">{{ $trend['applications'] }} candidatures</p>
+                                <p class="text-sm text-[#9ca3af]">{{ number_format($trend['views']) }} vues</p>
                             </div>
                         </div>
                         <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 64%"></div>
+                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: {{ $trend['percentage'] }}%"></div>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
-                                <span class="font-bold text-[#00b6b4]">Nov</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-[#f5f5f5]">52 candidatures</p>
-                                <p class="text-sm text-[#9ca3af]">1020 vues</p>
-                            </div>
-                        </div>
-                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 74%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
-                                <span class="font-bold text-[#00b6b4]">Déc</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-[#f5f5f5]">38 candidatures</p>
-                                <p class="text-sm text-[#9ca3af]">780 vues</p>
-                            </div>
-                        </div>
-                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 54%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
-                                <span class="font-bold text-[#00b6b4]">Jan</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-[#f5f5f5]">67 candidatures</p>
-                                <p class="text-sm text-[#9ca3af]">1340 vues</p>
-                            </div>
-                        </div>
-                        <div class="w-24 h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00b6b4] rounded-full" style="width: 96%"></div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -187,57 +144,20 @@
                     Sources des candidats
                 </h2>
                 <div class="space-y-4">
+                    @foreach($stats['candidate_sources'] as $source)
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-[#f5f5f5]">Recherche directe</span>
-                            <span class="text-sm text-[#9ca3af]">40 candidats</span>
+                            <span class="text-sm font-medium text-[#f5f5f5]">{{ $source['name'] }}</span>
+                            <span class="text-sm text-[#9ca3af]">{{ $source['count'] }} candidats</span>
                         </div>
                         <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 45%"></div>
+                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: {{ $source['percentage'] }}%"></div>
                         </div>
                         <div class="text-right">
-                            <span class="text-xs text-[#9ca3af]">45%</span>
+                            <span class="text-xs text-[#9ca3af]">{{ $source['percentage'] }}%</span>
                         </div>
                     </div>
-                    
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-[#f5f5f5]">Profils recommandés</span>
-                            <span class="text-sm text-[#9ca3af]">27 candidats</span>
-                        </div>
-                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 30%"></div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs text-[#9ca3af]">30%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-[#f5f5f5]">Candidatures spontanées</span>
-                            <span class="text-sm text-[#9ca3af]">13 candidats</span>
-                        </div>
-                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 15%"></div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs text-[#9ca3af]">15%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-[#f5f5f5]">Réseaux sociaux</span>
-                            <span class="text-sm text-[#9ca3af]">9 candidats</span>
-                        </div>
-                        <div class="w-full h-2 bg-[#333333] rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-[#00b6b4] to-[#009999] rounded-full" style="width: 10%"></div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs text-[#9ca3af]">10%</span>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -262,70 +182,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($stats['job_performance'] as $job)
                         <tr class="border-b border-[#333333] hover:bg-[#333333]">
                             <td class="py-4 px-4">
-                                <div class="font-medium text-[#f5f5f5]">Développeur Frontend React</div>
+                                <div class="font-medium text-[#f5f5f5]">{{ $job['title'] }}</div>
                             </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">234</td>
-                            <td class="py-4 px-4 text-[#9ca3af]">18</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">{{ $job['views'] }}</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">{{ $job['applications'] }}</td>
                             <td class="py-4 px-4">
-                                <span class="font-medium text-[#f5f5f5]">7.7%</span>
+                                <span class="font-medium text-[#f5f5f5]">{{ $job['conversion_rate'] }}</span>
                             </td>
                             <td class="py-4 px-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
-                                    Actif
+                                <span class="px-2 py-1 rounded-full text-xs font-medium {{ $job['status'] == 'Actif' ? 'text-green-400 bg-green-400/20' : 'text-red-400 bg-red-400/20' }}">
+                                    {{ $job['status'] }}
                                 </span>
                             </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-10</td>
+                            <td class="py-4 px-4 text-[#9ca3af]">{{ $job['date'] }}</td>
                         </tr>
-                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
-                            <td class="py-4 px-4">
-                                <div class="font-medium text-[#f5f5f5]">Designer UX/UI</div>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="py-8 px-4 text-center text-[#9ca3af]">
+                                Aucune offre d'emploi trouvée
                             </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">189</td>
-                            <td class="py-4 px-4 text-[#9ca3af]">12</td>
-                            <td class="py-4 px-4">
-                                <span class="font-medium text-[#f5f5f5]">6.3%</span>
-                            </td>
-                            <td class="py-4 px-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
-                                    Actif
-                                </span>
-                            </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-12</td>
                         </tr>
-                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
-                            <td class="py-4 px-4">
-                                <div class="font-medium text-[#f5f5f5]">Community Manager</div>
-                            </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">156</td>
-                            <td class="py-4 px-4 text-[#9ca3af]">15</td>
-                            <td class="py-4 px-4">
-                                <span class="font-medium text-[#f5f5f5]">9.6%</span>
-                            </td>
-                            <td class="py-4 px-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-red-400 bg-red-400/20">
-                                    Expiré
-                                </span>
-                            </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-08</td>
-                        </tr>
-                        <tr class="border-b border-[#333333] hover:bg-[#333333]">
-                            <td class="py-4 px-4">
-                                <div class="font-medium text-[#f5f5f5]">Data Analyst</div>
-                            </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">98</td>
-                            <td class="py-4 px-4 text-[#9ca3af]">8</td>
-                            <td class="py-4 px-4">
-                                <span class="font-medium text-[#f5f5f5]">8.2%</span>
-                            </td>
-                            <td class="py-4 px-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium text-green-400 bg-green-400/20">
-                                    Actif
-                                </span>
-                            </td>
-                            <td class="py-4 px-4 text-[#9ca3af]">2024-01-15</td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -348,7 +228,7 @@
                                 <p class="text-sm text-[#9ca3af]">Candidatures en attente</p>
                             </div>
                         </div>
-                        <span class="text-2xl font-bold text-blue-400">23</span>
+                        <span class="text-2xl font-bold text-blue-400">{{ $stats['application_status']['pending'] }}</span>
                     </div>
                     
                     <div class="flex items-center justify-between p-4 bg-green-400/20 rounded-lg">
@@ -359,7 +239,7 @@
                                 <p class="text-sm text-[#9ca3af]">Candidatures retenues</p>
                             </div>
                         </div>
-                        <span class="text-2xl font-bold text-green-400">12</span>
+                        <span class="text-2xl font-bold text-green-400">{{ $stats['application_status']['accepted'] }}</span>
                     </div>
                     
                     <div class="flex items-center justify-between p-4 bg-red-400/20 rounded-lg">
@@ -370,7 +250,7 @@
                                 <p class="text-sm text-[#9ca3af]">Candidatures non retenues</p>
                             </div>
                         </div>
-                        <span class="text-2xl font-bold text-red-400">8</span>
+                        <span class="text-2xl font-bold text-red-400">{{ $stats['application_status']['rejected'] }}</span>
                     </div>
                 </div>
             </div>
@@ -381,7 +261,7 @@
                 </h2>
                 <div class="space-y-6">
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-[#00b6b4] mb-2">2.3 jours</div>
+                        <div class="text-4xl font-bold text-[#00b6b4] mb-2">{{ $stats['response_time'] }} jours</div>
                         <p class="text-[#9ca3af]">Temps moyen de première réponse</p>
                     </div>
                     

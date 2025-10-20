@@ -47,10 +47,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        \Log::info('Profile update request received', [
-            'user_id' => Auth::id(),
-            'request_data' => $request->all()
-        ]);
         
         $user = Auth::user();
         $profile = $user->candidateProfile;
@@ -92,18 +88,12 @@ class ProfileController extends Controller
         ]);
 
         try {
-            \Log::info('Starting profile update process');
             
             // Update user name if provided
             if ($request->has('firstName') && $request->has('lastName')) {
-                \Log::info('Updating user name', [
-                    'firstName' => $request->firstName,
-                    'lastName' => $request->lastName
-                ]);
                 $user->update([
                     'name' => $request->firstName . ' ' . $request->lastName
                 ]);
-                \Log::info('User name updated successfully');
             }
 
             $data = $request->only([
@@ -111,13 +101,6 @@ class ProfileController extends Controller
                 'linkedin_url', 'portfolio_url', 'facebook_url', 'twitter_url'
             ]);
             
-            // Debug social media fields
-            \Log::info('Social media fields received:', [
-                'linkedin_url' => $request->linkedin_url,
-                'portfolio_url' => $request->portfolio_url,
-                'facebook_url' => $request->facebook_url,
-                'twitter_url' => $request->twitter_url
-            ]);
 
             // Handle experience and education JSON data
             if ($request->has('experience') && $request->experience) {
@@ -172,20 +155,7 @@ class ProfileController extends Controller
             }
 
             // Update profile
-            \Log::info('Updating profile with data', ['data' => $data]);
-            \Log::info('Raw request data', [
-                'phone' => $request->phone,
-                'phone_empty' => empty($request->phone),
-                'skills' => $request->skills,
-                'experience' => $request->experience,
-                'education' => $request->education,
-                'languages' => $request->languages,
-                'experience_decoded' => json_decode($request->experience, true),
-                'education_decoded' => json_decode($request->education, true)
-            ]);
             $profile->update($data);
-            \Log::info('Profile updated successfully');
-            \Log::info('Updated profile phone:', ['phone' => $profile->fresh()->phone]);
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -198,8 +168,6 @@ class ProfileController extends Controller
                 ->with('success', 'Profil mis à jour avec succès!');
 
         } catch (\Exception $e) {
-            \Log::error('Profile update error: ' . $e->getMessage());
-            \Log::error('Profile update error trace: ' . $e->getTraceAsString());
             
             if ($request->expectsJson()) {
                 return response()->json([

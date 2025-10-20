@@ -103,21 +103,86 @@ function getWorkTypeIcon($type) {
         </div>
     </section>
 
+    <!-- Search and Filters -->
+    <section class="py-8 bg-gray-50 dark:bg-[#2b2b2b] relative z-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <form method="GET" action="{{ route('jobs.index') }}" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Search Input -->
+                    <div class="lg:col-span-2">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            value="{{ request('search') }}"
+                            placeholder="Rechercher un emploi, entreprise, localisation..."
+                            class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none"
+                        >
+                    </div>
+                    
+                    <!-- Location Filter -->
+                    <div>
+                        <select name="location" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            <option value="">Toutes les localisations</option>
+                            <option value="Alger" {{ request('location') == 'Alger' ? 'selected' : '' }}>Alger</option>
+                            <option value="Oran" {{ request('location') == 'Oran' ? 'selected' : '' }}>Oran</option>
+                            <option value="Constantine" {{ request('location') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
+                            <option value="Annaba" {{ request('location') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                            <option value="Blida" {{ request('location') == 'Blida' ? 'selected' : '' }}>Blida</option>
+                            <option value="Sétif" {{ request('location') == 'Sétif' ? 'selected' : '' }}>Sétif</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Type Filter -->
+                    <div>
+                        <select name="type" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            <option value="">Tous les types</option>
+                            <option value="CDI" {{ request('type') == 'CDI' ? 'selected' : '' }}>CDI</option>
+                            <option value="CDD" {{ request('type') == 'CDD' ? 'selected' : '' }}>CDD</option>
+                            <option value="Freelance" {{ request('type') == 'Freelance' ? 'selected' : '' }}>Freelance</option>
+                            <option value="Stage" {{ request('type') == 'Stage' ? 'selected' : '' }}>Stage</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <!-- Experience Filter -->
+                        <select name="experience" class="px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            <option value="">Tous les niveaux</option>
+                            <option value="Junior" {{ request('experience') == 'Junior' ? 'selected' : '' }}>Junior (0-2 ans)</option>
+                            <option value="Intermédiaire" {{ request('experience') == 'Intermédiaire' ? 'selected' : '' }}>Intermédiaire (2-5 ans)</option>
+                            <option value="Senior" {{ request('experience') == 'Senior' ? 'selected' : '' }}>Senior (5+ ans)</option>
+                        </select>
+                        
+                        <!-- Sort Filter -->
+                        <select name="sort" class="px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Plus récentes</option>
+                            <option value="salary_asc" {{ request('sort') == 'salary_asc' ? 'selected' : '' }}>Salaire croissant</option>
+                            <option value="salary_desc" {{ request('sort') == 'salary_desc' ? 'selected' : '' }}>Salaire décroissant</option>
+                            <option value="title" {{ request('sort') == 'title' ? 'selected' : '' }}>Titre A-Z</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                            Rechercher
+                        </button>
+                        <a href="{{ route('jobs.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                            Effacer
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <!-- Jobs List -->
     <section class="py-16 relative z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4">
                 <h2 class="text-xl sm:text-2xl font-bold text-[#111111] dark:text-[#f5f5f5]">
-                    {{ count($jobs) }} offres trouvées
+                    {{ $jobs->total() }} offres trouvées
                 </h2>
-                <div class="flex items-center gap-4">
-                    <select class="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] text-sm sm:text-base">
-                        <option>Plus récentes</option>
-                        <option>Salaire croissant</option>
-                        <option>Salaire décroissant</option>
-                        <option>Pertinence</option>
-                    </select>
-                </div>
             </div>
 
             <div class="space-y-6">
@@ -226,12 +291,12 @@ function getWorkTypeIcon($type) {
                 @endforeach
             </div>
 
-            <!-- Load More -->
-            <div class="text-center mt-12">
-                <button class="bg-white dark:bg-[#2b2b2b] border border-gray-200 dark:border-[#333333] text-[#111111] dark:text-[#f5f5f5] hover:bg-gray-100 dark:hover:bg-[#333333] font-medium py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105">
-                    Charger plus d'offres
-                </button>
+            <!-- Pagination -->
+            @if($jobs->hasPages())
+            <div class="mt-12">
+                {{ $jobs->appends(request()->query())->links() }}
             </div>
+            @endif
         </div>
     </section>
 </div>

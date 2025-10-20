@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PartnersController extends Controller
@@ -17,10 +16,8 @@ class PartnersController extends Controller
     {
         try {
             $partners = Partner::orderBy('sort_order')->orderBy('name')->get();
-            \Log::info('Partners loaded successfully: ' . $partners->count());
             return view('dashboard.admin.partners', compact('partners'));
         } catch (\Exception $e) {
-            \Log::error('Error loading partners: ' . $e->getMessage());
             $partners = collect();
             return view('dashboard.admin.partners', compact('partners'));
         }
@@ -31,14 +28,6 @@ class PartnersController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info('Partner store request received', [
-            'name' => $request->name,
-            'has_logo' => $request->hasFile('logo'),
-            'website' => $request->website,
-            'description' => $request->description,
-            'is_featured' => $request->is_featured
-        ]);
-
         $request->validate([
             'name' => 'required|string|max:255',
             'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
@@ -54,7 +43,6 @@ class PartnersController extends Controller
                 $logo = $request->file('logo');
                 $logoName = Str::slug($request->name) . '_' . time() . '.' . $logo->getClientOriginalExtension();
                 $logoPath = $logo->storeAs('partners', $logoName, 'public');
-                \Log::info('Logo stored at: ' . $logoPath);
             }
 
             $partner = Partner::create([
@@ -62,22 +50,13 @@ class PartnersController extends Controller
                 'logo' => $logoPath,
                 'website' => $request->website,
                 'description' => $request->description,
-                'is_featured' => $request->has('is_featured') ? $request->boolean('is_featured') : false,
+                'is_featured' => $request->boolean('is_featured'),
                 'sort_order' => Partner::max('sort_order') + 1
             ]);
 
-            \Log::info('Partner created successfully with ID: ' . $partner->id);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Partenaire ajouté avec succès',
-                'partner' => $partner
-            ]);
+            return redirect()->route('admin.partners')->with('success', 'Partenaire créé avec succès!');
         } catch (\Exception $e) {
-            \Log::error('Partner creation error: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
-            
-            return response()->json(['error' => 'Erreur lors de la création du partenaire: ' . $e->getMessage()], 500);
+            return back()->withErrors(['error' => 'Erreur lors de la création du partenaire: ' . $e->getMessage()]);
         }
     }
 
@@ -87,7 +66,16 @@ class PartnersController extends Controller
     public function show($id)
     {
         $partner = Partner::findOrFail($id);
-        return response()->json($partner);
+        return view('dashboard.admin.partners.show', compact('partner'));
+    }
+
+    /**
+     * Show the form for editing the specified partner
+     */
+    public function edit($id)
+    {
+        $partner = Partner::findOrFail($id);
+        return view('dashboard.admin.partners.edit', compact('partner'));
     }
 
     /**
@@ -95,47 +83,35 @@ class PartnersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $partner = Partner::findOrFail($id);
-        
         $request->validate([
             'name' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
             'website' => 'nullable|url|max:255',
             'description' => 'nullable|string|max:1000',
-            'is_featured' => 'boolean'
+            'is_featured' => 'nullable|boolean'
         ]);
 
         try {
-            $data = [
+            $partner = Partner::findOrFail($id);
+            
+            // Handle logo upload if new logo is provided
+            if ($request->hasFile('logo')) {
+                $logo = $request->file('logo');
+                $logoName = Str::slug($request->name) . '_' . time() . '.' . $logo->getClientOriginalExtension();
+                $logoPath = $logo->storeAs('partners', $logoName, 'public');
+                $partner->logo = $logoPath;
+            }
+
+            $partner->update([
                 'name' => $request->name,
                 'website' => $request->website,
                 'description' => $request->description,
                 'is_featured' => $request->boolean('is_featured')
-            ];
-
-            // Handle logo upload if new logo provided
-            if ($request->hasFile('logo')) {
-                // Delete old logo
-                if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-                    Storage::disk('public')->delete($partner->logo);
-                }
-                
-                $logo = $request->file('logo');
-                $logoName = Str::slug($request->name) . '_' . time() . '.' . $logo->getClientOriginalExtension();
-                $data['logo'] = $logo->storeAs('partners', $logoName, 'public');
-            }
-
-            $partner->update($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Partenaire modifié avec succès',
-                'partner' => $partner
             ]);
+
+            return redirect()->route('admin.partners')->with('success', 'Partenaire mis à jour avec succès!');
         } catch (\Exception $e) {
-            \Log::error('Partner update error: ' . $e->getMessage());
-            
-            return response()->json(['error' => 'Erreur lors de la modification du partenaire'], 500);
+            return back()->withErrors(['error' => 'Erreur lors de la mise à jour du partenaire: ' . $e->getMessage()]);
         }
     }
 
@@ -144,39 +120,13 @@ class PartnersController extends Controller
      */
     public function destroy($id)
     {
-        $partner = Partner::findOrFail($id);
-        
         try {
-            // Delete logo file
-            if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-                Storage::disk('public')->delete($partner->logo);
-            }
-            
+            $partner = Partner::findOrFail($id);
             $partner->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Partenaire supprimé avec succès'
-            ]);
-        } catch (\Exception $e) {
-            \Log::error('Partner deletion error: ' . $e->getMessage());
             
-            return response()->json(['error' => 'Erreur lors de la suppression du partenaire'], 500);
+            return redirect()->route('admin.partners')->with('success', 'Partenaire supprimé avec succès!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erreur lors de la suppression du partenaire: ' . $e->getMessage()]);
         }
-    }
-
-    /**
-     * Toggle featured status
-     */
-    public function toggleFeatured($id)
-    {
-        $partner = Partner::findOrFail($id);
-        $partner->update(['is_featured' => !$partner->is_featured]);
-        
-        return response()->json([
-            'success' => true,
-            'is_featured' => $partner->is_featured,
-            'message' => $partner->is_featured ? 'Partenaire mis en avant' : 'Partenaire retiré de la mise en avant'
-        ]);
     }
 }

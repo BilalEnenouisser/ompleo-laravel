@@ -164,8 +164,6 @@ class JobsController extends Controller
         try {
             $job->update($request->all());
         } catch (\Exception $e) {
-            \Log::error('Job update error: ' . $e->getMessage());
-            \Log::error('Request data: ' . json_encode($request->all()));
             
             if (request()->wantsJson() || request()->ajax()) {
                 return response()->json(['error' => 'Erreur lors de la mise à jour: ' . $e->getMessage()], 500);
