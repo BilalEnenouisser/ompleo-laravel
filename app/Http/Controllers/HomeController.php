@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Job;
+use App\Models\Company;
+use App\Models\User;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Fake data for the homepage
+        // Get real statistics from database
         $stats = [
-            'jobs_count' => 10000,
-            'companies_count' => 5000,
-            'candidates_count' => 50000
+            'jobs_count' => Job::published()->count(),
+            'companies_count' => Company::where('is_active', true)->count(),
+            'candidates_count' => User::where('user_type', 'candidate')->count()
         ];
+
+        // Get 6 latest published jobs with company information
+        $jobs = Job::with('company')
+            ->published()
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+
+        // Get 6 latest published blogs for featured articles
+        $featuredBlogs = \App\Models\Blog::where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
 
         $features = [
             [
@@ -48,7 +64,7 @@ class HomeController extends Controller
             ]
         ];
 
-        return view('home', compact('stats', 'features'));
+        return view('home', compact('stats', 'features', 'jobs', 'featuredBlogs'));
     }
 }
 

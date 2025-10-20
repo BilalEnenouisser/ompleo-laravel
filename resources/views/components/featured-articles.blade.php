@@ -1,33 +1,6 @@
 @php
-$articles = [
-    [
-        'id' => 1,
-        'title' => 'Comment rédiger un CV qui attire l\'attention des recruteurs',
-        'excerpt' => 'Découvrez les secrets pour créer un CV percutant qui vous démarque de la concurrence et attire l\'œil des recruteurs.',
-        'image' => 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'date' => '15 Janvier 2024',
-        'author' => 'Sarah Benali',
-        'slug' => 'comment-rediger-cv-attire-attention-recruteurs',
-    ],
-    [
-        'id' => 2,
-        'title' => 'Les compétences digitales les plus recherchées en 2024',
-        'excerpt' => 'Explorez les compétences numériques essentielles que les entreprises recherchent activement cette année.',
-        'image' => 'https://images.pexels.com/photos/3184432/pexels-photo-3184432.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'date' => '12 Janvier 2024',
-        'author' => 'Ahmed Belkacem',
-        'slug' => 'competences-digitales-recherchees-2024',
-    ],
-    [
-        'id' => 3,
-        'title' => 'Préparer son entretien d\'embauche : guide complet',
-        'excerpt' => 'Un guide détaillé pour réussir votre entretien d\'embauche, de la préparation aux questions fréquentes.',
-        'image' => 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=400',
-        'date' => '10 Janvier 2024',
-        'author' => 'Fatima Zohra',
-        'slug' => 'preparer-entretien-embauche-guide-complet',
-    ],
-];
+// Use the featuredBlogs passed from the controller, or fallback to empty collection
+$articles = $featuredBlogs ?? collect();
 @endphp
 
 <section class="py-16 bg-[#e0e3df] dark:bg-[#1f1f1f]">
@@ -45,11 +18,11 @@ $articles = [
             <!-- Carousel -->
             <div class="overflow-hidden rounded-2xl shadow-lg">
                 <div id="articlesCarousel" class="flex transition-transform duration-500 ease-in-out h-[500px]">
-                    @foreach($articles as $index => $article)
+                    @forelse($articles as $index => $article)
                     <div class="w-full flex-shrink-0 relative">
                         <img 
-                            src="{{ $article['image'] }}" 
-                            alt="{{ $article['title'] }}" 
+                            src="{{ $article->featured_image ? asset('storage/' . $article->featured_image) : 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400' }}" 
+                            alt="{{ $article->title }}" 
                             class="w-full h-full object-cover dark:opacity-90"
                         />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
@@ -64,7 +37,7 @@ $articles = [
                                         <line x1="8" y1="2" x2="8" y2="6"></line>
                                         <line x1="3" y1="10" x2="21" y2="10"></line>
                                     </svg>
-                                    <span>{{ $article['date'] }}</span>
+                                    <span>{{ $article->created_at->format('d F Y') }}</span>
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <!-- User icon from Lucide React -->
@@ -72,27 +45,50 @@ $articles = [
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
-                                    <span>{{ $article['author'] }}</span>
+                                    <span>{{ $article->author ?? 'OMPLEO' }}</span>
                                 </div>
                             </div>
                             
                             <h3 class="text-2xl md:text-3xl font-bold mb-3">
-                                {{ $article['title'] }}
+                                {{ $article->title }}
                             </h3>
                             
                             <p class="text-white/80 mb-4 line-clamp-2">
-                                {{ $article['excerpt'] }}
+                                {{ $article->excerpt ?? Str::limit(strip_tags($article->content), 150) }}
                             </p>
                             
                             <a 
-                                href="{{ route('blog.show', $article['slug']) }}"
+                                href="{{ route('blog.show', $article->slug) }}"
                                 class="inline-flex items-center gap-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105"
                             >
                                 Lire l'article
                             </a>
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                    <div class="w-full flex-shrink-0 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#00b6b4] to-[#009e9c]"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <div class="w-16 h-16 mx-auto mb-4 text-white/80">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14,2 14,8 20,8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10,9 9,9 8,9"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-3 text-center">
+                                Aucun article disponible
+                            </h3>
+                            <p class="text-white/80 mb-4 text-center">
+                                Revenez bientôt pour découvrir nos derniers articles et conseils !
+                            </p>
+                        </div>
+                    </div>
+                    @endforelse
                 </div>
             </div>
 
@@ -118,6 +114,7 @@ $articles = [
             </button>
 
             <!-- Dots Indicator -->
+            @if($articles->count() > 0)
             <div class="flex justify-center mt-6 space-x-2">
                 @foreach($articles as $index => $article)
                 <button
@@ -127,6 +124,7 @@ $articles = [
                 ></button>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </section>

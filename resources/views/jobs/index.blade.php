@@ -136,9 +136,9 @@ function getWorkTypeIcon($type) {
                                 
                                 <div class="flex-1">
                                     <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-                                        <h3 class="text-lg sm:text-xl font-bold text-[#111111] dark:text-[#f5f5f5] hover:text-[#00b6b4] cursor-pointer">
+                                        <a href="{{ route('jobs.show', $job->slug) }}" class="text-lg sm:text-xl font-bold text-[#111111] dark:text-[#f5f5f5] hover:text-[#00b6b4] transition-colors duration-200">
                                             {{ $job->title }}
-                                        </h3>
+                                        </a>
                                         @if($job->is_featured)
                                         <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,9 +213,13 @@ function getWorkTypeIcon($type) {
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                 </svg>
                             </button>
-                            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base">
+                            <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                </svg>
                                 Postuler
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

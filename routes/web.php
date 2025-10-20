@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\LocaleController;
 
@@ -121,7 +123,7 @@ Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordControlle
 
 // Jobs Routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('/jobs/{job:slug}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 
 // Admin Routes
@@ -192,24 +194,13 @@ Route::post('/contact', function () {
 })->name('contact.submit');
 
 // Blog Routes
-Route::get('/blog', function () {
-    $posts = \App\Models\Blog::where('status', 'published')->orderBy('created_at', 'desc')->get();
-    return view('blog.index', compact('posts'));
-})->name('blog.index');
-
-Route::get('/blog/{post}', function ($post) {
-    $post = \App\Models\Blog::where('slug', $post)->where('status', 'published')->firstOrFail();
-    return view('blog.show', compact('post'));
-})->name('blog.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // Companies Routes
-Route::get('/companies', function () {
-    return view('companies.index');
-})->name('companies.index');
-
-Route::get('/companies/{company}', function ($company) {
-    return view('companies.show', compact('company'));
-})->name('companies.show');
+Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
+Route::get('/companies/search', [CompanyController::class, 'search'])->name('companies.search');
+Route::get('/companies/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');
 
 // Candidates Route
 Route::get('/candidates', function () {
