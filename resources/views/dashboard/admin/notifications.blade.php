@@ -587,12 +587,23 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="text-xs sm:text-sm text-[#9ca3af]">
+                                <div class="text-xs sm:text-sm">
                                     @if($notification->is_sent)
-                                        @if($notification->target_type === 'all')
-                                            Taux d'ouverture: 100%
+                                        @php
+                                            $openingRate = $notification->opening_rate ?? 0;
+                                            $rateColor = $openingRate == 0 ? 'text-red-400' : ($openingRate < 30 ? 'text-yellow-400' : ($openingRate < 70 ? 'text-orange-400' : 'text-green-400'));
+                                        @endphp
+                                        <span class="{{ $rateColor }} font-medium">
+                                            Taux d'ouverture: {{ $openingRate }}%
+                                        </span>
+                                        @if($openingRate == 0)
+                                            <span class="text-red-500 text-xs ml-1">(Aucune ouverture)</span>
+                                        @elseif($openingRate < 30)
+                                            <span class="text-yellow-500 text-xs ml-1">(Faible)</span>
+                                        @elseif($openingRate < 70)
+                                            <span class="text-orange-500 text-xs ml-1">(Moyen)</span>
                                         @else
-                                            Taux d'ouverture: {{ rand(60, 95) }}%
+                                            <span class="text-green-500 text-xs ml-1">(Excellent)</span>
                                         @endif
                                     @else
                                         <span class="text-yellow-500">En attente</span>
@@ -678,12 +689,59 @@
 <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
 {{-- Debug Panel --}}
-<div id="debug-panel" class="fixed bottom-4 left-4 z-50 bg-black/90 text-white p-4 rounded-lg max-w-md max-h-64 overflow-y-auto text-xs font-mono">
-    <div class="flex justify-between items-center mb-2">
-        <h3 class="text-yellow-400 font-bold">🐛 DEBUG PANEL</h3>
-        <button onclick="clearDebugPanel()" class="text-red-400 hover:text-red-300">Clear</button>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="closeDeleteModal()">
+    <div class="bg-[#2b2b2b] rounded-2xl shadow-2xl border border-[#333333] max-w-md w-full transform transition-all duration-300 scale-95 opacity-0" id="deleteModalContent" onclick="event.stopPropagation()">
+        <div class="p-6">
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                        <line x1="10" x2="10" y1="11" y2="17"/>
+                        <line x1="14" x2="14" y1="11" y2="17"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-[#f5f5f5]">Supprimer la notification</h3>
+                    <p class="text-sm text-[#9ca3af]">Cette action est irréversible</p>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="mb-6">
+                <p class="text-[#cccccc] mb-2">Êtes-vous sûr de vouloir supprimer cette notification ?</p>
+                <div class="bg-[#333333] rounded-lg p-3 border border-[#444444]">
+                    <p class="text-sm text-[#9ca3af] mb-1">Titre :</p>
+                    <p class="text-[#f5f5f5] font-medium" id="deleteNotificationTitle">-</p>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-3">
+                <button
+                    onclick="closeDeleteModal()"
+                    class="px-4 py-2 text-[#9ca3af] hover:text-[#f5f5f5] transition-colors duration-200"
+                >
+                    Annuler
+                </button>
+                <button
+                    onclick="confirmDeleteNotification()"
+                    class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+                >
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    </svg>
+                    Supprimer
+                </button>
+            </div>
+        </div>
     </div>
-    <div id="debug-messages" class="space-y-1"></div>
 </div>
 
 <script>
@@ -695,35 +753,6 @@ let isDragging = false;
 let draggedElement = null;
 let dragPosition = { x: 0, y: 0 };
 
-// Debug panel functions
-function addDebugMessage(message, type = 'info') {
-    const debugMessages = document.getElementById('debug-messages');
-    if (!debugMessages) return;
-    
-    const timestamp = new Date().toLocaleTimeString();
-    const color = type === 'error' ? 'text-red-400' : type === 'success' ? 'text-green-400' : 'text-blue-400';
-    
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `${color} border-l-2 border-current pl-2`;
-    messageDiv.innerHTML = `<span class="text-gray-400">[${timestamp}]</span> ${message}`;
-    
-    debugMessages.appendChild(messageDiv);
-    
-    // Auto-scroll to bottom
-    debugMessages.scrollTop = debugMessages.scrollHeight;
-    
-    // Keep only last 20 messages
-    while (debugMessages.children.length > 20) {
-        debugMessages.removeChild(debugMessages.firstChild);
-    }
-}
-
-function clearDebugPanel() {
-    const debugMessages = document.getElementById('debug-messages');
-    if (debugMessages) {
-        debugMessages.innerHTML = '';
-    }
-}
 
 // Initialize editor with default content
 function initializeEditor() {
@@ -737,32 +766,6 @@ function initializeEditor() {
 
 // Initialize visual editor
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DEBUG: Page loaded - DOMContentLoaded event fired');
-    
-    // Debug: Check if notifications data is available
-    console.log('📊 DEBUG: Checking notifications data...');
-    
-    // Check if we have notifications in the table
-    const notificationRows = document.querySelectorAll('tbody tr');
-    console.log('📋 DEBUG: Found notification rows:', notificationRows.length);
-    
-    // Check form elements
-    const formTitle = document.getElementById('form-title');
-    const formMessage = document.getElementById('form-message');
-    const formType = document.getElementById('form-type');
-    const targetSelect = document.getElementById('notification-recipients');
-    
-    console.log('📝 DEBUG: Form elements found:', {
-        formTitle: formTitle ? 'Found' : 'Missing',
-        formMessage: formMessage ? 'Found' : 'Missing',
-        formType: formType ? 'Found' : 'Missing',
-        targetSelect: targetSelect ? 'Found' : 'Missing'
-    });
-    
-    // Check CSRF token
-    const csrfToken = document.querySelector('meta[name="csrf-token"]');
-    console.log('🔐 DEBUG: CSRF token:', csrfToken ? 'Found' : 'Missing');
-    
     initializeEditor();
     updateCanvas();
     
@@ -1328,23 +1331,13 @@ function updateActiveElementFont(fontFamily) {
 let currentColorTarget = 'text';
 
 function updateFormData() {
-    console.log('🔄 DEBUG: updateFormData called');
-    console.log('📝 DEBUG: Current elements:', elements);
-    
     const titleElement = elements.find(el => el.type === 'title');
     const textElement = elements.find(el => el.type === 'text');
     const buttonElement = elements.find(el => el.type === 'button');
     
-    console.log('🔍 DEBUG: Found elements:', {
-        titleElement: titleElement ? titleElement.content : 'None',
-        textElement: textElement ? textElement.content : 'None',
-        buttonElement: buttonElement ? buttonElement.content : 'None'
-    });
-    
     // Update title
     const titleValue = titleElement ? titleElement.content : 'Nouvelle notification';
     document.getElementById('form-title').value = titleValue;
-    console.log('📝 DEBUG: Updated form title:', titleValue);
     
     // Update message - combine text and button content
     let message = '';
@@ -1359,7 +1352,6 @@ function updateFormData() {
     }
     
     document.getElementById('form-message').value = message;
-    console.log('📝 DEBUG: Updated form message:', message);
     
     updatePreview();
 }
@@ -1456,17 +1448,6 @@ function resetForm() {
 }
 
 function createNotification(event) {
-    console.log('🚀 DEBUG: createNotification function called');
-    addDebugMessage('🚀 createNotification function called', 'info');
-    
-    console.log('⏸️ DEBUG: PAUSE - Check console now before continuing...');
-    addDebugMessage('⏸️ PAUSE - Check debug panel now before continuing...', 'info');
-    
-    // Add a small delay to let you read the debug panel
-    setTimeout(() => {
-        console.log('▶️ DEBUG: Continuing after pause...');
-        addDebugMessage('▶️ Continuing after pause...', 'info');
-    }, 3000);
     
     event.preventDefault();
     const form = event.target.closest('form');
@@ -1477,37 +1458,20 @@ function createNotification(event) {
     const type = document.getElementById('form-type').value || 'info';
     const targetType = document.getElementById('notification-recipients').value;
     
-    console.log('📝 DEBUG: Form data collected:', {
-        title: title,
-        message: message,
-        type: type,
-        targetType: targetType
-    });
-    addDebugMessage(`📝 Form data: Title="${title}", Type="${type}", Target="${targetType}"`, 'info');
-    
     if (!title.trim()) {
-        console.log('❌ DEBUG: Title validation failed');
-        addDebugMessage('❌ Title validation failed', 'error');
         showToast('Erreur', 'Le titre est requis', 'error');
         return;
     }
     
     if (!message.trim()) {
-        console.log('❌ DEBUG: Message validation failed');
-        addDebugMessage('❌ Message validation failed', 'error');
         showToast('Erreur', 'Le message est requis', 'error');
         return;
     }
     
     if (!targetType) {
-        console.log('❌ DEBUG: Target type validation failed');
-        addDebugMessage('❌ Target type validation failed', 'error');
         showToast('Erreur', 'Veuillez sélectionner les destinataires', 'error');
         return;
     }
-    
-    console.log('✅ DEBUG: All validations passed');
-    addDebugMessage('✅ All validations passed', 'success');
     
     // Create form data
     const formData = new FormData();
@@ -1516,18 +1480,6 @@ function createNotification(event) {
     formData.append('type', type);
     formData.append('target_type', targetType);
     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-    
-    console.log('📤 DEBUG: Sending request to:', '{{ route("admin.notifications.store") }}');
-    addDebugMessage('📤 Sending request to server...', 'info');
-    
-    console.log('📤 DEBUG: FormData contents:', {
-        title: formData.get('title'),
-        message: formData.get('message'),
-        type: formData.get('type'),
-        target_type: formData.get('target_type'),
-        _token: formData.get('_token') ? 'Present' : 'Missing'
-    });
-    addDebugMessage(`📤 Request data: Title="${formData.get('title')}", Target="${formData.get('target_type')}"`, 'info');
     
     // Send to backend
     fetch('{{ route("admin.notifications.store") }}', {
@@ -1538,39 +1490,40 @@ function createNotification(event) {
             'Accept': 'application/json',
         }
     })
-    .then(response => {
-        console.log('📡 DEBUG: Response received:', {
-            status: response.status,
-            statusText: response.statusText,
-            ok: response.ok
-        });
-        addDebugMessage(`📡 Response received: Status ${response.status} (${response.statusText})`, response.ok ? 'success' : 'error');
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('📊 DEBUG: Response data:', data);
-        addDebugMessage(`📊 Server response: ${JSON.stringify(data)}`, 'info');
-        
         if (data.success) {
-            console.log('✅ DEBUG: Notification created successfully');
-            addDebugMessage('✅ Notification created successfully!', 'success');
             showToast('Notification créée', data.message, 'success');
-            form.reset();
-            // Reload the page to show the new notification
+            
+            // Auto-send the notification after creation
+            
             setTimeout(() => {
-                console.log('🔄 DEBUG: Reloading page...');
-                addDebugMessage('🔄 Reloading page...', 'info');
-                location.reload();
-            }, 1500);
+                fetch(`/admin/notifications/${data.notification.id}/send`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(sendData => {
+                    if (sendData.success) {
+                        showToast('Notification envoyée', sendData.message, 'success');
+                        form.reset();
+                        location.reload();
+                    } else {
+                        showToast('Erreur', sendData.error, 'error');
+                    }
+                })
+                .catch(error => {
+                    showToast('Erreur', 'Erreur lors de l\'envoi de la notification', 'error');
+                });
+            }, 1000);
         } else {
-            console.log('❌ DEBUG: Notification creation failed:', data.error);
-            addDebugMessage(`❌ Notification creation failed: ${data.error}`, 'error');
             showToast('Erreur', data.error, 'error');
         }
     })
     .catch(error => {
-        console.log('💥 DEBUG: Request failed with error:', error);
-        addDebugMessage(`💥 Request failed: ${error.message}`, 'error');
         showToast('Erreur', 'Une erreur est survenue lors de la création de la notification', 'error');
     });
 }
@@ -1605,12 +1558,7 @@ function duplicateNotification(notification) {
 }
 
 function sendExistingNotification(id) {
-    console.log('🚀 DEBUG: sendExistingNotification function called with ID:', id);
-    addDebugMessage(`🚀 sendExistingNotification called with ID: ${id}`, 'info');
-    
     // Send notification directly without confirmation
-    console.log('📤 DEBUG: Sending request to:', `/admin/notifications/${id}/send`);
-    addDebugMessage(`📤 Sending existing notification ID: ${id}`, 'info');
     
     fetch(`/admin/notifications/${id}/send`, {
         method: 'POST',
@@ -1619,73 +1567,107 @@ function sendExistingNotification(id) {
             'Accept': 'application/json',
         }
     })
-    .then(response => {
-        console.log('📡 DEBUG: Response received:', {
-            status: response.status,
-            statusText: response.statusText,
-            ok: response.ok
-        });
-        addDebugMessage(`📡 Response received: Status ${response.status}`, response.ok ? 'success' : 'error');
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('📊 DEBUG: Response data:', data);
-        addDebugMessage(`📊 Server response: ${JSON.stringify(data)}`, 'info');
-        
         if (data.success) {
-            console.log('✅ DEBUG: Notification sent successfully');
-            addDebugMessage('✅ Notification sent successfully!', 'success');
             showToast('Notification envoyée', data.message, 'success');
             setTimeout(() => {
-                console.log('🔄 DEBUG: Reloading page...');
-                addDebugMessage('🔄 Reloading page...', 'info');
                 location.reload();
             }, 1500);
         } else {
-            console.log('❌ DEBUG: Notification sending failed:', data.error);
-            addDebugMessage(`❌ Notification sending failed: ${data.error}`, 'error');
             showToast('Erreur', data.error, 'error');
         }
     })
     .catch(error => {
-        console.log('💥 DEBUG: Request failed with error:', error);
-        addDebugMessage(`💥 Request failed: ${error.message}`, 'error');
         showToast('Erreur', 'Une erreur est survenue lors de l\'envoi de la notification', 'error');
     });
 }
 
+// Global variables for delete modal
+let deleteNotificationId = null;
+let deleteNotificationTitle = null;
+
 function deleteNotification(id, title) {
-    if (confirm(`Êtes-vous sûr de vouloir supprimer la notification "${title}" ?`)) {
-        fetch(`/admin/notifications/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Accept': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showToast('Notification supprimée', data.message, 'success');
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
-            } else {
-                showToast('Erreur', data.error, 'error');
-            }
-        })
-        .catch(error => {
-            showToast('Erreur', 'Une erreur est survenue lors de la suppression de la notification', 'error');
-        });
-    }
+    deleteNotificationId = id;
+    deleteNotificationTitle = title;
+    
+    // Update modal content
+    document.getElementById('deleteNotificationTitle').textContent = title;
+    
+    // Show modal with animation
+    const modal = document.getElementById('deleteModal');
+    const modalContent = document.getElementById('deleteModalContent');
+    
+    modal.classList.remove('hidden');
+    
+    // Trigger animation
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
 }
+
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    const modalContent = document.getElementById('deleteModalContent');
+    
+    // Animate out
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    // Hide modal after animation
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+
+function confirmDeleteNotification() {
+    if (!deleteNotificationId) return;
+    
+    // Close modal first
+    closeDeleteModal();
+    
+    // Show loading state
+    showToast('Suppression en cours...', 'Suppression de la notification', 'info');
+    
+    // Delete notification
+    fetch(`/admin/notifications/${deleteNotificationId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('Notification supprimée', data.message, 'success');
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            showToast('Erreur', data.error, 'error');
+        }
+    })
+    .catch(error => {
+        showToast('Erreur', 'Une erreur est survenue lors de la suppression de la notification', 'error');
+    });
+}
+
+// Keyboard support for modal
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('deleteModal');
+        if (!modal.classList.contains('hidden')) {
+            closeDeleteModal();
+        }
+    }
+});
 
 // Toast notifications with improved UI
 function showToast(title, message, type = 'success') {
-    console.log('🔔 DEBUG: showToast called:', { title, message, type });
     
     const container = document.getElementById('toast-container');
-    console.log('📦 DEBUG: Toast container found:', container ? 'Yes' : 'No');
     
     const toast = document.createElement('div');
     
@@ -1715,11 +1697,7 @@ function showToast(title, message, type = 'success') {
             </button>
         </div>
                 <div class="absolute bottom-0 left-0 h-1 ${type === 'success' ? 'bg-green-400' : 'bg-red-400'} rounded-b-xl animate-pulse"></div>
-                <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg">DEBUG</div>
     `;
-    
-    // DEBUG MODE: No hover functionality needed since popups stay forever
-    console.log('DEBUG: Popup will stay visible - no auto-hide enabled');
     
     container.appendChild(toast);
     
@@ -1729,11 +1707,17 @@ function showToast(title, message, type = 'success') {
         toast.classList.add('translate-x-0', 'opacity-100');
     }, 10);
     
-    // DEBUG MODE: Disable auto-hide completely for debugging
-    console.log('DEBUG: Popup created - will stay visible until manually closed');
-    
-    // Don't set any timeout - popups stay until manually closed
-    // This is for debugging purposes
+    // Auto-hide after 4 seconds for success, 8 seconds for error
+    const hideDelay = type === 'success' ? 4000 : 8000;
+    setTimeout(() => {
+        toast.classList.remove('translate-x-0', 'opacity-100');
+        toast.classList.add('translate-x-full', 'opacity-0');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.parentElement.removeChild(toast);
+            }
+        }, 300);
+    }, hideDelay);
 }
 </script>
 @endsection

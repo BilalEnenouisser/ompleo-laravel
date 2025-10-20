@@ -16,7 +16,18 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::orderBy('created_at', 'desc')->paginate(10);
+        $notifications = Notification::with('userNotifications')->orderBy('created_at', 'desc')->paginate(10);
+        
+        // Calculate opening rates for each notification
+        foreach ($notifications as $notification) {
+            if ($notification->is_sent && $notification->target_users) {
+                $totalRecipients = count($notification->target_users);
+                $openedCount = $notification->userNotifications()->where('is_read', true)->count();
+                $notification->opening_rate = $totalRecipients > 0 ? round(($openedCount / $totalRecipients) * 100) : 0;
+            } else {
+                $notification->opening_rate = 0;
+            }
+        }
         
         // Get statistics
         $stats = [
@@ -25,8 +36,8 @@ class NotificationsController extends Controller
             'pending' => Notification::pending()->count(),
             'candidates' => User::where('user_type', 'candidate')->count(),
             'recruiters' => User::where('user_type', 'recruiter')->count(),
+            'all_users' => User::count()
         ];
-
 
         return view('dashboard.admin.notifications', compact('notifications', 'stats'));
     }

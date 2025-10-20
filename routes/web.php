@@ -88,9 +88,11 @@ Route::post('/admin/notifications/{notification}/send', [App\Http\Controllers\Ad
 Route::delete('/admin/notifications/{notification}', [App\Http\Controllers\Admin\NotificationsController::class, 'destroy'])->name('admin.notifications.destroy');
 Route::get('/admin/notifications/stats', [App\Http\Controllers\Admin\NotificationsController::class, 'stats'])->name('admin.notifications.stats');
 
-Route::get('/admin/reports', function () {
-    return view('dashboard.admin.reports');
-})->name('admin.reports');
+// Reports routes
+Route::get('/admin/reports', [App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('admin.reports');
+Route::post('/admin/reports/{report}/action', [App\Http\Controllers\Admin\ReportsController::class, 'updateStatus'])->name('admin.reports.action');
+Route::get('/admin/reports/search-suggestions', [App\Http\Controllers\Admin\ReportsController::class, 'searchSuggestions'])->name('admin.reports.suggestions');
+Route::get('/admin/reports/export', [App\Http\Controllers\Admin\ReportsController::class, 'export'])->name('admin.reports.export');
 
 Route::get('/admin/payments', function () {
     return view('dashboard.admin.payments');

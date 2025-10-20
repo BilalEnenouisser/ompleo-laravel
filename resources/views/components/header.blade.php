@@ -382,6 +382,11 @@ function loadNotifications() {
 function renderNotifications(notifications) {
     const container = document.getElementById('notificationList');
     
+    if (!container) {
+        console.error('Notification container not found!');
+        return;
+    }
+    
     if (notifications.length === 0) {
         container.innerHTML = `
             <div class="p-4 text-center text-[#9ca3af]">
