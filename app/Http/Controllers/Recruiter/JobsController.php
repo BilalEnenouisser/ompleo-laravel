@@ -20,9 +20,9 @@ class JobsController extends Controller
         $user = Auth::user();
         $recruiterProfile = $user->recruiterProfile;
         
-        // Get recruiter's jobs
+        // Get recruiter's jobs (newest first)
         $jobs = $recruiterProfile && $recruiterProfile->company 
-            ? Job::where('recruiter_id', $user->id)->with(['company', 'applications'])->get()
+            ? Job::where('recruiter_id', $user->id)->with(['company', 'applications'])->orderBy('created_at', 'desc')->get()
             : collect();
         
         // Calculate statistics

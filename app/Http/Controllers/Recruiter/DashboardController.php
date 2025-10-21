@@ -25,9 +25,9 @@ class DashboardController extends Controller
         // Get company if exists
         $company = $recruiterProfile ? $recruiterProfile->company : null;
         
-        // Get recruiter's jobs
+        // Get recruiter's jobs (newest first)
         $jobs = $recruiterProfile && $recruiterProfile->company 
-            ? Job::where('recruiter_id', $user->id)->get()
+            ? Job::where('recruiter_id', $user->id)->orderBy('created_at', 'desc')->get()
             : collect();
         
         // Get applications for recruiter's jobs
