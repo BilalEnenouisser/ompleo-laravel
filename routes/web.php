@@ -84,11 +84,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
     Route::delete('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
     Route::patch('/admin/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])->name('admin.blog.toggle-status');
+    Route::post('/admin/blog/upload-image', [App\Http\Controllers\Admin\BlogController::class, 'uploadImage'])->name('admin.blog.upload-image');
 Route::get('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'index'])->name('admin.notifications');
 Route::post('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'store'])->name('admin.notifications.store');
 Route::post('/admin/notifications/{notification}/send', [App\Http\Controllers\Admin\NotificationsController::class, 'send'])->name('admin.notifications.send');
 Route::delete('/admin/notifications/{notification}', [App\Http\Controllers\Admin\NotificationsController::class, 'destroy'])->name('admin.notifications.destroy');
 Route::get('/admin/notifications/stats', [App\Http\Controllers\Admin\NotificationsController::class, 'stats'])->name('admin.notifications.stats');
+
+
+// Export routes
+Route::get('/admin/export/stats', [App\Http\Controllers\Admin\ExportController::class, 'stats'])->name('admin.export.stats');
 
 // Reports routes
 Route::get('/admin/reports', [App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('admin.reports');
@@ -105,8 +110,11 @@ Route::get('/admin/blog/editor', function () {
     return view('dashboard.admin.blog-editor');
 })->name('admin.blog.editor');
     Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
-    Route::get('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
+    Route::get('/candidate/profile/{user?}', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
     Route::put('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'update'])->name('candidate.profile.update');
+    
+    // Public candidate profile view (for recruiters)
+    Route::get('/candidate/{user}/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'publicShow'])->name('candidate.profile.public');
     
 });
 
@@ -246,6 +254,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'update'])->name('recruiter.jobs.update');
     Route::delete('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\JobsController::class, 'destroy'])->name('recruiter.jobs.destroy');
     
+    // Job applications route
+    Route::get('/recruiter/jobs/{job}/applications', [App\Http\Controllers\Recruiter\JobsController::class, 'applications'])->name('recruiter.jobs.applications');
+    
+    // Application status update route
+    Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.update-status');
+    
     Route::get('/recruiter/candidates', function () {
         return view('dashboard.recruiter.candidates');
     })->name('recruiter.candidates');
@@ -261,9 +275,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'update'])->name('recruiter.company-profile.update');
     
     
-    Route::get('/candidate/applications', function () {
-        return view('dashboard.candidate.applications');
-    })->name('candidate.applications');
+    Route::get('/candidate/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('candidate.applications');
     
     Route::get('/candidate/referrals', function () {
         return view('dashboard.candidate.referrals');

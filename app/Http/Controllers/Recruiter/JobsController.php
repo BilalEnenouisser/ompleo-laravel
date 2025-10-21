@@ -46,6 +46,33 @@ class JobsController extends Controller
         return view('dashboard.recruiter.job-detail', compact('job'));
     }
 
+    public function applications(Job $job)
+    {
+        // Check if the job belongs to the authenticated recruiter
+        if ($job->recruiter_id !== Auth::id()) {
+            abort(403, 'Unauthorized access to this job.');
+        }
+
+        // Load job with applications and candidate profiles
+        $job->load(['applications.candidate.candidateProfile', 'company']);
+        
+        // Get applications with pagination
+        $applications = $job->applications()
+            ->with(['candidate.candidateProfile'])
+            ->orderBy('applied_at', 'desc')
+            ->paginate(10);
+
+        // Calculate statistics
+        $stats = [
+            'total' => $job->applications()->count(),
+            'pending' => $job->applications()->where('status', 'pending')->count(),
+            'accepted' => $job->applications()->where('status', 'accepted')->count(),
+            'rejected' => $job->applications()->where('status', 'rejected')->count(),
+        ];
+
+        return view('dashboard.recruiter.job-applications', compact('job', 'applications', 'stats'));
+    }
+
     public function destroy(Job $job)
     {
         // Check if the job belongs to the authenticated recruiter

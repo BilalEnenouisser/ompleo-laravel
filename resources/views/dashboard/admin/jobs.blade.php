@@ -288,14 +288,14 @@
                                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                     </svg>
-                                    {{ $job->applications_count ?? 0 }} candidatures
+                                    {{ $job->applications_count }} candidatures
                                 </div>
                                 <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
-                                    {{ $job->views_count ?? 0 }} vues
+                                    {{ $job->views ?? 0 }} vues
                                 </div>
                             </div>
                         </td>
@@ -1040,7 +1040,6 @@ window.viewJob = function(jobId) {
             document.getElementById('viewJobModal').classList.remove('hidden');
         })
         .catch(error => {
-            console.error('Error loading job:', error);
             alert('Erreur lors du chargement des détails de l\'offre');
         });
 };
@@ -1095,7 +1094,6 @@ window.editJob = function(jobId) {
             document.getElementById('editJobModal').classList.remove('hidden');
         })
         .catch(error => {
-            console.error('Error loading job:', error);
             alert('Erreur lors du chargement des données de l\'offre');
         });
 };
@@ -1148,7 +1146,6 @@ window.confirmDelete = function() {
             }
         })
         .catch(error => {
-            console.error('Error deleting job:', error);
             alert('Erreur lors de la suppression de l\'offre');
         });
     }
@@ -1421,7 +1418,6 @@ document.getElementById('editJobForm').addEventListener('submit', function(e) {
         }
     })
     .catch(error => {
-        console.error('Error updating job:', error);
         alert('Erreur lors de la mise à jour de l\'offre: ' + error.message);
     });
 });

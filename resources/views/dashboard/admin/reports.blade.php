@@ -431,7 +431,6 @@ function fetchSuggestions(query) {
             showSuggestions(suggestions);
         })
         .catch(error => {
-            console.error('Error fetching suggestions:', error);
             hideSuggestions();
         })
         .finally(() => {
@@ -581,7 +580,6 @@ function executeAction() {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         showToast('Erreur', 'Une erreur est survenue lors du traitement', 'error');
     })
     .finally(() => {

@@ -34,7 +34,7 @@
 
             <!-- Quick Actions -->
             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                <button class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
+                <button onclick="window.location.href='{{ route('admin.blog.editor') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
@@ -50,7 +50,7 @@
                     </div>
                 </button>
 
-                <button class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
+                <button onclick="window.location.href='{{ route('admin.notifications') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
@@ -63,7 +63,7 @@
                     </div>
                 </button>
 
-                <button class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
+                <button onclick="showExportModal()" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -77,7 +77,7 @@
                     </div>
                 </button>
 
-                <button class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
+                <button onclick="window.location.href='{{ route('admin.payments') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-2 md:gap-3 hover:scale-105">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart3 w-4 h-4 md:w-5 md:h-5 text-[#00b6b4]"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
                     </div>
@@ -841,4 +841,92 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Export Modal Functions
+function showExportModal() {
+    const modal = document.getElementById('exportModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function hideExportModal() {
+    const modal = document.getElementById('exportModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function exportStats(format) {
+    // Show loading state
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = 'Export en cours...';
+    button.disabled = true;
+    
+    // Create download URL
+    const url = `/admin/export/stats?format=${format}`;
+    
+    // Create temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `stats_ompleo_${new Date().toISOString().split('T')[0]}.${format}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Reset button state
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+        hideExportModal();
+    }, 2000);
+}
 </script>
+
+<!-- Export Modal -->
+<div id="exportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl p-6 w-full max-w-md mx-4">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-[#f5f5f5]">Exporter les statistiques</h3>
+            <button onclick="hideExportModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18"/>
+                    <path d="M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        
+        <p class="text-[#9ca3af] mb-6">Choisissez le format d'export pour les statistiques de la plateforme.</p>
+        
+        <div class="space-y-3">
+            <button onclick="exportStats('excel')" class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <path d="M7 10l5 5 5-5"/>
+                    <path d="M12 15V3"/>
+                </svg>
+                Exporter en Excel (.xlsx)
+            </button>
+            
+            <button onclick="exportStats('pdf')" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                    <path d="M16 13H8"/>
+                    <path d="M16 17H8"/>
+                    <path d="M10 9H8"/>
+                </svg>
+                Exporter en PDF (.pdf)
+            </button>
+        </div>
+        
+        <div class="mt-6 flex justify-end gap-3">
+            <button onclick="hideExportModal()" class="px-4 py-2 text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
+                Annuler
+            </button>
+        </div>
+    </div>
+</div>

@@ -514,24 +514,12 @@ function filterPartners() {
     const rows = document.querySelectorAll('.partner-row');
     let visibleCount = 0;
 
-        searchValue: searchValue,
-        featuredOnly: featuredOnly,
-        totalRows: rows.length
-    });
-
     rows.forEach(row => {
         const name = row.getAttribute('data-name');
         const isFeatured = row.getAttribute('data-featured') === 'true';
         
         const matchesSearch = name.includes(searchValue);
         const matchesFeatured = !featuredOnly || isFeatured;
-        
-            name: name,
-            isFeatured: isFeatured,
-            matchesSearch: matchesSearch,
-            matchesFeatured: matchesFeatured,
-            willShow: matchesSearch && matchesFeatured
-        });
         
         if (matchesSearch && matchesFeatured) {
             row.style.display = '';
@@ -578,7 +566,6 @@ function toggleFeatured(id, button) {
         }
     })
     .catch(error => {
-        console.error('Error toggling featured:', error);
         showToast('Erreur', 'Erreur lors de la modification', 'error');
     });
 }
@@ -613,8 +600,25 @@ function confirmDelete() {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        
+        if (!contentType || !contentType.includes('application/json')) {
+            return response.text().then(text => {
+                throw new Error('Server returned HTML instead of JSON. Check console for details.');
+            });
+        }
+        
+        return response.json();
+    })
     .then(data => {
+        
         if (data.success) {
             const row = document.querySelector(`tr[data-id="${currentDeleteId}"]`);
             if (row) {
@@ -629,8 +633,7 @@ function confirmDelete() {
         }
     })
     .catch(error => {
-        console.error('Error deleting partner:', error);
-        showToast('Erreur', 'Erreur lors de la suppression', 'error');
+        showToast('Erreur', 'Erreur lors de la suppression: ' + error.message, 'error');
     });
 }
 
@@ -749,13 +752,6 @@ function addPartner() {
     const description = document.getElementById('partner-description').value.trim();
     const featured = document.getElementById('partner-featured').checked;
     
-        name: name,
-        website: website,
-        description: description,
-        featured: featured,
-        selectedLogoFile: selectedLogoFile
-    });
-    
     if (!name) {
         showToast('Erreur', 'Le nom du partenaire est requis', 'error');
         return;
@@ -776,13 +772,6 @@ function addPartner() {
     
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     formData.append('_token', csrfToken);
-    
-        name: name,
-        website: website,
-        description: description,
-        featured: featured,
-        hasLogo: !!selectedLogoFile
-    });
 
     fetch('/admin/partners', {
         method: 'POST',
@@ -792,9 +781,25 @@ function addPartner() {
         }
     })
     .then(response => {
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        
+        if (!contentType || !contentType.includes('application/json')) {
+            // If not JSON, get text to see what we're receiving
+            return response.text().then(text => {
+                throw new Error('Server returned HTML instead of JSON. Check console for details.');
+            });
+        }
+        
         return response.json();
     })
     .then(data => {
+        
         if (data.success) {
             hideAddModal();
             showToast('Partenaire ajouté', data.message, 'success');
@@ -807,8 +812,7 @@ function addPartner() {
         }
     })
     .catch(error => {
-        console.error('Error adding partner:', error);
-        showToast('Erreur', 'Erreur lors de l\'ajout du partenaire', 'error');
+        showToast('Erreur', 'Erreur lors de l\'ajout du partenaire: ' + error.message, 'error');
     });
 }
 
@@ -819,14 +823,27 @@ function editPartner(id) {
     
     fetch(`/admin/partners/${id}`)
     .then(response => {
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        
+        if (!contentType || !contentType.includes('application/json')) {
+            return response.text().then(text => {
+                throw new Error('Server returned HTML instead of JSON. Check console for details.');
+            });
+        }
+        
         return response.json();
     })
     .then(data => {
         showEditModal(data);
     })
     .catch(error => {
-        console.error('Error loading partner:', error);
-        showToast('Erreur', 'Erreur lors du chargement du partenaire', 'error');
+        showToast('Erreur', 'Erreur lors du chargement du partenaire: ' + error.message, 'error');
     });
 }
 
@@ -839,14 +856,6 @@ function saveEditPartner() {
     const website = document.getElementById('edit-partner-website').value.trim();
     const description = document.getElementById('edit-partner-description').value.trim();
     const featured = document.getElementById('edit-partner-featured').checked;
-    
-        id: currentEditId,
-        name: name,
-        website: website,
-        description: description,
-        featured: featured,
-        hasNewLogo: !!selectedEditLogoFile
-    });
     
     if (!name) {
         showToast('Erreur', 'Le nom du partenaire est requis', 'error');
@@ -873,8 +882,25 @@ function saveEditPartner() {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        
+        if (!contentType || !contentType.includes('application/json')) {
+            return response.text().then(text => {
+                throw new Error('Server returned HTML instead of JSON. Check console for details.');
+            });
+        }
+        
+        return response.json();
+    })
     .then(data => {
+        
         if (data.success) {
             hideEditModal();
             showToast('Partenaire modifié', data.message, 'success');
@@ -884,8 +910,7 @@ function saveEditPartner() {
         }
     })
     .catch(error => {
-        console.error('Error updating partner:', error);
-        showToast('Erreur', 'Erreur lors de la modification', 'error');
+        showToast('Erreur', 'Erreur lors de la modification: ' + error.message, 'error');
     });
 }
 

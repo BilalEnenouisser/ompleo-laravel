@@ -876,7 +876,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.style.overflow = 'hidden';
             })
             .catch(error => {
-                console.error('Error:', error);
                 alert('Erreur lors du chargement des données utilisateur');
             });
     }
@@ -917,7 +916,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.style.overflow = 'hidden';
             })
             .catch(error => {
-                console.error('Error:', error);
                 alert('Erreur lors du chargement des données utilisateur');
             });
     }
@@ -968,7 +966,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 alert('Erreur lors de la suppression');
             });
         }
@@ -1001,7 +998,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             alert('Erreur lors de la mise à jour');
         });
     });

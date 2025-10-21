@@ -278,13 +278,57 @@ function getWorkTypeIcon($type) {
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                 </svg>
                             </button>
-                            <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                </svg>
-                                Postuler
-                            </a>
+                            
+                            @auth
+                                @if(auth()->user()->user_type === 'candidate')
+                                    @php
+                                        $existingApplication = \App\Models\Application::where('job_id', $job->id)
+                                            ->where('candidate_id', auth()->id())
+                                            ->first();
+                                    @endphp
+                                    
+                                    @if($existingApplication)
+                                        <div class="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            @if($existingApplication->status === 'pending')
+                                                En attente
+                                            @elseif($existingApplication->status === 'accepted')
+                                                Acceptée
+                                            @elseif($existingApplication->status === 'rejected')
+                                                Rejetée
+                                            @else
+                                                {{ ucfirst($existingApplication->status) }}
+                                            @endif
+                                        </div>
+                                    @else
+                                        <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                            </svg>
+                                            Postuler
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                        </svg>
+                                        Voir l'offre
+                                    </a>
+                                @endif
+                            @else
+                                <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                    </svg>
+                                    Postuler
+                                </a>
+                            @endauth
                         </div>
                     </div>
                 </div>

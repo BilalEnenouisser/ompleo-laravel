@@ -17,29 +17,67 @@ class ProfileController extends Controller
         $this->fileUploadService = $fileUploadService;
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->user_type !== 'candidate') {
-                abort(403, 'Accès non autorisé');
+            // Allow candidates to access their own profile
+            if (Auth::user()->user_type === 'candidate') {
+                return $next($request);
             }
-            return $next($request);
+            // Allow recruiters and admins to view candidate profiles
+            if (Auth::user()->user_type === 'recruiter' || Auth::user()->user_type === 'admin') {
+                return $next($request);
+            }
+            abort(403, 'Accès non autorisé');
         });
     }
 
     /**
      * Display the candidate profile
      */
-    public function show()
+    public function show($user = null)
     {
-        $user = Auth::user();
-        $profile = $user->candidateProfile;
+        // If user parameter is provided, show that user's profile (for recruiters)
+        if ($user) {
+            $candidate = \App\Models\User::findOrFail($user);
+            $profile = $candidate->candidateProfile;
+            
+            if (!$profile) {
+                abort(404, 'Profil candidat non trouvé');
+            }
+            
+            return view('dashboard.candidate.profile', compact('candidate', 'profile'));
+        }
+        
+        // Otherwise, show current user's profile
+        $candidate = Auth::user();
+        $profile = $candidate->candidateProfile;
         
         // If no profile exists, create one
         if (!$profile) {
             $profile = CandidateProfile::create([
-                'user_id' => $user->id,
+                'user_id' => $candidate->id,
             ]);
         }
         
-        return view('dashboard.candidate.profile', compact('user', 'profile'));
+        return view('dashboard.candidate.profile', compact('candidate', 'profile'));
+    }
+
+    /**
+     * Display a public candidate profile (for recruiters)
+     */
+    public function publicShow($user)
+    {
+        // Check if user is recruiter or admin
+        if (!Auth::check() || (Auth::user()->user_type !== 'recruiter' && Auth::user()->user_type !== 'admin')) {
+            abort(403, 'Accès non autorisé');
+        }
+
+        $candidate = \App\Models\User::findOrFail($user);
+        $profile = $candidate->candidateProfile;
+        
+        if (!$profile) {
+            abort(404, 'Profil candidat non trouvé');
+        }
+        
+        return view('dashboard.recruiter.candidate-profile', compact('candidate', 'profile'));
     }
 
     /**

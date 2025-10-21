@@ -9,6 +9,29 @@
 
 <div class="min-h-screen bg-gray-50 dark:bg-[#1f1f1f] pt-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+            <div class="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                <div class="flex items-center gap-2 text-green-700 dark:text-green-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="font-medium">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <div class="flex items-center gap-2 text-red-700 dark:text-red-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="font-medium">{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
+
         <!-- Header -->
         <div class="flex items-center gap-4 mb-8">
             <button
@@ -229,16 +252,50 @@
                     
                     @auth
                         @if(auth()->user()->user_type === 'candidate')
-                            <button
-                                onclick="applyForJob({{ $job->id }})"
-                                class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-                            >
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                </svg>
-                                Postuler maintenant
-                            </button>
+                            @php
+                                $existingApplication = \App\Models\Application::where('job_id', $job->id)
+                                    ->where('candidate_id', auth()->id())
+                                    ->first();
+                            @endphp
+                            
+                            @if($existingApplication)
+                                <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                                    <div class="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 mb-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span class="font-semibold">Candidature envoyée</span>
+                                    </div>
+                                    <p class="text-sm text-green-600 dark:text-green-400">
+                                        Statut: 
+                                        <span class="font-medium">
+                                            @if($existingApplication->status === 'pending')
+                                                En attente
+                                            @elseif($existingApplication->status === 'accepted')
+                                                Acceptée
+                                            @elseif($existingApplication->status === 'rejected')
+                                                Rejetée
+                                            @else
+                                                {{ ucfirst($existingApplication->status) }}
+                                            @endif
+                                        </span>
+                                    </p>
+                                    <p class="text-xs text-green-500 dark:text-green-500 mt-1">
+                                        Postulé le {{ $existingApplication->applied_at->format('d/m/Y à H:i') }}
+                                    </p>
+                                </div>
+                            @else
+                                <a
+                                    href="{{ route('applications.create', $job) }}"
+                                    class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                                >
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                    </svg>
+                                    Postuler maintenant
+                                </a>
+                            @endif
                         @else
                             <div class="text-center p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
                                 <p class="text-gray-600 dark:text-gray-400">

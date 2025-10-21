@@ -26,7 +26,17 @@ class ApplicationController extends Controller
         $user = Auth::user();
         
         if ($user->isCandidate()) {
-            $applications = $user->applications()->with(['job.company'])->paginate(10);
+            $applications = $user->applications()->with(['job.company'])->orderBy('applied_at', 'desc')->paginate(10);
+            
+            // Calculate statistics for candidate
+            $stats = [
+                'total' => $user->applications()->count(),
+                'pending' => $user->applications()->where('status', 'pending')->count(),
+                'accepted' => $user->applications()->where('status', 'accepted')->count(),
+                'rejected' => $user->applications()->where('status', 'rejected')->count(),
+            ];
+            
+            return view('dashboard.candidate.applications', compact('applications', 'stats'));
         } elseif ($user->isRecruiter()) {
             $applications = Application::whereHas('job', function($query) use ($user) {
                 $query->where('recruiter_id', $user->id);
@@ -83,7 +93,7 @@ class ApplicationController extends Controller
                 'applied_at' => now(),
             ]);
 
-            return redirect()->route('applications.index')
+            return redirect()->route('jobs.show', $application->job->slug)
                 ->with('success', 'Votre candidature a été envoyée avec succès!');
 
         } catch (\Exception $e) {

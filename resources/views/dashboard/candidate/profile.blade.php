@@ -3,13 +3,31 @@
 @section('content')
 @php
     use Illuminate\Support\Facades\Storage;
+    $isOwnProfile = $candidate->id === auth()->id();
 @endphp
 <div class="space-y-8">
     {{-- Header --}}
     <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-[#f5f5f5]">
-            Mon Profil
-        </h1>
+        <div>
+            <h1 class="text-3xl font-bold text-[#f5f5f5]">
+                @if($isOwnProfile)
+                    Mon Profil
+                @else
+                    Profil de {{ $candidate->name }}
+                @endif
+            </h1>
+            @if(!$isOwnProfile)
+                <div class="flex items-center gap-2 mt-2">
+                    <a href="{{ url()->previous() }}" class="text-[#9ca3af] hover:text-[#00b6b4] transition-colors flex items-center gap-1">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                        Retour
+                    </a>
+                </div>
+            @endif
+        </div>
+        @if($isOwnProfile)
         <div class="flex items-center gap-3">
             <button id="cancelBtn" class="hidden px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center gap-2">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -24,6 +42,7 @@
                 Modifier
             </button>
         </div>
+        @endif
     </div>
 
     <!-- Custom Glass Modal -->
@@ -58,7 +77,7 @@
                         <img id="avatarImage" src="{{ Storage::url($profile->avatar) }}" alt="Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]">
                     @else
                         <div id="avatarInitials" class="w-32 h-32 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white text-4xl font-bold">
-                            {{ strtoupper(substr($user->name, 0, 1)) }}{{ strtoupper(substr($user->name, strpos($user->name, ' ') + 1, 1)) }}
+                            {{ strtoupper(substr($candidate->name, 0, 1)) }}{{ strtoupper(substr($candidate->name, strpos($candidate->name, ' ') + 1, 1)) }}
                     </div>
                     @endif
                     <label for="avatarUpload" id="avatarUploadBtn" class="hidden absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer">
@@ -74,16 +93,16 @@
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Prénom
                         </label>
-                         <div id="firstNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $user->name)[0] ?? 'Prénom' }}</div>
-                         <input id="firstName" type="text" value="{{ explode(' ', $user->name)[0] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                         <div id="firstNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $candidate->name)[0] ?? 'Prénom' }}</div>
+                         <input id="firstName" type="text" value="{{ explode(' ', $candidate->name)[0] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-[#9ca3af] mb-2">
                             Nom
                         </label>
-                         <div id="lastNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $user->name)[1] ?? 'Nom' }}</div>
-                         <input id="lastName" type="text" value="{{ explode(' ', $user->name)[1] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                         <div id="lastNameDisplay" class="text-lg font-semibold text-[#f5f5f5]">{{ explode(' ', $candidate->name)[1] ?? 'Nom' }}</div>
+                         <input id="lastName" type="text" value="{{ explode(' ', $candidate->name)[1] ?? '' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
                     </div>
 
                     <div>
@@ -128,7 +147,7 @@
                 <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <div>
                     <p class="text-sm text-[#9ca3af]">Email</p>
-                    <p class="font-medium text-[#f5f5f5]">{{ $user->email }}</p>
+                    <p class="font-medium text-[#f5f5f5]">{{ $candidate->email }}</p>
                 </div>
             </div>
             
@@ -336,6 +355,7 @@
     </div>
 </div>
 
+@if($isOwnProfile)
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const editBtn = document.getElementById('editBtn');
@@ -343,9 +363,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('saveBtn');
     const addExperienceBtn = document.getElementById('addExperienceBtn');
     const addEducationBtn = document.getElementById('addEducationBtn');
-        const addSkillBtn = document.getElementById('addSkillBtn');
-        const addLanguageBtn = document.getElementById('addLanguageBtn');
-        const avatarUpload = document.getElementById('avatarUpload');
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const addLanguageBtn = document.getElementById('addLanguageBtn');
+    const avatarUpload = document.getElementById('avatarUpload');
     
     const inputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
     const displays = document.querySelectorAll('[id$="Display"]');
@@ -463,12 +483,6 @@ document.addEventListener('DOMContentLoaded', function() {
          const facebookValue = document.getElementById('facebook').value;
          const portfolioValue = document.getElementById('portfolio').value;
          const twitterValue = document.getElementById('twitter').value;
-         
-             linkedin: linkedinValue,
-             facebook: facebookValue,
-             portfolio: portfolioValue,
-             twitter: twitterValue
-         });
          
          formData.append('linkedin_url', linkedinValue);
          formData.append('facebook_url', facebookValue);
@@ -629,7 +643,6 @@ document.addEventListener('DOMContentLoaded', function() {
              
              if (!response.ok) {
                  return response.text().then(text => {
-                     console.error('Error response:', text);
                      throw new Error(`HTTP ${response.status}: ${text}`);
                  });
              }
@@ -639,12 +652,10 @@ document.addEventListener('DOMContentLoaded', function() {
              if (data.success) {
                  showSuccessModal();
              } else {
-                 console.error('Server error:', data);
                  showErrorModal('Erreur lors de la sauvegarde: ' + (data.message || data.debug || 'Erreur inconnue'));
              }
          })
          .catch(error => {
-             console.error('Error:', error);
              showErrorModal('Erreur lors de la sauvegarde: ' + error.message);
          });
     });
@@ -721,126 +732,126 @@ document.addEventListener('DOMContentLoaded', function() {
         container.appendChild(newSkill);
     });
     
-        addLanguageBtn.addEventListener('click', function() {
-            const container = document.getElementById('languagesContainer');
-            
-            // Hide empty message if it exists
-            const emptyMessage = container.querySelector('.text-center');
-            if (emptyMessage) {
-                emptyMessage.style.display = 'none';
-            }
-            
-            const newLanguage = document.createElement('div');
-            newLanguage.className = 'flex items-center justify-between border border-[#444444] rounded-lg p-3';
-            newLanguage.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    <input type="text" placeholder="Nom de la langue" class="bg-transparent border-none font-medium text-[#f5f5f5] w-32 focus:outline-none" />
-                </div>
-                <div class="flex items-center gap-2">
-                    <select class="bg-[#333333] border border-[#444444] rounded px-2 py-1 text-[#f5f5f5] text-sm">
-                        <option value="Débutant">Débutant</option>
-                        <option value="Intermédiaire">Intermédiaire</option>
-                        <option value="Avancé">Avancé</option>
-                        <option value="Natif">Natif</option>
-                    </select>
-                    <button class="hidden text-red-500 hover:text-red-700" onclick="removeLanguage(this)">
-                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            `;
-            container.appendChild(newLanguage);
-        });
+    addLanguageBtn.addEventListener('click', function() {
+        const container = document.getElementById('languagesContainer');
         
-        // Avatar upload functionality
-        avatarUpload.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                // Validate file type
-                if (!file.type.startsWith('image/')) {
-                    alert('Veuillez sélectionner un fichier image valide.');
-                    return;
-                }
-                
-                // Validate file size (max 2MB)
-                if (file.size > 2 * 1024 * 1024) {
-                    alert('La taille du fichier ne doit pas dépasser 2MB.');
-                    return;
-                }
-                
-                // Create preview
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const avatarContainer = document.querySelector('.relative');
-                    const existingImage = document.getElementById('avatarImage');
-                    const existingInitials = document.getElementById('avatarInitials');
-                    
-                    if (existingImage) {
-                        existingImage.src = e.target.result;
-                    } else if (existingInitials) {
-                        // Replace initials with image
-                        const newImage = document.createElement('img');
-                        newImage.id = 'avatarImage';
-                        newImage.src = e.target.result;
-                        newImage.alt = 'Avatar';
-                        newImage.className = 'w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]';
-                        existingInitials.parentNode.replaceChild(newImage, existingInitials);
-                    }
-                };
-                reader.readAsDataURL(file);
+        // Hide empty message if it exists
+        const emptyMessage = container.querySelector('.text-center');
+        if (emptyMessage) {
+            emptyMessage.style.display = 'none';
+        }
+        
+        const newLanguage = document.createElement('div');
+        newLanguage.className = 'flex items-center justify-between border border-[#444444] rounded-lg p-3';
+        newLanguage.innerHTML = `
+            <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <input type="text" placeholder="Nom de la langue" class="bg-transparent border-none font-medium text-[#f5f5f5] w-32 focus:outline-none" />
+            </div>
+            <div class="flex items-center gap-2">
+                <select class="bg-[#333333] border border-[#444444] rounded px-2 py-1 text-[#f5f5f5] text-sm">
+                    <option value="Débutant">Débutant</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="Avancé">Avancé</option>
+                    <option value="Natif">Natif</option>
+                </select>
+                <button class="hidden text-red-500 hover:text-red-700" onclick="removeLanguage(this)">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                </button>
+            </div>
+        `;
+        container.appendChild(newLanguage);
+    });
+    
+    // Avatar upload functionality
+    avatarUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Veuillez sélectionner un fichier image valide.');
+                return;
             }
-        });
+            
+            // Validate file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('La taille du fichier ne doit pas dépasser 2MB.');
+                return;
+            }
+            
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const avatarContainer = document.querySelector('.relative');
+                const existingImage = document.getElementById('avatarImage');
+                const existingInitials = document.getElementById('avatarInitials');
+                
+                if (existingImage) {
+                    existingImage.src = e.target.result;
+                } else if (existingInitials) {
+                    // Replace initials with image
+                    const newImage = document.createElement('img');
+                    newImage.id = 'avatarImage';
+                    newImage.src = e.target.result;
+                    newImage.alt = 'Avatar';
+                    newImage.className = 'w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]';
+                    existingInitials.parentNode.replaceChild(newImage, existingInitials);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     
 });
 
- function removeSkill(button) {
-     showConfirmModal(
-         'Supprimer la compétence',
-         'Êtes-vous sûr de vouloir supprimer cette compétence ?',
-         () => {
-             const skillElement = button.closest('span');
-             if (skillElement) {
-        skillElement.remove();
-    }
-}
-     );
-}
-
-    function removeExperience(button) {
-        showConfirmModal(
-            'Supprimer l\'expérience',
-            'Êtes-vous sûr de vouloir supprimer cette expérience ?',
-            () => {
-                const experienceElement = button.closest('.border-l-4');
-                if (experienceElement) {
-                    experienceElement.remove();
-                }
+function removeSkill(button) {
+    showConfirmModal(
+        'Supprimer la compétence',
+        'Êtes-vous sûr de vouloir supprimer cette compétence ?',
+        () => {
+            const skillElement = button.closest('span');
+            if (skillElement) {
+                skillElement.remove();
             }
-        );
-    }
+        }
+    );
+}
 
-    function removeEducation(button) {
-        showConfirmModal(
-            'Supprimer la formation',
-            'Êtes-vous sûr de vouloir supprimer cette formation ?',
-            () => {
-                const educationElement = button.closest('.border-l-4');
-                if (educationElement) {
-                    educationElement.remove();
-                }
+function removeExperience(button) {
+    showConfirmModal(
+        'Supprimer l\'expérience',
+        'Êtes-vous sûr de vouloir supprimer cette expérience ?',
+        () => {
+            const experienceElement = button.closest('.border-l-4');
+            if (experienceElement) {
+                experienceElement.remove();
             }
-        );
-    }
+        }
+    );
+}
 
- function removeLanguage(button) {
-     showConfirmModal(
-         'Supprimer la langue',
-         'Êtes-vous sûr de vouloir supprimer cette langue ?',
-         () => {
-             const languageElement = button.closest('.flex.items-center.justify-between');
-             languageElement.remove();
-         }
-     );
+function removeEducation(button) {
+    showConfirmModal(
+        'Supprimer la formation',
+        'Êtes-vous sûr de vouloir supprimer cette formation ?',
+        () => {
+            const educationElement = button.closest('.border-l-4');
+            if (educationElement) {
+                educationElement.remove();
+            }
+        }
+    );
+}
+
+function removeLanguage(button) {
+    showConfirmModal(
+        'Supprimer la langue',
+        'Êtes-vous sûr de vouloir supprimer cette langue ?',
+        () => {
+            const languageElement = button.closest('.flex.items-center.justify-between');
+            languageElement.remove();
+        }
+    );
 }
 
 // Custom confirmation modal functions
@@ -969,4 +980,5 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+@endif
 @endsection

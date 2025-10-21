@@ -372,7 +372,6 @@ function loadNotifications() {
         updateNotificationBadge(notifications);
     })
     .catch(error => {
-        console.error('Error loading notifications:', error);
         // Show empty state on error
         renderNotifications([]);
         updateNotificationBadge([]);
@@ -383,7 +382,6 @@ function renderNotifications(notifications) {
     const container = document.getElementById('notificationList');
     
     if (!container) {
-        console.error('Notification container not found!');
         return;
     }
     
@@ -506,7 +504,6 @@ function markAsRead(notificationId) {
         }
     })
     .catch(error => {
-        console.error('Error marking notification as read:', error);
     });
 }
 
@@ -525,7 +522,6 @@ function markAllAsRead() {
         }
     })
     .catch(error => {
-        console.error('Error marking all notifications as read:', error);
     });
 }
 
@@ -545,7 +541,6 @@ function deleteNotification(notificationId) {
             }
         })
         .catch(error => {
-            console.error('Error deleting notification:', error);
         });
     }
 }

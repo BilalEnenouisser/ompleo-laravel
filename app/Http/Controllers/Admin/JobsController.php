@@ -60,7 +60,10 @@ class JobsController extends Controller
             }
         }
 
-        $jobs = $query->orderBy('created_at', 'desc')->paginate(5);
+        $jobs = $query->with(['company', 'applications'])
+            ->withCount('applications')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
         $companies = Company::all();
         
         

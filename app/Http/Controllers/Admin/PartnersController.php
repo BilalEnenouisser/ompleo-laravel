@@ -28,13 +28,28 @@ class PartnersController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'website' => 'nullable|url|max:255',
-            'description' => 'nullable|string|max:1000',
-            'is_featured' => 'nullable|boolean'
-        ]);
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Non authentifié'
+            ], 401);
+        }
+        
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+                'website' => 'nullable|url|max:255',
+                'description' => 'nullable|string|max:1000',
+                'is_featured' => 'nullable|boolean'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Validation failed: ' . implode(', ', $e->errors())
+            ], 422);
+        }
 
         try {
             // Handle logo upload
@@ -43,6 +58,18 @@ class PartnersController extends Controller
                 $logo = $request->file('logo');
                 $logoName = Str::slug($request->name) . '_' . time() . '.' . $logo->getClientOriginalExtension();
                 $logoPath = $logo->storeAs('partners', $logoName, 'public');
+                
+                if (!$logoPath) {
+                    return response()->json([
+                        'success' => false,
+                        'error' => 'Erreur lors de l\'upload du logo'
+                    ], 500);
+                }
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Logo requis'
+                ], 422);
             }
 
             $partner = Partner::create([
@@ -54,9 +81,17 @@ class PartnersController extends Controller
                 'sort_order' => Partner::max('sort_order') + 1
             ]);
 
-            return redirect()->route('admin.partners')->with('success', 'Partenaire créé avec succès!');
+            // Always return JSON for AJAX requests
+            return response()->json([
+                'success' => true,
+                'message' => 'Partenaire créé avec succès!',
+                'partner' => $partner
+            ]);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Erreur lors de la création du partenaire: ' . $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'error' => 'Erreur lors de la création du partenaire: ' . $e->getMessage()
+            ], 500);
         }
     }
 
@@ -66,7 +101,9 @@ class PartnersController extends Controller
     public function show($id)
     {
         $partner = Partner::findOrFail($id);
-        return view('dashboard.admin.partners.show', compact('partner'));
+        
+        // Always return JSON for AJAX requests
+        return response()->json($partner);
     }
 
     /**
@@ -83,13 +120,28 @@ class PartnersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'website' => 'nullable|url|max:255',
-            'description' => 'nullable|string|max:1000',
-            'is_featured' => 'nullable|boolean'
-        ]);
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Non authentifié'
+            ], 401);
+        }
+        
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+                'website' => 'nullable|url|max:255',
+                'description' => 'nullable|string|max:1000',
+                'is_featured' => 'nullable|boolean'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Validation failed: ' . implode(', ', $e->errors())
+            ], 422);
+        }
 
         try {
             $partner = Partner::findOrFail($id);
@@ -109,9 +161,16 @@ class PartnersController extends Controller
                 'is_featured' => $request->boolean('is_featured')
             ]);
 
-            return redirect()->route('admin.partners')->with('success', 'Partenaire mis à jour avec succès!');
+            return response()->json([
+                'success' => true,
+                'message' => 'Partenaire mis à jour avec succès!',
+                'partner' => $partner
+            ]);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Erreur lors de la mise à jour du partenaire: ' . $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'error' => 'Erreur lors de la mise à jour du partenaire: ' . $e->getMessage()
+            ], 500);
         }
     }
 
@@ -120,13 +179,50 @@ class PartnersController extends Controller
      */
     public function destroy($id)
     {
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Non authentifié'
+            ], 401);
+        }
+        
         try {
             $partner = Partner::findOrFail($id);
             $partner->delete();
             
-            return redirect()->route('admin.partners')->with('success', 'Partenaire supprimé avec succès!');
+            return response()->json([
+                'success' => true,
+                'message' => 'Partenaire supprimé avec succès!'
+            ]);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Erreur lors de la suppression du partenaire: ' . $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'error' => 'Erreur lors de la suppression du partenaire: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Toggle featured status of a partner
+     */
+    public function toggleFeatured($id)
+    {
+        try {
+            $partner = Partner::findOrFail($id);
+            $partner->is_featured = !$partner->is_featured;
+            $partner->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $partner->is_featured ? 'Partenaire mis en avant' : 'Partenaire retiré des partenaires mis en avant',
+                'is_featured' => $partner->is_featured
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Erreur lors de la modification: ' . $e->getMessage()
+            ], 500);
         }
     }
 }

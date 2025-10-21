@@ -468,7 +468,6 @@ function editArticle(id) {
         document.getElementById('edit-form').setAttribute('data-id', id);
     })
     .catch(error => {
-        console.error('Error:', error);
         showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
     });
 }
@@ -503,7 +502,6 @@ function saveEditArticle() {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         showToast('Erreur', 'Erreur lors de la modification de l\'article', 'error');
     });
 }
@@ -527,7 +525,6 @@ function deleteArticle(id, title) {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
             showToast('Erreur', 'Erreur lors de la suppression de l\'article', 'error');
         });
     }
@@ -551,27 +548,14 @@ function toggleArticleStatus(id, button) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         showToast('Erreur', 'Erreur lors du changement de statut', 'error');
     });
 }
 
 // View Article Functions
 function viewArticle(slug) {
-    // Fetch blog details and show in popup
-    fetch(`/admin/blog/${slug}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data) {
-            showViewModal(data);
-        } else {
-            showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showToast('Erreur', 'Erreur lors du chargement de l\'article', 'error');
-    });
+    // Redirect to public blog page
+    window.open(`/blog/${slug}`, '_blank');
 }
 
 // Edit Article Functions
@@ -737,7 +721,6 @@ function confirmDelete(id) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         showToast('Erreur', 'Erreur lors de la suppression', 'error');
     });
 }

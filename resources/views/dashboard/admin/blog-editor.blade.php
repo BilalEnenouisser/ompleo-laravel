@@ -1071,7 +1071,74 @@ document.getElementById('publishBtn').addEventListener('click', function() {
     saveArticle('published');
 });
 
-function saveArticle(status) {
+// Function to upload image to server
+async function uploadImageToServer(base64Data, altText) {
+    try {
+        // Convert base64 to blob
+        const response = await fetch(base64Data);
+        const blob = await response.blob();
+        
+        // Create FormData for upload
+        const formData = new FormData();
+        formData.append('image', blob, `${altText || 'image'}.png`);
+        formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+        
+        // Upload to server
+        const uploadResponse = await fetch('/admin/blog/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+            const errorText = await uploadResponse.text();
+            throw new Error('Image upload failed: ' + errorText);
+        }
+        
+        const result = await uploadResponse.json();
+        return result.url;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to process base64 images in content
+async function processBase64Images(content) {
+    // Create a temporary DOM element to parse the content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    
+    // Find all image placeholders with base64 data
+    const placeholders = tempDiv.querySelectorAll('.image-placeholder[data-base64]');
+    
+    for (const placeholder of placeholders) {
+        const base64Data = placeholder.getAttribute('data-base64');
+        const altText = placeholder.getAttribute('data-alt');
+        
+        try {
+            // Upload the image
+            const imageUrl = await uploadImageToServer(base64Data, altText);
+            
+            // Replace placeholder with actual image
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrl;
+            imgElement.alt = altText;
+            imgElement.style.maxWidth = '100%';
+            imgElement.style.height = 'auto';
+            
+            placeholder.parentNode.replaceChild(imgElement, placeholder);
+        } catch (error) {
+            // Keep the placeholder but update the message
+            placeholder.innerHTML = `
+                <p style="color: #666; margin: 0;">[Image: ${altText}]</p>
+                <small style="color: #999;">Image upload failed: ${error.message}</small>
+            `;
+        }
+    }
+    
+    return tempDiv.innerHTML;
+}
+
+async function saveArticle(status) {
     // Get form data
     const title = document.getElementById('articleTitle').value;
     const excerpt = document.getElementById('articleExcerpt').value;
@@ -1099,26 +1166,10 @@ function saveArticle(status) {
         }
     }
     
-    // Debug: Log form field values
-    
-    // Validate required fields
-    if (!title.trim()) {
-        showNotification('Le titre est requis', 'error');
-        return;
-    }
-    
-    if (!excerpt.trim()) {
-        showNotification('L\'extrait est requis', 'error');
-        return;
-    }
-    
-    // Get featured image (already defined above)
-    // const featuredImage = document.getElementById('featuredImageInput').files[0];
-    
-    // Generate content from blocks
+    // Generate content from blocks first
     let content = '';
     
-    contentBlocks.forEach((block, index) => {
+    for (const block of contentBlocks) {
         switch(block.type) {
             case 'title':
                 const titleContent = block.content || 'Titre de l\'article';
@@ -1134,7 +1185,18 @@ function saveArticle(status) {
                 break;
             case 'image':
                 if (block.imageData) {
-                    content += `<img src="${block.imageData}" alt="${block.imageAlt || 'Image'}" style="max-width: 100%; height: auto;">`;
+                    // Check if it's a base64 data URL
+                    if (block.imageData.startsWith('data:image/')) {
+                        // For base64 images, convert to a placeholder for now
+                        // We'll process these images separately after content is built
+                        content += `<div class="image-placeholder" data-base64="${block.imageData}" data-alt="${block.imageAlt || 'Image'}" style="border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 10px 0; background: #f9f9f9;">
+                            <p style="color: #666; margin: 0;">[Image: ${block.imageAlt || 'Image'}]</p>
+                            <small style="color: #999;">Processing image...</small>
+                        </div>`;
+                    } else {
+                        // For regular URLs, include in content
+                        content += `<img src="${block.imageData}" alt="${block.imageAlt || 'Image'}" style="max-width: 100%; height: auto;">`;
+                    }
                 }
                 break;
             case 'quote':
@@ -1158,7 +1220,27 @@ function saveArticle(status) {
                 content += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;"><div>${col1Content}</div><div>${col2Content}</div></div>`;
                 break;
         }
-    });
+    }
+    
+    // Process base64 images in content
+    content = await processBase64Images(content);
+    
+    // Check content size to prevent 500 error
+    if (content.length > 1000000) { // 1MB limit
+        showNotification('Le contenu est trop volumineux. Veuillez réduire le nombre d\'images ou leur taille.', 'error');
+        return;
+    }
+    
+    // Validate required fields
+    if (!title.trim()) {
+        showNotification('Le titre est requis', 'error');
+        return;
+    }
+    
+    if (!excerpt.trim()) {
+        showNotification('L\'extrait est requis', 'error');
+        return;
+    }
     
     // Create FormData
     const formData = new FormData();
@@ -1220,13 +1302,10 @@ function saveArticle(status) {
         } else {
             // Try to get error details
             return response.text().then(errorText => {
-                console.error('Error response text:', errorText);
                 try {
                     const errorData = JSON.parse(errorText);
-                    console.error('Error response JSON:', errorData);
                     throw new Error(`Server error: ${errorData.message || errorData.error || 'Unknown error'}`);
                 } catch (e) {
-                    console.error('Error parsing response:', e);
                     throw new Error(`Server error: ${response.status} ${response.statusText}`);
                 }
             });
@@ -1259,8 +1338,7 @@ function saveArticle(status) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        showNotification('Erreur lors de la sauvegarde', 'error');
+        showNotification('Erreur lors de la sauvegarde: ' + error.message, 'error');
     })
     .finally(() => {
         // Reset button states

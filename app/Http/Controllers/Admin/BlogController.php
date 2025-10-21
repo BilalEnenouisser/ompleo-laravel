@@ -43,8 +43,16 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Non authentifié'
+            ], 401);
+        }
         
         try {
+            
             $request->validate([
             'title' => 'required|string|max:255',
             'excerpt' => 'required|string|max:500',
@@ -74,14 +82,12 @@ class BlogController extends Controller
             // Calculate reading time (average 200 words per minute)
             $wordCount = str_word_count(strip_tags($request->content));
             $readingTime = max(1, round($wordCount / 200));
-
             // Process tags
             $tags = [];
             if ($request->tags) {
                 $tags = array_map('trim', explode(',', $request->tags));
                 $tags = array_filter($tags); // Remove empty tags
             }
-
             $blog = Blog::create([
                 'title' => $request->title,
                 'slug' => Str::slug($request->title),
@@ -101,6 +107,7 @@ class BlogController extends Controller
                 'blog' => $blog
             ]);
         } catch (\Exception $e) {
+            
             return response()->json([
                 'success' => false,
                 'error' => 'Erreur lors de la création de l\'article: ' . $e->getMessage()
@@ -114,7 +121,7 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::findOrFail($id);
-        return response()->json($blog);
+        return view('dashboard.admin.blog-show', compact('blog'));
     }
 
     /**
@@ -238,5 +245,37 @@ class BlogController extends Controller
             'status' => $blog->status,
             'message' => $blog->status === 'published' ? 'Article publié' : 'Article mis en brouillon'
         ]);
+    }
+
+    /**
+     * Upload image for blog content
+     */
+    public function uploadImage(Request $request)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
+        ]);
+
+        try {
+            $image = $request->file('image');
+            $filename = 'blog-content-' . time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/blog-content', $filename);
+            $url = Storage::url($path);
+
+            return response()->json([
+                'success' => true,
+                'url' => $url,
+                'message' => 'Image uploaded successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to upload image',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }
