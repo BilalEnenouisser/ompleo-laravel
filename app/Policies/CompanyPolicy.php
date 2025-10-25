@@ -13,7 +13,7 @@ class CompanyPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true; // Anyone can view companies list
     }
 
     /**
@@ -21,7 +21,7 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company): bool
     {
-        //
+        return true; // Anyone can view company details
     }
 
     /**
@@ -29,7 +29,7 @@ class CompanyPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->isAdmin(); // Only admin can create companies
     }
 
     /**
@@ -37,7 +37,17 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        //
+        // Admin can update all companies
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        // Recruiter can update their own company
+        if ($user->isRecruiter() && $user->recruiterProfile && $user->recruiterProfile->company_id === $company->id) {
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -45,7 +55,7 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company): bool
     {
-        //
+        return $user->isAdmin(); // Only admin can delete companies
     }
 
     /**
@@ -53,7 +63,7 @@ class CompanyPolicy
      */
     public function restore(User $user, Company $company): bool
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -61,6 +71,6 @@ class CompanyPolicy
      */
     public function forceDelete(User $user, Company $company): bool
     {
-        //
+        return $user->isAdmin();
     }
 }

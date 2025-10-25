@@ -117,6 +117,7 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                     </div>
 
+
                     <div class="relative">
             <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
                 @if(auth()->user()->user_type === 'recruiter' && auth()->user()->recruiterProfile && auth()->user()->recruiterProfile->company && auth()->user()->recruiterProfile->company->logo)
@@ -333,6 +334,7 @@ function toggleUserMenu() {
     menu.classList.toggle('hidden');
 }
 
+
 function toggleNotificationMenu() {
     const menu = document.getElementById('notificationMenu');
     menu.classList.toggle('hidden');
@@ -348,28 +350,34 @@ function toggleMobileMenu() {
     menu.classList.toggle('hidden');
 }
 
+
+
+
 // Notification functions
 function loadNotifications() {
     // Load real notifications from API
-    fetch('/api/notifications', {
+    fetch('/api/notifications?header=true', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
         }
     })
     .then(response => response.json())
     .then(data => {
-        const notifications = data.notifications.map(notification => ({
-            id: notification.id,
-            title: notification.title,
-            message: notification.message,
-            timestamp: new Date(notification.created_at),
-            isRead: notification.is_read,
-            type: notification.type
-        }));
-        
-        renderNotifications(notifications);
-        updateNotificationBadge(notifications);
+        if (data.notifications) {
+            const notifications = data.notifications.map(notification => ({
+                id: notification.id,
+                title: notification.title,
+                message: notification.message,
+                timestamp: new Date(notification.created_at),
+                isRead: notification.is_read,
+                type: notification.type
+            }));
+            
+            renderNotifications(notifications);
+            updateNotificationBadge(notifications);
+        }
     })
     .catch(error => {
         // Show empty state on error
@@ -409,22 +417,8 @@ function renderNotifications(notifications) {
                 </div>
                 
                 <div class="flex-1 min-w-0" onclick="handleNotificationClick(${notification.id})">
-                    ${notification.link ? `
-                        <a href="${notification.link}" class="block">
-                            <div class="flex items-start justify-between">
-                                <h4 class="font-medium text-[#f5f5f5] mb-1 pr-6">${notification.title}</h4>
-                                <svg class="w-3 h-3 text-[#9ca3af] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <path d="M15 3h6v6"></path>
-                                    <path d="M10 14 21 3"></path>
-                                </svg>
-                            </div>
-                            <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
-                        </a>
-                    ` : `
-                        <h4 class="font-medium text-[#f5f5f5] mb-1">${notification.title}</h4>
-                        <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
-                    `}
+                    <h4 class="font-medium text-[#f5f5f5] mb-1">${notification.title}</h4>
+                    <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
                     
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-[#9ca3af]">${formatTime(notification.timestamp)}</span>
@@ -451,21 +445,6 @@ function renderNotifications(notifications) {
     `).join('');
 }
 
-function updateNotificationBadge(notifications) {
-    const badge = document.getElementById('notificationBadge');
-    const markAllBtn = document.getElementById('markAllReadBtn');
-    const unreadCount = notifications.filter(n => !n.isRead).length;
-    
-    if (unreadCount > 0) {
-        badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        badge.classList.remove('hidden');
-        markAllBtn.classList.remove('hidden');
-    } else {
-        badge.classList.add('hidden');
-        markAllBtn.classList.add('hidden');
-    }
-}
-
 function formatTime(date) {
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -489,6 +468,21 @@ function handleNotificationClick(notificationId) {
     markAsRead(notificationId);
 }
 
+function updateNotificationBadge(notifications) {
+    const badge = document.getElementById('notificationBadge');
+    const markAllBtn = document.getElementById('markAllReadBtn');
+    const unreadCount = notifications.filter(n => !n.isRead).length;
+    
+    if (unreadCount > 0) {
+        badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        badge.classList.remove('hidden');
+        markAllBtn.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+        markAllBtn.classList.add('hidden');
+    }
+}
+
 function markAsRead(notificationId) {
     fetch(`/notifications/${notificationId}/read`, {
         method: 'POST',
@@ -504,6 +498,7 @@ function markAsRead(notificationId) {
         }
     })
     .catch(error => {
+        console.error('Error marking notification as read:', error);
     });
 }
 
@@ -522,6 +517,7 @@ function markAllAsRead() {
         }
     })
     .catch(error => {
+        console.error('Error marking all notifications as read:', error);
     });
 }
 
@@ -541,22 +537,10 @@ function deleteNotification(notificationId) {
             }
         })
         .catch(error => {
+            console.error('Error deleting notification:', error);
         });
     }
 }
-
-// Close notification menu when clicking outside
-document.addEventListener('click', function(event) {
-    const notificationMenu = document.getElementById('notificationMenu');
-    const notificationBell = document.querySelector('[onclick="toggleNotificationMenu()"]');
-    
-    if (notificationMenu && !notificationMenu.classList.contains('hidden')) {
-        // Check if click is outside the notification menu and bell
-        if (!notificationMenu.contains(event.target) && !notificationBell.contains(event.target)) {
-            notificationMenu.classList.add('hidden');
-        }
-    }
-});
 
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {

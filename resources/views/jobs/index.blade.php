@@ -52,7 +52,7 @@ function getWorkTypeIcon($type) {
     <!-- Search and Filters -->
     <section class="py-8 relative z-10 -mt-8 bg-white dark:bg-[#1f1f1f] animate-on-scroll">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-[#333333]">
+            <form method="GET" action="{{ route('jobs.index') }}" class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-[#333333]">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     <div class="lg:col-span-2 relative">
                         <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,6 +60,8 @@ function getWorkTypeIcon($type) {
                         </svg>
                         <input
                             type="text"
+                            name="search"
+                            value="{{ request('search') }}"
                             placeholder="Poste, entreprise, compétences..."
                             class="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]"
                         />
@@ -70,90 +72,82 @@ function getWorkTypeIcon($type) {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
-                        <select class="w-full pl-10 pr-8 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                        <select name="location" class="w-full pl-10 pr-8 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
                             <option value="">Toutes les villes</option>
-                            <option value="Alger">Alger</option>
-                            <option value="Chéraga">Chéraga</option>
-                            <option value="El Harrach">El Harrach</option>
-                            <option value="El Mouradia">El Mouradia</option>
-                        </select>
-                    </div>
-                    
-                    <div class="relative">
-                        <select class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
-                            <option value="">Type de travail</option>
-                            <option value="remote">Télétravail</option>
-                            <option value="onsite">Présentiel</option>
-                            <option value="hybrid">Hybride</option>
-                        </select>
-                    </div>
-                    
-                    <div class="relative">
-                        <select class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
-                            <option value="">Expérience</option>
-                            <option value="0-1">0-1 an</option>
-                            <option value="1-3">1-3 ans</option>
-                            <option value="2-5">2-5 ans</option>
-                            <option value="3-7">3-7 ans</option>
-                            <option value="5+">5+ ans</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Search and Filters -->
-    <section class="py-8 bg-gray-50 dark:bg-[#2b2b2b] relative z-10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <form method="GET" action="{{ route('jobs.index') }}" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Search Input -->
-                    <div class="lg:col-span-2">
-                        <input 
-                            type="text" 
-                            name="search" 
-                            value="{{ request('search') }}"
-                            placeholder="Rechercher un emploi, entreprise, localisation..."
-                            class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none"
-                        >
-                    </div>
-                    
-                    <!-- Location Filter -->
-                    <div>
-                        <select name="location" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
-                            <option value="">Toutes les localisations</option>
-                            <option value="Alger" {{ request('location') == 'Alger' ? 'selected' : '' }}>Alger</option>
-                            <option value="Oran" {{ request('location') == 'Oran' ? 'selected' : '' }}>Oran</option>
-                            <option value="Constantine" {{ request('location') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
-                            <option value="Annaba" {{ request('location') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                            <option value="Adrar" {{ request('location') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
+                            <option value="Chlef" {{ request('location') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
+                            <option value="Laghouat" {{ request('location') == 'Laghouat' ? 'selected' : '' }}>Laghouat</option>
+                            <option value="Oum El Bouaghi" {{ request('location') == 'Oum El Bouaghi' ? 'selected' : '' }}>Oum El Bouaghi</option>
+                            <option value="Batna" {{ request('location') == 'Batna' ? 'selected' : '' }}>Batna</option>
+                            <option value="Béjaïa" {{ request('location') == 'Béjaïa' ? 'selected' : '' }}>Béjaïa</option>
+                            <option value="Biskra" {{ request('location') == 'Biskra' ? 'selected' : '' }}>Biskra</option>
+                            <option value="Béchar" {{ request('location') == 'Béchar' ? 'selected' : '' }}>Béchar</option>
                             <option value="Blida" {{ request('location') == 'Blida' ? 'selected' : '' }}>Blida</option>
+                            <option value="Bouira" {{ request('location') == 'Bouira' ? 'selected' : '' }}>Bouira</option>
+                            <option value="Tamanrasset" {{ request('location') == 'Tamanrasset' ? 'selected' : '' }}>Tamanrasset</option>
+                            <option value="Tébessa" {{ request('location') == 'Tébessa' ? 'selected' : '' }}>Tébessa</option>
+                            <option value="Tlemcen" {{ request('location') == 'Tlemcen' ? 'selected' : '' }}>Tlemcen</option>
+                            <option value="Tiaret" {{ request('location') == 'Tiaret' ? 'selected' : '' }}>Tiaret</option>
+                            <option value="Tizi Ouzou" {{ request('location') == 'Tizi Ouzou' ? 'selected' : '' }}>Tizi Ouzou</option>
+                            <option value="Alger" {{ request('location') == 'Alger' ? 'selected' : '' }}>Alger</option>
+                            <option value="Djelfa" {{ request('location') == 'Djelfa' ? 'selected' : '' }}>Djelfa</option>
+                            <option value="Jijel" {{ request('location') == 'Jijel' ? 'selected' : '' }}>Jijel</option>
                             <option value="Sétif" {{ request('location') == 'Sétif' ? 'selected' : '' }}>Sétif</option>
+                            <option value="Saïda" {{ request('location') == 'Saïda' ? 'selected' : '' }}>Saïda</option>
+                            <option value="Skikda" {{ request('location') == 'Skikda' ? 'selected' : '' }}>Skikda</option>
+                            <option value="Sidi Bel Abbès" {{ request('location') == 'Sidi Bel Abbès' ? 'selected' : '' }}>Sidi Bel Abbès</option>
+                            <option value="Annaba" {{ request('location') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                            <option value="Guelma" {{ request('location') == 'Guelma' ? 'selected' : '' }}>Guelma</option>
+                            <option value="Constantine" {{ request('location') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
+                            <option value="Médéa" {{ request('location') == 'Médéa' ? 'selected' : '' }}>Médéa</option>
+                            <option value="Mostaganem" {{ request('location') == 'Mostaganem' ? 'selected' : '' }}>Mostaganem</option>
+                            <option value="M'Sila" {{ request('location') == "M'Sila" ? 'selected' : '' }}>M'Sila</option>
+                            <option value="Mascara" {{ request('location') == 'Mascara' ? 'selected' : '' }}>Mascara</option>
+                            <option value="Ouargla" {{ request('location') == 'Ouargla' ? 'selected' : '' }}>Ouargla</option>
+                            <option value="Oran" {{ request('location') == 'Oran' ? 'selected' : '' }}>Oran</option>
+                            <option value="El Bayadh" {{ request('location') == 'El Bayadh' ? 'selected' : '' }}>El Bayadh</option>
+                            <option value="Illizi" {{ request('location') == 'Illizi' ? 'selected' : '' }}>Illizi</option>
+                            <option value="Bordj Bou Arreridj" {{ request('location') == 'Bordj Bou Arreridj' ? 'selected' : '' }}>Bordj Bou Arreridj</option>
+                            <option value="Boumerdès" {{ request('location') == 'Boumerdès' ? 'selected' : '' }}>Boumerdès</option>
+                            <option value="El Tarf" {{ request('location') == 'El Tarf' ? 'selected' : '' }}>El Tarf</option>
+                            <option value="Tindouf" {{ request('location') == 'Tindouf' ? 'selected' : '' }}>Tindouf</option>
+                            <option value="Tissemsilt" {{ request('location') == 'Tissemsilt' ? 'selected' : '' }}>Tissemsilt</option>
+                            <option value="El Oued" {{ request('location') == 'El Oued' ? 'selected' : '' }}>El Oued</option>
+                            <option value="Khenchela" {{ request('location') == 'Khenchela' ? 'selected' : '' }}>Khenchela</option>
+                            <option value="Souk Ahras" {{ request('location') == 'Souk Ahras' ? 'selected' : '' }}>Souk Ahras</option>
+                            <option value="Tipaza" {{ request('location') == 'Tipaza' ? 'selected' : '' }}>Tipaza</option>
+                            <option value="Mila" {{ request('location') == 'Mila' ? 'selected' : '' }}>Mila</option>
+                            <option value="Aïn Defla" {{ request('location') == 'Aïn Defla' ? 'selected' : '' }}>Aïn Defla</option>
+                            <option value="Naâma" {{ request('location') == 'Naâma' ? 'selected' : '' }}>Naâma</option>
+                            <option value="Aïn Témouchent" {{ request('location') == 'Aïn Témouchent' ? 'selected' : '' }}>Aïn Témouchent</option>
+                            <option value="Ghardaïa" {{ request('location') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
+                            <option value="Relizane" {{ request('location') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
                         </select>
                     </div>
                     
-                    <!-- Type Filter -->
-                    <div>
-                        <select name="type" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
-                            <option value="">Tous les types</option>
-                            <option value="CDI" {{ request('type') == 'CDI' ? 'selected' : '' }}>CDI</option>
-                            <option value="CDD" {{ request('type') == 'CDD' ? 'selected' : '' }}>CDD</option>
-                            <option value="Freelance" {{ request('type') == 'Freelance' ? 'selected' : '' }}>Freelance</option>
-                            <option value="Stage" {{ request('type') == 'Stage' ? 'selected' : '' }}>Stage</option>
+                    <div class="relative">
+                        <select name="type" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <option value="">Type de travail</option>
+                            <option value="remote" {{ request('type') == 'remote' ? 'selected' : '' }}>Télétravail</option>
+                            <option value="onsite" {{ request('type') == 'onsite' ? 'selected' : '' }}>Présentiel</option>
+                            <option value="hybrid" {{ request('type') == 'hybrid' ? 'selected' : '' }}>Hybride</option>
+                        </select>
+                    </div>
+                    
+                    <div class="relative">
+                        <select name="experience" class="w-full px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <option value="">Expérience</option>
+                            <option value="0-1" {{ request('experience') == '0-1' ? 'selected' : '' }}>0-1 an</option>
+                            <option value="1-3" {{ request('experience') == '1-3' ? 'selected' : '' }}>1-3 ans</option>
+                            <option value="2-5" {{ request('experience') == '2-5' ? 'selected' : '' }}>2-5 ans</option>
+                            <option value="3-7" {{ request('experience') == '3-7' ? 'selected' : '' }}>3-7 ans</option>
+                            <option value="5+" {{ request('experience') == '5+' ? 'selected' : '' }}>5+ ans</option>
                         </select>
                     </div>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between mt-4">
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <!-- Experience Filter -->
-                        <select name="experience" class="px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
-                            <option value="">Tous les niveaux</option>
-                            <option value="Junior" {{ request('experience') == 'Junior' ? 'selected' : '' }}>Junior (0-2 ans)</option>
-                            <option value="Intermédiaire" {{ request('experience') == 'Intermédiaire' ? 'selected' : '' }}>Intermédiaire (2-5 ans)</option>
-                            <option value="Senior" {{ request('experience') == 'Senior' ? 'selected' : '' }}>Senior (5+ ans)</option>
-                        </select>
-                        
                         <!-- Sort Filter -->
                         <select name="sort" class="px-4 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
                             <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Plus récentes</option>
@@ -176,6 +170,7 @@ function getWorkTypeIcon($type) {
         </div>
     </section>
 
+
     <!-- Jobs List -->
     <section class="py-16 relative z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,165 +180,84 @@ function getWorkTypeIcon($type) {
                 </h2>
             </div>
 
-            <div class="space-y-6">
-                @foreach($jobs as $job)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border {{ $job->is_featured ? 'border-[#00b6b4]/20 dark:border-[#00b6b4]/30 ring-2 ring-[#00b6b4]/10 dark:ring-[#00b6b4]/20' : 'border-gray-100 dark:border-[#333333]' }} hover:-translate-y-1">
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 bg-[#00b6b4] rounded-xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                                    @if($job->company && $job->company->logo)
-                                        <img src="{{ Storage::url($job->company->logo) }}" alt="{{ $job->company->name }}" class="w-full h-full object-cover rounded-xl">
-                                    @else
-                                        {{ substr($job->company->name ?? 'CO', 0, 2) }}
-                                    @endif
-                                </div>
-                                
-                                <div class="flex-1">
-                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-                                        <a href="{{ route('jobs.show', $job->slug) }}" class="text-lg sm:text-xl font-bold text-[#111111] dark:text-[#f5f5f5] hover:text-[#00b6b4] transition-colors duration-200">
-                                            {{ $job->title }}
-                                        </a>
-                                        @if($job->is_featured)
-                                        <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                                            </svg>
-                                            Vedette
-                                        </span>
-                                        @endif
-                                    </div>
-                                    
-                                    <div class="grid grid-cols-2 sm:flex sm:flex-row gap-4 text-[#111111] dark:text-[#cccccc] mb-3">
-                                        <div class="flex items-center gap-1">
-                                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                            </svg>
-                                            <span class="font-medium text-[#111111] dark:text-[#f5f5f5] text-sm sm:text-base">{{ $job->company->name ?? 'Entreprise' }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            </svg>
-                                            <span class="text-sm sm:text-base">{{ $job->location }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <span class="text-[#00b6b4]">{{ getWorkTypeIcon($job->work_type) }}</span>
-                                            <span class="text-sm sm:text-base">{{ getWorkTypeLabel($job->work_type) }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span class="text-sm sm:text-base">{{ $job->experience_level ?? 'Non spécifié' }}</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <p class="text-sm sm:text-base text-[#111111] dark:text-[#cccccc] mb-4 line-clamp-2">
-                                        {{ $job->description }}
-                                    </p>
-                                    
-                                    @if($job->tags && count($job->tags) > 0)
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        @foreach($job->tags as $skill)
-                                        <span class="px-2 sm:px-3 py-1 bg-[#00b6b4]/10 text-[#00b6b4] rounded-full text-xs sm:text-sm font-medium">
-                                            {{ $skill }}
-                                        </span>
-                                        @endforeach
-                                    </div>
-                                    @endif
-                                    
-                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                                        <div class="text-base sm:text-lg font-bold text-[#111111] dark:text-[#f5f5f5]">
-                                            @if($job->salary_min && $job->salary_max)
-                                                {{ number_format($job->salary_min) }} - {{ number_format($job->salary_max) }} DA
-                                            @elseif($job->salary_min)
-                                                À partir de {{ number_format($job->salary_min) }} DA
-                                            @else
-                                                Salaire non spécifié
-                                            @endif
-                                        </div>
-                                        <div class="text-xs sm:text-sm text-[#111111] dark:text-[#cccccc]">
-                                            Publié {{ $job->created_at->diffForHumans() }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between sm:justify-end gap-3 lg:flex-col lg:items-end">
-                            <button class="p-2 text-gray-400 hover:text-red-500 transition-colors duration-200 hover:scale-110">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#111111] dark:text-[#cccccc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                </svg>
-                            </button>
-                            
-                            @auth
-                                @if(auth()->user()->user_type === 'candidate')
-                                    @php
-                                        $existingApplication = \App\Models\Application::where('job_id', $job->id)
-                                            ->where('candidate_id', auth()->id())
-                                            ->first();
-                                    @endphp
-                                    
-                                    @if($existingApplication)
-                                        <div class="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            @if($existingApplication->status === 'pending')
-                                                En attente
-                                            @elseif($existingApplication->status === 'accepted')
-                                                Acceptée
-                                            @elseif($existingApplication->status === 'rejected')
-                                                Rejetée
-                                            @else
-                                                {{ ucfirst($existingApplication->status) }}
-                                            @endif
-                                        </div>
-                                    @else
-                                        <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                            </svg>
-                                            Postuler
-                                        </a>
-                                    @endif
-                                @else
-                                    <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                        </svg>
-                                        Voir l'offre
-                                    </a>
-                                @endif
-                            @else
-                                <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                                        <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                    </svg>
-                                    Postuler
-                                </a>
-                            @endauth
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+            <div id="jobs-container" class="space-y-6">
+                @include('jobs.partials.job-card', ['jobs' => $jobs])
             </div>
 
-            <!-- Pagination -->
-            @if($jobs->hasPages())
-            <div class="mt-12">
-                {{ $jobs->appends(request()->query())->links() }}
+            <!-- Show More Button -->
+            @if($jobs->hasMorePages())
+            <div class="mt-12 text-center">
+                <button 
+                    id="show-more-btn" 
+                    class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2"
+                    data-page="2"
+                    data-loading="false"
+                >
+                    <span class="btn-text">Voir plus d'offres</span>
+                    <svg id="loading-spinner" class="w-5 h-5 animate-spin hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </button>
             </div>
             @endif
         </div>
     </section>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const showMoreBtn = document.getElementById('show-more-btn');
+    const jobsContainer = document.getElementById('jobs-container');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const btnText = document.querySelector('.btn-text');
+    
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', function() {
+            if (this.dataset.loading === 'true') return;
+            
+            this.dataset.loading = 'true';
+            this.disabled = true;
+            loadingSpinner.classList.remove('hidden');
+            btnText.textContent = 'Chargement...';
+            
+            const currentPage = parseInt(this.dataset.page);
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', currentPage);
+            
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.html) {
+                    jobsContainer.insertAdjacentHTML('beforeend', data.html);
+                }
+                
+                if (data.hasMore) {
+                    this.dataset.page = data.nextPage;
+                    this.dataset.loading = 'false';
+                    this.disabled = false;
+                    loadingSpinner.classList.add('hidden');
+                    btnText.textContent = 'Voir plus d\'offres';
+                } else {
+                    this.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading more jobs:', error);
+                this.dataset.loading = 'false';
+                this.disabled = false;
+                loadingSpinner.classList.add('hidden');
+                btnText.textContent = 'Voir plus d\'offres';
+            });
+        });
+    }
+});
+</script>
 
 <!-- Footer -->
 @include('components.footer')

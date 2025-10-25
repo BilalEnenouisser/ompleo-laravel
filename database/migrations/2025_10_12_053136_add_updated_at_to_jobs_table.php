@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Check if the jobs table exists, if not, skip this migration
+        if (!Schema::hasTable('jobs')) {
+            return;
+        }
+
         Schema::table('jobs', function (Blueprint $table) {
-            $table->timestamp('updated_at')->nullable();
+            // Only add column if it doesn't already exist
+            if (!Schema::hasColumn('jobs', 'updated_at')) {
+                $table->timestamp('updated_at')->nullable();
+            }
         });
     }
 

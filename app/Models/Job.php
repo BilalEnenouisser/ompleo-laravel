@@ -27,6 +27,7 @@ class Job extends Model
         'location',
         'type',
         'work_type',
+        'experience',
         'experience_level',
         'tags',
         'status',

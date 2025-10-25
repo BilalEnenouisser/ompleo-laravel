@@ -27,7 +27,7 @@
                 <!-- Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                     <h1 class="text-2xl sm:text-3xl font-bold text-[#f5f5f5]">
-                        Notifications
+                        Mes notifications
                     </h1>
                     <div class="flex items-center gap-3">
                         <button onclick="markAllAsRead()" class="flex items-center gap-2 px-4 py-2 bg-[#00b6b4]/10 text-[#00b6b4] rounded-lg hover:bg-[#00b6b4]/20 transition-colors">
@@ -77,8 +77,8 @@
 
                 <!-- Notifications List -->
                 <div class="space-y-4">
-                    @if($userNotifications->count() > 0)
-                        @foreach($userNotifications as $userNotification)
+                    @if($notifications->count() > 0)
+                        @foreach($notifications as $userNotification)
                             <div class="bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-[#333333] {{ !$userNotification->is_read ? 'border-l-4 border-l-[#00b6b4]' : '' }}">
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 {{ !$userNotification->is_read ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]' }}">
@@ -139,7 +139,7 @@
                         
                         <!-- Pagination -->
                         <div class="mt-6">
-                            {{ $userNotifications->links() }}
+                            {{ $notifications->links() }}
                         </div>
                     @else
                         <div class="bg-[#2b2b2b] rounded-2xl p-12 shadow-lg border border-[#333333] text-center">
@@ -162,7 +162,7 @@
 
     <script>
         function markAsRead(id) {
-            fetch(`/notifications/${id}/read`, {
+            fetch(`/candidate/notifications/${id}/read`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -181,7 +181,7 @@
 
         function deleteNotification(id) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
-                fetch(`/notifications/${id}`, {
+                fetch(`/candidate/notifications/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -200,7 +200,7 @@
         }
 
         function markAllAsRead() {
-            fetch('/notifications/read-all', {
+            fetch('/candidate/notifications/read-all', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -219,7 +219,7 @@
 
         function deleteAllNotifications() {
             if (confirm('Êtes-vous sûr de vouloir supprimer toutes les notifications ?')) {
-                fetch('/notifications', {
+                fetch('/candidate/notifications', {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

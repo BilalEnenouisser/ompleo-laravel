@@ -85,11 +85,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
     Route::patch('/admin/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])->name('admin.blog.toggle-status');
     Route::post('/admin/blog/upload-image', [App\Http\Controllers\Admin\BlogController::class, 'uploadImage'])->name('admin.blog.upload-image');
+// Admin notification management (create/send notifications)
 Route::get('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'index'])->name('admin.notifications');
 Route::post('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'store'])->name('admin.notifications.store');
 Route::post('/admin/notifications/{notification}/send', [App\Http\Controllers\Admin\NotificationsController::class, 'send'])->name('admin.notifications.send');
 Route::delete('/admin/notifications/{notification}', [App\Http\Controllers\Admin\NotificationsController::class, 'destroy'])->name('admin.notifications.destroy');
 Route::get('/admin/notifications/stats', [App\Http\Controllers\Admin\NotificationsController::class, 'stats'])->name('admin.notifications.stats');
+
+// Admin notification viewing (view all user notifications)
+Route::get('/admin/notifications/view', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('admin.notifications.view');
+Route::post('/admin/notifications/view/{id}/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
+Route::post('/admin/notifications/view/read-all', [App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+Route::delete('/admin/notifications/view/{id}', [App\Http\Controllers\Admin\NotificationController::class, 'destroy'])->name('admin.notifications.destroy');
+Route::delete('/admin/notifications/view', [App\Http\Controllers\Admin\NotificationController::class, 'destroyAll'])->name('admin.notifications.destroyAll');
 
 
 // Export routes
@@ -170,6 +178,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'show'])->name('applications.show');
     Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
     Route::delete('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'withdraw'])->name('applications.withdraw');
+    
+    // Notifications Routes
+    Route::get('/notifications', [App\Http\Controllers\UserNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [App\Http\Controllers\UserNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/notifications/read-all', [App\Http\Controllers\UserNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::delete('/notifications/{id}', [App\Http\Controllers\UserNotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::delete('/notifications', [App\Http\Controllers\UserNotificationController::class, 'destroyAll'])->name('notifications.destroyAll');
 });
 
 // Companies Routes
@@ -233,7 +248,20 @@ Route::middleware('auth')->group(function () {
         return view('profile');
     })->name('profile');
     
-    Route::get('/notifications', [App\Http\Controllers\UserNotificationController::class, 'index'])->name('notifications');
+    // General notifications route (redirects based on user type)
+    Route::get('/notifications', function () {
+        $user = auth()->user();
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.notifications.view');
+        } elseif ($user->isRecruiter()) {
+            return redirect()->route('recruiter.notifications');
+        } elseif ($user->isCandidate()) {
+            return redirect()->route('candidate.notifications');
+        }
+        return redirect()->route('notifications.index');
+    })->name('notifications');
+    
+    // API notifications
     Route::get('/api/notifications', [App\Http\Controllers\UserNotificationController::class, 'getNotifications'])->name('notifications.api');
     Route::post('/notifications/{id}/read', [App\Http\Controllers\UserNotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [App\Http\Controllers\UserNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
@@ -244,6 +272,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
     
     Route::get('/recruiter/jobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index'])->name('recruiter.jobs');
+    
+    // Recruiter Notifications
+    Route::get('/recruiter/notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'index'])->name('recruiter.notifications');
+    Route::post('/recruiter/notifications/{id}/read', [App\Http\Controllers\Recruiter\NotificationController::class, 'markAsRead'])->name('recruiter.notifications.markAsRead');
+    Route::post('/recruiter/notifications/read-all', [App\Http\Controllers\Recruiter\NotificationController::class, 'markAllAsRead'])->name('recruiter.notifications.markAllAsRead');
+    Route::delete('/recruiter/notifications/{id}', [App\Http\Controllers\Recruiter\NotificationController::class, 'destroy'])->name('recruiter.notifications.destroy');
+    Route::delete('/recruiter/notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'destroyAll'])->name('recruiter.notifications.destroyAll');
     
     Route::get('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'show'])->name('recruiter.create-offer');
     Route::post('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'store'])->name('recruiter.create-offer.store');
@@ -280,7 +315,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/candidate/referrals', function () {
         return view('dashboard.candidate.referrals');
     })->name('candidate.referrals');
+    
+    // Candidate Notifications
+    Route::get('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'index'])->name('candidate.notifications');
+    Route::post('/candidate/notifications/{id}/read', [App\Http\Controllers\Candidate\NotificationController::class, 'markAsRead'])->name('candidate.notifications.markAsRead');
+    Route::post('/candidate/notifications/read-all', [App\Http\Controllers\Candidate\NotificationController::class, 'markAllAsRead'])->name('candidate.notifications.markAllAsRead');
+    Route::delete('/candidate/notifications/{id}', [App\Http\Controllers\Candidate\NotificationController::class, 'destroy'])->name('candidate.notifications.destroy');
+    Route::delete('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'destroyAll'])->name('candidate.notifications.destroyAll');
 });
+
 
 // Catch-all route for 404 errors - must be at the end
 Route::fallback(function () {

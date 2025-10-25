@@ -6,16 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Job;
 use App\Services\FileUploadService;
+use App\Services\NotificationService;
 use App\Http\Requests\StoreApplicationRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
     protected $fileUploadService;
+    protected $notificationService;
 
-    public function __construct(FileUploadService $fileUploadService)
+    public function __construct(FileUploadService $fileUploadService, NotificationService $notificationService)
     {
         $this->fileUploadService = $fileUploadService;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -93,6 +96,20 @@ class ApplicationController extends Controller
                 'applied_at' => now(),
             ]);
 
+            // Load relationships for notification
+            $application->load(['job.company', 'job.recruiter', 'candidate']);
+
+            // Send notification to recruiter
+            try {
+                \Log::info('Attempting to send notification for application: ' . $application->id);
+                $this->notificationService->notifyApplicationReceived($application);
+                \Log::info('Notification sent successfully for application: ' . $application->id);
+            } catch (\Exception $e) {
+                // Log the error but don't fail the application
+                \Log::error('Failed to send application notification: ' . $e->getMessage());
+                \Log::error('Stack trace: ' . $e->getTraceAsString());
+            }
+
             return redirect()->route('jobs.show', $application->job->slug)
                 ->with('success', 'Votre candidature a été envoyée avec succès!');
 
@@ -102,6 +119,7 @@ class ApplicationController extends Controller
                 ->with('error', 'Erreur lors de l\'envoi de la candidature: ' . $e->getMessage());
         }
     }
+
 
     /**
      * Display the specified application
@@ -139,10 +157,32 @@ class ApplicationController extends Controller
             'status' => 'required|in:pending,reviewed,shortlisted,rejected,accepted'
         ]);
 
-        $application->updateStatus($request->status);
+        try {
+            $oldStatus = $application->status;
+            $application->updateStatus($request->status);
+            
+            // Load relationships for notification
+            $application->load(['job.company', 'candidate']);
 
-        return redirect()->back()
-            ->with('success', 'Statut de la candidature mis à jour.');
+            // Send notification to candidate if status changed
+            if ($oldStatus !== $request->status && in_array($request->status, ['accepted', 'rejected', 'shortlisted'])) {
+                try {
+                    \Log::info('Sending status update notification for application: ' . $application->id . ' to candidate: ' . $application->candidate_id . ' with status: ' . $request->status);
+                    $this->notificationService->notifyApplicationStatusUpdate($application, $request->status);
+                    \Log::info('Status update notification sent successfully');
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send status update notification: ' . $e->getMessage());
+                    \Log::error('Stack trace: ' . $e->getTraceAsString());
+                }
+            }
+
+            return redirect()->back()
+                ->with('success', 'Statut de la candidature mis à jour.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la mise à jour: ' . $e->getMessage());
+        }
     }
 
     /**

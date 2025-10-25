@@ -91,6 +91,7 @@ class CreateOfferController extends Controller
         $job->location = $request->location ?? '';
         $job->type = $request->type ?? 'CDI';
         $job->work_type = $request->workType ?? 'onsite';
+        $job->experience = $request->experience ?? '';
         $job->tags = $request->skills ?? [];
         $job->status = $isDraft ? 'draft' : 'published';
         $job->application_deadline = $request->expiryDate;

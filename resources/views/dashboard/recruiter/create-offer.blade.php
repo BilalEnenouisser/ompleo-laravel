@@ -86,13 +86,61 @@
                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                             <circle cx="12" cy="10" r="3"/>
                         </svg>
-                        <input
-                            type="text"
+                        <select
                             id="location"
                             name="location"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
-                            placeholder="Ex: Alger, Chéraga"
-                        />
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        >
+                            <option value="">Sélectionner une ville</option>
+                            <option value="Adrar">Adrar</option>
+                            <option value="Chlef">Chlef</option>
+                            <option value="Laghouat">Laghouat</option>
+                            <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+                            <option value="Batna">Batna</option>
+                            <option value="Béjaïa">Béjaïa</option>
+                            <option value="Biskra">Biskra</option>
+                            <option value="Béchar">Béchar</option>
+                            <option value="Blida">Blida</option>
+                            <option value="Bouira">Bouira</option>
+                            <option value="Tamanrasset">Tamanrasset</option>
+                            <option value="Tébessa">Tébessa</option>
+                            <option value="Tlemcen">Tlemcen</option>
+                            <option value="Tiaret">Tiaret</option>
+                            <option value="Tizi Ouzou">Tizi Ouzou</option>
+                            <option value="Alger">Alger</option>
+                            <option value="Djelfa">Djelfa</option>
+                            <option value="Jijel">Jijel</option>
+                            <option value="Sétif">Sétif</option>
+                            <option value="Saïda">Saïda</option>
+                            <option value="Skikda">Skikda</option>
+                            <option value="Sidi Bel Abbès">Sidi Bel Abbès</option>
+                            <option value="Annaba">Annaba</option>
+                            <option value="Guelma">Guelma</option>
+                            <option value="Constantine">Constantine</option>
+                            <option value="Médéa">Médéa</option>
+                            <option value="Mostaganem">Mostaganem</option>
+                            <option value="M'Sila">M'Sila</option>
+                            <option value="Mascara">Mascara</option>
+                            <option value="Ouargla">Ouargla</option>
+                            <option value="Oran">Oran</option>
+                            <option value="El Bayadh">El Bayadh</option>
+                            <option value="Illizi">Illizi</option>
+                            <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
+                            <option value="Boumerdès">Boumerdès</option>
+                            <option value="El Tarf">El Tarf</option>
+                            <option value="Tindouf">Tindouf</option>
+                            <option value="Tissemsilt">Tissemsilt</option>
+                            <option value="El Oued">El Oued</option>
+                            <option value="Khenchela">Khenchela</option>
+                            <option value="Souk Ahras">Souk Ahras</option>
+                            <option value="Tipaza">Tipaza</option>
+                            <option value="Mila">Mila</option>
+                            <option value="Aïn Defla">Aïn Defla</option>
+                            <option value="Naâma">Naâma</option>
+                            <option value="Aïn Témouchent">Aïn Témouchent</option>
+                            <option value="Ghardaïa">Ghardaïa</option>
+                            <option value="Relizane">Relizane</option>
+                        </select>
                     </div>
                 </div>
                 
@@ -105,13 +153,25 @@
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12,6 12,12 16,14"/>
                         </svg>
-                        <input
-                            type="text"
+                        <select
                             id="experience"
                             name="experience"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
-                            placeholder="Ex: 2-5 ans"
-                        />
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        >
+                            <option value="">Sélectionner l'expérience</option>
+                            <option value="0-1 ans">0-1 ans</option>
+                            <option value="1-2 ans">1-2 ans</option>
+                            <option value="2-3 ans">2-3 ans</option>
+                            <option value="3-5 ans">3-5 ans</option>
+                            <option value="5-7 ans">5-7 ans</option>
+                            <option value="7-10 ans">7-10 ans</option>
+                            <option value="10+ ans">10+ ans</option>
+                            <option value="Débutant">Débutant</option>
+                            <option value="Junior">Junior</option>
+                            <option value="Intermédiaire">Intermédiaire</option>
+                            <option value="Senior">Senior</option>
+                            <option value="Expert">Expert</option>
+                        </select>
                     </div>
                 </div>
                 

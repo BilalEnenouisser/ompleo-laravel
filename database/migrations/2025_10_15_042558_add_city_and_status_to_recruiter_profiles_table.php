@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Check if the recruiter_profiles table exists, if not, skip this migration
+        if (!Schema::hasTable('recruiter_profiles')) {
+            return;
+        }
+
         Schema::table('recruiter_profiles', function (Blueprint $table) {
-            $table->string('city')->nullable();
-            $table->enum('status', ['active', 'suspended', 'pending'])->default('active');
+            // Only add columns if they don't already exist
+            if (!Schema::hasColumn('recruiter_profiles', 'city')) {
+                $table->string('city')->nullable();
+            }
+            if (!Schema::hasColumn('recruiter_profiles', 'status')) {
+                $table->enum('status', ['active', 'suspended', 'pending'])->default('active');
+            }
         });
     }
 

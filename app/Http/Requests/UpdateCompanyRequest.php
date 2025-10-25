@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCompanyRequest extends FormRequest
+class UpdateCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->isAdmin();
+        return auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isRecruiter());
     }
 
     /**
@@ -21,8 +21,10 @@ class StoreCompanyRequest extends FormRequest
      */
     public function rules(): array
     {
+        $companyId = $this->route('company') ? $this->route('company')->id : $this->route('id');
+        
         return [
-            'name' => 'required|string|max:255|unique:companies',
+            'name' => 'required|string|max:255|unique:companies,name,' . $companyId,
             'description' => 'nullable|string|max:1000',
             'website' => 'nullable|url|max:255',
             'size' => 'nullable|string|max:50',

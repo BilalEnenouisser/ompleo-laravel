@@ -1,150 +1,98 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Candidate;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\UserNotification;
-use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserNotificationController extends Controller
+class NotificationController extends Controller
 {
-    /**
-     * Display the notifications page for the authenticated user
-     */
     public function index()
     {
         $user = Auth::user();
         
-        // Get user notifications with the notification details
-        $userNotifications = UserNotification::with('notification')
-            ->where('user_id', $user->id)
+        // Get notifications for this candidate only
+        $notifications = UserNotification::where('user_id', $user->id)
+            ->with('notification')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('notifications', compact('userNotifications'));
+            ->paginate(20);
+            
+        return view('candidate.notifications', compact('notifications'));
     }
-
-    /**
-     * Get notifications for the header dropdown
-     */
-    public function getNotifications()
-    {
-        $user = Auth::user();
-        
-        // Get recent unread notifications
-        $notifications = UserNotification::with('notification')
-            ->where('user_id', $user->id)
-            ->where('is_read', false)
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-
-        // Get total unread count
-        $unreadCount = UserNotification::where('user_id', $user->id)
-            ->where('is_read', false)
-            ->count();
-
-        return response()->json([
-            'notifications' => $notifications->map(function ($userNotification) {
-                return [
-                    'id' => $userNotification->id,
-                    'title' => $userNotification->notification->title,
-                    'message' => $userNotification->notification->message,
-                    'type' => $userNotification->notification->type,
-                    'created_at' => $userNotification->created_at,
-                    'is_read' => $userNotification->is_read,
-                ];
-            }),
-            'unread_count' => $unreadCount
-        ]);
-    }
-
-    /**
-     * Mark a notification as read
-     */
+    
     public function markAsRead($id)
     {
+        $user = Auth::user();
         $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->first();
-
+            
         if ($userNotification) {
             $userNotification->update([
                 'is_read' => true,
                 'read_at' => now()
             ]);
-
+            
             if (request()->expectsJson()) {
                 return response()->json(['success' => true]);
             }
-
             return redirect()->back()->with('success', 'Notification marquée comme lue.');
         }
-
+        
         if (request()->expectsJson()) {
             return response()->json(['success' => false], 404);
         }
-
         return redirect()->back()->with('error', 'Notification non trouvée.');
     }
-
-    /**
-     * Mark all notifications as read
-     */
+    
     public function markAllAsRead()
     {
-        UserNotification::where('user_id', Auth::id())
+        $user = Auth::user();
+        UserNotification::where('user_id', $user->id)
             ->where('is_read', false)
             ->update([
                 'is_read' => true,
                 'read_at' => now()
             ]);
-
+            
         if (request()->expectsJson()) {
             return response()->json(['success' => true]);
         }
-
         return redirect()->back()->with('success', 'Toutes les notifications ont été marquées comme lues.');
     }
-
-    /**
-     * Delete a notification
-     */
+    
     public function destroy($id)
     {
+        $user = Auth::user();
         $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->first();
-
+            
         if ($userNotification) {
             $userNotification->delete();
             
             if (request()->expectsJson()) {
                 return response()->json(['success' => true]);
             }
-
             return redirect()->back()->with('success', 'Notification supprimée.');
         }
-
+        
         if (request()->expectsJson()) {
             return response()->json(['success' => false], 404);
         }
-
         return redirect()->back()->with('error', 'Notification non trouvée.');
     }
-
-    /**
-     * Delete all notifications
-     */
+    
     public function destroyAll()
     {
-        UserNotification::where('user_id', Auth::id())->delete();
+        $user = Auth::user();
+        UserNotification::where('user_id', $user->id)->delete();
         
         if (request()->expectsJson()) {
             return response()->json(['success' => true]);
         }
-
         return redirect()->back()->with('success', 'Toutes les notifications ont été supprimées.');
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CandidateProfile;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -96,6 +97,7 @@ class ProfileController extends Controller
             ]);
         }
 
+
         $request->validate([
             'firstName' => 'nullable|string|max:255',
             'lastName' => 'nullable|string|max:255',
@@ -114,7 +116,7 @@ class ProfileController extends Controller
             'portfolio_url' => 'nullable|url|max:255',
             'facebook_url' => 'nullable|url|max:255',
             'twitter_url' => 'nullable|url|max:255',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'avatar' => 'nullable|file|max:2048',
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ], [
             'firstName.required' => 'Le prénom est requis.',
@@ -123,6 +125,8 @@ class ProfileController extends Controller
             'phone.max' => 'Le téléphone ne doit pas dépasser 20 caractères.',
             'linkedin_url.url' => 'L\'URL LinkedIn doit être valide.',
             'portfolio_url.url' => 'L\'URL du portfolio doit être valide.',
+            'avatar.file' => 'Le fichier avatar doit être un fichier valide.',
+            'avatar.max' => 'Le fichier avatar ne doit pas dépasser 2MB.',
         ]);
 
         try {
@@ -176,11 +180,21 @@ class ProfileController extends Controller
 
             // Handle avatar upload
             if ($request->hasFile('avatar')) {
-                // Delete old avatar if exists
-                if ($profile->avatar) {
-                    $this->fileUploadService->deleteFile($profile->avatar);
+                try {
+                    // Delete old avatar if exists
+                    if ($profile->avatar) {
+                        $this->fileUploadService->deleteFile($profile->avatar);
+                    }
+                    $data['avatar'] = $this->fileUploadService->uploadAvatar($request->file('avatar'));
+                } catch (\Exception $e) {
+                    \Log::error('Avatar upload failed:', [
+                        'error' => $e->getMessage(),
+                        'file_name' => $request->file('avatar')->getClientOriginalName(),
+                        'file_size' => $request->file('avatar')->getSize(),
+                        'file_type' => $request->file('avatar')->getMimeType()
+                    ]);
+                    throw new \Exception('Erreur lors de l\'upload de l\'avatar: ' . $e->getMessage());
                 }
-                $data['avatar'] = $this->fileUploadService->uploadAvatar($request->file('avatar'));
             }
 
             // Handle resume upload

@@ -232,7 +232,7 @@
             <!-- Sidebar -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Apply Card -->
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg sticky top-8">
+                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg top-8">
                     <div class="text-center mb-6">
                         <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                             @if($job->salary_min && $job->salary_max)

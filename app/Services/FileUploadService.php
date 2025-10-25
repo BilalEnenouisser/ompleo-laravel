@@ -26,7 +26,24 @@ class FileUploadService
      */
     public function uploadAvatar(UploadedFile $file): string
     {
-        $this->validateFile($file, ['jpg', 'jpeg', 'png'], 2048); // 2MB max
+        // Check if file is valid
+        if (!$file->isValid()) {
+            throw new \InvalidArgumentException("Invalid file upload: " . $file->getErrorMessage());
+        }
+        
+        // Check file size (2MB max)
+        if ($file->getSize() > 2048 * 1024) {
+            throw new \InvalidArgumentException("File too large. Maximum size: 2MB");
+        }
+        
+        // Check file type manually
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        $mimeType = $file->getMimeType();
+        $extension = strtolower($file->getClientOriginalExtension());
+        
+        if (!in_array($mimeType, $allowedTypes) && !in_array($extension, ['jpg', 'jpeg', 'png'])) {
+            throw new \InvalidArgumentException("Invalid file type. Allowed types: JPEG, PNG");
+        }
         
         $filename = $this->generateUniqueFilename($file, 'avatars');
         $path = $file->storeAs('avatars', $filename, 'public');

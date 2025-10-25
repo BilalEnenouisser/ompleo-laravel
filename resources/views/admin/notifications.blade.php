@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Notifications - OMPLEO</title>
-    <meta name="description" content="Gérez vos notifications OMPLEO">
+    <meta name="description" content="Gérez toutes les notifications">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
@@ -27,7 +27,7 @@
                 <!-- Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                     <h1 class="text-2xl sm:text-3xl font-bold text-[#f5f5f5]">
-                        Notifications
+                        Toutes les notifications
                     </h1>
                     <div class="flex items-center gap-3">
                         <button onclick="markAllAsRead()" class="flex items-center gap-2 px-4 py-2 bg-[#00b6b4]/10 text-[#00b6b4] rounded-lg hover:bg-[#00b6b4]/20 transition-colors">
@@ -77,8 +77,8 @@
 
                 <!-- Notifications List -->
                 <div class="space-y-4">
-                    @if($userNotifications->count() > 0)
-                        @foreach($userNotifications as $userNotification)
+                    @if($notifications->count() > 0)
+                        @foreach($notifications as $userNotification)
                             <div class="bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-[#333333] {{ !$userNotification->is_read ? 'border-l-4 border-l-[#00b6b4]' : '' }}">
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 {{ !$userNotification->is_read ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]' }}">
@@ -90,9 +90,17 @@
                                     
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-start justify-between mb-2">
-                                            <h3 class="text-xl font-bold text-[#f5f5f5]">
-                                                {{ $userNotification->notification->title }}
-                                            </h3>
+                                            <div class="flex-1">
+                                                <h3 class="text-xl font-bold text-[#f5f5f5]">
+                                                    {{ $userNotification->notification->title }}
+                                                </h3>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="text-xs px-2 py-1 rounded-full {{ $userNotification->user->user_type === 'admin' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' : ($userNotification->user->user_type === 'recruiter' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
+                                                        {{ ucfirst($userNotification->user->user_type) }}
+                                                    </span>
+                                                    <span class="text-sm text-[#9ca3af]">{{ $userNotification->user->name }}</span>
+                                                </div>
+                                            </div>
                                             <div class="flex items-center gap-2">
                                                 @if(!$userNotification->is_read)
                                                     <button onclick="markAsRead({{ $userNotification->id }})" class="p-1 text-[#00b6b4] hover:text-[#009e9c] bg-[#00b6b4]/10 rounded-full" title="Marquer comme lu">
@@ -139,7 +147,7 @@
                         
                         <!-- Pagination -->
                         <div class="mt-6">
-                            {{ $userNotifications->links() }}
+                            {{ $notifications->links() }}
                         </div>
                     @else
                         <div class="bg-[#2b2b2b] rounded-2xl p-12 shadow-lg border border-[#333333] text-center">
@@ -150,7 +158,7 @@
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-[#f5f5f5] mb-2">Aucune notification</h3>
-                            <p class="text-[#9ca3af]">Vous n'avez pas encore de notifications.</p>
+                            <p class="text-[#9ca3af]">Il n'y a pas encore de notifications dans le système.</p>
                         </div>
                     @endif
                 </div>
@@ -162,7 +170,7 @@
 
     <script>
         function markAsRead(id) {
-            fetch(`/notifications/${id}/read`, {
+            fetch(`/admin/notifications/view/${id}/read`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -181,7 +189,7 @@
 
         function deleteNotification(id) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
-                fetch(`/notifications/${id}`, {
+                fetch(`/admin/notifications/view/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -200,7 +208,7 @@
         }
 
         function markAllAsRead() {
-            fetch('/notifications/read-all', {
+            fetch('/admin/notifications/view/read-all', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -219,7 +227,7 @@
 
         function deleteAllNotifications() {
             if (confirm('Êtes-vous sûr de vouloir supprimer toutes les notifications ?')) {
-                fetch('/notifications', {
+                fetch('/admin/notifications/view', {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

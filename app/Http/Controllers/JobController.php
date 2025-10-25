@@ -67,7 +67,20 @@ class JobController extends Controller
                 break;
         }
 
-        $jobs = $query->paginate(12);
+        // Check if it's an AJAX request for "show more" functionality
+        if ($request->ajax()) {
+            $page = $request->get('page', 1);
+            $jobs = $query->paginate(5, ['*'], 'page', $page);
+            
+            return response()->json([
+                'html' => view('jobs.partials.job-card', compact('jobs'))->render(),
+                'hasMore' => $jobs->hasMorePages(),
+                'nextPage' => $jobs->currentPage() + 1
+            ]);
+        }
+        
+        // Initial load - show first 10 jobs
+        $jobs = $query->paginate(10);
             
         return view('jobs.index', compact('jobs'));
     }
@@ -134,6 +147,14 @@ class JobController extends Controller
         // Limit to 3 jobs
         $relatedJobs = $relatedJobs->take(3);
         
-        return view('jobs.show', compact('job', 'relatedJobs'));
+        // Check if user has already applied to this job
+        $existingApplication = null;
+        if (auth()->check() && auth()->user()->isCandidate()) {
+            $existingApplication = \App\Models\Application::where('job_id', $job->id)
+                ->where('candidate_id', auth()->id())
+                ->first();
+        }
+        
+        return view('jobs.show', compact('job', 'relatedJobs', 'existingApplication'));
     }
 }
