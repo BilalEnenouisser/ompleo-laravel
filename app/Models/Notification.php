@@ -16,13 +16,16 @@ class Notification extends Model
         'target_type',
         'target_users',
         'is_sent',
-        'sent_at'
+        'sent_at',
+        'rich_content',
+        'background_color'
     ];
 
     protected $casts = [
         'target_users' => 'array',
         'is_sent' => 'boolean',
-        'sent_at' => 'datetime'
+        'sent_at' => 'datetime',
+        'rich_content' => 'array'
     ];
 
     /**

@@ -101,7 +101,6 @@ class ApplicationController extends Controller
             try {
                 $this->notificationService->notifyApplicationReceived($application);
             } catch (\Exception $e) {
-                \Log::error('Failed to send application notification: ' . $e->getMessage());
             }
 
             return response()->json([

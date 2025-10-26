@@ -118,6 +118,8 @@ class ProfileController extends Controller
             'twitter_url' => 'nullable|url|max:255',
             'avatar' => 'nullable|file|max:2048',
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'experience_years' => 'nullable|string|max:50',
+            'availability' => 'nullable|string|max:50',
         ], [
             'firstName.required' => 'Le prénom est requis.',
             'lastName.required' => 'Le nom est requis.',
@@ -140,7 +142,8 @@ class ProfileController extends Controller
 
             $data = $request->only([
                 'phone', 'address', 'city', 'date_of_birth', 'bio', 
-                'linkedin_url', 'portfolio_url', 'facebook_url', 'twitter_url'
+                'linkedin_url', 'portfolio_url', 'facebook_url', 'twitter_url',
+                'experience_years', 'availability'
             ]);
             
 
@@ -187,12 +190,6 @@ class ProfileController extends Controller
                     }
                     $data['avatar'] = $this->fileUploadService->uploadAvatar($request->file('avatar'));
                 } catch (\Exception $e) {
-                    \Log::error('Avatar upload failed:', [
-                        'error' => $e->getMessage(),
-                        'file_name' => $request->file('avatar')->getClientOriginalName(),
-                        'file_size' => $request->file('avatar')->getSize(),
-                        'file_type' => $request->file('avatar')->getMimeType()
-                    ]);
                     throw new \Exception('Erreur lors de l\'upload de l\'avatar: ' . $e->getMessage());
                 }
             }

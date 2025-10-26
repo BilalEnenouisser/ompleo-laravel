@@ -384,6 +384,31 @@
                     </div>
                 </div>
                 
+                {{-- Notification Type Selection --}}
+                <div>
+                    <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                        Type de notification *
+                    </label>
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
+                        </svg>
+                        <select
+                            name="type"
+                            id="notification-type"
+                            onchange="updateFormType(this.value)"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        >
+                            <option value="info">Information</option>
+                            <option value="success">Succès</option>
+                            <option value="warning">Avertissement</option>
+                            <option value="error">Erreur</option>
+                        </select>
+                    </div>
+                </div>
+                
                 {{-- Submit Buttons --}}
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 sm:gap-4">
                     <button
@@ -688,7 +713,6 @@
 {{-- Toast Notifications --}}
 <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
-{{-- Debug Panel --}}
 
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="closeDeleteModal()">
@@ -1415,6 +1439,10 @@ function updatePreview() {
     updatePreviewInfo();
 }
 
+function updateFormType(type) {
+    document.getElementById('form-type').value = type;
+}
+
 function updatePreviewInfo() {
     const recipients = document.getElementById('notification-recipients').value;
     let recipientText = '';
@@ -1455,8 +1483,14 @@ function createNotification(event) {
     // Get data from the editor
     const title = document.getElementById('form-title').value || 'Nouvelle notification';
     const message = document.getElementById('form-message').value || 'Contenu de la notification';
-    const type = document.getElementById('form-type').value || 'info';
+    const type = document.getElementById('notification-type').value || 'info';
     const targetType = document.getElementById('notification-recipients').value;
+    
+    // Ensure we have at least some content
+    if (elements.length === 0) {
+        showToast('Erreur', 'Veuillez ajouter du contenu à votre notification', 'error');
+        return;
+    }
     
     if (!title.trim()) {
         showToast('Erreur', 'Le titre est requis', 'error');
@@ -1479,7 +1513,10 @@ function createNotification(event) {
     formData.append('message', message);
     formData.append('type', type);
     formData.append('target_type', targetType);
+    formData.append('rich_content', JSON.stringify(elements));
+    formData.append('background_color', document.getElementById('notification-canvas').style.backgroundColor || '#2b2b2b');
     formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    
     
     // Send to backend
     fetch('{{ route("admin.notifications.store") }}', {
@@ -1512,7 +1549,7 @@ function createNotification(event) {
                         form.reset();
                         location.reload();
                     } else {
-                        showToast('Erreur', sendData.error, 'error');
+                        showToast('Erreur', sendData.error || 'Erreur inconnue lors de l\'envoi', 'error');
                     }
                 })
                 .catch(error => {
@@ -1520,7 +1557,7 @@ function createNotification(event) {
                 });
             }, 1000);
         } else {
-            showToast('Erreur', data.error, 'error');
+            showToast('Erreur', data.error || 'Erreur inconnue lors de la création', 'error');
         }
     })
     .catch(error => {

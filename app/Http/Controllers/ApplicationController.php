@@ -24,12 +24,46 @@ class ApplicationController extends Controller
     /**
      * Display a listing of applications for the authenticated user
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         
         if ($user->isCandidate()) {
-            $applications = $user->applications()->with(['job.company'])->orderBy('applied_at', 'desc')->paginate(10);
+            $query = $user->applications()->with(['job.company']);
+            
+            // Search functionality
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('job', function($jobQuery) use ($search) {
+                        $jobQuery->where('title', 'like', "%{$search}%")
+                                 ->orWhere('description', 'like', "%{$search}%")
+                                 ->orWhereHas('company', function($companyQuery) use ($search) {
+                                     $companyQuery->where('name', 'like', "%{$search}%");
+                                 });
+                    });
+                });
+            }
+            
+            // Status filter
+            if ($request->filled('status')) {
+                $status = $request->status;
+                // Map French status to English database values
+                $statusMap = [
+                    'En cours' => 'pending',
+                    'Accepté' => 'accepted', 
+                    'Refusé' => 'rejected',
+                    'En attente' => 'pending',
+                    'Présélectionné' => 'shortlisted',
+                    'Examiné' => 'reviewed'
+                ];
+                
+                if (isset($statusMap[$status])) {
+                    $query->where('status', $statusMap[$status]);
+                }
+            }
+            
+            $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
             
             // Calculate statistics for candidate
             $stats = [
@@ -41,14 +75,107 @@ class ApplicationController extends Controller
             
             return view('dashboard.candidate.applications', compact('applications', 'stats'));
         } elseif ($user->isRecruiter()) {
-            $applications = Application::whereHas('job', function($query) use ($user) {
+            $query = Application::whereHas('job', function($query) use ($user) {
                 $query->where('recruiter_id', $user->id);
-            })->with(['job.company', 'candidate'])->paginate(10);
+            })->with(['job.company', 'candidate']);
+            
+            // Search functionality for recruiter
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('job', function($jobQuery) use ($search) {
+                        $jobQuery->where('title', 'like', "%{$search}%")
+                                 ->orWhere('description', 'like', "%{$search}%");
+                    })->orWhereHas('candidate', function($candidateQuery) use ($search) {
+                        $candidateQuery->where('name', 'like', "%{$search}%")
+                                      ->orWhere('email', 'like', "%{$search}%");
+                    });
+                });
+            }
+            
+            // Status filter for recruiter
+            if ($request->filled('status')) {
+                $status = $request->status;
+                $statusMap = [
+                    'En cours' => 'pending',
+                    'Accepté' => 'accepted', 
+                    'Refusé' => 'rejected',
+                    'En attente' => 'pending',
+                    'Présélectionné' => 'shortlisted',
+                    'Examiné' => 'reviewed'
+                ];
+                
+                if (isset($statusMap[$status])) {
+                    $query->where('status', $statusMap[$status]);
+                }
+            }
+            
+            $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
         } else {
             $applications = Application::with(['job.company', 'candidate'])->paginate(10);
         }
 
         return view('applications.index', compact('applications'));
+    }
+
+    /**
+     * Export applications to PDF
+     */
+    public function exportPdf(Request $request)
+    {
+        $user = Auth::user();
+        
+        if (!$user->isCandidate()) {
+            abort(403, 'Unauthorized');
+        }
+        
+        // Get all applications for the candidate (not paginated)
+        $query = $user->applications()->with(['job.company']);
+        
+        // Apply same filters as index method
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('job', function($jobQuery) use ($search) {
+                    $jobQuery->where('title', 'like', "%{$search}%")
+                             ->orWhere('description', 'like', "%{$search}%")
+                             ->orWhereHas('company', function($companyQuery) use ($search) {
+                                 $companyQuery->where('name', 'like', "%{$search}%");
+                             });
+                });
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $status = $request->status;
+            $statusMap = [
+                'En cours' => 'pending',
+                'Accepté' => 'accepted', 
+                'Refusé' => 'rejected',
+                'En attente' => 'pending',
+                'Présélectionné' => 'shortlisted',
+                'Examiné' => 'reviewed'
+            ];
+            
+            if (isset($statusMap[$status])) {
+                $query->where('status', $statusMap[$status]);
+            }
+        }
+        
+        $applications = $query->orderBy('applied_at', 'desc')->get();
+        
+        // Calculate statistics
+        $stats = [
+            'total' => $user->applications()->count(),
+            'pending' => $user->applications()->where('status', 'pending')->count(),
+            'accepted' => $user->applications()->where('status', 'accepted')->count(),
+            'rejected' => $user->applications()->where('status', 'rejected')->count(),
+        ];
+        
+        // Generate PDF
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.applications', compact('applications', 'stats', 'user'));
+        
+        return $pdf->download('mes-candidatures-' . now()->format('Y-m-d') . '.pdf');
     }
 
     /**
@@ -101,13 +228,9 @@ class ApplicationController extends Controller
 
             // Send notification to recruiter
             try {
-                \Log::info('Attempting to send notification for application: ' . $application->id);
                 $this->notificationService->notifyApplicationReceived($application);
-                \Log::info('Notification sent successfully for application: ' . $application->id);
             } catch (\Exception $e) {
                 // Log the error but don't fail the application
-                \Log::error('Failed to send application notification: ' . $e->getMessage());
-                \Log::error('Stack trace: ' . $e->getTraceAsString());
             }
 
             return redirect()->route('jobs.show', $application->job->slug)
@@ -167,12 +290,8 @@ class ApplicationController extends Controller
             // Send notification to candidate if status changed
             if ($oldStatus !== $request->status && in_array($request->status, ['accepted', 'rejected', 'shortlisted'])) {
                 try {
-                    \Log::info('Sending status update notification for application: ' . $application->id . ' to candidate: ' . $application->candidate_id . ' with status: ' . $request->status);
                     $this->notificationService->notifyApplicationStatusUpdate($application, $request->status);
-                    \Log::info('Status update notification sent successfully');
                 } catch (\Exception $e) {
-                    \Log::error('Failed to send status update notification: ' . $e->getMessage());
-                    \Log::error('Stack trace: ' . $e->getTraceAsString());
                 }
             }
 

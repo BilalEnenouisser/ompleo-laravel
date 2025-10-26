@@ -48,20 +48,38 @@ class NotificationsController extends Controller
     public function store(Request $request)
     {
         try {
+            
             $request->validate([
                 'title' => 'required|string|max:255',
                 'message' => 'required|string|max:1000',
                 'type' => 'required|in:info,success,warning,error',
-                'target_type' => 'required|in:all,candidates,recruiters'
+                'target_type' => 'required|in:all,candidates,recruiters',
+                'rich_content' => 'nullable|string', // Changed from array to string since we're sending JSON
+                'background_color' => 'nullable|string|max:50'
             ]);
+
+            // Parse rich_content if it's a JSON string
+            $richContent = null;
+            if ($request->rich_content) {
+                $richContent = json_decode($request->rich_content, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return response()->json([
+                        'success' => false,
+                        'error' => 'Invalid rich_content JSON format'
+                    ], 422);
+                }
+            }
 
             $notification = Notification::create([
                 'title' => $request->title,
                 'message' => $request->message,
                 'type' => $request->type,
                 'target_type' => $request->target_type,
+                'rich_content' => $richContent,
+                'background_color' => $request->background_color,
                 'is_sent' => false
             ]);
+
 
             return response()->json([
                 'success' => true,
@@ -122,6 +140,7 @@ class NotificationsController extends Controller
                     'is_read' => false
                 ]);
             }
+
 
             // Here you would typically send emails or push notifications
             // For now, we'll just mark as sent

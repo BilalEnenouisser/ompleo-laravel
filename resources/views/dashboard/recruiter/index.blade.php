@@ -94,7 +94,7 @@
                 </svg>
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-[#f5f5f5] mb-1">
-                {{ $stats['total_applications'] * 3 }}
+                {{ $stats['profiles_viewed'] }}
             </h3>
             <p class="text-[#9ca3af] text-sm mb-2">
                 Profils consultés
@@ -151,7 +151,7 @@
                 </div>
             </a>
 
-            <button class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
+            <a href="{{ route('recruiter.candidates') }}" class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -164,9 +164,9 @@
                     <div class="font-medium text-[#f5f5f5] text-sm sm:text-base">Parcourir les CV</div>
                     <div class="text-xs sm:text-sm text-[#9ca3af]">Rechercher des candidats</div>
                 </div>
-            </button>
+            </a>
 
-            <button class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
+            <a href="{{ route('recruiter.interviews.create') }}" class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-8 h-8 sm:w-10 sm:h-10 bg-orange-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
@@ -179,7 +179,7 @@
                     <div class="font-medium text-[#f5f5f5] text-sm sm:text-base">Programmer entretien</div>
                     <div class="text-xs sm:text-sm text-[#9ca3af]">Organiser un RDV</div>
                 </div>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -190,9 +190,9 @@
                 <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                     Candidatures récentes
                 </h2>
-                <button class="text-[#00b6b4] hover:text-[#009e9c] text-sm font-medium">
+                <a href="{{ route('recruiter.jobs') }}" class="text-[#00b6b4] hover:text-[#009e9c] text-sm font-medium">
                     Voir tout
-                </button>
+                </a>
             </div>
             <div class="space-y-4">
                 @forelse($recentApplications as $application)
@@ -259,9 +259,9 @@
                 <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                     Offres actives
                 </h2>
-                <button class="text-[#00b6b4] hover:text-[#009e9c] text-sm font-medium">
+                <a href="{{ route('recruiter.jobs') }}" class="text-[#00b6b4] hover:text-[#009e9c] text-sm font-medium">
                     Gérer
-                </button>
+                </a>
             </div>
             <div class="space-y-4">
                 @forelse($activeJobs as $job)
@@ -312,16 +312,86 @@
         </div>
     </div>
 
-    @if($stats['scheduled_interviews'] > 0)
     {{-- Upcoming Interviews --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-        <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6">
-            Entretiens à venir
-        </h2>
+        <div class="flex items-center justify-between mb-4 sm:mb-6">
+            <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
+                Entretiens à venir
+            </h2>
+            <a href="{{ route('recruiter.interviews') }}" class="text-[#00b6b4] hover:text-[#009e9c] text-sm font-medium">
+                Voir tout
+            </a>
+        </div>
         <div class="space-y-4">
+            @forelse($upcomingInterviews->take(5) as $interview)
+            <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors duration-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        {{ substr($interview->candidate->name, 0, 2) }}
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
+                            {{ $interview->candidate->name }}
+                        </h3>
+                        <p class="text-sm text-[#9ca3af]">
+                            {{ $interview->job->title }}
+                        </p>
+                        <div class="flex items-center gap-2 text-xs text-[#9ca3af] mt-1">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" x2="16" y1="2" y2="6"/>
+                                    <line x1="8" x2="8" y1="2" y2="6"/>
+                                    <line x1="3" x2="21" y1="10" y2="10"/>
+                                </svg>
+                                {{ $interview->formatted_date }}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                {{ $interview->formatted_start_time }}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                {{ $interview->type_in_french }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    @php
+                        $statusColors = [
+                            'programme' => 'color: rgb(0, 182, 180); background-color: rgba(0, 182, 180, 0.1);',
+                            'confirme' => 'color: rgb(16, 185, 129); background-color: rgba(16, 185, 129, 0.1);',
+                            'en_attente' => 'color: rgb(245, 158, 11); background-color: rgba(245, 158, 11, 0.1);',
+                            'annule' => 'color: rgb(239, 68, 68); background-color: rgba(239, 68, 68, 0.1);',
+                            'termine' => 'color: rgb(107, 114, 128); background-color: rgba(107, 114, 128, 0.1);'
+                        ];
+                        $statusLabels = [
+                            'programme' => 'Programmé',
+                            'confirme' => 'Confirmé',
+                            'en_attente' => 'En attente',
+                            'annule' => 'Annulé',
+                            'termine' => 'Terminé'
+                        ];
+                    @endphp
+                    <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium" style="{{ $statusColors[$interview->status] ?? $statusColors['programme'] }}">
+                        {{ $statusLabels[$interview->status] ?? 'Programmé' }}
+                    </span>
+                    <p class="text-xs text-[#9ca3af] mt-1">
+                        {{ $interview->formatted_duration }}
+                    </p>
+                </div>
+            </div>
+            @empty
             <div class="text-center py-8">
-                <div class="w-16 h-16 mx-auto mb-4 bg-blue-500/10 rounded-full flex items-center justify-center">
-                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <div class="w-16 h-16 mx-auto mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                         <line x1="16" x2="16" y1="2" y2="6"/>
                         <line x1="8" x2="8" y1="2" y2="6"/>
@@ -329,10 +399,17 @@
                     </svg>
                 </div>
                 <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucun entretien programmé</h3>
-                <p class="text-[#9ca3af]">Vous n'avez pas encore programmé d'entretiens.</p>
+                <p class="text-[#9ca3af] mb-4">Vous n'avez pas encore programmé d'entretiens.</p>
+                <a href="{{ route('recruiter.interviews.create') }}" class="inline-flex items-center gap-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="M12 5v14"/>
+                    </svg>
+                    Programmer un entretien
+                </a>
             </div>
+            @endforelse
         </div>
     </div>
-    @endif
 </div>
 @endsection

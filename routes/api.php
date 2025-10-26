@@ -29,8 +29,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/blog/{blog:slug}', [App\Http\Controllers\Api\BlogController::class, 'show']);
 });
 
-// Protected API Routes (Sanctum Authentication Required)
-Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+// Protected API Routes (Session Authentication Required)
+Route::middleware('auth:web')->prefix('v1')->group(function () {
     // User Profile API
     Route::get('/user', function (Request $request) {
         return $request->user();

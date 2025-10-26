@@ -14,10 +14,10 @@
                 Suivez l'état de vos candidatures en temps réel
             </p>
         </div>
-        <button class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+        <a href="{{ route('applications.export-pdf', request()->query()) }}" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download w-5 h-5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
             Exporter PDF
-        </button>
+        </a>
     </div>
 
     {{-- Stats Cards --}}
@@ -85,26 +85,43 @@
 
     {{-- Filters --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
-        <div class="flex flex-col lg:flex-row gap-4">
+        <form method="GET" action="{{ route('applications.index') }}" class="flex flex-col lg:flex-row gap-4">
             <div class="flex-1 relative">
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 <input
                     type="text"
+                    name="search"
+                    value="{{ request('search') }}"
                     placeholder="Rechercher par poste ou entreprise..."
                     class="w-full pl-10 pr-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]"
                 />
             </div>
             <div class="relative">
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/></svg>
-                <select class="pl-10 pr-8 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] min-w-[200px]">
+                <select name="status" class="pl-10 pr-8 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] min-w-[200px]">
                     <option value="">Tous les statuts</option>
-                    <option value="En cours">En cours</option>
-                    <option value="Accepté">Accepté</option>
-                    <option value="Refusé">Refusé</option>
-                    <option value="En attente">En attente</option>
+                    <option value="En cours" {{ request('status') == 'En cours' ? 'selected' : '' }}>En cours</option>
+                    <option value="En attente" {{ request('status') == 'En attente' ? 'selected' : '' }}>En attente</option>
+                    <option value="Présélectionné" {{ request('status') == 'Présélectionné' ? 'selected' : '' }}>Présélectionné</option>
+                    <option value="Examiné" {{ request('status') == 'Examiné' ? 'selected' : '' }}>Examiné</option>
+                    <option value="Accepté" {{ request('status') == 'Accepté' ? 'selected' : '' }}>Accepté</option>
+                    <option value="Refusé" {{ request('status') == 'Refusé' ? 'selected' : '' }}>Refusé</option>
                 </select>
             </div>
-        </div>
+            <div class="flex gap-2 flex-shrink-0">
+                <button type="submit" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    Rechercher
+                </button>
+                <a href="{{ route('applications.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </a>
+            </div>
+        </form>
     </div>
 
     {{-- Applications List --}}

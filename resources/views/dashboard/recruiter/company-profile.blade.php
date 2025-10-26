@@ -38,11 +38,11 @@ use Illuminate\Support\Facades\Storage;
 
             <!-- Logo Section -->
             <div class="flex items-center gap-6">
-                <div class="relative">
+                <div class="relative" id="logo-container">
                     @if($company && $company->logo)
-                        <img src="{{ Storage::url($company->logo) }}" alt="Logo" class="w-20 h-20 rounded-xl object-cover border-2 border-[#00b6b4]">
+                        <img src="{{ Storage::url($company->logo) }}" alt="Logo" class="w-20 h-20 rounded-xl object-cover border-2 border-[#00b6b4]" id="logo-preview">
                     @else
-                        <div class="w-20 h-20 bg-[#00b6b4] rounded-xl flex items-center justify-center text-white text-2xl font-bold">
+                        <div class="w-20 h-20 bg-[#00b6b4] rounded-xl flex items-center justify-center text-white text-2xl font-bold" id="logo-placeholder">
                             {{ substr($company->name ?? 'E', 0, 1) }}
                         </div>
                     @endif
@@ -246,25 +246,63 @@ use Illuminate\Support\Facades\Storage;
 
 <script>
 // Logo preview functionality
-document.getElementById('logo').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const logoContainer = document.querySelector('.relative');
-            const existingImg = logoContainer.querySelector('img');
-            const existingDiv = logoContainer.querySelector('div');
-            
-            if (existingImg) {
-                existingImg.src = e.target.result;
-            } else if (existingDiv) {
-                const newImg = document.createElement('img');
-                newImg.src = e.target.result;
-                newImg.className = 'w-20 h-20 rounded-xl object-cover border-2 border-[#00b6b4]';
-                logoContainer.replaceChild(newImg, existingDiv);
+document.addEventListener('DOMContentLoaded', function() {
+    const logoInput = document.getElementById('logo');
+    const logoContainer = document.getElementById('logo-container');
+    
+    if (logoInput) {
+        logoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    alert('Veuillez sélectionner un fichier image valide.');
+                    return;
+                }
+                
+                // Validate file size (2MB max)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Le fichier est trop volumineux. Taille maximale: 2MB.');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Check if there's already an image
+                    const existingImg = document.getElementById('logo-preview');
+                    const existingPlaceholder = document.getElementById('logo-placeholder');
+                    
+                    if (existingImg) {
+                        // Update existing image
+                        existingImg.src = e.target.result;
+                    } else if (existingPlaceholder) {
+                        // Replace placeholder with new image
+                        const newImg = document.createElement('img');
+                        newImg.id = 'logo-preview';
+                        newImg.src = e.target.result;
+                        newImg.alt = 'Logo';
+                        newImg.className = 'w-20 h-20 rounded-xl object-cover border-2 border-[#00b6b4]';
+                        logoContainer.replaceChild(newImg, existingPlaceholder);
+                    } else {
+                        // Create new image if neither exists
+                        const newImg = document.createElement('img');
+                        newImg.id = 'logo-preview';
+                        newImg.src = e.target.result;
+                        newImg.alt = 'Logo';
+                        newImg.className = 'w-20 h-20 rounded-xl object-cover border-2 border-[#00b6b4]';
+                        logoContainer.appendChild(newImg);
+                    }
+                    
+                    // Show success message
+                };
+                
+                reader.onerror = function() {
+                    alert('Erreur lors de la lecture du fichier.');
+                };
+                
+                reader.readAsDataURL(file);
             }
-        };
-        reader.readAsDataURL(file);
+        });
     }
 });
 </script>

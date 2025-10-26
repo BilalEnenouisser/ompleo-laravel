@@ -223,8 +223,6 @@
 
                 <!-- Liste des événements de tracking -->
                 <div id="trackingContainer" class="space-y-2 md:space-y-3 max-h-96 md:max-h-[500px] overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: #4a5568 #2d3748;">
-                    <!-- Debug: Activities count: {{ is_array($recentActivities) ? count($recentActivities) : $recentActivities->count() }} -->
-                    <!-- Debug: First activity keys: {{ json_encode(array_keys($recentActivities->first() ?? [])) }} -->
                     @forelse($recentActivities as $activity)
                     <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors"
                          data-activity="true"
@@ -375,26 +373,57 @@
                             Voir tout
                         </button>
                     </div>
-                    <div class="space-y-3 md:space-y-4">
+                    <div class="space-y-4">
                         @forelse($recentActivities as $activity)
-                        <div class="flex items-start md:items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-[#333333] rounded-lg transition-colors">
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-blue-400 bg-blue-900/30 flex-shrink-0">
-                                <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                </svg>
+                        <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors duration-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                    {{ substr($activity['user_name'] ?? 'U', 0, 2) }}
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
+                                        {{ $activity['user_name'] ?? 'Utilisateur inconnu' }}
+                                    </h3>
+                                    <p class="text-sm text-[#9ca3af]">
+                                        {{ $activity['activity'] ?? 'Activité' }} - {{ $activity['description'] ?? 'Description non disponible' }}
+                                    </p>
+                                    <div class="flex items-center gap-2 text-xs text-[#9ca3af] mt-1">
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                                <circle cx="12" cy="10" r="3"/>
+                                            </svg>
+                                            {{ $activity['url'] ?? '/' }}
+                                        </span>
+                                        <span>•</span>
+                                        <span>{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
+                                        <span>•</span>
+                                        <span class="text-green-400">{{ $activity['status'] ?? 'Succès' }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-[#f5f5f5] text-sm md:text-base">{{ $activity['activity'] ?? 'Activité' }}</p>
-                                <p class="text-xs md:text-sm text-[#cccccc] truncate">{{ $activity['description'] ?? 'Description non disponible' }}</p>
+                            <div class="text-right">
+                                <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium 
+                                    @if(isset($activity['user_type']) && $activity['user_type'] == 'candidate') text-blue-400 bg-blue-900/30
+                                    @elseif(isset($activity['user_type']) && $activity['user_type'] == 'recruiter') text-green-400 bg-green-900/30
+                                    @else text-purple-400 bg-purple-900/30
+                                    @endif">
+                                    {{ $activity['user_type'] ?? 'admin' }}
+                                </span>
                             </div>
-                            <span class="text-xs text-[#999999] flex-shrink-0">{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
                         </div>
                         @empty
                         <div class="text-center py-8">
-                            <p class="text-[#cccccc]">Aucune activité récente</p>
+                            <div class="w-16 h-16 mx-auto mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucune activité récente</h3>
+                            <p class="text-[#9ca3af]">Aucune activité enregistrée pour le moment.</p>
                         </div>
                         @endforelse
                     </div>
@@ -499,63 +528,57 @@
                 <h2 class="text-xl md:text-2xl font-bold text-[#f5f5f5]">Toutes les activités</h2>
                 <button id="closeActivitiesModal" class="text-[#cccccc] hover:text-[#f5f5f5] text-2xl">&times;</button>
             </div>
-            <div class="overflow-y-auto flex-1 space-y-3">
+            <div class="overflow-y-auto flex-1 space-y-4">
                 @forelse($allRecentActivities as $activity)
-                <div class="flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#333333] border border-[#444444] rounded-lg hover:bg-[#3a3a3a] transition-colors">
-                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center 
-                        @if(isset($activity['icon_color']) && $activity['icon_color'] == 'blue') text-blue-400 bg-blue-900/30
-                        @elseif(isset($activity['icon_color']) && $activity['icon_color'] == 'green') text-green-400 bg-green-900/30
-                        @else text-purple-400 bg-purple-900/30
-                        @endif flex-shrink-0">
-                        @if(isset($activity['type']) && $activity['type'] == 'application')
-                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        @elseif(isset($activity['type']) && $activity['type'] == 'job')
-                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
-                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
-                            <path d="M10 6h4"/>
-                            <path d="M10 10h4"/>
-                            <path d="M10 14h4"/>
-                            <path d="M10 18h4"/>
-                        </svg>
-                        @else
-                        <svg class="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            <path d="M9 12l2 2 4-4"/>
-                        </svg>
-                        @endif
+                <div class="flex items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors duration-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {{ substr($activity['user_name'] ?? 'U', 0, 2) }}
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
+                                {{ $activity['user_name'] ?? 'Utilisateur inconnu' }}
+                            </h3>
+                            <p class="text-sm text-[#9ca3af]">
+                                {{ $activity['activity'] ?? 'Activité' }} - {{ $activity['description'] ?? 'Description non disponible' }}
+                            </p>
+                            <div class="flex items-center gap-2 text-xs text-[#9ca3af] mt-1">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                    {{ $activity['url'] ?? '/' }}
+                                </span>
+                                <span>•</span>
+                                <span>{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
+                                <span>•</span>
+                                <span class="text-green-400">{{ $activity['status'] ?? 'Succès' }}</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="flex-1 min-w-0">
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                            <span class="font-medium text-[#f5f5f5] text-sm md:text-base truncate">{{ $activity['user_name'] ?? 'Utilisateur inconnu' }}</span>
-                            <span class="px-2 py-1 rounded-full text-xs font-medium 
-                                @if(isset($activity['user_type']) && $activity['user_type'] == 'candidate') text-blue-400 bg-blue-900/30
-                                @elseif(isset($activity['user_type']) && $activity['user_type'] == 'recruiter') text-green-400 bg-green-900/30
-                                @else text-purple-400 bg-purple-900/30
-                                @endif w-fit">{{ $activity['user_type'] ?? 'admin' }}</span>
-                        </div>
-                        <p class="text-xs md:text-sm text-[#cccccc] mb-1">
-                            <strong class="text-[#00b6b4]">{{ $activity['activity'] ?? 'Activité' }}</strong> - {{ $activity['description'] ?? 'Description non disponible' }}
-                        </p>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-[#999999]">
-                            <span class="hidden sm:inline">{{ $activity['url'] ?? '/' }}</span>
-                            <span class="hidden sm:inline">•</span>
-                            <span>{{ isset($activity['time']) && method_exists($activity['time'], 'diffForHumans') ? $activity['time']->diffForHumans() : 'Maintenant' }}</span>
-                            <span class="hidden sm:inline">•</span>
-                            <span class="text-green-400">{{ $activity['status'] ?? 'Succès' }}</span>
-                        </div>
+                    <div class="text-right">
+                        <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium 
+                            @if(isset($activity['user_type']) && $activity['user_type'] == 'candidate') text-blue-400 bg-blue-900/30
+                            @elseif(isset($activity['user_type']) && $activity['user_type'] == 'recruiter') text-green-400 bg-green-900/30
+                            @else text-purple-400 bg-purple-900/30
+                            @endif">
+                            {{ $activity['user_type'] ?? 'admin' }}
+                        </span>
                     </div>
                 </div>
                 @empty
                 <div class="text-center py-8">
-                    <p class="text-[#cccccc]">Aucune activité récente</p>
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucune activité récente</h3>
+                    <p class="text-[#9ca3af]">Aucune activité enregistrée pour le moment.</p>
                 </div>
                 @endforelse
             </div>
@@ -701,7 +724,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         timeLimit = Infinity;
                 }
                 
-                // Debug logging for each activity
                 
                 if (timeDiff > timeLimit) {
                     show = false;

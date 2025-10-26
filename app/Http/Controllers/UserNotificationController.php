@@ -52,8 +52,11 @@ class UserNotificationController extends Controller
                     'title' => $userNotification->notification->title,
                     'message' => $userNotification->notification->message,
                     'type' => $userNotification->notification->type,
+                    'rich_content' => $userNotification->notification->rich_content,
+                    'background_color' => $userNotification->notification->background_color,
                     'created_at' => $userNotification->created_at,
-                    'is_read' => $userNotification->is_read,
+                    'timestamp' => $userNotification->created_at,
+                    'isRead' => $userNotification->is_read,
                 ];
             }),
             'unread_count' => $unreadCount

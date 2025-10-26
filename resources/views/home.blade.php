@@ -36,7 +36,7 @@
                             <div class="sm:whitespace-nowrap">ou l'emploi de vos rêves</div>
                         </div>
 
-                        <form class="mt-6 sm:mt-10 space-y-3 sm:space-y-4 animate-fade-in-up" style="animation-delay: 0.6s;">
+                        <form id="homeSearchForm" method="GET" action="{{ route('jobs.index') }}" class="mt-6 sm:mt-10 space-y-3 sm:space-y-4 animate-fade-in-up" style="animation-delay: 0.6s;">
                             <!-- Job Search -->
                             <div class="relative w-full">
                                 <div class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2">
@@ -46,6 +46,8 @@
                                 </div>
                                 <input
                                     type="text"
+                                    id="homeSearchInput"
+                                    name="search"
                                     placeholder="Intitulé du poste, mot-clé ou compétence"
                                     class="w-full h-10 sm:h-12 pl-10 sm:pl-12 pr-3 sm:pr-4 rounded-lg border border-[#333333] bg-[#2b2b2b] text-[#f5f5f5] placeholder-[#cccccc] focus:outline-none focus:ring-2 focus:ring-[#00b6b4] shadow-lg text-sm sm:text-base"
                                 />
@@ -59,7 +61,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                 </div>
-                                <select class="w-full h-10 sm:h-12 pl-10 sm:pl-12 pr-3 sm:pr-4 rounded-lg border border-[#333333] bg-[#2b2b2b] text-[#f5f5f5] focus:outline-none focus:ring-2 focus:ring-[#00b6b4] shadow-lg text-sm sm:text-base">
+                                <select id="homeLocationSelect" name="location" class="w-full h-10 sm:h-12 pl-10 sm:pl-12 pr-3 sm:pr-4 rounded-lg border border-[#333333] bg-[#2b2b2b] text-[#f5f5f5] focus:outline-none focus:ring-2 focus:ring-[#00b6b4] shadow-lg text-sm sm:text-base">
                                     <option value="">Région / Wilaya</option>
                                     <option value="Adrar">Adrar</option>
                                     <option value="Chlef">Chlef</option>
@@ -125,16 +127,16 @@
                         <div class="mt-4 sm:mt-6 animate-fade-in-up" style="animation-delay: 0.9s;">
                             <p class="text-white text-shadow mb-2 sm:mb-3 text-sm sm:text-base">Recherches populaires :</p>
                             <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                                <button class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
+                                <button type="button" onclick="searchPopular('Développeur')" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Développeur
                                 </button>
-                                <button class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
+                                <button type="button" onclick="searchPopular('Marketing')" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Marketing
                                 </button>
-                                <button class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
+                                <button type="button" onclick="searchPopular('Commercial')" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Commercial
                                 </button>
-                                <button class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
+                                <button type="button" onclick="searchPopular('Design')" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#2b2b2b]/80 backdrop-blur-sm border border-[#00b6b4]/20 rounded-full text-xs sm:text-sm text-[#00b6b4] transition-all duration-300 hover:bg-[#2b2b2b] hover:scale-105 active:scale-95">
                                     Design
                                 </button>
                             </div>
@@ -178,4 +180,41 @@
 
 <!-- Footer -->
 @include('components.footer')
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle popular search buttons
+    window.searchPopular = function(keyword) {
+        const searchInput = document.getElementById('homeSearchInput');
+        if (searchInput) {
+            searchInput.value = keyword;
+        }
+        
+        // Submit the form
+        const form = document.getElementById('homeSearchForm');
+        if (form) {
+            form.submit();
+        }
+    };
+
+    // Handle form submission with validation
+    const form = document.getElementById('homeSearchForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const searchInput = document.getElementById('homeSearchInput');
+            const locationSelect = document.getElementById('homeLocationSelect');
+            
+            // If both search and location are empty, prevent submission
+            if (!searchInput.value.trim() && !locationSelect.value) {
+                e.preventDefault();
+                // Focus on search input to encourage user to enter something
+                searchInput.focus();
+                return false;
+            }
+            
+            // Form will submit normally with GET parameters
+        });
+    }
+});
+</script>
 @endsection

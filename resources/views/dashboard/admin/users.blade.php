@@ -760,7 +760,6 @@ document.addEventListener('DOMContentLoaded', function() {
         companyNameInput.required = false;
     }
     
-    // Form submission debugging
     document.getElementById('addUserForm').addEventListener('submit', function(e) {
         
         // Get form data

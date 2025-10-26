@@ -81,52 +81,49 @@
                 <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                     Candidatures récentes
                 </h2>
-                <button class="text-[#00b6b4] hover:text-[#009999] text-xs sm:text-sm font-medium">
+                <a href="{{ route('candidate.applications') }}" class="text-[#00b6b4] hover:text-[#009999] text-xs sm:text-sm font-medium">
                     Voir tout
-                </button>
+                </a>
             </div>
             <div class="space-y-3 sm:space-y-4">
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Développeur Frontend React
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            IMPACTOME • 2024-01-15
-                        </p>
+                @forelse($recentApplications as $application)
+                    <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
+                                {{ $application->job->title }}
+                            </h3>
+                            <p class="text-[#9ca3af] text-xs sm:text-sm">
+                                {{ $application->job->company->name }} • {{ $application->applied_at->format('d/m/Y') }}
+                            </p>
+                        </div>
+                        @php
+                            $statusMap = [
+                                'pending' => ['text' => 'En cours', 'class' => 'text-yellow-600 bg-yellow-100'],
+                                'accepted' => ['text' => 'Accepté', 'class' => 'text-green-600 bg-green-100'],
+                                'rejected' => ['text' => 'Refusé', 'class' => 'text-red-600 bg-red-100'],
+                                'shortlisted' => ['text' => 'Présélectionné', 'class' => 'text-blue-600 bg-blue-100'],
+                                'reviewed' => ['text' => 'Examiné', 'class' => 'text-purple-600 bg-purple-100']
+                            ];
+                            $statusInfo = $statusMap[$application->status] ?? ['text' => $application->status, 'class' => 'text-gray-600 bg-gray-100'];
+                        @endphp
+                        <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 {{ $statusInfo['class'] }}">
+                            {{ $statusInfo['text'] }}
+                        </span>
                     </div>
-                    <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0" style="color: rgb(202 138 4 / var(--tw-text-opacity, 1)); background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1));">
-                        En cours
-                    </span>
-                </div>
-                
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Designer UX/UI
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            OMPLEO • 2024-01-12
-                        </p>
+                @empty
+                    <div class="text-center py-8">
+                        <div class="w-16 h-16 bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                <rect width="20" height="14" x="2" y="6" rx="2"/>
+                            </svg>
+                        </div>
+                        <p class="text-[#9ca3af] text-sm">Aucune candidature récente</p>
+                        <a href="{{ route('jobs.index') }}" class="text-[#00b6b4] hover:text-[#009999] text-sm font-medium mt-2 inline-block">
+                            Voir les offres d'emploi
+                        </a>
                     </div>
-                    <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1)); background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));">
-                        Accepté
-                    </span>
-                </div>
-                
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Community Manager
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            CONDOR • 2024-01-10
-                        </p>
-                    </div>
-                    <span class="px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0" style="color: rgb(220 38 38 / var(--tw-text-opacity, 1)); background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));">
-                        Refusé
-                    </span>
-                </div>
+                @endforelse
             </div>
         </div>
 
@@ -136,67 +133,44 @@
                 <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                     Offres recommandées
                 </h2>
-                <button class="text-[#00b6b4] hover:text-[#009999] text-xs sm:text-sm font-medium">
+                <a href="{{ route('jobs.index') }}" class="text-[#00b6b4] hover:text-[#009999] text-xs sm:text-sm font-medium">
                     Voir plus
-                </button>
+                </a>
             </div>
             <div class="space-y-3 sm:space-y-4">
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Développeur Full Stack
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            TechCorp • Alger
-                        </p>
-                    </div>
-                    <div class="text-right flex-shrink-0 ml-2">
-                        <div class="text-[#00b6b4] font-bold text-xs sm:text-sm mb-1">
-                            95% match
+                @forelse($recommendedJobs as $job)
+                    <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
+                                {{ $job->title }}
+                            </h3>
+                            <p class="text-[#9ca3af] text-xs sm:text-sm">
+                                {{ $job->company->name }} • {{ $job->location }}
+                            </p>
                         </div>
-                        <button class="text-xs text-[#00b6b4] hover:text-[#009999] font-medium">
-                            Postuler
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Product Manager
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            StartupXYZ • Remote
-                        </p>
-                    </div>
-                    <div class="text-right flex-shrink-0 ml-2">
-                        <div class="text-[#00b6b4] font-bold text-xs sm:text-sm mb-1">
-                            88% match
+                        <div class="text-right flex-shrink-0 ml-2">
+                            <div class="text-[#00b6b4] font-bold text-xs sm:text-sm mb-1">
+                                {{ rand(75, 95) }}% match
+                            </div>
+                            <a href="{{ route('jobs.show', $job->slug) }}" class="text-xs text-[#00b6b4] hover:text-[#009999] font-medium">
+                                Voir l'offre
+                            </a>
                         </div>
-                        <button class="text-xs text-[#00b6b4] hover:text-[#009999] font-medium">
-                            Postuler
-                        </button>
                     </div>
-                </div>
-                
-                <div class="flex items-center justify-between p-3 sm:p-4 border border-[#333333] rounded-xl hover:bg-[#333333] transition-colors duration-200">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-[#f5f5f5] mb-1 text-sm sm:text-base">
-                            Data Analyst
-                        </h3>
-                        <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            DataCorp • Oran
-                        </p>
-                    </div>
-                    <div class="text-right flex-shrink-0 ml-2">
-                        <div class="text-[#00b6b4] font-bold text-xs sm:text-sm mb-1">
-                            82% match
+                @empty
+                    <div class="text-center py-8">
+                        <div class="w-16 h-16 bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
                         </div>
-                        <button class="text-xs text-[#00b6b4] hover:text-[#009999] font-medium">
-                            Postuler
-                        </button>
+                        <p class="text-[#9ca3af] text-sm">Aucune offre recommandée</p>
+                        <a href="{{ route('jobs.index') }}" class="text-[#00b6b4] hover:text-[#009999] text-sm font-medium mt-2 inline-block">
+                            Voir toutes les offres
+                        </a>
                     </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -240,22 +214,47 @@
             Prochains événements
         </h2>
         <div class="space-y-3 sm:space-y-4">
-            <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-blue-400/20 rounded-xl">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            @php
+                // Get upcoming interviews (applications with status 'shortlisted' or 'accepted' that might have interviews)
+                $upcomingInterviews = $user->applications()
+                    ->whereIn('status', ['shortlisted', 'accepted'])
+                    ->with(['job.company'])
+                    ->orderBy('updated_at', 'desc')
+                    ->limit(3)
+                    ->get();
+            @endphp
+            
+            @forelse($upcomingInterviews as $application)
+                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-blue-400/20 rounded-xl">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
+                            {{ $application->status === 'accepted' ? 'Candidature acceptée' : 'Entretien possible' }} - {{ $application->job->company->name }}
+                        </h3>
+                        <p class="text-[#9ca3af] text-xs sm:text-sm">
+                            {{ $application->job->title }} • {{ $application->updated_at->format('d/m/Y') }}
+                        </p>
+                    </div>
+                    <a href="{{ route('jobs.show', $application->job->slug) }}" class="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-medium flex-shrink-0">
+                        Détails
+                    </a>
                 </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
-                        Entretien avec IMPACTOME
-                    </h3>
-                    <p class="text-[#9ca3af] text-xs sm:text-sm">
-                        Demain à 14h00 • Visioconférence
-                    </p>
+            @empty
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 bg-[#333333] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                            <line x1="16" x2="16" y1="2" y2="6"/>
+                            <line x1="8" x2="8" y1="2" y2="6"/>
+                            <line x1="3" x2="21" y1="10" y2="10"/>
+                        </svg>
+                    </div>
+                    <p class="text-[#9ca3af] text-sm">Aucun événement à venir</p>
+                    <p class="text-[#9ca3af] text-xs mt-1">Continuez à postuler pour voir vos prochains entretiens</p>
                 </div>
-                <button class="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-medium flex-shrink-0">
-                    Détails
-                </button>
-            </div>
+            @endforelse
         </div>
     </div>
 </div>

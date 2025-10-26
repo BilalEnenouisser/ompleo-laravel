@@ -19,6 +19,10 @@ class JobController extends Controller
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
                   ->orWhere('location', 'like', "%{$search}%")
+                  ->orWhere('experience', 'like', "%{$search}%")
+                  ->orWhere('experience_level', 'like', "%{$search}%")
+                  ->orWhere('type', 'like', "%{$search}%")
+                  ->orWhere('work_type', 'like', "%{$search}%")
                   ->orWhereHas('company', function($companyQuery) use ($search) {
                       $companyQuery->where('name', 'like', "%{$search}%")
                                    ->orWhere('industry', 'like', "%{$search}%");
@@ -31,14 +35,17 @@ class JobController extends Controller
             $query->where('location', 'like', "%{$request->location}%");
         }
 
-        // Type filter
+        // Type filter (work type)
         if ($request->filled('type')) {
-            $query->where('type', $request->type);
+            $query->where('work_type', $request->type);
         }
 
         // Experience level filter
         if ($request->filled('experience')) {
-            $query->where('experience_level', 'like', "%{$request->experience}%");
+            $query->where(function($q) use ($request) {
+                $q->where('experience_level', 'like', "%{$request->experience}%")
+                  ->orWhere('experience', 'like', "%{$request->experience}%");
+            });
         }
 
         // Salary range filter
@@ -68,21 +75,31 @@ class JobController extends Controller
         }
 
         // Check if it's an AJAX request for "show more" functionality
-        if ($request->ajax()) {
-            $page = $request->get('page', 1);
-            $jobs = $query->paginate(5, ['*'], 'page', $page);
+        if ($request->ajax() || $request->has('page')) {
+            $page = $request->get('page', 2); // AJAX requests start from page 2
+            $perPage = 5; // Load 5 more jobs per AJAX request
+            
+            // Calculate offset: (page - 1) * perPage + 10 (since first 10 are already shown)
+            $offset = ($page - 2) * $perPage + 10;
+            
+            $jobs = $query->skip($offset)->take($perPage)->get();
+            $totalJobs = $query->count();
+            $hasMore = ($offset + $perPage) < $totalJobs;
             
             return response()->json([
-                'html' => view('jobs.partials.job-card', compact('jobs'))->render(),
-                'hasMore' => $jobs->hasMorePages(),
-                'nextPage' => $jobs->currentPage() + 1
+                'html' => view('jobs.partials.job-card', ['jobs' => $jobs])->render(),
+                'hasMore' => $hasMore,
+                'nextPage' => $page + 1
             ]);
         }
         
         // Initial load - show first 10 jobs
         $jobs = $query->paginate(10);
+        
+        // Get total count of published jobs for the hero section
+        $totalPublishedJobs = Job::where('status', 'published')->count();
             
-        return view('jobs.index', compact('jobs'));
+        return view('jobs.index', compact('jobs', 'totalPublishedJobs'));
     }
 
     public function show(Job $job)

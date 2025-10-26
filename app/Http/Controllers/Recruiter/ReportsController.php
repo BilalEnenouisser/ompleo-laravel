@@ -129,6 +129,9 @@ class ReportsController extends Controller
         // Response time (simplified calculation)
         $responseTime = 2.3; // Default value, in real app calculate from actual response times
         
+        // Trends data for the trends section
+        $trendsData = $this->getTrendsData($recruiter, $days);
+        
         $stats = [
             'total_jobs' => $totalJobs,
             'total_applications' => $totalApplications,
@@ -138,9 +141,134 @@ class ReportsController extends Controller
             'candidate_sources' => $candidateSources,
             'job_performance' => $jobPerformance,
             'application_status' => $applicationStatus,
-            'response_time' => $responseTime
+            'response_time' => $responseTime,
+            'trends' => $trendsData
         ];
         
         return view('dashboard.recruiter.reports', compact('stats'));
+    }
+    
+    private function getTrendsData($recruiter, $days)
+    {
+        $startDate = Carbon::now()->subDays($days);
+        
+        // Weekly applications trend
+        $weeklyApplications = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $dayStart = $date->copy()->startOfDay();
+            $dayEnd = $date->copy()->endOfDay();
+            
+            $applications = Application::whereHas('job', function($query) use ($recruiter) {
+                $query->where('recruiter_id', $recruiter->id);
+            })->whereBetween('created_at', [$dayStart, $dayEnd])->count();
+            
+            $weeklyApplications[] = [
+                'date' => $date->format('M d'),
+                'applications' => $applications
+            ];
+        }
+        
+        // Monthly job performance trend
+        $monthlyJobTrend = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i);
+            $monthStart = $month->copy()->startOfMonth();
+            $monthEnd = $month->copy()->endOfMonth();
+            
+            $jobs = Job::where('recruiter_id', $recruiter->id)
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->count();
+            
+            $views = Job::where('recruiter_id', $recruiter->id)
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->sum('views') ?? 0;
+            
+            $monthlyJobTrend[] = [
+                'month' => $month->format('M Y'),
+                'jobs' => $jobs,
+                'views' => $views
+            ];
+        }
+        
+        // Top performing job categories (using company industry)
+        $jobCategories = Job::where('recruiter_id', $recruiter->id)
+            ->where('status', 'published')
+            ->with('company')
+            ->get()
+            ->groupBy(function($job) {
+                return $job->company ? $job->company->industry : 'Non spécifié';
+            })
+            ->map(function($jobs, $industry) {
+                return [
+                    'category' => $industry ?: 'Non spécifié',
+                    'jobs' => $jobs->count(),
+                    'views' => $jobs->sum('views')
+                ];
+            })
+            ->sortByDesc('views')
+            ->take(5)
+            ->values();
+        
+        // Application status trend over time
+        $statusTrend = [];
+        for ($i = 3; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i);
+            $monthStart = $month->copy()->startOfMonth();
+            $monthEnd = $month->copy()->endOfMonth();
+            
+            $pending = Application::whereHas('job', function($query) use ($recruiter) {
+                $query->where('recruiter_id', $recruiter->id);
+            })->where('status', 'pending')
+              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            
+            $accepted = Application::whereHas('job', function($query) use ($recruiter) {
+                $query->where('recruiter_id', $recruiter->id);
+            })->where('status', 'accepted')
+              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            
+            $rejected = Application::whereHas('job', function($query) use ($recruiter) {
+                $query->where('recruiter_id', $recruiter->id);
+            })->where('status', 'rejected')
+              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            
+            $statusTrend[] = [
+                'month' => $month->format('M'),
+                'pending' => $pending,
+                'accepted' => $accepted,
+                'rejected' => $rejected
+            ];
+        }
+        
+        // Conversion rate trend
+        $conversionTrend = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $dayStart = $date->copy()->startOfDay();
+            $dayEnd = $date->copy()->endOfDay();
+            
+            $applications = Application::whereHas('job', function($query) use ($recruiter) {
+                $query->where('recruiter_id', $recruiter->id);
+            })->whereBetween('created_at', [$dayStart, $dayEnd])->count();
+            
+            $views = Job::where('recruiter_id', $recruiter->id)
+                ->whereBetween('created_at', [$dayStart, $dayEnd])
+                ->sum('views') ?? 0;
+            
+            $conversionRate = $views > 0 ? round(($applications / $views) * 100, 1) : 0;
+            
+            $conversionTrend[] = [
+                'date' => $date->format('M d'),
+                'rate' => $conversionRate
+            ];
+        }
+        
+        return [
+            'weekly_applications' => $weeklyApplications,
+            'monthly_job_trend' => $monthlyJobTrend,
+            'job_categories' => $jobCategories,
+            'status_trend' => $statusTrend,
+            'conversion_trend' => $conversionTrend
+        ];
     }
 }

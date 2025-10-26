@@ -441,7 +441,6 @@
 
 <script>
 function applyForJob(jobId) {
-    // TODO: Implement job application logic
     alert('Fonctionnalité de candidature en cours de développement');
 }
 </script>

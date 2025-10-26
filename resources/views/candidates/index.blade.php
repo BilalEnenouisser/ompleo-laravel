@@ -234,7 +234,7 @@ $steps = [
                         </svg>
                     </div>
                     <div class="text-4xl font-bold mb-2 animate-counter" style="animation-delay: 0.4s;">
-                        1187+
+                        {{ $totalPublishedJobs }}+
                     </div>
                     <div class="text-white/80">Offres disponibles</div>
                 </div>

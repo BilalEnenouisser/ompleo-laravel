@@ -243,63 +243,46 @@ use Illuminate\Support\Facades\Storage;
                     </div>
                     
                     <div class="flex items-center space-x-2 sm:space-x-4">
-                        <!-- Notification Icon -->
-                        <div class="relative">
-                            <button id="notificationBtn" class="p-2 text-[#cccccc] hover:text-[#00b6b4] rounded-lg hover:bg-[#333333] relative">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-                                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+                        <!-- Mobile Notification Icon (only visible on mobile) -->
+                        <div class="relative lg:hidden">
+                            <button onclick="toggleMobileNotificationMenu()" class="relative p-2 text-[#cccccc] hover:text-[#00b6b4] rounded-lg hover:bg-[#333333] transition-colors">
+                                <!-- Bell icon from Lucide React -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
                                 </svg>
-                                <!-- Notification Badge -->
-                                <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
-                                    <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                <!-- Unread count badge -->
+                                <span id="mobileNotificationBadge" class="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center hidden">
+                                    0
                                 </span>
                             </button>
-                            
-                            <!-- Notifications Dropdown -->
-                            <div id="notificationDropdown" class="hidden absolute right-0 top-full mt-2 w-80 bg-[#2b2b2b] border border-[#333333] rounded-xl shadow-xl z-50">
-                                <div class="p-4 border-b border-[#333333]">
-                                    <h3 class="text-lg font-semibold text-[#f5f5f5]">Notifications</h3>
-                                </div>
-                                <div class="max-h-64 overflow-y-auto">
-                                    <!-- Notification Item 1 -->
-                                    <div class="p-4 border-b border-[#333333] hover:bg-[#333333]">
-                                        <div class="flex items-start space-x-3">
-                                            <div class="w-2 h-2 bg-[#00b6b4] rounded-full mt-2 flex-shrink-0"></div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-[#f5f5f5]">Nouvelle candidature</p>
-                                                <p class="text-xs text-[#9ca3af] mt-1">Ahmed Belkacem a postulé pour Développeur Frontend</p>
-                                                <p class="text-xs text-[#666666] mt-1">Il y a 2 heures</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Notification Item 2 -->
-                                    <div class="p-4 border-b border-[#333333] hover:bg-[#333333]">
-                                        <div class="flex items-start space-x-3">
-                                            <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-[#f5f5f5]">Entretien confirmé</p>
-                                                <p class="text-xs text-[#9ca3af] mt-1">Entretien avec Fatima Zohra confirmé pour demain</p>
-                                                <p class="text-xs text-[#666666] mt-1">Il y a 4 heures</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Notification Item 3 -->
-                                    <div class="p-4 hover:bg-[#333333]">
-                                        <div class="flex items-start space-x-3">
-                                            <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-[#f5f5f5]">Rappel d'entretien</p>
-                                                <p class="text-xs text-[#9ca3af] mt-1">Entretien avec Karim Boudjadar dans 30 minutes</p>
-                                                <p class="text-xs text-[#666666] mt-1">Il y a 1 jour</p>
-                                            </div>
-                                        </div>
+
+                            <!-- Mobile Notification Dropdown -->
+                            <div id="mobileNotificationMenu" class="hidden absolute right-0 mt-2 w-80 max-h-[70vh] overflow-y-auto bg-[#2b2b2b] rounded-xl shadow-lg border border-[#333333] z-50">
+                                <div class="p-4 border-b border-[#333333] flex items-center justify-between">
+                                    <h3 class="font-semibold text-[#f5f5f5]">Notifications</h3>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="markAllAsRead()" class="text-xs text-[#00b6b4] hover:text-[#009e9c] flex items-center gap-1 hidden" id="mobileMarkAllReadBtn">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path d="M20 6 9 17l-5-5"></path>
+                                            </svg>
+                                            Tout marquer comme lu
+                                        </button>
+                                        <button onclick="toggleMobileNotificationMenu()" class="text-[#9ca3af] hover:text-[#f5f5f5]">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path d="M18 6 6 18"></path>
+                                                <path d="M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="p-4 border-t border-[#333333]">
-                                    <a href="{{ route('notifications') }}" class="block w-full text-center text-sm text-[#00b6b4] hover:text-[#009e9c] font-medium">
+
+                                <div id="mobileNotificationList" class="divide-y divide-[#333333]">
+                                    <!-- Notifications will be loaded here -->
+                                </div>
+
+                                <div class="p-3 border-t border-[#333333] text-center">
+                                    <a href="{{ route('notifications') }}" class="text-sm text-[#00b6b4] hover:text-[#009e9c] font-medium" onclick="toggleMobileNotificationMenu()">
                                         Voir toutes les notifications
                                     </a>
                                 </div>
@@ -348,6 +331,127 @@ use Illuminate\Support\Facades\Storage;
             }
         }
 
+        // Mobile Notification Functions
+        function toggleMobileNotificationMenu() {
+            const menu = document.getElementById('mobileNotificationMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                loadMobileNotifications();
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        function loadMobileNotifications() {
+            fetch('/api/notifications?header=true', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const notificationList = document.getElementById('mobileNotificationList');
+                const badge = document.getElementById('mobileNotificationBadge');
+                const markAllBtn = document.getElementById('mobileMarkAllReadBtn');
+                
+                if (data.notifications && data.notifications.length > 0) {
+                    notificationList.innerHTML = data.notifications.map(notification => `
+                        <div class="p-4 hover:bg-[#333333] cursor-pointer" onclick="markNotificationAsRead(${notification.id})">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-2 h-2 ${notification.is_read ? 'bg-gray-500' : 'bg-[#00b6b4]'} rounded-full mt-2 flex-shrink-0"></div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-[#f5f5f5]">${notification.title}</p>
+                                    <p class="text-xs text-[#9ca3af] mt-1">${notification.message}</p>
+                                    <p class="text-xs text-[#666666] mt-1">${formatTimeAgo(notification.created_at)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    // Update badge
+                    const unreadCount = data.notifications.filter(n => !n.is_read).length;
+                    if (unreadCount > 0) {
+                        badge.textContent = unreadCount;
+                        badge.classList.remove('hidden');
+                        markAllBtn.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                        markAllBtn.classList.add('hidden');
+                    }
+                } else {
+                    notificationList.innerHTML = '<div class="p-8 text-center text-[#9ca3af]">Aucune notification</div>';
+                    badge.classList.add('hidden');
+                    markAllBtn.classList.add('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading notifications:', error);
+                const notificationList = document.getElementById('mobileNotificationList');
+                notificationList.innerHTML = '<div class="p-8 text-center text-red-500">Erreur lors du chargement</div>';
+            });
+        }
+
+        function markNotificationAsRead(notificationId) {
+            fetch(`/notifications/${notificationId}/read`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadMobileNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+        }
+
+        function markAllAsRead() {
+            fetch('/notifications/read-all', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadMobileNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking all notifications as read:', error);
+            });
+        }
+
+        function formatTimeAgo(dateString) {
+            const now = new Date();
+            const date = new Date(dateString);
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return 'À l\'instant';
+            } else if (diffInSeconds < 3600) {
+                const minutes = Math.floor(diffInSeconds / 60);
+                return `Il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
+            } else if (diffInSeconds < 86400) {
+                const hours = Math.floor(diffInSeconds / 3600);
+                return `Il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+            } else {
+                const days = Math.floor(diffInSeconds / 86400);
+                return `Il y a ${days} jour${days > 1 ? 's' : ''}`;
+            }
+        }
+
         // Notification dropdown functionality
         document.addEventListener('DOMContentLoaded', function() {
             const notificationBtn = document.getElementById('notificationBtn');
@@ -366,6 +470,9 @@ use Illuminate\Support\Facades\Storage;
                     }
                 });
             }
+            
+            // Load mobile notifications on page load
+            loadMobileNotifications();
         });
     </script>
     

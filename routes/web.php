@@ -173,6 +173,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.user.type:adm
 // Applications Routes
 Route::middleware('auth')->group(function () {
     Route::get('/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/applications/export-pdf', [App\Http\Controllers\ApplicationController::class, 'exportPdf'])->name('applications.export-pdf');
     Route::get('/jobs/{job}/apply', [App\Http\Controllers\ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/applications', [App\Http\Controllers\ApplicationController::class, 'store'])->name('applications.store');
     Route::get('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'show'])->name('applications.show');
@@ -191,9 +192,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
 Route::get('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.show');
 
-// Public Jobs Routes
-Route::get('/jobs', [App\Http\Controllers\JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{job}', [App\Http\Controllers\JobController::class, 'show'])->name('jobs.show');
+// Public Jobs Routes (duplicate removed - already defined above)
 
 Route::middleware('auth')->group(function () {
     Route::get('/companies/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('companies.create');
@@ -227,7 +226,8 @@ Route::get('/companies/{company:slug}', [CompanyController::class, 'show'])->nam
 
 // Candidates Route
 Route::get('/candidates', function () {
-    return view('candidates.index');
+    $totalPublishedJobs = \App\Models\Job::where('status', 'published')->count();
+    return view('candidates.index', compact('totalPublishedJobs'));
 })->name('candidates');
 
 // Pricing Page
@@ -295,14 +295,20 @@ Route::middleware('auth')->group(function () {
     // Application status update route
     Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.update-status');
     
-    Route::get('/recruiter/candidates', function () {
-        return view('dashboard.recruiter.candidates');
-    })->name('recruiter.candidates');
+    Route::get('/recruiter/candidates', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index'])->name('recruiter.candidates');
+    Route::get('/recruiter/candidates/{candidate}/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'publicShow'])->name('recruiter.candidate.profile');
     
-    Route::get('/recruiter/interviews', function () {
-        return view('dashboard.recruiter.interviews');
-    })->name('recruiter.interviews');
-    
+    // Interview Management Routes
+    Route::get('/recruiter/interviews', [App\Http\Controllers\Recruiter\InterviewsController::class, 'index'])->name('recruiter.interviews');
+    Route::get('/recruiter/interviews/create', [App\Http\Controllers\Recruiter\InterviewsController::class, 'create'])->name('recruiter.interviews.create');
+    Route::post('/recruiter/interviews', [App\Http\Controllers\Recruiter\InterviewsController::class, 'store'])->name('recruiter.interviews.store');
+    Route::get('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'show'])->name('recruiter.interviews.show');
+    Route::get('/recruiter/interviews/{interview}/edit', [App\Http\Controllers\Recruiter\InterviewsController::class, 'edit'])->name('recruiter.interviews.edit');
+    Route::put('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'update'])->name('recruiter.interviews.update');
+    Route::put('/recruiter/interviews/{interview}/status', [App\Http\Controllers\Recruiter\InterviewsController::class, 'updateStatus'])->name('recruiter.interviews.update-status');
+    Route::delete('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'destroy'])->name('recruiter.interviews.destroy');
+    Route::get('/recruiter/interviews/calendar/data', [App\Http\Controllers\Recruiter\InterviewsController::class, 'calendar'])->name('recruiter.interviews.calendar');
+
     Route::get('/recruiter/reports', [App\Http\Controllers\Recruiter\ReportsController::class, 'index'])->name('recruiter.reports');
     
     // Recruiter Company Profile

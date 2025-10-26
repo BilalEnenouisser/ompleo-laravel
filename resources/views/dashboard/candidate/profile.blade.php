@@ -72,7 +72,7 @@
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg">
         <div class="flex flex-col lg:flex-row gap-8">
             <div class="flex flex-col items-center lg:items-start">
-                <div class="relative">
+                <div class="relative" id="avatar-container">
                     @if($profile->avatar)
                         <img id="avatarImage" src="{{ Storage::url($profile->avatar) }}" alt="Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4]">
                     @else
@@ -122,6 +122,51 @@
                              <span>{{ $profile->city ?? 'Alger, Algérie' }}</span>
                         </div>
                          <input id="location" type="text" value="{{ $profile->city ?? 'Alger, Algérie' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Année d'expérience
+                        </label>
+                        <div id="experienceYearsDisplay" class="flex items-center gap-2 text-[#9ca3af]">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span>{{ $profile->experience_years ?? 'Non spécifié' }}</span>
+                        </div>
+                        <select id="experienceYears" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">
+                            <option value="">Sélectionner l'expérience</option>
+                            <option value="0-1 ans" {{ ($profile->experience_years ?? '') == '0-1 ans' ? 'selected' : '' }}>0-1 ans</option>
+                            <option value="1-2 ans" {{ ($profile->experience_years ?? '') == '1-2 ans' ? 'selected' : '' }}>1-2 ans</option>
+                            <option value="2-3 ans" {{ ($profile->experience_years ?? '') == '2-3 ans' ? 'selected' : '' }}>2-3 ans</option>
+                            <option value="3-5 ans" {{ ($profile->experience_years ?? '') == '3-5 ans' ? 'selected' : '' }}>3-5 ans</option>
+                            <option value="5-7 ans" {{ ($profile->experience_years ?? '') == '5-7 ans' ? 'selected' : '' }}>5-7 ans</option>
+                            <option value="7-10 ans" {{ ($profile->experience_years ?? '') == '7-10 ans' ? 'selected' : '' }}>7-10 ans</option>
+                            <option value="10+ ans" {{ ($profile->experience_years ?? '') == '10+ ans' ? 'selected' : '' }}>10+ ans</option>
+                            <option value="Débutant" {{ ($profile->experience_years ?? '') == 'Débutant' ? 'selected' : '' }}>Débutant</option>
+                            <option value="Junior" {{ ($profile->experience_years ?? '') == 'Junior' ? 'selected' : '' }}>Junior</option>
+                            <option value="Intermédiaire" {{ ($profile->experience_years ?? '') == 'Intermédiaire' ? 'selected' : '' }}>Intermédiaire</option>
+                            <option value="Senior" {{ ($profile->experience_years ?? '') == 'Senior' ? 'selected' : '' }}>Senior</option>
+                            <option value="Expert" {{ ($profile->experience_years ?? '') == 'Expert' ? 'selected' : '' }}>Expert</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Disponible
+                        </label>
+                        <div id="availabilityDisplay" class="flex items-center gap-2 text-[#9ca3af]">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                            <span>{{ $profile->availability ?? 'Non spécifié' }}</span>
+                        </div>
+                        <select id="availability" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">
+                            <option value="">Sélectionner la disponibilité</option>
+                            <option value="Immédiate" {{ ($profile->availability ?? '') == 'Immédiate' ? 'selected' : '' }}>Immédiate</option>
+                            <option value="1 semaine" {{ ($profile->availability ?? '') == '1 semaine' ? 'selected' : '' }}>1 semaine</option>
+                            <option value="2 semaines" {{ ($profile->availability ?? '') == '2 semaines' ? 'selected' : '' }}>2 semaines</option>
+                            <option value="1 mois" {{ ($profile->availability ?? '') == '1 mois' ? 'selected' : '' }}>1 mois</option>
+                            <option value="2 mois" {{ ($profile->availability ?? '') == '2 mois' ? 'selected' : '' }}>2 mois</option>
+                            <option value="3 mois" {{ ($profile->availability ?? '') == '3 mois' ? 'selected' : '' }}>3 mois</option>
+                            <option value="À négocier" {{ ($profile->availability ?? '') == 'À négocier' ? 'selected' : '' }}>À négocier</option>
+                        </select>
                     </div>
                 </div>
 
@@ -367,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addLanguageBtn = document.getElementById('addLanguageBtn');
     const avatarUpload = document.getElementById('avatarUpload');
     
-    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
+    const inputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea, select');
     const displays = document.querySelectorAll('[id$="Display"]');
     const skillButtons = document.querySelectorAll('#skillsContainer button');
     
@@ -400,11 +445,19 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('portfolio').classList.remove('hidden');
             document.getElementById('twitter').classList.remove('hidden');
             
+            // Show new dropdown fields
+            document.getElementById('experienceYears').classList.remove('hidden');
+            document.getElementById('availability').classList.remove('hidden');
+            
             // Hide social media displays
             document.getElementById('linkedinDisplay').classList.add('hidden');
             document.getElementById('facebookDisplay').classList.add('hidden');
             document.getElementById('portfolioDisplay').classList.add('hidden');
             document.getElementById('twitterDisplay').classList.add('hidden');
+            
+            // Hide new dropdown displays
+            document.getElementById('experienceYearsDisplay').classList.add('hidden');
+            document.getElementById('availabilityDisplay').classList.add('hidden');
             
             // Show delete buttons for all sections
             skillButtons.forEach(btn => btn.classList.remove('hidden'));
@@ -442,10 +495,18 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('portfolio').classList.add('hidden');
             document.getElementById('twitter').classList.add('hidden');
             
+            // Hide new dropdown fields, show displays
+            document.getElementById('experienceYears').classList.add('hidden');
+            document.getElementById('availability').classList.add('hidden');
+            
             document.getElementById('linkedinDisplay').classList.remove('hidden');
             document.getElementById('facebookDisplay').classList.remove('hidden');
             document.getElementById('portfolioDisplay').classList.remove('hidden');
             document.getElementById('twitterDisplay').classList.remove('hidden');
+            
+            // Show new dropdown displays
+            document.getElementById('experienceYearsDisplay').classList.remove('hidden');
+            document.getElementById('availabilityDisplay').classList.remove('hidden');
             
             // Hide delete buttons for all sections
             skillButtons.forEach(btn => btn.classList.add('hidden'));
@@ -477,6 +538,12 @@ document.addEventListener('DOMContentLoaded', function() {
          formData.append('bio', document.getElementById('bio').value);
          const phoneValue = document.getElementById('phone').value;
          formData.append('phone', phoneValue);
+         
+         // Add new dropdown fields
+         const experienceYearsValue = document.getElementById('experienceYears').value;
+         const availabilityValue = document.getElementById('availability').value;
+         formData.append('experience_years', experienceYearsValue);
+         formData.append('availability', availabilityValue);
          
          // Add social media fields
          const linkedinValue = document.getElementById('linkedin').value;
@@ -652,7 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
              if (data.success) {
                  showSuccessModal();
              } else {
-                 showErrorModal('Erreur lors de la sauvegarde: ' + (data.message || data.debug || 'Erreur inconnue'));
+                 showErrorModal('Erreur lors de la sauvegarde: ' + (data.message || 'Erreur inconnue'));
              }
          })
          .catch(error => {
@@ -782,7 +849,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Create preview
             const reader = new FileReader();
             reader.onload = function(e) {
-                const avatarContainer = document.querySelector('.relative');
+                const avatarContainer = document.getElementById('avatar-container');
                 const existingImage = document.getElementById('avatarImage');
                 const existingInitials = document.getElementById('avatarInitials');
                 

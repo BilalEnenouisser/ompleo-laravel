@@ -282,7 +282,6 @@ function addBlock(type) {
     attachEventListeners();
 }
 
-// Test function to clear all blocks
 function clearAllBlocks() {
     contentBlocks = [];
     blockIdCounter = 0;
@@ -1252,7 +1251,6 @@ async function saveArticle(status) {
     formData.append('status', status); // Use the parameter passed to the function
     formData.append('tags', tags);
     
-    // Debug: Log form data
     
     if (featuredImage) {
         formData.append('featured_image', featuredImage);

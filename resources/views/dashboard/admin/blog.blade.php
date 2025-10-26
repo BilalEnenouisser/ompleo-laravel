@@ -151,7 +151,6 @@
                 {{-- Featured Image --}}
                 <div class="lg:w-48 h-32 sm:h-40 rounded-xl overflow-hidden flex-shrink-0">
                     @if($post->featured_image)
-                        {{-- Debug: Log featured image info --}}
                         <img
                             src="{{ asset('storage/' . $post->featured_image) }}"
                             alt="{{ $post->title }}"

@@ -1,4 +1,4 @@
-<footer class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'bg-[#2b2b2b] text-[#cccccc]' : 'bg-gray-100 dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]' }} relative overflow-hidden">
+<footer class="bg-[#2b2b2b] text-[#cccccc] relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Company Info -->
@@ -8,7 +8,7 @@
                     <!-- Dark mode logo -->
                     <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto  dark:block">
                 </div>
-                <p class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} text-lg leading-relaxed mb-6 max-w-lg">
+                <p class="text-[#cccccc] text-lg leading-relaxed mb-6 max-w-lg">
                     OMPLEO n'est pas une simple plateforme d'offres d'emploi. C'est un espace pensé pour simplifier la rencontre entre les bons talents et les bonnes entreprises dans l'ère numérique.
                 </p>
                 
@@ -18,59 +18,59 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
-                        <span class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }}">Chéraga, Alger, Algérie</span>
+                        <span class="text-[#cccccc]">Chéraga, Alger, Algérie</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
-                        <span class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }}">contact@ompleo.com</span>
+                        <span class="text-[#cccccc]">contact@ompleo.com</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
-                        <span class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }}">+213 XXX XXX XXX</span>
+                        <span class="text-[#cccccc]">+213 XXX XXX XXX</span>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Links -->
             <div>
-                <h3 class="text-xl font-semibold {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#f5f5f5]' : 'text-[#111111] dark:text-[#f5f5f5]' }} mb-6">Navigation</h3>
+                <h3 class="text-xl font-semibold text-[#f5f5f5] mb-6">Navigation</h3>
                 <ul class="space-y-3">
                     <li>
-                        <a href="{{ route('home') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('home') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Accueil
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('jobs.index') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('jobs.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Emplois
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('companies.index') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('companies.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Entreprises
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('candidates') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('candidates') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Candidats
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('blog.index') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('blog.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Blog
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('contact') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
+                        <a href="{{ route('contact') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
                             <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                             Contact
                         </a>
@@ -80,25 +80,25 @@
 
             <!-- Resources -->
             <div>
-                <h3 class="text-xl font-semibold {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#f5f5f5]' : 'text-[#111111] dark:text-[#f5f5f5]' }} mb-6">Liens utiles</h3>
+                <h3 class="text-xl font-semibold text-[#f5f5f5] mb-6">Liens utiles</h3>
                 <ul class="space-y-3">
                     <li>
-                        <a href="/mentions-legales" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200">
+                        <a href="/mentions-legales" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200">
                             Mentions légales
                         </a>
                     </li>
                     <li>
-                        <a href="/cgu" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200">
+                        <a href="/cgu" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200">
                             Conditions d'utilisation
                         </a>
                     </li>
                     <li>
-                        <a href="/cgv" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200">
+                        <a href="/cgv" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200">
                             Conditions générales de vente
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('contact') }}" class="{{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#cccccc]' : 'text-[#111111] dark:text-[#cccccc]' }} hover:text-[#00b6b4] transition-colors duration-200">
+                        <a href="{{ route('contact') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200">
                             Nous contacter
                         </a>
                     </li>
@@ -106,7 +106,7 @@
                 
                 <!-- Social Links -->
                 <div class="mt-8">
-                    <h3 class="text-xl font-semibold {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'text-[#f5f5f5]' : 'text-[#111111] dark:text-[#f5f5f5]' }} mb-6">Suivez-nous</h3>
+                    <h3 class="text-xl font-semibold text-[#f5f5f5] mb-6">Suivez-nous</h3>
                     <div class="flex gap-3">
                         <a href="#" class="w-10 h-10 {{ request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*') ? 'bg-[#333333] border-[#444444] text-[#cccccc]' : 'bg-white dark:bg-[#333333] border border-gray-200 dark:border-[#444444] text-[#111111] dark:text-[#cccccc]' }} rounded-full flex items-center justify-center hover:text-[#00b6b4] hover:border-[#00b6b4] transition-colors duration-200" aria-label="Facebook">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

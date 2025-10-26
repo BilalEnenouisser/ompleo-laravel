@@ -41,16 +41,49 @@ class DashboardController extends Controller
             ->get();
         
         // Get recommended jobs (jobs in same location or with similar skills)
-        $recommendedJobs = \App\Models\Job::published()
-            ->active()
-            ->where('location', 'like', '%' . ($profile->city ?? '') . '%')
-            ->orWhereHas('company', function($query) use ($profile) {
-                if ($profile && $profile->skills) {
-                    $query->where('industry', 'like', '%' . implode('%', $profile->skills) . '%');
-                }
-            })
-            ->limit(6)
-            ->get();
+        $recommendedJobs = collect();
+        
+        if ($profile) {
+            // Get jobs in the same city
+            if ($profile->city) {
+                $locationJobs = \App\Models\Job::published()
+                    ->active()
+                    ->where('location', 'like', '%' . $profile->city . '%')
+                    ->whereNotIn('id', $user->applications()->pluck('job_id'))
+                    ->limit(3)
+                    ->get();
+                $recommendedJobs = $recommendedJobs->merge($locationJobs);
+            }
+            
+            // Get jobs with similar skills/industry
+            if ($profile->skills) {
+                $skillsJobs = \App\Models\Job::published()
+                    ->active()
+                    ->where(function($query) use ($profile) {
+                        foreach ($profile->skills as $skill) {
+                            $query->orWhere('title', 'like', '%' . $skill . '%')
+                                  ->orWhere('description', 'like', '%' . $skill . '%');
+                        }
+                    })
+                    ->whereNotIn('id', $user->applications()->pluck('job_id'))
+                    ->limit(3)
+                    ->get();
+                $recommendedJobs = $recommendedJobs->merge($skillsJobs);
+            }
+        }
+        
+        // If no recommendations based on profile, get recent published jobs
+        if ($recommendedJobs->isEmpty()) {
+            $recommendedJobs = \App\Models\Job::published()
+                ->active()
+                ->whereNotIn('id', $user->applications()->pluck('job_id'))
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
+        }
+        
+        // Remove duplicates and limit to 6
+        $recommendedJobs = $recommendedJobs->unique('id')->take(6);
         
         // Get profile completion percentage
         $profileCompletion = $profile ? $profile->getCompletionPercentage() : 0;
