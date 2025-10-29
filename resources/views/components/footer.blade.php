@@ -41,37 +41,37 @@
                 <ul class="space-y-3">
                     <li>
                         <a href="{{ route('home') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Accueil
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('jobs.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Emplois
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('companies.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Entreprises
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('candidates') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Candidats
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('blog.index') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Blog
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('contact') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200 flex items-center gap-2 group">
-                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                            <span class="w-1 h-1 bg-[#00b6b4] rounded-full opacity-0 group-hover:opacity-100 transition-opacity hidden md:block"></span>
                             Contact
                         </a>
                     </li>

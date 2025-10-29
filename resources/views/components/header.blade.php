@@ -272,22 +272,22 @@ use Illuminate\Support\Facades\Storage;
         <!-- Mobile Navigation -->
         <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
-                <a href="{{ route('home') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('home') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('home') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('home') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Accueil
                 </a>
-                <a href="{{ route('jobs.index') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Emplois
                 </a>
-                <a href="{{ route('companies.index') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('companies.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Entreprises
                 </a>
-                <a href="{{ route('candidates') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('candidates') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('candidates') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('candidates') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Candidats
                 </a>
-                <a href="{{ route('blog.index') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('blog.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('blog.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('blog.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Blog
                 </a>
-                <a href="{{ route('contact') }}" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('contact') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('contact') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('contact') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Contact
                 </a>
                 
@@ -309,20 +309,20 @@ use Illuminate\Support\Facades\Storage;
                     
                     <div class="mt-4 space-y-2">
                         @auth
-                            <a href="{{ route('dashboard') }}" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                            <a href="{{ route('dashboard') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
                                 Mon espace
                             </a>
                             <form method="POST" action="{{ route('logout') }}" class="block">
                                 @csrf
-                                <button type="submit" class="block w-full text-left text-red-400 px-3 py-3 text-base font-medium rounded-lg hover:bg-red-900/20 transition-all duration-300">
+                                <button type="submit" onclick="closeMobileMenu()" class="block w-full text-left text-red-400 px-3 py-3 text-base font-medium rounded-lg hover:bg-red-900/20 transition-all duration-300">
                                     Déconnexion
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                            <a href="{{ route('login') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
                                 Connexion
                             </a>
-                            <a href="{{ route('register') }}" class="block w-full bg-[#00b6b4] text-white px-4 py-3 rounded-lg text-base font-medium text-center hover:bg-[#009e9c] transition-all duration-300 shadow-sm">
+                            <a href="{{ route('register') }}" onclick="closeMobileMenu()" class="block w-full bg-[#00b6b4] text-white px-4 py-3 rounded-lg text-base font-medium text-center hover:bg-[#009e9c] transition-all duration-300 shadow-sm">
                                 S'inscrire
                             </a>
                         @endauth
@@ -358,6 +358,11 @@ function toggleNotificationMenu() {
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('hidden');
+}
+
+function closeMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.add('hidden');
 }
 
 

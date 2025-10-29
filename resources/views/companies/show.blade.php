@@ -27,8 +27,10 @@
                 <div class="flex flex-col lg:flex-row lg:items-start gap-8">
                     <!-- Left Content -->
                     <div class="flex-1">
-                        <div class="flex items-start gap-6 mb-6">
-                            <div class="w-24 h-24 rounded-2xl overflow-hidden bg-gray-100 dark:bg-[#333333] flex-shrink-0">
+                        <!-- Mobile Layout -->
+                        <div class="block lg:hidden text-center mb-6">
+                            <!-- Company Image -->
+                            <div class="w-32 h-32 rounded-2xl overflow-hidden bg-gray-100 dark:bg-[#333333] mx-auto mb-6">
                                 @if($company->logo)
                                 <img
                                     src="{{ asset('storage/' . $company->logo) }}"
@@ -36,38 +38,83 @@
                                     class="w-full h-full object-cover"
                                 />
                                 @else
-                                <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-2xl">
+                                <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-3xl">
                                     {{ substr($company->name, 0, 2) }}
                                 </div>
                                 @endif
                             </div>
                             
-                            <div class="flex-1">
-                                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                                    {{ $company->name }}
-                                </h1>
-                                <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
-                                    {{ $company->industry ?? 'Entreprise' }}
+                            <!-- Company Name -->
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                                {{ $company->name }}
+                            </h1>
+                            
+                            <!-- Company Description -->
+                            <div class="prose prose-lg max-w-none dark:prose-invert text-center mb-6">
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                                    {{ $company->description }}
                                 </p>
-                                <a href="#jobs" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                                    </svg>
-                                    Postes disponibles
-                                </a>
+                                @if($company->about)
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    {{ $company->about }}
+                                </p>
+                                @endif
                             </div>
+                            
+                            <!-- Button - Full Width -->
+                            <a href="#jobs" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center justify-center gap-2 w-full">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                                Postes disponibles
+                            </a>
                         </div>
 
-                        <div class="prose prose-lg max-w-none dark:prose-invert">
-                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                                {{ $company->description }}
-                            </p>
-                            @if($company->about)
-                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                                {{ $company->about }}
-                            </p>
-                            @endif
+                        <!-- Desktop Layout -->
+                        <div class="hidden lg:block">
+                            <div class="flex items-start gap-6 mb-6">
+                                <div class="w-24 h-24 rounded-2xl overflow-hidden bg-gray-100 dark:bg-[#333333] flex-shrink-0">
+                                    @if($company->logo)
+                                    <img
+                                        src="{{ asset('storage/' . $company->logo) }}"
+                                        alt="{{ $company->name }}"
+                                        class="w-full h-full object-cover"
+                                    />
+                                    @else
+                                    <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-2xl">
+                                        {{ substr($company->name, 0, 2) }}
+                                    </div>
+                                    @endif
+                                </div>
+                                
+                                <div class="flex-1">
+                                    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                                        {{ $company->name }}
+                                    </h1>
+                                    <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
+                                        {{ $company->industry ?? 'Entreprise' }}
+                                    </p>
+                                    <a href="#jobs" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                        </svg>
+                                        Postes disponibles
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="prose prose-lg max-w-none dark:prose-invert">
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                                    {{ $company->description }}
+                                </p>
+                                @if($company->about)
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    {{ $company->about }}
+                                </p>
+                                @endif
+                            </div>
                         </div>
                     </div>
 

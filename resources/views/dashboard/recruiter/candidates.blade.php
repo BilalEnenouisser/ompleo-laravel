@@ -121,8 +121,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </a>
-            </div>
         </div>
+    </div>
     </form>
 
     {{-- Results Count --}}
@@ -145,7 +145,7 @@
                 <option value="recent" {{ request('sort') == 'recent' ? 'selected' : '' }}>Plus récents</option>
                 <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Mieux notés</option>
                 <option value="experience" {{ request('sort') == 'experience' ? 'selected' : '' }}>Expérience</option>
-            </select>
+        </select>
         </form>
     </div>
 
@@ -233,7 +233,7 @@
                 $hasHalfStar = ($rating - $fullStars) >= 0.5;
             @endphp
             
-            <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-[1.02]">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-[1.02]">
                 {{-- Profile Image --}}
                 <div class="flex items-center gap-4 mb-4">
                     @if($profile->avatar)
@@ -241,9 +241,9 @@
                     @else
                         <div class="w-16 h-16 bg-[#00b6b4]/20 rounded-full flex items-center justify-center border-2 border-[#00b6b4]">
                             <span class="text-[#00b6b4] font-bold text-xl">{{ $initials ?: 'U' }}</span>
-                        </div>
+                </div>
                     @endif
-                    <div class="flex-1">
+                <div class="flex-1">
                         {{-- Name --}}
                         <h3 class="text-xl font-bold text-[#f5f5f5] mb-1">{{ is_string($candidate->name) ? $candidate->name : 'Candidat' }}</h3>
                         
@@ -254,77 +254,77 @@
                         <div class="flex items-center gap-2">
                             @for($i = 1; $i <= 5; $i++)
                                 @if($i <= $fullStars)
-                                    <svg class="w-4 h-4 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
+                        <svg class="w-4 h-4 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
                                 @elseif($i == $fullStars + 1 && $hasHalfStar)
-                                    <svg class="w-4 h-4 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
+                        <svg class="w-4 h-4 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
                                 @else
-                                    <svg class="w-4 h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
+                        <svg class="w-4 h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg>
                                 @endif
                             @endfor
                             <span class="text-sm text-[#9ca3af]">({{ $rating }})</span>
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 {{-- À propos --}}
-                <div class="mb-4">
+            <div class="mb-4">
                     <p class="text-[#f5f5f5] text-sm">{{ is_string($profile->bio ?? null) ? $profile->bio : 'Développeur passionné avec 3 ans d\'expérience en React et TypeScript.' }}</p>
-                </div>
+        </div>
 
                 {{-- Profile Details with Icons --}}
                 <div class="space-y-2 mb-4">
                     {{-- Location --}}
-                    <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
+                <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                         <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                         <span>{{ is_string($profile->city ?? null) ? $profile->city : 'Alger, Chéraga' }}</span>
-                    </div>
+                </div>
 
                     {{-- Experience --}}
-                    <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
+                <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                         <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                         <span>{{ $profile->experience_years ?? '3 ans d\'expérience' }}</span>
-                    </div>
+                </div>
 
                     {{-- Education --}}
-                    <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
+                <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                         <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
                         <span>{{ $educationText ?: 'Master en Informatique' }}</span>
-                    </div>
+        </div>
 
                     {{-- Availability --}}
-                    <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
+                <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
                         <svg class="w-4 h-4 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
                         <span>Disponible: {{ $profile->availability ?? 'Immédiate' }}</span>
-                    </div>
-                </div>
+            </div>
+        </div>
 
                 {{-- Compétences --}}
                 @if(count($skills) > 0)
-                    <div class="mb-4">
+            <div class="mb-4">
                         <p class="text-sm font-medium text-[#9ca3af] mb-2">Compétences:</p>
-                        <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2">
                             @foreach(array_slice($skills, 0, 4) as $skill)
                                 <span class="px-2 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full text-xs font-medium">{{ $skill }}</span>
                             @endforeach
                             @if(count($skills) > 4)
                                 <span class="px-2 py-1 bg-[#333333] text-[#9ca3af] rounded-full text-xs font-medium">+{{ count($skills) - 4 }}</span>
                             @endif
-                        </div>
-                    </div>
+                </div>
+            </div>
                 @endif
 
                 {{-- Buttons --}}
-                <div class="flex items-center gap-2">
-                    <button class="flex-1 bg-[#00b6b4] hover:bg-[#009999] text-white py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+            <div class="flex items-center gap-2">
+                <button class="flex-1 bg-[#00b6b4] hover:bg-[#009999] text-white py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                        Contacter
-                    </button>
+                    Contacter
+                </button>
                     <a href="{{ route('recruiter.candidate.profile', $candidate->id) }}" class="px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                        Voir profil
+                    Voir profil
                     </a>
-                </div>
             </div>
+        </div>
             @endif
         @empty
             <div class="col-span-2 text-center py-12">
@@ -352,7 +352,7 @@
     @if($candidates->hasPages())
         <div class="flex justify-center mt-8">
             {{ $candidates->appends(request()->query())->links() }}
-        </div>
+    </div>
     @endif
 </div>
 @endsection

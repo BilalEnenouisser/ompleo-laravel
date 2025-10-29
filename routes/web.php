@@ -241,7 +241,19 @@ Route::get('/locale/{locale}', [LocaleController::class, 'setLocale'])->name('lo
 // Dashboard Routes (Protected)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard.index');
+        $user = auth()->user();
+        
+        // Redirect based on user type
+        switch ($user->user_type) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+            case 'recruiter':
+                return redirect()->route('recruiter.dashboard');
+            case 'candidate':
+                return redirect()->route('candidate.dashboard');
+            default:
+                return redirect()->route('home');
+        }
     })->name('dashboard');
     
     Route::get('/profile', function () {

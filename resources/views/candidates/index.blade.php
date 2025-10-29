@@ -103,8 +103,8 @@ $steps = [
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach($benefits as $index => $benefit)
-                <div class="bg-white dark:bg-[#333333] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 animate-stagger-fade-in" data-animate="benefit-card" data-delay="{{ $index * 0.1 }}" style="animation-delay: {{ $index * 0.1 }}s;">
-                    <div class="{{ $benefit['bgColor'] }} {{ $benefit['color'] }} w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                <div class="bg-white dark:bg-[#333333] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105 animate-stagger-fade-in text-center" data-animate="benefit-card" data-delay="{{ $index * 0.1 }}" style="animation-delay: {{ $index * 0.1 }}s;">
+                    <div class="{{ $benefit['bgColor'] }} {{ $benefit['color'] }} w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md mx-auto">
                         @if($index === 0)
                         <!-- User Icon -->
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
