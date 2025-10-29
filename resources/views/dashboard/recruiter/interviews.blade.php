@@ -396,126 +396,238 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* Mobile Responsive Calendar Styles */
+@media (max-width: 640px) {
+    .fc {
+        font-size: 12px !important;
+        border-radius: 12px !important;
+    }
+    
+    .fc-theme-standard th {
+        padding: 8px 4px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .fc-theme-standard .fc-daygrid-day {
+        min-height: 80px !important;
+    }
+    
+    .fc-theme-standard .fc-daygrid-day-number {
+        padding: 6px !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .fc-theme-standard .fc-toolbar {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .fc-theme-standard .fc-toolbar-chunk {
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    .fc-theme-standard .fc-toolbar-title {
+        font-size: 1.2rem !important;
+        text-align: center !important;
+    }
+    
+    .fc-theme-standard .fc-button {
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .fc-theme-standard .fc-event {
+        font-size: 9px !important;
+        padding: 2px 4px !important;
+        margin: 1px 0 !important;
+    }
+    
+    .fc-theme-standard .fc-daygrid-event {
+        margin: 1px 2px !important;
+    }
+    
+    .fc-theme-standard .fc-daygrid-day-frame {
+        min-height: 80px !important;
+    }
+    
+    .fc-theme-standard .fc-scrollgrid-sync-table {
+        font-size: 11px !important;
+    }
+}
+
+/* Tablet Responsive Calendar Styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .fc-theme-standard .fc-daygrid-day {
+        min-height: 100px !important;
+    }
+    
+    .fc-theme-standard .fc-daygrid-day-frame {
+        min-height: 100px !important;
+    }
+    
+    .fc-theme-standard th {
+        padding: 12px 8px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .fc-theme-standard .fc-toolbar-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Improved Event Colors for Better Visibility */
+.fc-event[data-status="programme"] {
+    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #00b6b4 !important;
+}
+
+.fc-event[data-status="confirme"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #10b981 !important;
+}
+
+.fc-event[data-status="en_attente"] {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: #1a1a1a !important;
+    border: 1px solid #f59e0b !important;
+}
+
+.fc-event[data-status="annule"] {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #ef4444 !important;
+}
+
+.fc-event[data-status="termine"] {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #6b7280 !important;
+}
+
 </style>
 @endpush
 
 @section('content')
-<div class="space-y-8">
+<div class="space-y-4 sm:space-y-6 md:space-y-8">
     {{-- Header --}}
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div>
-            <h1 class="text-3xl font-bold text-[#f5f5f5]">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#f5f5f5]">
                 Entretiens
             </h1>
-            <p class="text-[#9ca3af] mt-2">
+            <p class="text-xs sm:text-sm md:text-base text-[#9ca3af] mt-1 sm:mt-2">
                 Planifiez et gérez vos entretiens candidats
             </p>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0 flex-wrap">
             <div class="flex bg-[#333333] rounded-lg p-1">
-                <button id="listView" class="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#2b2b2b] text-[#f5f5f5] shadow-sm">
+                <button id="listView" class="px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors bg-[#2b2b2b] text-[#f5f5f5] shadow-sm">
                     Liste
                 </button>
-                <button id="calendarViewBtn" class="px-4 py-2 rounded-md text-sm font-medium transition-colors text-[#9ca3af]">
+                <button id="calendarViewBtn" class="px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors text-[#9ca3af]">
                     Calendrier
                 </button>
             </div>
-            <a href="{{ route('recruiter.interviews.create') }}" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                Programmer entretien
+            <a href="{{ route('recruiter.interviews.create') }}" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-lg transition-colors flex items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+                <svg class="w-3 h-3 sm:w-4 sm:h-5 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                <span class="hidden sm:inline">Programmer entretien</span>
+                <span class="sm:hidden">Programmer</span>
             </a>
         </div>
     </div>
 
     {{-- Success Message --}}
     @if(session('success'))
-        <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-4 flex items-center gap-3">
-            <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            <p class="text-green-400">{{ session('success') }}</p>
+            <p class="text-xs sm:text-sm md:text-base text-green-400">{{ session('success') }}</p>
         </div>
     @endif
 
     {{-- Stats Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-[#9ca3af]">Total</p>
-                    <p class="text-2xl font-bold text-[#f5f5f5]">{{ $stats['total'] }}</p>
+                    <p class="text-xs sm:text-sm text-[#9ca3af]">Total</p>
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-[#f5f5f5]">{{ $stats['total'] }}</p>
                 </div>
-                <div class="w-12 h-12 bg-[#ffffff] rounded-xl flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-6 h-6 text-[#9ca3af]"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-[#ffffff] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#9ca3af]"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
                 </div>
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-[#9ca3af]">Programmés</p>
-                    <p class="text-2xl font-bold text-blue-600">{{ $stats['programme'] }}</p>
+                    <p class="text-xs sm:text-sm text-[#9ca3af]">Programmés</p>
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-blue-600">{{ $stats['programme'] }}</p>
                 </div>
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-6 h-6 text-blue-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-blue-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-[#9ca3af]">Confirmés</p>
-                    <p class="text-2xl font-bold text-green-600">{{ $stats['confirme'] }}</p>
+                    <p class="text-xs sm:text-sm text-[#9ca3af]">Confirmés</p>
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-green-600">{{ $stats['confirme'] }}</p>
                 </div>
-                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6 text-green-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
                 </div>
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-[#9ca3af]">En attente</p>
-                    <p class="text-2xl font-bold text-yellow-600">{{ $stats['en_attente'] }}</p>
+                    <p class="text-xs sm:text-sm text-[#9ca3af]">En attente</p>
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-600">{{ $stats['en_attente'] }}</p>
                 </div>
-                <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-6 h-6 text-yellow-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-yellow-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-yellow-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
             </div>
         </div>
 
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg col-span-2 lg:col-span-1">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-[#9ca3af]">Annulés</p>
-                    <p class="text-2xl font-bold text-red-600">{{ $stats['annule'] }}</p>
+                    <p class="text-xs sm:text-sm text-[#9ca3af]">Annulés</p>
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-red-600">{{ $stats['annule'] }}</p>
                 </div>
-                <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle w-6 h-6 text-red-600"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-circle w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-red-600"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- Filters --}}
-    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg">
-        <form method="GET" action="{{ route('recruiter.interviews') }}" class="flex flex-col lg:flex-row gap-4">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+        <form method="GET" action="{{ route('recruiter.interviews') }}" class="flex flex-col lg:flex-row gap-3 sm:gap-4">
             <div class="flex-1 relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                 <input
                     type="text"
                     name="search"
                     value="{{ request('search') }}"
                     placeholder="Rechercher par candidat ou poste..."
-                    class="w-full pl-10 pr-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]"
+                    class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                 />
             </div>
             <div class="relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/></svg>
-                <select name="status" class="pl-10 pr-8 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] min-w-[200px]">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/></svg>
+                <select name="status" class="w-full lg:min-w-[200px] pl-8 sm:pl-10 pr-8 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base">
                     <option value="">Tous les statuts</option>
                     <option value="Programmé" {{ request('status') == 'Programmé' ? 'selected' : '' }}>Programmé</option>
                     <option value="Confirmé" {{ request('status') == 'Confirmé' ? 'selected' : '' }}>Confirmé</option>
@@ -525,38 +637,39 @@
                 </select>
             </div>
             <div class="flex gap-2">
-                <button type="submit" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    Rechercher
+                <button type="submit" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-lg transition-colors flex items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <span class="hidden sm:inline">Rechercher</span>
+                    <span class="sm:hidden">Recherche</span>
                 </button>
-                <a href="{{ route('recruiter.interviews') }}" class="px-4 py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center">
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                <a href="{{ route('recruiter.interviews') }}" class="px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center justify-center">
+                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                 </a>
         </div>
         </form>
     </div>
 
     {{-- Interviews List --}}
-    <div id="interviewsList" class="space-y-6">
+    <div id="interviewsList" class="space-y-4 sm:space-y-6">
         @forelse($interviews as $interview)
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div class="flex flex-col lg:flex-row lg:items-center gap-6">
-                <div class="flex items-start gap-4 flex-1">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6">
+                <div class="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-[#00b6b4] to-[#009999] rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg flex-shrink-0">
                             {{ strtoupper(substr($interview->candidate->name, 0, 2)) }}
                     </div>
                     
-                    <div class="flex-1">
-                        <div class="flex items-start justify-between mb-2">
-                            <div>
-                                <h3 class="text-xl font-bold text-[#f5f5f5]">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3 mb-2">
+                            <div class="flex-1 min-w-0">
+                                <h3 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5] truncate">
                                         {{ $interview->candidate->name }}
                                 </h3>
-                                <p class="text-[#00b6b4] font-medium">
+                                <p class="text-xs sm:text-sm md:text-base text-[#00b6b4] font-medium truncate">
                                         {{ $interview->job->title }}
                                 </p>
                             </div>
-                                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                <span class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 self-start sm:self-auto
                                     @if($interview->status == 'programme') text-blue-400 bg-blue-400/20
                                     @elseif($interview->status == 'confirme') text-green-400 bg-green-400/20
                                     @elseif($interview->status == 'en_attente') text-yellow-400 bg-yellow-400/20
@@ -567,34 +680,34 @@
                             </span>
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-[#9ca3af] mb-4">
+                        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 text-xs sm:text-sm text-[#9ca3af] mb-3 sm:mb-4">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                                    <span>{{ $interview->formatted_date }}</span>
+                                <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                    <span class="truncate">{{ $interview->formatted_date }}</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                                    <span>{{ $interview->full_time }}</span>
+                                <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                                    <span class="truncate">{{ $interview->full_time }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                     @if($interview->type == 'visioconference')
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                                     @elseif($interview->type == 'presentiel')
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                                     @else
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                     @endif
-                                    <span>{{ $interview->type_in_french }}</span>
+                                    <span class="truncate">{{ $interview->type_in_french }}</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                                     <span class="truncate">{{ $interview->location }}</span>
                             </div>
                         </div>
                         
                             @if($interview->notes)
-                        <div class="bg-[#333333] rounded-lg p-3 mb-4">
-                            <p class="text-sm text-[#9ca3af]">
+                        <div class="bg-[#333333] rounded-lg p-2 sm:p-3 mb-3 sm:mb-4">
+                            <p class="text-xs sm:text-sm text-[#9ca3af]">
                                         <strong>Notes :</strong> {{ $interview->notes }}
                             </p>
                         </div>
@@ -602,13 +715,13 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center gap-3 lg:flex-col lg:items-end">
-                    <div class="flex items-center gap-2">
+                <div class="flex flex-col sm:flex-row lg:flex-col lg:items-end gap-2 sm:gap-3 w-full sm:w-auto">
+                    <div class="flex items-center gap-2 justify-end sm:justify-end w-full sm:w-auto">
                             {{-- Status Update Dropdown --}}
-                            <form method="POST" action="{{ route('recruiter.interviews.update-status', $interview) }}" class="inline">
+                            <form method="POST" action="{{ route('recruiter.interviews.update-status', $interview) }}" class="inline flex-1 sm:flex-none">
                                 @csrf
                                 @method('PUT')
-                                <select name="status" onchange="this.form.submit()" class="text-xs px-2 py-1 border border-[#444444] rounded bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                                <select name="status" onchange="this.form.submit()" class="w-full sm:w-auto text-xs px-2 sm:px-2 py-2 sm:py-1 border border-[#444444] rounded bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
                                     <option value="programme" {{ $interview->status == 'programme' ? 'selected' : '' }}>Programmé</option>
                                     <option value="confirme" {{ $interview->status == 'confirme' ? 'selected' : '' }}>Confirmé</option>
                                     <option value="en_attente" {{ $interview->status == 'en_attente' ? 'selected' : '' }}>En attente</option>
@@ -617,20 +730,20 @@
                                 </select>
                             </form>
                             
-                            <a href="{{ route('recruiter.interviews.edit', $interview) }}" class="p-2 text-[#9ca3af] hover:text-blue-400 transition-colors duration-200">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <a href="{{ route('recruiter.interviews.edit', $interview) }}" class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-blue-400 transition-colors duration-200 flex-shrink-0">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             </a>
-                            <button type="button" onclick="showDeleteModal({{ $interview->id }}, '{{ $interview->candidate->name }}')" class="p-2 text-[#9ca3af] hover:text-red-400 transition-colors duration-200">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                            <button type="button" onclick="showDeleteModal({{ $interview->id }}, '{{ $interview->candidate->name }}')" class="p-1.5 sm:p-2 text-[#9ca3af] hover:text-red-400 transition-colors duration-200 flex-shrink-0">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                         </button>
                     </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center gap-2">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                        <button class="w-full sm:w-auto px-3 sm:px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                             Contacter
                         </button>
                             @if($interview->type == 'visioconference' && $interview->meeting_link)
-                                <a href="{{ $interview->meeting_link }}" target="_blank" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-4 py-2 rounded-lg transition-colors">
+                                <a href="{{ $interview->meeting_link }}" target="_blank" class="w-full sm:w-auto bg-[#00b6b4] hover:bg-[#009999] text-white px-3 sm:px-4 py-2 rounded-lg transition-colors text-xs sm:text-sm text-center">
                             Rejoindre
                                 </a>
                             @endif
@@ -639,20 +752,21 @@
             </div>
         </div>
         @empty
-            <div class="text-center py-12">
-                <div class="w-16 h-16 mx-auto mb-4 bg-blue-500/10 rounded-full flex items-center justify-center">
-                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <div class="text-center py-8 sm:py-12">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-blue-500/10 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                         <line x1="16" x2="16" y1="2" y2="6"/>
                         <line x1="8" x2="8" y1="2" y2="6"/>
                         <line x1="3" x2="21" y1="10" y2="10"/>
                     </svg>
                     </div>
-                <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucun entretien trouvé</h3>
-                <p class="text-[#9ca3af] mb-4">Vous n'avez pas encore programmé d'entretiens.</p>
-                <a href="{{ route('recruiter.interviews.create') }}" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2">
-                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                    Programmer un entretien
+                <h3 class="text-base sm:text-lg font-semibold text-[#f5f5f5] mb-2">Aucun entretien trouvé</h3>
+                <p class="text-xs sm:text-sm text-[#9ca3af] mb-3 sm:mb-4">Vous n'avez pas encore programmé d'entretiens.</p>
+                <a href="{{ route('recruiter.interviews.create') }}" class="bg-[#00b6b4] hover:bg-[#009999] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors inline-flex items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
+                    <svg class="w-3 h-3 sm:w-4 sm:h-5 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    <span class="hidden sm:inline">Programmer un entretien</span>
+                    <span class="sm:hidden">Programmer</span>
                 </a>
                             </div>
         @endforelse
@@ -660,44 +774,44 @@
                         
     {{-- Pagination --}}
     @if($interviews->hasPages())
-        <div class="mt-8">
+        <div class="mt-6 sm:mt-8">
             {{ $interviews->appends(request()->query())->links() }}
                             </div>
     @endif
 
 
     {{-- Calendar View --}}
-    <div id="calendarView" class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-8 shadow-lg hidden">
-        <div id="calendar">    </div>
+    <div id="calendarView" class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8 shadow-lg hidden overflow-x-auto">
+        <div id="calendar" class="min-w-[300px] sm:min-w-full">    </div>
         </div>
 
 {{-- Delete Confirmation Modal --}}
 <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 max-w-md w-full">
-        <div class="flex items-center gap-4 mb-4">
-            <div class="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 max-w-md w-full">
+        <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                 </svg>
                     </div>
                             <div>
-                <h3 class="text-lg font-semibold text-[#f5f5f5]">Supprimer l'entretien</h3>
-                <p class="text-[#9ca3af] text-sm">Cette action est irréversible</p>
+                <h3 class="text-base sm:text-lg font-semibold text-[#f5f5f5]">Supprimer l'entretien</h3>
+                <p class="text-xs sm:text-sm text-[#9ca3af]">Cette action est irréversible</p>
                             </div>
                         </div>
                         
-        <p class="text-[#f5f5f5] mb-6">
+        <p class="text-sm sm:text-base text-[#f5f5f5] mb-4 sm:mb-6">
             Êtes-vous sûr de vouloir supprimer l'entretien avec <span id="candidateName" class="font-semibold text-[#00b6b4]"></span> ?
         </p>
         
-        <div class="flex gap-3 justify-end">
-            <button onclick="hideDeleteModal()" class="px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors">
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-end">
+            <button onclick="hideDeleteModal()" class="px-3 sm:px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors text-xs sm:text-sm">
                 Annuler
                         </button>
             <form id="deleteForm" method="POST" class="inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                <button type="submit" class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors text-xs sm:text-sm">
                     Supprimer
                         </button>
             </form>
@@ -739,11 +853,11 @@ try {
         }
         
         calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+            initialView: window.innerWidth < 640 ? 'dayGridMonth' : 'dayGridMonth',
             headerToolbar: {
-                left: 'prev,next today',
+                left: window.innerWidth < 640 ? 'prev,next' : 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: window.innerWidth < 640 ? 'dayGridMonth' : 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             locale: 'fr',
             buttonText: {
@@ -812,6 +926,13 @@ try {
         });
         
         calendar.render();
+        
+        // Handle window resize for mobile responsiveness
+        window.addEventListener('resize', function() {
+            if (calendar) {
+                calendar.updateSize();
+            }
+        });
         
         // View mode toggle - moved inside DOMContentLoaded
         const listBtn = document.getElementById('listView');

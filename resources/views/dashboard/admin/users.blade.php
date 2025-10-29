@@ -180,14 +180,14 @@
     <!-- Users Table -->
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl lg:rounded-2xl shadow-lg overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[800px]">
                 <thead class="bg-[#333333]">
                     <tr>
                         <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Utilisateur</th>
                         <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Contact</th>
                         <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Rôle</th>
                         <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Statut</th>
-                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Inscription</th>
+                        <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base min-w-[200px] sm:min-w-[250px] md:min-w-[300px]">Inscription</th>
                         <th class="text-left py-4 px-6 font-semibold text-[#f5f5f5] text-base">Actions</th>
                     </tr>
                 </thead>
@@ -274,21 +274,21 @@
                                 {{ $status['text'] }}
                             </span>
                         </td>
-                        <td class="py-4 px-6" data-user-registration="{{ $user->created_at ? $user->created_at->setTimezone('Africa/Algiers')->format('d/m/Y') : 'N/A' }}" data-user-last-activity="{{ $user->updated_at ? $user->updated_at->setTimezone('Africa/Algiers')->format('d/m/Y H:i') : 'N/A' }}">
+                        <td class="py-4 px-6 min-w-[200px] sm:min-w-[250px] md:min-w-[300px]" data-user-registration="{{ $user->created_at ? $user->created_at->setTimezone('Africa/Algiers')->format('d/m/Y') : 'N/A' }}" data-user-last-activity="{{ $user->updated_at ? $user->updated_at->setTimezone('Africa/Algiers')->format('d/m/Y H:i') : 'N/A' }}">
                             <div class="space-y-1">
-                                <div class="flex items-center gap-1 text-sm text-[#9ca3af]">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <div class="flex items-center gap-1 text-sm text-[#9ca3af] whitespace-nowrap">
+                                    <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                                         <line x1="16" x2="16" y1="2" y2="6"/>
                                         <line x1="8" x2="8" y1="2" y2="6"/>
                                         <line x1="3" x2="21" y1="10" y2="10"/>
                                     </svg>
-                                    {{ $user->created_at ? $user->created_at->setTimezone('Africa/Algiers')->format('d/m/Y') : 'N/A' }}
+                                    <span class="truncate">{{ $user->created_at ? $user->created_at->setTimezone('Africa/Algiers')->format('d/m/Y') : 'N/A' }}</span>
                                 </div>
-                                <div class="text-xs text-[#999999]">
+                                <div class="text-xs text-[#999999] whitespace-nowrap">
                                     {{ $user->created_at ? $user->created_at->setTimezone('Africa/Algiers')->diffForHumans() : 'N/A' }}
                                 </div>
-                                <div class="text-xs text-[#999999]">
+                                <div class="text-xs text-[#999999] whitespace-nowrap">
                                     Dernière activité: {{ $user->updated_at ? $user->updated_at->setTimezone('Africa/Algiers')->format('d/m/Y H:i') : 'N/A' }}
                                 </div>
                             </div>

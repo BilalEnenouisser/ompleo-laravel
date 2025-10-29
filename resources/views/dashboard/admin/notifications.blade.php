@@ -538,44 +538,44 @@
         
         {{-- Table --}}
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[1000px]">
                 <thead class="bg-[#333333]">
                     <tr>
-                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Notification</th>
-                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Destinataires</th>
-                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Date d'envoi</th>
-                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Statistiques</th>
-                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base">Actions</th>
+                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base min-w-[200px]">Notification</th>
+                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base min-w-[150px]">Destinataires</th>
+                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base min-w-[140px]">Date d'envoi</th>
+                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base min-w-[180px]">Statistiques</th>
+                        <th class="text-left py-3 sm:py-4 px-4 sm:px-6 font-semibold text-[#f5f5f5] text-sm sm:text-base min-w-[120px]">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($notifications->count() > 0)
                         @foreach($notifications as $notification)
                     <tr class="border-b border-[#444444] hover:bg-[#333333]">
-                        <td class="py-3 sm:py-4 px-4 sm:px-6">
-                            <div>
-                                <div class="font-semibold text-[#f5f5f5] text-sm sm:text-base">{{ $notification->title }}</div>
+                        <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[200px]">
+                            <div class="min-w-0">
+                                <div class="font-semibold text-[#f5f5f5] text-sm sm:text-base truncate">{{ $notification->title }}</div>
                                 <div class="text-xs sm:text-sm text-[#9ca3af] line-clamp-2">{{ $notification->message }}</div>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-4 sm:px-6">
+                        <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[150px]">
                             <div class="flex items-center gap-1.5 sm:gap-2">
                                 @if($notification->target_type === 'all')
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                         <circle cx="9" cy="7" r="4"/>
                                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                     </svg>
-                                    <span class="text-[#9ca3af] text-xs sm:text-sm">Tous les utilisateurs</span>
+                                    <span class="text-[#9ca3af] text-xs sm:text-sm whitespace-nowrap">Tous les utilisateurs</span>
                                 @elseif($notification->target_type === 'candidates')
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                         <circle cx="12" cy="7" r="4"/>
                                     </svg>
-                                    <span class="text-[#9ca3af] text-xs sm:text-sm">Candidats</span>
+                                    <span class="text-[#9ca3af] text-xs sm:text-sm whitespace-nowrap">Candidats</span>
                                 @else
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-[#9ca3af] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                         <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                                         <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -584,12 +584,12 @@
                                         <path d="M10 14h4"/>
                                         <path d="M10 18h4"/>
                                     </svg>
-                                    <span class="text-[#9ca3af] text-xs sm:text-sm">Recruteurs</span>
+                                    <span class="text-[#9ca3af] text-xs sm:text-sm whitespace-nowrap">Recruteurs</span>
                                 @endif
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-4 sm:px-6">
-                            <div class="text-[#9ca3af] text-xs sm:text-sm">
+                        <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[140px]">
+                            <div class="text-[#9ca3af] text-xs sm:text-sm whitespace-nowrap">
                                 @if($notification->sent_at)
                                     {{ $notification->sent_at->format('d/m/Y') }} à {{ $notification->sent_at->format('H:i') }}
                                 @else
@@ -597,9 +597,9 @@
                                 @endif
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-4 sm:px-6">
-                            <div class="flex flex-col">
-                                <div class="text-[#f5f5f5] font-medium text-xs sm:text-sm">
+                        <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[180px]">
+                            <div class="flex flex-col min-w-0">
+                                <div class="text-[#f5f5f5] font-medium text-xs sm:text-sm whitespace-nowrap">
                                     @if($notification->target_users)
                                         {{ count($notification->target_users) }} destinataires
                                     @else
@@ -618,25 +618,27 @@
                                             $openingRate = $notification->opening_rate ?? 0;
                                             $rateColor = $openingRate == 0 ? 'text-red-400' : ($openingRate < 30 ? 'text-yellow-400' : ($openingRate < 70 ? 'text-orange-400' : 'text-green-400'));
                                         @endphp
-                                        <span class="{{ $rateColor }} font-medium">
-                                            Taux d'ouverture: {{ $openingRate }}%
-                                        </span>
-                                        @if($openingRate == 0)
-                                            <span class="text-red-500 text-xs ml-1">(Aucune ouverture)</span>
-                                        @elseif($openingRate < 30)
-                                            <span class="text-yellow-500 text-xs ml-1">(Faible)</span>
-                                        @elseif($openingRate < 70)
-                                            <span class="text-orange-500 text-xs ml-1">(Moyen)</span>
-                                        @else
-                                            <span class="text-green-500 text-xs ml-1">(Excellent)</span>
-                                        @endif
+                                        <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+                                            <span class="{{ $rateColor }} font-medium whitespace-nowrap">
+                                                Taux d'ouverture: {{ $openingRate }}%
+                                            </span>
+                                            @if($openingRate == 0)
+                                                <span class="text-red-500 text-xs whitespace-nowrap">(Aucune ouverture)</span>
+                                            @elseif($openingRate < 30)
+                                                <span class="text-yellow-500 text-xs whitespace-nowrap">(Faible)</span>
+                                            @elseif($openingRate < 70)
+                                                <span class="text-orange-500 text-xs whitespace-nowrap">(Moyen)</span>
+                                            @else
+                                                <span class="text-green-500 text-xs whitespace-nowrap">(Excellent)</span>
+                                            @endif
+                                        </div>
                                     @else
-                                        <span class="text-yellow-500">En attente</span>
+                                        <span class="text-yellow-500 whitespace-nowrap">En attente</span>
                                     @endif
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 sm:py-4 px-4 sm:px-6">
+                        <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[120px]">
                             <div class="flex items-center gap-1.5 sm:gap-2">
                                 <button
                                     onclick="duplicateNotification({{ json_encode($notification) }})"

@@ -31,9 +31,9 @@ class DashboardController extends Controller
             ? Job::where('recruiter_id', $user->id)->orderBy('created_at', 'desc')->get()
             : collect();
         
-        // Get applications for recruiter's jobs
+        // Get applications for recruiter's jobs with relationships
         $applications = $jobs->isNotEmpty() 
-            ? Application::whereIn('job_id', $jobs->pluck('id'))->get()
+            ? Application::whereIn('job_id', $jobs->pluck('id'))->with(['candidate', 'job'])->get()
             : collect();
         
         // Get upcoming interviews for this recruiter
@@ -58,7 +58,7 @@ class DashboardController extends Controller
         ];
         
         // Get recent applications (last 5) with relationships
-        $recentApplications = $applications->sortByDesc('created_at')->take(5)->load(['candidate', 'job']);
+        $recentApplications = $applications->sortByDesc('created_at')->take(5);
         
         // Get active jobs (last 3) with application counts
         $activeJobs = $jobs->where('status', 'published')->sortByDesc('created_at')->take(3);

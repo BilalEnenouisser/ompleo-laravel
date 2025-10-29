@@ -5,7 +5,7 @@
 @section('page-title', 'Publier une offre d\'emploi')
 
 @section('content')
-<div class="space-y-6 sm:space-y-8">
+<div class="space-y-4 sm:space-y-6 md:space-y-8">
     {{-- Success/Error Messages --}}
     @if(session('success'))
         <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300">
@@ -31,26 +31,26 @@
 
     {{-- Header --}}
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
-        <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-[#f5f5f5]">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#f5f5f5]">
                 Publier une offre d'emploi
             </h1>
-            <p class="text-sm sm:text-base text-[#9ca3af] mt-1 sm:mt-2">
+            <p class="text-xs sm:text-sm md:text-base text-[#9ca3af] mt-1 sm:mt-2">
                 Créez une offre attractive pour trouver les meilleurs talents
             </p>
         </div>
     </div>
 
     {{-- Form --}}
-    <form id="createOfferForm" action="{{ route('recruiter.create-offer.store') }}" method="POST" class="space-y-6 sm:space-y-8">
+    <form id="createOfferForm" action="{{ route('recruiter.create-offer.store') }}" method="POST" class="space-y-4 sm:space-y-6 md:space-y-8">
         @csrf
         {{-- Basic Information --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5] mb-3 sm:mb-4 md:mb-6">
                 Informations de base
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                 <div>
                     <label for="title" class="block text-xs sm:text-sm font-medium text-[#9ca3af] mb-1 sm:mb-2">
                         Titre du poste *
@@ -59,7 +59,7 @@
                         type="text"
                         id="title"
                         name="title"
-                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Ex: Développeur Frontend React"
                     />
                 </div>
@@ -72,7 +72,7 @@
                         type="text"
                         id="department"
                         name="department"
-                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Ex: Développement, Marketing, RH"
                     />
                 </div>
@@ -89,7 +89,7 @@
                         <select
                             id="location"
                             name="location"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         >
                             <option value="">Sélectionner une ville</option>
                             <option value="Adrar">Adrar</option>
@@ -156,7 +156,7 @@
                         <select
                             id="experience"
                             name="experience"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         >
                             <option value="">Sélectionner l'expérience</option>
                             <option value="0-1 ans">0-1 ans</option>
@@ -184,7 +184,7 @@
                         <select
                             id="type"
                             name="type"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         >
                             <option value="CDI">CDI</option>
                             <option value="CDD">CDD</option>
@@ -212,7 +212,7 @@
                         <select
                             id="workType"
                             name="workType"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         >
                             <option value="onsite">Présentiel</option>
                             <option value="remote">Télétravail</option>
@@ -234,7 +234,7 @@
                             type="number"
                             id="salaryMin"
                             name="salary_min"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                             placeholder="Ex: 60000"
                         />
                     </div>
@@ -253,7 +253,7 @@
                             type="number"
                             id="salaryMax"
                             name="salary_max"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                             placeholder="Ex: 80000"
                         />
                     </div>
@@ -274,7 +274,7 @@
                             type="date"
                             id="expiryDate"
                             name="expiryDate"
-                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                            class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         />
                     </div>
                 </div>
@@ -284,11 +284,11 @@
                         type="checkbox"
                         id="featured"
                         name="featured"
-                        class="w-4 h-4 text-[#00b6b4] border-[#444444] rounded focus:ring-[#00b6b4] bg-[#333333]"
+                        class="w-4 h-4 text-[#00b6b4] border-[#444444] rounded focus:ring-[#00b6b4] bg-[#333333] flex-shrink-0"
                     />
-                    <label for="featured" class="ml-2 text-xs sm:text-sm text-[#9ca3af] flex items-center gap-1 sm:gap-2">
-                        Mettre en avant cette offre
-                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <label for="featured" class="ml-2 text-xs sm:text-sm text-[#9ca3af] flex items-center gap-1 sm:gap-2 flex-wrap">
+                        <span>Mettre en avant cette offre</span>
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
                         </svg>
                         <span class="text-xs text-[#9ca3af]">(+1000 DA)</span>
@@ -298,8 +298,8 @@
         </div>
 
         {{-- Description --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5] mb-3 sm:mb-4 md:mb-6">
                 Description du poste
             </h2>
             
@@ -311,16 +311,16 @@
                     id="description"
                     name="description"
                     rows="6"
-                    class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                    class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                     placeholder="Décrivez le poste, l'entreprise et le profil recherché..."
                 ></textarea>
             </div>
         </div>
 
         {{-- Responsibilities --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <div class="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
+                <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5]">
                     Responsabilités
                 </h2>
                 <button
@@ -335,12 +335,12 @@
                 </button>
             </div>
             
-            <div id="responsibilitiesContainer" class="space-y-3 sm:space-y-4">
+            <div id="responsibilitiesContainer" class="space-y-2 sm:space-y-3 md:space-y-4">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <input
                         type="text"
                         name="responsibilities[]"
-                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Responsabilité 1"
                     />
                     <button
@@ -358,9 +358,9 @@
         </div>
 
         {{-- Requirements --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <div class="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
+                <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5]">
                     Exigences
                 </h2>
                 <button
@@ -375,12 +375,12 @@
                 </button>
             </div>
             
-            <div id="requirementsContainer" class="space-y-3 sm:space-y-4">
+            <div id="requirementsContainer" class="space-y-2 sm:space-y-3 md:space-y-4">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <input
                         type="text"
                         name="requirements[]"
-                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Exigence 1"
                     />
                     <button
@@ -398,9 +398,9 @@
         </div>
 
         {{-- Benefits --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <div class="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
+                <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5]">
                     Avantages
                 </h2>
                 <button
@@ -415,12 +415,12 @@
                 </button>
             </div>
             
-            <div id="benefitsContainer" class="space-y-3 sm:space-y-4">
+            <div id="benefitsContainer" class="space-y-2 sm:space-y-3 md:space-y-4">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <input
                         type="text"
                         name="benefits[]"
-                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Avantage 1"
                     />
                     <button
@@ -438,9 +438,9 @@
         </div>
 
         {{-- Skills --}}
-        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-            <div class="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
+        <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
+                <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5]">
                     Compétences requises
                 </h2>
                 <button
@@ -455,12 +455,12 @@
                 </button>
             </div>
             
-            <div id="skillsContainer" class="space-y-3 sm:space-y-4">
+            <div id="skillsContainer" class="space-y-2 sm:space-y-3 md:space-y-4">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <input
                         type="text"
                         name="skills[]"
-                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
                         placeholder="Compétence 1"
                     />
                     <button
@@ -478,11 +478,11 @@
         </div>
 
         {{-- Submit Buttons --}}
-        <div class="flex items-center justify-end gap-3 sm:gap-4">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 md:gap-4">
             <button
                 type="button"
                 onclick="window.location.href='{{ route('recruiter.jobs') }}'"
-                class="px-4 sm:px-6 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 text-sm sm:text-base"
+                class="px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 text-xs sm:text-sm md:text-base"
             >
                 Annuler
             </button>
@@ -491,26 +491,28 @@
                 type="submit"
                 name="save_draft"
                 value="1"
-                class="px-3 sm:px-4 py-2 sm:py-2.5 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+                class="px-3 sm:px-4 py-2 sm:py-2.5 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] hover:text-[#f5f5f5] transition-colors duration-200 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base"
             >
                 <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                     <polyline points="17,21 17,13 7,13 7,21"/>
                     <polyline points="7,3 7,8 15,8"/>
                 </svg>
-                Enregistrer brouillon
+                <span class="hidden sm:inline">Enregistrer brouillon</span>
+                <span class="sm:hidden">Brouillon</span>
             </button>
             
             <button
                 type="submit"
-                class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+                class="bg-[#00b6b4] hover:bg-[#009999] text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base"
             >
                 <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                     <polyline points="17,21 17,13 7,13 7,21"/>
                     <polyline points="7,3 7,8 15,8"/>
                 </svg>
-                Publier l'offre
+                <span class="hidden sm:inline">Publier l'offre</span>
+                <span class="sm:hidden">Publier</span>
             </button>
         </div>
     </form>
@@ -531,7 +533,7 @@ function addResponsibility() {
         <input
             type="text"
             name="responsibilities[]"
-            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
             placeholder="Responsabilité ${responsibilityCount}"
         />
         <button
@@ -562,7 +564,7 @@ function addRequirement() {
         <input
             type="text"
             name="requirements[]"
-            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
             placeholder="Exigence ${requirementCount}"
         />
         <button
@@ -593,7 +595,7 @@ function addBenefit() {
         <input
             type="text"
             name="benefits[]"
-            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
             placeholder="Avantage ${benefitCount}"
         />
         <button
@@ -624,7 +626,7 @@ function addSkill() {
         <input
             type="text"
             name="skills[]"
-            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base"
+            class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"
             placeholder="Compétence ${skillCount}"
         />
         <button
