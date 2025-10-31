@@ -93,24 +93,62 @@ class CandidateProfile extends Model
      */
     public function getCompletionPercentage()
     {
-        $fields = [
-            'phone' => !empty($this->phone),
-            'address' => !empty($this->address),
-            'city' => !empty($this->city),
-            'date_of_birth' => !empty($this->date_of_birth),
-            'bio' => !empty($this->bio),
-            'skills' => !empty($this->skills) && is_array($this->skills) && count($this->skills) > 0,
-            'experience' => !empty($this->experience) && is_array($this->experience) && count($this->experience) > 0,
-            'education' => !empty($this->education) && is_array($this->education) && count($this->education) > 0,
-            'languages' => !empty($this->languages) && is_array($this->languages) && count($this->languages) > 0,
-            'linkedin_url' => !empty($this->linkedin_url),
-            'portfolio_url' => !empty($this->portfolio_url),
+        // Helper function to check if array has meaningful content
+        $hasArrayContent = function($value) {
+            if (empty($value)) {
+                return false;
+            }
+            if (!is_array($value)) {
+                return false;
+            }
+            // Check if array has at least one non-empty element
+            foreach ($value as $item) {
+                if (!empty($item)) {
+                    // If item is itself an array, check if it has any non-empty values
+                    if (is_array($item)) {
+                        $hasContent = false;
+                        foreach ($item as $subItem) {
+                            if (!empty($subItem)) {
+                                $hasContent = true;
+                                break;
+                            }
+                        }
+                        if ($hasContent) {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        // Essential fields required for profile completion
+        // Note: Address is optional if city is provided, date_of_birth and languages are optional
+        $essentialFields = [
+            'phone' => !empty($this->phone) && trim($this->phone) !== '',
+            'city' => !empty($this->city) && trim($this->city) !== '',
+            'bio' => !empty($this->bio) && trim($this->bio) !== '',
+            'skills' => $hasArrayContent($this->skills),
+            'experience' => $hasArrayContent($this->experience),
+            'education' => $hasArrayContent($this->education),
         ];
 
-        $completedFields = array_filter($fields);
-        $totalFields = count($fields);
-        $completedCount = count($completedFields);
+        // Count address if city is not provided (to encourage location info)
+        // But don't require both
+        if (empty($this->city) || trim($this->city) === '') {
+            $essentialFields['address'] = !empty($this->address) && trim($this->address) !== '';
+        }
 
-        return round(($completedCount / $totalFields) * 100);
+        $completedEssentialFields = array_filter($essentialFields);
+        $totalEssentialFields = count($essentialFields);
+        $completedCount = count($completedEssentialFields);
+
+        // Calculate percentage based on essential fields only
+        $percentage = round(($completedCount / $totalEssentialFields) * 100);
+        
+        // Cap at 100%
+        return min($percentage, 100);
     }
 }

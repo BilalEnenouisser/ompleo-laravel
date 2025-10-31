@@ -332,24 +332,56 @@
             </div>
             
             {{-- Canvas --}}
-            <div 
-                id="notification-canvas"
-                class="border border-[#444444] rounded-lg overflow-hidden mb-4 sm:mb-6 relative"
-                style="height: 300px; background-color: #2b2b2b; color: #f5f5f5;"
-                onclick="deselectAllElements()"
-            >
-                <div id="canvas-content" style="transform: scale(1); transform-origin: top left; height: 100%; position: relative;">
-                    {{-- Elements will be added here dynamically --}}
+            <div class="mb-4 sm:mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs sm:text-sm text-[#9ca3af]">Taille du canvas</span>
+                    <div class="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onclick="expandCanvas()"
+                            class="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded text-[#9ca3af] hover:bg-[#444444] hover:text-[#00b6b4] text-xs sm:text-sm transition-colors"
+                            title="Agrandir le canvas"
+                        >
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                            </svg>
+                            <span class="hidden sm:inline">Agrandir</span>
+                        </button>
+                        <button
+                            type="button"
+                            onclick="resetCanvasSize()"
+                            class="p-1.5 sm:p-2 rounded text-[#9ca3af] hover:bg-[#444444] hover:text-[#00b6b4] text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2"
+                            title="Réinitialiser la taille"
+                        >
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                <path d="M21 3v5h-5"/>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                <path d="M3 21v-5h5"/>
+                            </svg>
+                            <span>Réinitialiser</span>
+                        </button>
+                    </div>
                 </div>
+                <div 
+                    id="notification-canvas"
+                    class="border border-[#444444] rounded-lg overflow-auto mb-4 sm:mb-6 relative"
+                    style="min-height: 300px; background-color: #2b2b2b; color: #f5f5f5;"
+                    onclick="deselectAllElements()"
+                >
+                    <div id="canvas-content" style="transform: scale(1); transform-origin: top left; min-height: 300px; position: relative;">
+                        {{-- Elements will be added here dynamically --}}
+                    </div>
                 
-                <div id="empty-canvas" class="absolute inset-0 flex items-center justify-center text-[#9ca3af]">
-                    <div class="text-center px-4">
-                        <svg class="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
-                            <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
-                            <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
-                        </svg>
-                        <p class="text-sm sm:text-base">Ajoutez des éléments depuis la barre d'outils ci-dessus<br />ou sélectionnez un modèle</p>
+                    <div id="empty-canvas" class="absolute inset-0 flex items-center justify-center text-[#9ca3af]">
+                        <div class="text-center px-4">
+                            <svg class="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+                                <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+                                <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+                            </svg>
+                            <p class="text-sm sm:text-base">Ajoutez des éléments depuis la barre d'outils ci-dessus<br />ou sélectionnez un modèle</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -600,15 +632,17 @@
                         <td class="py-3 sm:py-4 px-4 sm:px-6 min-w-[180px]">
                             <div class="flex flex-col min-w-0">
                                 <div class="text-[#f5f5f5] font-medium text-xs sm:text-sm whitespace-nowrap">
-                                    @if($notification->target_users)
-                                        {{ count($notification->target_users) }} destinataires
+                                    @if($notification->is_sent && isset($notification->total_recipients))
+                                        {{ $notification->total_recipients }} destinataire{{ $notification->total_recipients > 1 ? 's' : '' }}
+                                    @elseif($notification->target_users && is_array($notification->target_users))
+                                        {{ count($notification->target_users) }} destinataire{{ count($notification->target_users) > 1 ? 's' : '' }}
                                     @else
                                         @if($notification->target_type === 'all')
-                                            {{ $stats['all_users'] ?? 0 }} destinataires
+                                            {{ $stats['all_users'] ?? 0 }} destinataire{{ ($stats['all_users'] ?? 0) > 1 ? 's' : '' }}
                                         @elseif($notification->target_type === 'candidates')
-                                            {{ $stats['candidates'] ?? 0 }} destinataires
+                                            {{ $stats['candidates'] ?? 0 }} destinataire{{ ($stats['candidates'] ?? 0) > 1 ? 's' : '' }}
                                         @else
-                                            {{ $stats['recruiters'] ?? 0 }} destinataires
+                                            {{ $stats['recruiters'] ?? 0 }} destinataire{{ ($stats['recruiters'] ?? 0) > 1 ? 's' : '' }}
                                         @endif
                                     @endif
                                 </div>
@@ -616,21 +650,28 @@
                                     @if($notification->is_sent)
                                         @php
                                             $openingRate = $notification->opening_rate ?? 0;
+                                            $openedCount = $notification->opened_count ?? 0;
+                                            $totalRecipients = $notification->total_recipients ?? 0;
                                             $rateColor = $openingRate == 0 ? 'text-red-400' : ($openingRate < 30 ? 'text-yellow-400' : ($openingRate < 70 ? 'text-orange-400' : 'text-green-400'));
                                         @endphp
-                                        <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                                            <span class="{{ $rateColor }} font-medium whitespace-nowrap">
-                                                Taux d'ouverture: {{ $openingRate }}%
-                                            </span>
-                                            @if($openingRate == 0)
-                                                <span class="text-red-500 text-xs whitespace-nowrap">(Aucune ouverture)</span>
-                                            @elseif($openingRate < 30)
-                                                <span class="text-yellow-500 text-xs whitespace-nowrap">(Faible)</span>
-                                            @elseif($openingRate < 70)
-                                                <span class="text-orange-500 text-xs whitespace-nowrap">(Moyen)</span>
-                                            @else
-                                                <span class="text-green-500 text-xs whitespace-nowrap">(Excellent)</span>
-                                            @endif
+                                        <div class="flex flex-col gap-1">
+                                            <div class="flex flex-col sm:flex-row sm:items-center gap-1">
+                                                <span class="{{ $rateColor }} font-medium whitespace-nowrap">
+                                                    Taux d'ouverture: {{ $openingRate }}%
+                                                </span>
+                                                @if($openingRate == 0)
+                                                    <span class="text-red-500 text-xs whitespace-nowrap">(Aucune ouverture)</span>
+                                                @elseif($openingRate < 30)
+                                                    <span class="text-yellow-500 text-xs whitespace-nowrap">(Faible)</span>
+                                                @elseif($openingRate < 70)
+                                                    <span class="text-orange-500 text-xs whitespace-nowrap">(Moyen)</span>
+                                                @else
+                                                    <span class="text-green-500 text-xs whitespace-nowrap">(Excellent)</span>
+                                                @endif
+                                            </div>
+                                            <div class="text-[#9ca3af] whitespace-nowrap">
+                                                <span class="text-[#00b6b4] font-medium">{{ $openedCount }}</span> / <span>{{ $totalRecipients }}</span> ouvert{{ $openedCount > 1 ? 'es' : 'e' }}
+                                            </div>
                                         </div>
                                     @else
                                         <span class="text-yellow-500 whitespace-nowrap">En attente</span>
@@ -877,8 +918,89 @@ function updateCanvas() {
         }, 50);
     }
     
+    // Auto-resize canvas based on content (with delay to let images load)
+    setTimeout(() => {
+        autoResizeCanvas();
+    }, 100);
+    
     // Update preview whenever canvas is updated
     updatePreview();
+}
+
+function autoResizeCanvas() {
+    const canvasContent = document.getElementById('canvas-content');
+    const canvasContainer = document.getElementById('notification-canvas');
+    
+    if (elements.length === 0) {
+        canvasContent.style.height = '300px';
+        canvasContainer.style.minHeight = '300px';
+        return;
+    }
+    
+    // Calculate the maximum bottom position of all elements
+    let maxBottom = 300; // Minimum height
+    
+    // First, try to calculate from actual DOM elements (more accurate)
+    const domElements = canvasContent.querySelectorAll('[data-element-index]');
+    if (domElements.length > 0) {
+        domElements.forEach(domElement => {
+            const rect = domElement.getBoundingClientRect();
+            const canvasRect = canvasContent.getBoundingClientRect();
+            const relativeBottom = rect.bottom - canvasRect.top + rect.height;
+            if (relativeBottom > maxBottom) {
+                maxBottom = relativeBottom;
+            }
+        });
+    } else {
+        // Fallback: calculate from element data
+        elements.forEach(element => {
+            let elementHeight = 40; // Default height for text elements
+            
+            if (element.type === 'image') {
+                // For images, use the stored height or calculate from aspect ratio
+                if (element.height) {
+                    elementHeight = element.height;
+                } else if (element.originalHeight && element.originalWidth) {
+                    // Calculate based on original dimensions
+                    const aspectRatio = element.originalHeight / element.originalWidth;
+                    elementHeight = (element.width || 200) * aspectRatio;
+                } else {
+                    elementHeight = (element.width || 200) * 0.75; // Default aspect ratio
+                }
+            } else if (element.type === 'title') {
+                elementHeight = element.fontSize || 18;
+            } else if (element.type === 'emoji' || element.type === 'icon') {
+                elementHeight = element.fontSize || 24;
+            } else if (element.type === 'button') {
+                elementHeight = 40; // Button height
+            }
+            
+            const bottomPosition = element.y + elementHeight + 20; // Add padding
+            if (bottomPosition > maxBottom) {
+                maxBottom = bottomPosition;
+            }
+        });
+    }
+    
+    // Set the canvas height (add some padding)
+    const newHeight = Math.max(300, maxBottom + 50);
+    canvasContent.style.height = newHeight + 'px';
+    canvasContainer.style.minHeight = newHeight + 'px';
+}
+
+function expandCanvas() {
+    const canvasContent = document.getElementById('canvas-content');
+    const canvasContainer = document.getElementById('notification-canvas');
+    
+    const currentHeight = parseInt(canvasContent.style.height) || 300;
+    const newHeight = currentHeight + 200; // Add 200px
+    
+    canvasContent.style.height = newHeight + 'px';
+    canvasContainer.style.minHeight = newHeight + 'px';
+}
+
+function resetCanvasSize() {
+    autoResizeCanvas();
 }
 
 function renderElement(element, index) {
@@ -935,6 +1057,7 @@ function renderElement(element, index) {
                     style="${baseStyle} max-width: ${element.width}px;"
                     onclick="selectElement(${index}); event.stopPropagation();"
                     onmousedown="startDrag(event, ${index})"
+                    onload="autoResizeCanvas()"
                 />
             `;
         case 'emoji':
@@ -990,17 +1113,29 @@ function addImage() {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                const newElement = {
-                    type: 'image',
-                    src: e.target.result,
-                    alt: 'Image',
-                    x: 20,
-                    y: 20 + (elements.length * 100),
-                    width: 200
+                // Create image to get actual dimensions
+                const img = new Image();
+                img.onload = function() {
+                    const aspectRatio = img.height / img.width;
+                    const displayWidth = 200; // Default width
+                    const displayHeight = displayWidth * aspectRatio;
+                    
+                    const newElement = {
+                        type: 'image',
+                        src: e.target.result,
+                        alt: 'Image',
+                        x: 20,
+                        y: 20 + (elements.length * 100),
+                        width: displayWidth,
+                        height: displayHeight,
+                        originalWidth: img.width,
+                        originalHeight: img.height
+                    };
+                    elements.push(newElement);
+                    updateCanvas();
+                    selectElement(elements.length - 1);
                 };
-                elements.push(newElement);
-                updateCanvas();
-                selectElement(elements.length - 1);
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -1409,7 +1544,7 @@ function updatePreview() {
                     previewContent += `<div style="${buttonStyle}">${element.content}</div>`;
                     break;
                 case 'image':
-                    previewContent += `<img src="${element.content}" style="${baseStyle} max-width: 200px; max-height: 100px; object-fit: contain;" alt="Image" />`;
+                    previewContent += `<img src="${element.src}" style="${baseStyle} max-width: ${element.width || 200}px; max-height: 100px; object-fit: contain;" alt="${element.alt || 'Image'}" />`;
                     break;
                 case 'emoji':
                     previewContent += `<div style="${baseStyle} font-size: ${element.fontSize || 24}px;">${element.content}</div>`;

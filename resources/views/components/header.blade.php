@@ -387,8 +387,11 @@ function loadNotifications() {
                 title: notification.title,
                 message: notification.message,
                 timestamp: new Date(notification.created_at),
-                isRead: notification.is_read,
-                type: notification.type
+                isRead: notification.is_read || notification.isRead,
+                type: notification.type,
+                rich_content: notification.rich_content,
+                background_color: notification.background_color,
+                interview: notification.interview || null
             }));
             
             renderNotifications(notifications);
@@ -433,40 +436,27 @@ function renderNotifications(notifications) {
 }
 
 function renderRichNotification(notification) {
-    const backgroundStyle = notification.background_color ? `background-color: ${notification.background_color};` : 'background-color: #2b2b2b;';
-    
-    // Render rich content elements
-    let richContentHtml = '';
-    if (notification.rich_content) {
-        notification.rich_content.forEach(element => {
-            const baseStyle = `position: absolute; left: ${element.x}px; top: ${element.y}px; color: ${element.color || '#f5f5f5'}; font-size: ${element.fontSize || 14}px; font-family: ${element.fontFamily || 'inherit'};`;
-            
-            switch(element.type) {
-                case 'title':
-                    richContentHtml += `<div style="${baseStyle} font-weight: bold; font-size: ${element.fontSize || 18}px;">${element.content}</div>`;
-                    break;
-                case 'text':
-                    richContentHtml += `<div style="${baseStyle}">${element.content}</div>`;
-                    break;
-                case 'button':
-                    const buttonStyle = `${baseStyle} background-color: ${element.backgroundColor || '#00b6b4'}; color: ${element.color || '#ffffff'}; padding: 8px 16px; border-radius: 4px; display: inline-block; cursor: pointer;`;
-                    richContentHtml += `<div style="${buttonStyle}">${element.content}</div>`;
-                    break;
-                case 'image':
-                    richContentHtml += `<img src="${element.src}" style="${baseStyle} max-width: 200px; max-height: 100px; object-fit: contain;" alt="Image" />`;
-                    break;
-                case 'emoji':
-                    richContentHtml += `<div style="${baseStyle} font-size: ${element.fontSize || 24}px;">${element.content}</div>`;
-                    break;
-                case 'icon':
-                    richContentHtml += `<div style="${baseStyle}">${getIconSVG(element.content)}</div>`;
-                    break;
-            }
-        });
-    }
+    const interviewSection = notification.interview ? `
+        <div class="mt-2 p-2 bg-[#333333] rounded border border-[#444444] text-xs">
+            <div class="flex items-center gap-1.5 mb-1">
+                <svg class="w-3 h-3 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                    <line x1="16" x2="16" y1="2" y2="6"/>
+                    <line x1="8" x2="8" y1="2" y2="6"/>
+                </svg>
+                <span class="text-[#00b6b4] font-medium">Interview</span>
+            </div>
+            <div class="space-y-0.5 text-[#9ca3af]">
+                ${notification.interview.date ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Date:</span> ${notification.interview.date}</div>` : ''}
+                ${notification.interview.time ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Time:</span> ${notification.interview.time}</div>` : ''}
+                ${notification.interview.company ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Company:</span> ${notification.interview.company}</div>` : ''}
+                ${notification.interview.job_title ? `<div class="flex items-center gap-1 truncate"><span class="text-[#00b6b4]">Job:</span> <span class="truncate">${notification.interview.job_title}</span></div>` : ''}
+            </div>
+        </div>
+    ` : '';
     
     return `
-        <div class="p-4 hover:bg-[#333333] transition-colors ${!notification.isRead ? 'bg-[#00b6b4]/10' : ''}">
+        <div class="p-4 hover:bg-[#333333] transition-colors cursor-pointer ${!notification.isRead ? 'bg-[#00b6b4]/10' : ''}">
             <div class="flex items-start gap-3">
                 <div class="w-8 h-8 rounded-full flex items-center justify-center ${!notification.isRead ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]'}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -476,15 +466,13 @@ function renderRichNotification(notification) {
                 </div>
                 
                 <div class="flex-1 min-w-0" onclick="handleNotificationClick(${notification.id})">
-                    <h4 class="font-medium text-[#f5f5f5] mb-2">${notification.title}</h4>
-                    
-                    <!-- Rich Content Preview -->
-                    <div class="relative mb-2" style="min-height: 120px; ${backgroundStyle} border-radius: 8px; padding: 15px; overflow: hidden; border: 1px solid #444444;">
-                        ${richContentHtml}
+                    <div class="flex items-center gap-2 mb-1">
+                        <h4 class="font-medium text-[#f5f5f5]">${notification.title}</h4>
+                        ${notification.rich_content && notification.rich_content.length > 0 ? `<span class="px-2 py-0.5 text-xs bg-[#00b6b4]/20 text-[#00b6b4] rounded-full whitespace-nowrap">De l'administration</span>` : ''}
                     </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-[#9ca3af]">${formatTime(notification.timestamp)}</span>
+                    ${interviewSection}
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-xs text-[#9ca3af]">${formatTime(new Date(notification.timestamp))}</span>
                         <div class="flex items-center gap-1">
                             ${!notification.isRead ? `
                                 <button onclick="event.stopPropagation(); markAsRead(${notification.id})" class="p-1 text-[#00b6b4] hover:text-[#009e9c]">
@@ -509,8 +497,27 @@ function renderRichNotification(notification) {
 }
 
 function renderBasicNotification(notification) {
+    const interviewSection = notification.interview ? `
+        <div class="mt-2 p-2 bg-[#333333] rounded border border-[#444444] text-xs">
+            <div class="flex items-center gap-1.5 mb-1">
+                <svg class="w-3 h-3 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                    <line x1="16" x2="16" y1="2" y2="6"/>
+                    <line x1="8" x2="8" y1="2" y2="6"/>
+                </svg>
+                <span class="text-[#00b6b4] font-medium">Interview</span>
+            </div>
+            <div class="space-y-0.5 text-[#9ca3af]">
+                ${notification.interview.date ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Date:</span> ${notification.interview.date}</div>` : ''}
+                ${notification.interview.time ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Time:</span> ${notification.interview.time}</div>` : ''}
+                ${notification.interview.company ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Company:</span> ${notification.interview.company}</div>` : ''}
+                ${notification.interview.job_title ? `<div class="flex items-center gap-1 truncate"><span class="text-[#00b6b4]">Job:</span> <span class="truncate">${notification.interview.job_title}</span></div>` : ''}
+            </div>
+        </div>
+    ` : '';
+    
     return `
-        <div class="p-4 hover:bg-[#333333] transition-colors ${!notification.isRead ? 'bg-[#00b6b4]/10' : ''}">
+        <div class="p-4 hover:bg-[#333333] transition-colors cursor-pointer ${!notification.isRead ? 'bg-[#00b6b4]/10' : ''}">
             <div class="flex items-start gap-3">
                 <div class="w-8 h-8 rounded-full flex items-center justify-center ${!notification.isRead ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]'}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -521,10 +528,9 @@ function renderBasicNotification(notification) {
                 
                 <div class="flex-1 min-w-0" onclick="handleNotificationClick(${notification.id})">
                     <h4 class="font-medium text-[#f5f5f5] mb-1">${notification.title}</h4>
-                    <p class="text-sm text-[#cccccc] mb-1 line-clamp-2">${notification.message}</p>
-                    
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-[#9ca3af]">${formatTime(notification.timestamp)}</span>
+                    ${interviewSection}
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-xs text-[#9ca3af]">${formatTime(new Date(notification.timestamp))}</span>
                         <div class="flex items-center gap-1">
                             ${!notification.isRead ? `
                                 <button onclick="event.stopPropagation(); markAsRead(${notification.id})" class="p-1 text-[#00b6b4] hover:text-[#009e9c]">
@@ -586,6 +592,8 @@ function formatTime(date) {
 function handleNotificationClick(notificationId) {
     // Mark as read when clicked
     markAsRead(notificationId);
+    // Redirect to notifications page
+    window.location.href = '{{ route("notifications") }}';
 }
 
 function updateNotificationBadge(notifications) {
@@ -615,10 +623,12 @@ function markAsRead(notificationId) {
     .then(data => {
         if (data.success) {
             loadNotifications();
+            // Update badge count
+            loadNotificationCount();
         }
     })
     .catch(error => {
-        console.error('Error marking notification as read:', error);
+        // Error handling - fail silently
     });
 }
 
@@ -634,10 +644,12 @@ function markAllAsRead() {
     .then(data => {
         if (data.success) {
             loadNotifications();
+            // Update badge count
+            loadNotificationCount();
         }
     })
     .catch(error => {
-        console.error('Error marking all notifications as read:', error);
+        // Error handling - fail silently
     });
 }
 
@@ -654,12 +666,63 @@ function deleteNotification(notificationId) {
         .then(data => {
             if (data.success) {
                 loadNotifications();
+                // Update badge count
+                loadNotificationCount();
             }
         })
         .catch(error => {
-            console.error('Error deleting notification:', error);
+            // Error handling - fail silently
         });
     }
+}
+
+// Load notifications on page load to show badge
+@auth
+document.addEventListener('DOMContentLoaded', function() {
+    // Load notifications count on page load
+    loadNotificationCount();
+});
+@endauth
+
+// Load only notification count (lighter request)
+function loadNotificationCount() {
+    fetch('/api/notifications', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const badge = document.getElementById('notificationBadge');
+        const markAllBtn = document.getElementById('markAllReadBtn');
+        
+        if (data.unread_count !== undefined) {
+            const unreadCount = data.unread_count;
+            
+            if (unreadCount > 0) {
+                if (badge) {
+                    badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                    badge.classList.remove('hidden');
+                }
+                if (markAllBtn) {
+                    markAllBtn.classList.remove('hidden');
+                }
+            } else {
+                if (badge) {
+                    badge.classList.add('hidden');
+                }
+                if (markAllBtn) {
+                    markAllBtn.classList.add('hidden');
+                }
+            }
+        }
+    })
+    .catch(error => {
+        // Silently fail - badge will remain hidden
+    });
 }
 
 // Close dropdowns when clicking outside

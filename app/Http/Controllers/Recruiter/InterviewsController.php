@@ -7,9 +7,11 @@ use App\Models\Interview;
 use App\Models\Application;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\UserNotification;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class InterviewsController extends Controller
@@ -63,6 +65,46 @@ class InterviewsController extends Controller
         }
 
         $interviews = $query->paginate(10);
+
+        // Get notification read status for each interview
+        $candidateIds = $interviews->pluck('candidate_id')->unique()->toArray();
+        
+        // Get ALL notifications for these candidates (not just interview type) to check read status
+        $allNotifications = UserNotification::whereIn('user_id', $candidateIds)
+            ->with('notification')
+            ->get()
+            ->groupBy('user_id');
+
+        // Get interview-related notifications specifically
+        $interviewNotifications = UserNotification::whereIn('user_id', $candidateIds)
+            ->with('notification')
+            ->whereHas('notification', function($q) {
+                $q->whereIn('type', ['interview', 'interview_update']);
+            })
+            ->get()
+            ->groupBy('user_id');
+
+        // Add notification read status to each interview
+        $interviews->getCollection()->transform(function($interview) use ($interviewNotifications, $allNotifications) {
+            // First check if there are interview-specific notifications
+            $candidateInterviewNotifications = $interviewNotifications->get($interview->candidate_id, collect());
+            
+            if ($candidateInterviewNotifications->isEmpty()) {
+                // If no interview notification exists, check all notifications for this candidate
+                // This handles cases where notification was marked as read but isn't specifically an interview notification
+                $candidateAllNotifications = $allNotifications->get($interview->candidate_id, collect());
+                $readNotification = $candidateAllNotifications->where('is_read', true)
+                    ->where('read_at', '>=', $interview->created_at)
+                    ->first();
+            } else {
+                // Check if candidate has read at least one interview notification
+                $readNotification = $candidateInterviewNotifications->where('is_read', true)->first();
+            }
+            
+            $interview->notification_read = $readNotification ? true : false;
+            $interview->notification_read_at = $readNotification ? $readNotification->read_at : null;
+            return $interview;
+        });
 
         // Calculate statistics
         $stats = [

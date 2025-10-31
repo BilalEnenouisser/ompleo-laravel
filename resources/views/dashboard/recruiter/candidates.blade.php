@@ -32,17 +32,17 @@
 
     {{-- Search and Filters --}}
     <form method="GET" action="{{ route('recruiter.candidates') }}" class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
-        <div class="space-y-4">
-            {{-- Filters Grid - 2 by 2 --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div class="space-y-4 md:space-y-0">
+            {{-- Filters and Buttons - Mobile: stacked, Desktop: one row --}}
+            <div class="grid grid-cols-1 md:flex md:items-center md:gap-3 md:gap-4 gap-3 sm:gap-4">
                 {{-- Search Input --}}
-                <div class="relative">
+                <div class="relative md:flex-1">
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Nom, poste, compétences..." class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"/>
                 </div>
                 
                 {{-- Location Dropdown --}}
-                <div class="relative">
+                <div class="relative md:flex-1">
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                     <select name="location" class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base">
                         <option value="">Toutes les villes</option>
@@ -98,8 +98,9 @@
                 </div>
                 
                 {{-- Experience Dropdown --}}
-                <div class="relative">
-                    <select name="experience" class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base">
+                <div class="relative md:flex-1">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5 z-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <select name="experience" class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base">
                         <option value="">Expérience</option>
                         <option value="0-1 ans" {{ request('experience') == '0-1 ans' ? 'selected' : '' }}>0-1 an</option>
                         <option value="1-2 ans" {{ request('experience') == '1-2 ans' ? 'selected' : '' }}>1-2 ans</option>
@@ -110,23 +111,24 @@
                 </div>
                 
                 {{-- Skills Input --}}
-                <div class="relative">
-                    <input type="text" name="skills" value="{{ request('skills') }}" placeholder="Compétence..." class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"/>
+                <div class="relative md:flex-1">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <input type="text" name="skills" value="{{ request('skills') }}" placeholder="Compétence..." class="w-full pl-8 sm:pl-10 pr-4 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] text-xs sm:text-sm md:text-base"/>
                 </div>
-            </div>
-            
-            {{-- Action Buttons --}}
-            <div class="flex items-center gap-2">
-                <button type="submit" class="w-4/5 bg-[#00b6b4] hover:bg-[#009999] text-white px-3 sm:px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base">
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                    <span class="hidden sm:inline">Rechercher</span>
-                    <span class="sm:hidden">Recherche</span>
-                </button>
-                <a href="{{ route('recruiter.candidates') }}" class="w-1/5 bg-gray-500 hover:bg-gray-600 text-white px-2 sm:px-3 py-2 rounded-lg transition-colors flex items-center justify-center">
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </a>
+                
+                {{-- Action Buttons --}}
+                <div class="flex items-center gap-2 md:flex-shrink-0">
+                    <button type="submit" class="flex-1 md:flex-initial md:px-4 bg-[#00b6b4] hover:bg-[#009999] text-white px-3 sm:px-4 py-2 md:py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base whitespace-nowrap">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <span class="hidden sm:inline">Rechercher</span>
+                        <span class="sm:hidden">Recherche</span>
+                    </button>
+                    <a href="{{ route('recruiter.candidates') }}" class="flex-shrink-0 bg-gray-500 hover:bg-gray-600 text-white px-3 sm:px-4 py-2.5 md:py-3.5 rounded-lg transition-colors flex items-center justify-center">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </form>

@@ -20,11 +20,32 @@ class NotificationsController extends Controller
         
         // Calculate opening rates for each notification
         foreach ($notifications as $notification) {
-            if ($notification->is_sent && $notification->target_users) {
-                $totalRecipients = count($notification->target_users);
+            if ($notification->is_sent) {
+                // Calculate total recipients
+                $totalRecipients = 0;
+                if ($notification->target_users && is_array($notification->target_users)) {
+                    $totalRecipients = count($notification->target_users);
+                } else {
+                    // If target_users is not set, use target_type to determine count
+                    if ($notification->target_type === 'all') {
+                        $totalRecipients = User::count();
+                    } elseif ($notification->target_type === 'candidates') {
+                        $totalRecipients = User::where('user_type', 'candidate')->count();
+                    } elseif ($notification->target_type === 'recruiters') {
+                        $totalRecipients = User::where('user_type', 'recruiter')->count();
+                    }
+                }
+                
+                // Calculate opened count
                 $openedCount = $notification->userNotifications()->where('is_read', true)->count();
+                
+                // Store both count and rate
+                $notification->opened_count = $openedCount;
+                $notification->total_recipients = $totalRecipients;
                 $notification->opening_rate = $totalRecipients > 0 ? round(($openedCount / $totalRecipients) * 100) : 0;
             } else {
+                $notification->opened_count = 0;
+                $notification->total_recipients = 0;
                 $notification->opening_rate = 0;
             }
         }

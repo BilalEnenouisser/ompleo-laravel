@@ -1,65 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# OMPLEO - Job Recruitment Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+OMPLEO is a comprehensive job recruitment platform built with Laravel, designed to connect candidates with recruiters and streamline the hiring process.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### For Candidates
+- **Profile Management**: Complete profile with skills, experience, education, and languages
+- **Job Search**: Browse and filter job opportunities
+- **Application Tracking**: Track application status and manage applications
+- **Interview Management**: View interview details, including date, time, location, and meeting links
+- **Rich Notifications**: Receive styled notifications with images and formatted content
+- **Profile Completion**: Track profile completion percentage with visual indicators
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### For Recruiters
+- **Candidate Search**: Advanced search and filter candidates by skills, location, experience
+- **Interview Scheduling**: Schedule and manage interviews with calendar view
+- **Application Management**: Review and manage candidate applications
+- **Company Profile**: Manage company information and branding
+- **Reports & Analytics**: View statistics and reports on job postings and candidates
+- **Notification System**: Send rich content notifications to candidates
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### For Administrators
+- **User Management**: Manage candidates, recruiters, and admin users
+- **Company Management**: View and manage all companies on the platform
+- **Notification Management**: Create and send rich content notifications with visual editor
+- **Payment Tracking**: Monitor subscription payments and transactions
+- **Blog Management**: Create and manage blog posts
+- **System Dashboard**: Overview of platform statistics and activities
 
-## Learning Laravel
+## Technologies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend**: Laravel (PHP)
+- **Frontend**: Blade Templates, Tailwind CSS
+- **JavaScript**: Vanilla JS, FullCalendar.js
+- **Database**: MySQL/PostgreSQL
+- **Storage**: Laravel File Storage
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd ompleo-laravel
+```
 
-## Laravel Sponsors
+2. **Install dependencies**
+```bash
+composer install
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. **Environment setup**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-### Premium Partners
+4. **Configure database**
+Edit `.env` file with your database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ompleo
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. **Run migrations**
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## Contributing
+6. **Build assets**
+```bash
+npm run build
+# Or for development:
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Start the server**
+```bash
+php artisan serve
+```
 
-## Code of Conduct
+Visit `http://127.0.0.1:8000` in your browser.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Key Features Implemented
 
-## Security Vulnerabilities
+### Mobile Responsiveness
+- Fully responsive design across all dashboard pages
+- Mobile-optimized filters and tables with horizontal scrolling
+- Adaptive layouts for candidate, recruiter, and admin views
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Notification System
+- Rich content notifications with images, styled text, buttons, and icons
+- Visual notification editor with canvas-based preview
+- Interview details displayed in notifications
+- Real-time notification badge updates
+
+### Profile Management
+- Dynamic profile completion tracking
+- Section-based profile editing
+- Skills, experience, education, and languages management
+
+### Interview Management
+- Calendar view with FullCalendar.js integration
+- Custom-styled calendar with status-based colors
+- Interview details with notification read status
+- Mobile-responsive calendar interface
+
+## User Roles
+
+- **Candidate**: Job seekers who can apply to positions and manage their profiles
+- **Recruiter**: Companies/HR who post jobs and manage candidates
+- **Admin**: Platform administrators with full system access
+
+## Routes
+
+Key routes include:
+- `/candidate/dashboard` - Candidate dashboard
+- `/recruiter/dashboard` - Recruiter dashboard
+- `/admin/dashboard` - Admin dashboard
+- `/candidate/profile` - Profile management
+- `/recruiter/candidates` - Candidate search
+- `/recruiter/interviews` - Interview management
+- `/admin/notifications` - Notification management
 
 ## License
 

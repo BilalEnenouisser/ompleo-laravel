@@ -4,7 +4,32 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 <style>
-/* Custom FullCalendar Site Theme */
+/* Custom FullCalendar Dark Theme - Define CSS Variables */
+.fc {
+    --fc-button-bg-color: #2b2b2b;
+    --fc-button-border-color: #444444;
+    --fc-button-text-color: #f5f5f5;
+    --fc-button-hover-bg-color: #00b6b4;
+    --fc-button-hover-border-color: #00b6b4;
+    --fc-button-hover-text-color: #ffffff;
+    --fc-button-active-bg-color: #00b6b4;
+    --fc-button-active-border-color: #00b6b4;
+    --fc-button-active-text-color: #ffffff;
+    --fc-button-disabled-bg-color: #1a1a1a;
+    --fc-button-disabled-border-color: #333333;
+    --fc-button-disabled-text-color: #666666;
+    --fc-event-bg-color: #00b6b4;
+    --fc-event-border-color: #00b6b4;
+    --fc-event-text-color: #ffffff;
+    --fc-today-bg-color: rgba(0, 182, 180, 0.1);
+}
+
+.fc,
+.fc * {
+    box-sizing: border-box;
+}
+
+/* Main calendar container */
 .fc {
     background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%) !important;
     color: #f5f5f5 !important;
@@ -137,38 +162,60 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
-.fc-theme-standard .fc-button {
-    background: linear-gradient(135deg, #333333 0%, #2b2b2b 100%) !important;
-    border: 1px solid #00b6b4 !important;
-    color: #f5f5f5 !important;
+/* Button styling - Override FullCalendar variables */
+.fc-button,
+.fc-button-primary {
+    background-color: var(--fc-button-bg-color) !important;
+    border-color: var(--fc-button-border-color) !important;
+    color: var(--fc-button-text-color) !important;
     border-radius: 8px !important;
     font-weight: 600 !important;
-    padding: 10px 16px !important;
+    padding: 8px 12px !important;
     transition: all 0.3s ease !important;
-    text-transform: uppercase !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.5px !important;
+    font-size: 0.875rem !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    text-transform: none !important;
 }
 
-.fc-theme-standard .fc-button:hover {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
-    border-color: #00b6b4 !important;
-    color: #ffffff !important;
+.fc-button:hover,
+.fc-button-primary:hover {
+    background-color: var(--fc-button-hover-bg-color) !important;
+    border-color: var(--fc-button-hover-border-color) !important;
+    color: var(--fc-button-hover-text-color) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 12px rgba(0, 182, 180, 0.4) !important;
+    box-shadow: 0 4px 8px rgba(0, 182, 180, 0.4) !important;
 }
 
-.fc-theme-standard .fc-button:focus {
+.fc-button:focus,
+.fc-button-primary:focus {
     box-shadow: 0 0 0 3px rgba(0, 182, 180, 0.3) !important;
     outline: none !important;
 }
 
-.fc-theme-standard .fc-button-primary:not(:disabled).fc-button-active {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
-    border-color: #00b6b4 !important;
-    color: #ffffff !important;
+.fc-button-primary:not(:disabled).fc-button-active,
+.fc-dayGridMonth-button.fc-button-active,
+.fc-timeGridWeek-button.fc-button-active,
+.fc-timeGridDay-button.fc-button-active {
+    background-color: var(--fc-button-active-bg-color) !important;
+    border-color: var(--fc-button-active-border-color) !important;
+    color: var(--fc-button-active-text-color) !important;
     box-shadow: 0 4px 8px rgba(0, 182, 180, 0.3) !important;
+}
+
+.fc-button:disabled,
+.fc-button-primary:disabled {
+    background-color: var(--fc-button-disabled-bg-color) !important;
+    border-color: var(--fc-button-disabled-border-color) !important;
+    color: var(--fc-button-disabled-text-color) !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Button icons */
+.fc-icon,
+.fc-icon-chevron-left,
+.fc-icon-chevron-right {
+    color: inherit !important;
 }
 
 .fc-theme-standard .fc-toolbar-title {
@@ -218,30 +265,109 @@
     text-decoration: none !important;
 }
 
-/* Event status colors with gradients */
-.fc-event[data-status="programme"] {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+/* Event status colors - Site theme colors - High specificity to override FullCalendar styles */
+.fc-theme-standard .fc-event[data-status="programme"],
+.fc-event[data-status="programme"],
+.fc-daygrid-event[data-status="programme"],
+.fc-daygrid-block-event[data-status="programme"] {
+    background-color: #00b6b4 !important;
+    border-color: #00b6b4 !important;
     color: #ffffff !important;
 }
 
-.fc-event[data-status="confirme"] {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+.fc-theme-standard .fc-event[data-status="programme"]:hover,
+.fc-event[data-status="programme"]:hover {
+    background-color: #009999 !important;
+    border-color: #009999 !important;
+}
+
+.fc-theme-standard .fc-event[data-status="confirme"],
+.fc-event[data-status="confirme"],
+.fc-daygrid-event[data-status="confirme"],
+.fc-daygrid-block-event[data-status="confirme"] {
+    background-color: #10b981 !important;
+    border-color: #10b981 !important;
     color: #ffffff !important;
 }
 
-.fc-event[data-status="en_attente"] {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+.fc-theme-standard .fc-event[data-status="confirme"]:hover,
+.fc-event[data-status="confirme"]:hover {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+}
+
+.fc-theme-standard .fc-event[data-status="en_attente"],
+.fc-event[data-status="en_attente"],
+.fc-daygrid-event[data-status="en_attente"],
+.fc-daygrid-block-event[data-status="en_attente"] {
+    background-color: #f59e0b !important;
+    border-color: #f59e0b !important;
     color: #1a1a1a !important;
 }
 
-.fc-event[data-status="annule"] {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+.fc-theme-standard .fc-event[data-status="en_attente"]:hover,
+.fc-event[data-status="en_attente"]:hover {
+    background-color: #d97706 !important;
+    border-color: #d97706 !important;
+}
+
+.fc-theme-standard .fc-event[data-status="annule"],
+.fc-event[data-status="annule"],
+.fc-daygrid-event[data-status="annule"],
+.fc-daygrid-block-event[data-status="annule"] {
+    background-color: #ef4444 !important;
+    border-color: #ef4444 !important;
     color: #ffffff !important;
 }
 
-.fc-event[data-status="termine"] {
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+.fc-theme-standard .fc-event[data-status="annule"]:hover,
+.fc-event[data-status="annule"]:hover {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+}
+
+.fc-theme-standard .fc-event[data-status="termine"],
+.fc-event[data-status="termine"],
+.fc-daygrid-event[data-status="termine"],
+.fc-daygrid-block-event[data-status="termine"] {
+    background-color: #6b7280 !important;
+    border-color: #6b7280 !important;
     color: #ffffff !important;
+}
+
+.fc-theme-standard .fc-event[data-status="termine"]:hover,
+.fc-event[data-status="termine"]:hover {
+    background-color: #4b5563 !important;
+    border-color: #4b5563 !important;
+}
+
+/* Default event color if no status */
+.fc-theme-standard .fc-event:not([data-status]),
+.fc-event:not([data-status]) {
+    background-color: #00b6b4 !important;
+    border-color: #00b6b4 !important;
+    color: #ffffff !important;
+}
+
+/* Override FullCalendar's event text colors */
+.fc-event-main[data-status="programme"],
+.fc-event-main[data-status="confirme"],
+.fc-event-main[data-status="annule"],
+.fc-event-main[data-status="termine"] {
+    color: #ffffff !important;
+}
+
+.fc-event-main[data-status="en_attente"] {
+    color: #1a1a1a !important;
+}
+
+.fc-event-title {
+    color: inherit !important;
+}
+
+.fc-event-time {
+    color: inherit !important;
+    opacity: 0.9 !important;
 }
 
 /* Additional calendar styling */
@@ -332,12 +458,35 @@
 }
 
 /* Month/year text in header */
-.fc-theme-standard .fc-toolbar-title {
-    color: #ffffff !important;
+.fc-theme-standard .fc-toolbar-title,
+.fc-toolbar-title {
+    color: #f5f5f5 !important;
     font-size: 1.75rem !important;
     font-weight: 800 !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
     letter-spacing: -0.5px !important;
+}
+
+/* All text elements */
+.fc-col-header-cell a,
+.fc-col-header-cell-cushion {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.fc-daygrid-day-number,
+.fc-daygrid-day-number a {
+    color: #ffffff !important;
+}
+
+/* Ensure all text is visible */
+.fc-event-main,
+.fc-event-title {
+    color: #ffffff !important;
+}
+
+.fc-event-time {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Weekday names */
@@ -403,44 +552,70 @@
         border-radius: 12px !important;
     }
     
-    .fc-theme-standard th {
-        padding: 8px 4px !important;
-        font-size: 0.7rem !important;
+    .fc-theme-standard th,
+    .fc-col-header-cell {
+        padding: 8px 2px !important;
+        font-size: 0.65rem !important;
+        text-transform: capitalize !important;
     }
     
     .fc-theme-standard .fc-daygrid-day {
-        min-height: 80px !important;
+        min-height: 70px !important;
     }
     
     .fc-theme-standard .fc-daygrid-day-number {
-        padding: 6px !important;
-        font-size: 0.8rem !important;
+        padding: 4px 6px !important;
+        font-size: 0.75rem !important;
     }
     
-    .fc-theme-standard .fc-toolbar {
+    .fc-theme-standard .fc-toolbar,
+    .fc-header-toolbar {
         flex-direction: column !important;
-        gap: 8px !important;
+        gap: 10px !important;
+        padding: 10px !important;
     }
     
-    .fc-theme-standard .fc-toolbar-chunk {
+    .fc-theme-standard .fc-toolbar-chunk,
+    .fc-toolbar-chunk {
         display: flex !important;
         justify-content: center !important;
+        align-items: center !important;
+        gap: 4px !important;
+        width: 100% !important;
     }
     
-    .fc-theme-standard .fc-toolbar-title {
-        font-size: 1.2rem !important;
+    .fc-theme-standard .fc-toolbar-title,
+    .fc-toolbar-title {
+        font-size: 1rem !important;
         text-align: center !important;
+        color: #f5f5f5 !important;
+        margin: 0 !important;
+        padding: 8px 0 !important;
     }
     
-    .fc-theme-standard .fc-button {
+    .fc-button,
+    .fc-button-primary,
+    .fc-prev-button,
+    .fc-next-button,
+    .fc-today-button,
+    .fc-dayGridMonth-button,
+    .fc-timeGridWeek-button,
+    .fc-timeGridDay-button {
         padding: 6px 10px !important;
         font-size: 0.7rem !important;
+        min-width: auto !important;
+    }
+    
+    .fc-button-group {
+        display: flex !important;
+        gap: 4px !important;
     }
     
     .fc-theme-standard .fc-event {
-        font-size: 9px !important;
-        padding: 2px 4px !important;
+        font-size: 8px !important;
+        padding: 1px 3px !important;
         margin: 1px 0 !important;
+        line-height: 1.2 !important;
     }
     
     .fc-theme-standard .fc-daygrid-event {
@@ -448,11 +623,29 @@
     }
     
     .fc-theme-standard .fc-daygrid-day-frame {
-        min-height: 80px !important;
+        min-height: 70px !important;
     }
     
     .fc-theme-standard .fc-scrollgrid-sync-table {
-        font-size: 11px !important;
+        font-size: 10px !important;
+    }
+    
+    .fc-event-title {
+        font-size: 8px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    .fc-event-time {
+        font-size: 7px !important;
+        display: block !important;
+    }
+    
+    /* Hide some buttons on mobile */
+    .fc-timeGridWeek-button,
+    .fc-timeGridDay-button {
+        display: none !important;
     }
 }
 
@@ -705,6 +898,31 @@
                             </div>
                         </div>
                         
+                        {{-- Notification Read Status --}}
+                        <div class="flex items-center gap-2 mb-2 sm:mb-3">
+                            @if(isset($interview->notification_read) && $interview->notification_read)
+                                <div class="flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full bg-green-400/20 text-green-400 text-xs sm:text-sm">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <path d="m9 11 3 3L22 4"/>
+                                    </svg>
+                                    <span>Notification lue</span>
+                                    @if($interview->notification_read_at)
+                                        <span class="text-[#9ca3af]">• {{ \Carbon\Carbon::parse($interview->notification_read_at)->diffForHumans() }}</span>
+                                    @endif
+                                </div>
+                            @else
+                                <div class="flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full bg-yellow-400/20 text-yellow-400 text-xs sm:text-sm">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" x2="12" y1="8" y2="12"/>
+                                        <line x1="12" x2="12.01" y1="16" y2="16"/>
+                                    </svg>
+                                    <span>Notification non lue</span>
+                                </div>
+                            @endif
+                        </div>
+                        
                             @if($interview->notes)
                         <div class="bg-[#333333] rounded-lg p-2 sm:p-3 mb-3 sm:mb-4">
                             <p class="text-xs sm:text-sm text-[#9ca3af]">
@@ -781,7 +999,7 @@
 
 
     {{-- Calendar View --}}
-    <div id="calendarView" class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8 shadow-lg hidden overflow-x-auto">
+    <div id="calendarView" class="bg-[#00b6b4] border border-[#333333] rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8 shadow-lg hidden overflow-x-auto">
         <div id="calendar" class="min-w-[300px] sm:min-w-full">    </div>
         </div>
 
@@ -879,47 +1097,79 @@ try {
                     .catch(error => failureCallback(error));
             },
             eventClick: function(info) {
-                // Show interview details in a modal or redirect
-                const interviewId = info.event.id;
-                window.location.href = `/recruiter/interviews/${interviewId}`;
-            },
-            eventColor: function(info) {
-                // Color events based on status - matching site theme
-                const status = info.event.extendedProps.status;
-                switch(status) {
-                    case 'programme': return '#00b6b4'; // Site primary color
-                    case 'confirme': return '#10b981'; // Green
-                    case 'en_attente': return '#f59e0b'; // Yellow
-                    case 'annule': return '#ef4444'; // Red
-                    case 'termine': return '#6b7280'; // Gray
-                    default: return '#00b6b4';
-                }
+                // Redirect to interviews list page
+                window.location.href = '{{ route("recruiter.interviews") }}';
             },
             height: 'auto',
             themeSystem: 'standard',
-            eventTextColor: '#ffffff',
-            eventBackgroundColor: '#00b6b4',
-            eventBorderColor: '#00b6b4',
             dayMaxEventRows: 2,
             // Event popover styling
             eventDidMount: function(info) {
-                // Add status data attribute for CSS styling
-                const status = info.event.extendedProps.status;
+                // Get status from extendedProps
+                const status = info.event.extendedProps.status || 'programme';
+                
+                // Set data attribute for CSS styling
                 info.el.setAttribute('data-status', status);
                 
-                // Add custom styling to events
-                info.el.style.borderRadius = '6px';
-                info.el.style.fontSize = '12px';
-                info.el.style.fontWeight = '500';
-                info.el.style.padding = '2px 6px';
-                info.el.style.margin = '1px 0';
+                // Define colors based on status
+                const colors = {
+                    'programme': { bg: '#00b6b4', border: '#00b6b4', text: '#ffffff' },
+                    'confirme': { bg: '#10b981', border: '#10b981', text: '#ffffff' },
+                    'en_attente': { bg: '#f59e0b', border: '#f59e0b', text: '#1a1a1a' },
+                    'annule': { bg: '#ef4444', border: '#ef4444', text: '#ffffff' },
+                    'termine': { bg: '#6b7280', border: '#6b7280', text: '#ffffff' }
+                };
+                
+                const eventColors = colors[status] || colors['programme'];
+                
+                // Remove any CSS variables that FullCalendar might have set
+                info.el.style.removeProperty('--fc-event-bg-color');
+                info.el.style.removeProperty('--fc-event-border-color');
+                info.el.style.removeProperty('--fc-event-text-color');
+                
+                // Force apply colors with !important using setProperty - override everything
+                info.el.style.setProperty('background-color', eventColors.bg, 'important');
+                info.el.style.setProperty('border-color', eventColors.border, 'important');
+                info.el.style.setProperty('color', eventColors.text, 'important');
+                info.el.style.setProperty('border-width', '1px', 'important');
+                info.el.style.setProperty('border-style', 'solid', 'important');
+                info.el.style.setProperty('border-radius', '6px', 'important');
+                info.el.style.setProperty('font-size', '12px', 'important');
+                info.el.style.setProperty('font-weight', '500', 'important');
+                info.el.style.setProperty('padding', '2px 6px', 'important');
+                info.el.style.setProperty('margin', '1px 0', 'important');
+                
+                // Also style child elements (time, title) - remove CSS variables first
+                const eventMain = info.el.querySelector('.fc-event-main');
+                if (eventMain) {
+                    eventMain.style.removeProperty('color');
+                    eventMain.style.setProperty('color', eventColors.text, 'important');
+                }
+                
+                const eventTitle = info.el.querySelector('.fc-event-title');
+                if (eventTitle) {
+                    eventTitle.style.removeProperty('color');
+                    eventTitle.style.setProperty('color', eventColors.text, 'important');
+                }
+                
+                const eventTime = info.el.querySelector('.fc-event-time');
+                if (eventTime) {
+                    eventTime.style.removeProperty('color');
+                    eventTime.style.setProperty('color', eventColors.text === '#1a1a1a' ? '#1a1a1a' : 'rgba(255, 255, 255, 0.9)', 'important');
+                }
+                
+                // Remove background from event-dot if it exists
+                const eventDot = info.el.querySelector('.fc-event-dot');
+                if (eventDot) {
+                    eventDot.style.setProperty('background-color', eventColors.bg, 'important');
+                }
                 
                 // Add tooltip with interview details
                 const event = info.event;
                 const title = event.title;
                 const time = event.start.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-                const type = event.extendedProps.type;
-                const location = event.extendedProps.location;
+                const type = event.extendedProps.type || '';
+                const location = event.extendedProps.location || '';
                 
                 info.el.title = `${title}\n${time}\n${type}\n${location}`;
             }

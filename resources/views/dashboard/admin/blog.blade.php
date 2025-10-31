@@ -297,28 +297,28 @@
         </div>
         @empty
         <div class="text-center py-12">
-            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-16 h-16 text-[#9ca3af] mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                 <path d="M7 7h.01"/>
             </svg>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            <h3 class="text-xl font-semibold text-[#f5f5f5] mb-2">
                 Aucun article trouvé
             </h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
+            <p class="text-[#9ca3af] mb-6">
                 Commencez par créer votre premier article
             </p>
         </div>
         @endforelse
         
         <div id="no-results" class="text-center py-12 hidden">
-            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-16 h-16 text-[#9ca3af] mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                 <path d="M7 7h.01"/>
             </svg>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            <h3 class="text-xl font-semibold text-[#f5f5f5] mb-2">
                 Aucun article trouvé
             </h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
+            <p class="text-[#9ca3af] mb-6">
                 Essayez de modifier vos critères de recherche
             </p>
         </div>

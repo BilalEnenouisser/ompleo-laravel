@@ -221,9 +221,8 @@ class ProfileController extends Controller
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Erreur lors de la mise à jour: ' . $e->getMessage(),
-                    'debug' => $e->getMessage()
-                ]);
+                    'message' => 'Erreur lors de la mise à jour du profil.'
+                ], 500);
             }
 
             return redirect()->back()

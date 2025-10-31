@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Candidate;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserNotification;
+use App\Models\Interview;
+use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +20,45 @@ class NotificationController extends Controller
             ->with('notification')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
+        
+        // For each notification, if it's about accepted application, try to find associated interview
+        $notifications->getCollection()->transform(function($userNotification) use ($user) {
+            // Check if notification is about accepted application
+            if ($userNotification->notification && 
+                $userNotification->notification->type === 'success' && 
+                str_contains($userNotification->notification->message, 'acceptée')) {
+                
+                // Try to extract job title from message
+                preg_match('/poste "([^"]+)"/', $userNotification->notification->message, $matches);
+                $jobTitle = $matches[1] ?? null;
+                
+                if ($jobTitle) {
+                    // Find application and then interview for this candidate and job
+                    $application = Application::where('candidate_id', $user->id)
+                        ->whereHas('job', function($q) use ($jobTitle) {
+                            $q->where('title', 'like', "%{$jobTitle}%");
+                        })
+                        ->where('status', 'accepted')
+                        ->first();
+                    
+                    if ($application) {
+                        // Find interview associated with this application
+                        $interview = Interview::where('candidate_id', $user->id)
+                            ->where(function($q) use ($application) {
+                                $q->where('application_id', $application->id)
+                                  ->orWhere('job_id', $application->job_id);
+                            })
+                            ->with(['job.company'])
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+                        
+                        $userNotification->interview = $interview;
+                    }
+                }
+            }
+            
+            return $userNotification;
+        });
             
         return view('candidate.notifications', compact('notifications'));
     }
