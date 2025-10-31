@@ -181,7 +181,7 @@ class DashboardController extends Controller
         // Get top companies with job and application counts
         $topCompanies = \App\Models\Company::withCount(['jobs', 'applications'])
             ->orderBy('applications_count', 'desc')
-            ->limit(5)
+            ->limit(7)
             ->get();
 
 
