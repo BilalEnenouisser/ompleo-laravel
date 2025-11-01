@@ -55,14 +55,62 @@ class UserNotificationController extends Controller
                 if ($userNotification->notification && 
                     in_array($userNotification->notification->type, ['interview', 'interview_update'])) {
                     
-                    // Find most recent interview for this candidate around notification time
-                    $notificationCreatedAt = $userNotification->created_at;
-                    $interview = Interview::where('candidate_id', $user->id)
-                        ->where('created_at', '<=', $notificationCreatedAt)
-                        ->where('created_at', '>=', $notificationCreatedAt->copy()->subDays(7))
-                        ->with(['job.company', 'candidate'])
-                        ->orderBy('created_at', 'desc')
-                        ->first();
+                    $notificationTime = $userNotification->created_at;
+                    
+                    // Extract job title from notification first (most reliable method)
+                    $jobTitle = null;
+                    if (preg_match('/- (.+)$/', $userNotification->notification->title, $matches)) {
+                        $jobTitle = trim($matches[1]);
+                    } elseif (preg_match('/poste "([^"]+)"/', $userNotification->notification->message, $matches)) {
+                        $jobTitle = trim($matches[1]);
+                    } elseif (preg_match('/poste de (.+?)\./', $userNotification->notification->message, $matches)) {
+                        $jobTitle = trim($matches[1]);
+                    }
+                    
+                    $interview = null;
+                    
+                    // First priority: Match by exact job title + candidate + time window (most precise)
+                    if ($jobTitle) {
+                        $interview = Interview::where('candidate_id', $user->id)
+                            ->whereHas('job', function($q) use ($jobTitle) {
+                                // Use exact match first, fallback to LIKE if exact doesn't work
+                                $q->where('title', $jobTitle);
+                            })
+                            ->with(['job.company', 'candidate'])
+                            ->whereBetween('created_at', [
+                                $notificationTime->copy()->subMinutes(5),
+                                $notificationTime->copy()->addMinutes(5)
+                            ])
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+                        
+                        // If exact match not found, try LIKE match
+                        if (!$interview) {
+                            $interview = Interview::where('candidate_id', $user->id)
+                                ->whereHas('job', function($q) use ($jobTitle) {
+                                    $q->where('title', 'like', "%{$jobTitle}%");
+                                })
+                                ->with(['job.company', 'candidate'])
+                                ->whereBetween('created_at', [
+                                    $notificationTime->copy()->subMinutes(5),
+                                    $notificationTime->copy()->addMinutes(5)
+                                ])
+                                ->orderBy('created_at', 'desc')
+                                ->first();
+                        }
+                    }
+                    
+                    // Fallback: If no job title found or no match, try time-based matching (less reliable)
+                    if (!$interview) {
+                        $interview = Interview::where('candidate_id', $user->id)
+                            ->with(['job.company', 'candidate'])
+                            ->whereBetween('created_at', [
+                                $notificationTime->copy()->subMinutes(1),
+                                $notificationTime->copy()->addMinutes(1)
+                            ])
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+                    }
                     
                     if ($interview) {
                         $interviewData = [
@@ -77,52 +125,6 @@ class UserNotificationController extends Controller
                             'meeting_link' => $interview->meeting_link,
                             'notes' => $interview->notes,
                         ];
-                    }
-                }
-                // Check if notification is about accepted application
-                elseif ($userNotification->notification && 
-                        $userNotification->notification->type === 'success' && 
-                        str_contains($userNotification->notification->message, 'acceptée')) {
-                    
-                    // Try to extract job title from message
-                    preg_match('/poste "([^"]+)"/', $userNotification->notification->message, $matches);
-                    $jobTitle = $matches[1] ?? null;
-                    
-                    if ($jobTitle) {
-                        // Find application and then interview for this candidate and job
-                        $application = Application::where('candidate_id', $user->id)
-                            ->whereHas('job', function($q) use ($jobTitle) {
-                                $q->where('title', 'like', "%{$jobTitle}%");
-                            })
-                            ->where('status', 'accepted')
-                            ->first();
-                        
-                        if ($application) {
-                            // Find interview associated with this application
-                            $interview = Interview::where('candidate_id', $user->id)
-                                ->where(function($q) use ($application) {
-                                    $q->where('application_id', $application->id)
-                                      ->orWhere('job_id', $application->job_id);
-                                })
-                                ->with(['job.company', 'candidate'])
-                                ->orderBy('created_at', 'desc')
-                                ->first();
-                            
-                            if ($interview) {
-                                $interviewData = [
-                                    'date' => $interview->interview_date->format('d/m/Y'),
-                                    'time' => \Carbon\Carbon::parse($interview->start_time)->format('H:i'),
-                                    'duration' => $interview->duration_minutes,
-                                    'location' => $interview->location,
-                                    'type' => $interview->type,
-                                    'type_in_french' => $interview->type_in_french ?? $interview->type,
-                                    'company' => $interview->job->company->name ?? null,
-                                    'job_title' => $interview->job->title ?? null,
-                                    'meeting_link' => $interview->meeting_link,
-                                    'notes' => $interview->notes,
-                                ];
-                            }
-                        }
                     }
                 }
                 

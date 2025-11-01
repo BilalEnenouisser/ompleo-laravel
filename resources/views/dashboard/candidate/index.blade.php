@@ -214,32 +214,27 @@
             Prochains événements
         </h2>
         <div class="space-y-3 sm:space-y-4">
-            @php
-                // Get upcoming interviews (applications with status 'shortlisted' or 'accepted' that might have interviews)
-                $upcomingInterviews = $user->applications()
-                    ->whereIn('status', ['shortlisted', 'accepted'])
-                    ->with(['job.company'])
-                    ->orderBy('updated_at', 'desc')
-                    ->limit(3)
-                    ->get();
-            @endphp
-            
-            @forelse($upcomingInterviews as $application)
-                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-blue-400/20 rounded-xl">
+            @forelse($upcomingInterviews as $interview)
+                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-blue-400/20 rounded-xl hover:bg-blue-400/30 transition-colors cursor-pointer" onclick="window.location.href='{{ route('candidate.interviews.show', $interview) }}'">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                     </div>
                     <div class="flex-1 min-w-0">
                         <h3 class="font-semibold text-[#f5f5f5] text-sm sm:text-base">
-                            {{ $application->status === 'accepted' ? 'Candidature acceptée' : 'Entretien possible' }} - {{ $application->job->company->name }}
+                            {{ $interview->job->title }} - {{ $interview->job->company->name }}
                         </h3>
                         <p class="text-[#9ca3af] text-xs sm:text-sm">
-                            {{ $application->job->title }} • {{ $application->updated_at->format('d/m/Y') }}
+                            {{ $interview->formatted_date }} à {{ $interview->formatted_start_time }} • 
+                            <span class="
+                                @if($interview->status == 'programme') text-blue-400
+                                @elseif($interview->status == 'confirme') text-green-400
+                                @elseif($interview->status == 'en_attente') text-yellow-400
+                                @endif">
+                                {{ $interview->status_in_french }}
+                            </span>
                         </p>
                     </div>
-                    <a href="{{ route('jobs.show', $application->job->slug) }}" class="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-medium flex-shrink-0">
-                        Détails
-                    </a>
+                    <svg class="w-5 h-5 text-blue-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
             @empty
                 <div class="text-center py-8">

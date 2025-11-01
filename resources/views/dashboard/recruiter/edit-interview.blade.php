@@ -90,39 +90,89 @@
                 </div>
             </div>
 
-            {{-- Interview Type --}}
-            <div class="space-y-2">
-                <label for="type" class="block text-sm font-medium text-[#f5f5f5]">Type d'entretien *</label>
-                <select id="type" name="type" 
-                        class="w-full bg-[#333333] border border-[#444444] rounded-lg px-4 py-3 text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none @error('type') border-red-500 @enderror" required>
-                    <option value="visioconference" {{ old('type', $interview->type) == 'visioconference' ? 'selected' : '' }}>Visioconférence</option>
-                    <option value="presentiel" {{ old('type', $interview->type) == 'presentiel' ? 'selected' : '' }}>Présentiel</option>
-                    <option value="telephonique" {{ old('type', $interview->type) == 'telephonique' ? 'selected' : '' }}>Téléphonique</option>
-                </select>
-                @error('type')
-                    <p class="text-red-400 text-sm">{{ $message }}</p>
-                @enderror
-            </div>
+            {{-- Location/Platform Details Section --}}
+            <div class="space-y-3 sm:space-y-4">
+                <h3 class="text-base sm:text-lg font-semibold text-[#f5f5f5]">Détails de localisation</h3>
+                
+                {{-- Interview Type --}}
+                <div class="space-y-2">
+                    <label for="type" class="block text-sm font-medium text-[#f5f5f5]">Type d'entretien *</label>
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        <select id="type" name="type"
+                                class="w-full pl-10 pr-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] @error('type') border-red-500 @enderror" required>
+                            <option value="">Sélectionner le type</option>
+                            <option value="visioconference" {{ old('type', $interview->type) == 'visioconference' ? 'selected' : '' }}>Visioconférence</option>
+                            <option value="presentiel" {{ old('type', $interview->type) == 'presentiel' ? 'selected' : '' }}>Présentiel</option>
+                            <option value="telephonique" {{ old('type', $interview->type) == 'telephonique' ? 'selected' : '' }}>Téléphonique</option>
+                        </select>
+                    </div>
+                    @error('type')
+                        <p class="text-red-400 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            {{-- Location/Meeting Details --}}
-            <div id="locationField" class="space-y-2" style="display: none;">
-                <label for="location" class="block text-sm font-medium text-[#f5f5f5]">Lieu / Détails *</label>
-                <input type="text" id="location" name="location" value="{{ old('location', $interview->location) }}" 
-                       class="w-full bg-[#333333] border border-[#444444] rounded-lg px-4 py-3 text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none @error('location') border-red-500 @enderror">
-                @error('location')
-                    <p class="text-red-400 text-sm">{{ $message }}</p>
-                @enderror
-            </div>
+                {{-- Location Field (changes based on type) --}}
+                <div id="location-field">
+                    <label for="location" class="block text-sm font-medium text-[#9ca3af] mb-2">
+                        <span id="location-label">
+                            @if(old('type', $interview->type) == 'visioconference')
+                                Lien de la réunion *
+                            @elseif(old('type', $interview->type) == 'presentiel')
+                                Lieu de l'entretien *
+                            @elseif(old('type', $interview->type) == 'telephonique')
+                                Numéro de téléphone *
+                            @else
+                                Localisation *
+                            @endif
+                        </span>
+                    </label>
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        @php
+                            $currentType = old('type', $interview->type);
+                            $placeholder = '';
+                            if ($currentType == 'visioconference') {
+                                $placeholder = 'https://meet.google.com/... ou https://zoom.us/j/...';
+                            } elseif ($currentType == 'presentiel') {
+                                $placeholder = 'Bureau Chéraga';
+                            } elseif ($currentType == 'telephonique') {
+                                $placeholder = '+213 XXX XXX XXX';
+                            }
+                        @endphp
+                        <input type="text" id="location" name="location" value="{{ old('location', $interview->location) }}" 
+                               placeholder="{{ $placeholder }}"
+                               class="w-full pl-10 pr-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] @error('location') border-red-500 @enderror" required>
+                    </div>
+                    @error('location')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            {{-- Meeting Link (for visioconference) --}}
-            <div id="meetingLinkField" class="space-y-2" style="display: none;">
-                <label for="meeting_link" class="block text-sm font-medium text-[#f5f5f5]">Lien de la réunion</label>
-                <input type="url" id="meeting_link" name="meeting_link" value="{{ old('meeting_link', $interview->meeting_link) }}" 
-                       class="w-full bg-[#333333] border border-[#444444] rounded-lg px-4 py-3 text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none @error('meeting_link') border-red-500 @enderror" 
-                       placeholder="https://meet.google.com/xxx-xxxx-xxx">
-                @error('meeting_link')
-                    <p class="text-red-400 text-sm">{{ $message }}</p>
-                @enderror
+                {{-- Meeting Details (for visioconference) --}}
+                <div id="meeting-details" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6" style="{{ old('type', $interview->type) == 'visioconference' ? '' : 'display: none;' }}">
+                    <div>
+                        <label for="meeting_id" class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            ID de la réunion
+                        </label>
+                        <input type="text" id="meeting_id" name="meeting_id" value="{{ old('meeting_id', $interview->meeting_id) }}" placeholder="Ex: abc-defg-hij" 
+                               class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">
+                        @error('meeting_id')
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="meeting_password" class="block text-sm font-medium text-[#9ca3af] mb-2">
+                            Mot de passe
+                        </label>
+                        <input type="text" id="meeting_password" name="meeting_password" value="{{ old('meeting_password', $interview->meeting_password) }}" placeholder="Mot de passe (optionnel)" 
+                               class="w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">
+                        @error('meeting_password')
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
             </div>
 
             {{-- Notes --}}
@@ -151,43 +201,61 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const typeSelect = document.getElementById('type');
-    const locationField = document.getElementById('locationField');
+function toggleLocationFields() {
+    const type = document.getElementById('type').value;
     const locationInput = document.getElementById('location');
-    const meetingLinkField = document.getElementById('meetingLinkField');
-    const meetingLinkInput = document.getElementById('meeting_link');
+    const locationLabel = document.getElementById('location-label');
+    const meetingDetails = document.getElementById('meeting-details');
 
-    function updateFields() {
-        const type = typeSelect.value;
-        
-        // Hide all fields first
-        locationField.style.display = 'none';
-        meetingLinkField.style.display = 'none';
-        locationInput.required = false;
-        meetingLinkInput.required = false;
+    // Always show location field
+    const locationField = document.getElementById('location-field');
+    locationField.style.display = 'block';
 
-        if (type === 'visioconference') {
-            locationField.style.display = 'block';
-            meetingLinkField.style.display = 'block';
-            locationInput.placeholder = 'Google Meet, Zoom, Teams, etc.';
-            locationInput.required = true;
-        } else if (type === 'presentiel') {
-            locationField.style.display = 'block';
-            locationInput.placeholder = 'Bureau Chéraga';
-            locationInput.required = true;
-        } else if (type === 'telephonique') {
-            locationField.style.display = 'block';
-            locationInput.placeholder = 'Numéro de téléphone';
-            locationInput.required = true;
-        }
+    // Hide meeting details first, then show if needed
+    if (meetingDetails) {
+        meetingDetails.style.display = 'none';
     }
 
-    // Initialize fields on page load
-    updateFields();
+    if (type === 'visioconference') {
+        locationLabel.textContent = 'Lien de la réunion *';
+        locationInput.placeholder = 'https://meet.google.com/... ou https://zoom.us/j/...';
+        if (meetingDetails) {
+            meetingDetails.style.display = 'grid';
+        }
+        locationInput.required = true;
+    } else if (type === 'presentiel') {
+        locationLabel.textContent = 'Lieu de l\'entretien *';
+        locationInput.placeholder = 'Bureau Chéraga';
+        if (meetingDetails) {
+            meetingDetails.style.display = 'none';
+        }
+        locationInput.required = true;
+    } else if (type === 'telephonique') {
+        locationLabel.textContent = 'Numéro de téléphone *';
+        locationInput.placeholder = '+213 XXX XXX XXX';
+        if (meetingDetails) {
+            meetingDetails.style.display = 'none';
+        }
+        locationInput.required = true;
+    } else {
+        locationLabel.textContent = 'Localisation *';
+        locationInput.placeholder = '';
+        if (meetingDetails) {
+            meetingDetails.style.display = 'none';
+        }
+        locationInput.required = false;
+    }
+}
 
-    // Update fields when type changes
-    typeSelect.addEventListener('change', updateFields);
+// Initialize on page load and when type changes
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up event listener for type changes
+    const typeSelect = document.getElementById('type');
+    if (typeSelect) {
+        typeSelect.addEventListener('change', toggleLocationFields);
+        // Initialize with current value
+        toggleLocationFields();
+    }
 });
 </script>
 @endpush

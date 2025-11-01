@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Candidate;
 
 use App\Http\Controllers\Controller;
+use App\Models\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,6 +89,16 @@ class DashboardController extends Controller
         // Get profile completion percentage
         $profileCompletion = $profile ? $profile->getCompletionPercentage() : 0;
         
+        // Get upcoming interviews (not cancelled or completed)
+        $upcomingInterviews = Interview::where('candidate_id', $user->id)
+            ->whereNotIn('status', ['annule', 'termine'])
+            ->where('interview_date', '>=', now()->toDateString())
+            ->with(['job.company', 'recruiter'])
+            ->orderBy('interview_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->limit(5)
+            ->get();
+
         // Statistics for dashboard
         $stats = [
             'total_applications' => $applicationsCount,
@@ -104,7 +115,8 @@ class DashboardController extends Controller
             'applications', 
             'recentApplications', 
             'recommendedJobs', 
-            'stats'
+            'stats',
+            'upcomingInterviews'
         ));
     }
 }

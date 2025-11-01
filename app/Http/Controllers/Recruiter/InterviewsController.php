@@ -86,20 +86,63 @@ class InterviewsController extends Controller
 
         // Add notification read status to each interview
         $interviews->getCollection()->transform(function($interview) use ($interviewNotifications, $allNotifications) {
-            // First check if there are interview-specific notifications
+            // Get all interview notifications for this candidate
             $candidateInterviewNotifications = $interviewNotifications->get($interview->candidate_id, collect());
             
-            if ($candidateInterviewNotifications->isEmpty()) {
-                // If no interview notification exists, check all notifications for this candidate
-                // This handles cases where notification was marked as read but isn't specifically an interview notification
-                $candidateAllNotifications = $allNotifications->get($interview->candidate_id, collect());
-                $readNotification = $candidateAllNotifications->where('is_read', true)
-                    ->where('read_at', '>=', $interview->created_at)
-                    ->first();
-            } else {
-                // Check if candidate has read at least one interview notification
-                $readNotification = $candidateInterviewNotifications->where('is_read', true)->first();
+            // Try to find the specific notification for THIS interview
+            // Match by job title from notification and time window around interview creation
+            $readNotification = null;
+            
+            if ($candidateInterviewNotifications->isNotEmpty()) {
+                // Get job title for matching
+                $jobTitle = $interview->job->title ?? null;
+                $interviewCreatedAt = $interview->created_at;
+                
+                // Find notifications that match this interview by job title and time
+                $matchingNotifications = $candidateInterviewNotifications->filter(function($userNotification) use ($jobTitle, $interviewCreatedAt) {
+                    if (!$userNotification->notification) {
+                        return false;
+                    }
+                    
+                    // Check if notification title/message contains the job title
+                    $notificationTitle = $userNotification->notification->title ?? '';
+                    $notificationMessage = $userNotification->notification->message ?? '';
+                    $notificationCreatedAt = $userNotification->created_at;
+                    
+                    // Check if job title matches exactly (extract from notification title pattern: "Nouvel entretien programmé - {Job Title}")
+                    $titleMatches = false;
+                    if ($jobTitle && preg_match('/- (.+)$/', $notificationTitle, $matches)) {
+                        $extractedJobTitle = trim($matches[1]);
+                        // Use exact match first (most reliable)
+                        $titleMatches = ($extractedJobTitle === $jobTitle);
+                    }
+                    
+                    // If title doesn't match exactly, check if message contains job title in quotes (more specific)
+                    $messageMatches = false;
+                    if (!$titleMatches && $jobTitle) {
+                        // Look for "poste "{Job Title}"" pattern for exact match
+                        if (preg_match('/poste "([^"]+)"/', $notificationMessage, $msgMatches)) {
+                            $extractedJobTitle = trim($msgMatches[1]);
+                            $messageMatches = ($extractedJobTitle === $jobTitle);
+                        } else {
+                            // Fallback to contains check
+                            $messageMatches = str_contains($notificationMessage, $jobTitle);
+                        }
+                    }
+                    
+                    // Check if notification was created around the same time as interview (within 5 minutes - tighter window)
+                    $timeMatches = abs($notificationCreatedAt->diffInMinutes($interviewCreatedAt)) <= 5;
+                    
+                    // Require both job title match AND time match to avoid false positives
+                    return ($titleMatches || $messageMatches) && $timeMatches;
+                });
+                
+                // Check if the matching notification is read
+                $readNotification = $matchingNotifications->where('is_read', true)->first();
             }
+            
+            // If no specific match found, don't mark as read (interview-specific notification must exist and be read)
+            // We don't use fallback to other notification types to avoid false positives
             
             $interview->notification_read = $readNotification ? true : false;
             $interview->notification_read_at = $readNotification ? $readNotification->read_at : null;
@@ -197,6 +240,14 @@ class InterviewsController extends Controller
             'status' => 'programme',
         ]);
 
+        // Load relationships needed for notification
+        $interview->load(['candidate', 'job.company', 'application']);
+        
+        // Ensure application has job with company loaded
+        if (!$application->relationLoaded('job')) {
+            $application->load('job.company');
+        }
+
         // Send notification to candidate
         $this->sendInterviewNotification($interview, $application);
 
@@ -268,6 +319,8 @@ class InterviewsController extends Controller
             return back()->withErrors(['start_time' => 'Vous avez déjà un entretien programmé à cette heure.']);
         }
 
+        $oldStatus = $interview->status;
+        
         $interview->update($request->only([
             'interview_date',
             'start_time',
@@ -279,6 +332,12 @@ class InterviewsController extends Controller
             'meeting_id',
             'meeting_password',
         ]));
+
+        // Reload interview with relationships
+        $interview->load(['candidate', 'job.company', 'application']);
+        
+        // Send notification to candidate about interview update
+        $this->sendInterviewUpdateNotification($interview);
 
         return redirect()->route('recruiter.interviews')
             ->with('success', 'Entretien mis à jour avec succès.');
@@ -300,6 +359,9 @@ class InterviewsController extends Controller
 
         $oldStatus = $interview->status;
         $interview->update(['status' => $request->status]);
+        
+        // Reload interview with relationships
+        $interview->load(['candidate', 'job.company', 'application']);
 
         // Send notification to candidate about status change
         $this->sendStatusChangeNotification($interview, $oldStatus, $request->status);
@@ -324,6 +386,12 @@ class InterviewsController extends Controller
         if ($interview->recruiter_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this interview.');
         }
+
+        // Load relationships before deleting for notification
+        $interview->load(['candidate', 'job.company', 'application']);
+        
+        // Send notification to candidate about interview cancellation/deletion
+        $this->sendInterviewDeletionNotification($interview);
 
         $interview->delete();
 
@@ -367,44 +435,144 @@ class InterviewsController extends Controller
     private function sendInterviewNotification($interview, $application)
     {
         try {
+            // Ensure relationships are loaded
+            if (!$interview->relationLoaded('candidate')) {
+                $interview->load('candidate');
+            }
+            if (!$interview->relationLoaded('job')) {
+                $interview->load('job');
+            }
+            if (!$application->relationLoaded('job')) {
+                $application->load('job');
+            }
+            
             $notificationService = new NotificationService();
             
             // Format the interview date and time
-            $interviewDate = Carbon::parse($interview->interview_date)->format('d/m/Y');
-            $interviewTime = Carbon::parse($interview->start_time)->format('H:i');
+            $interviewDate = $interview->interview_date->format('d/m/Y');
+            
+            // Parse start_time - handle both string and datetime formats
+            try {
+                if ($interview->start_time instanceof \DateTime || $interview->start_time instanceof \Carbon\Carbon) {
+                    $interviewTime = $interview->start_time->format('H:i');
+                } else {
+                    $interviewTime = Carbon::parse($interview->start_time)->format('H:i');
+                }
+            } catch (\Exception $e) {
+                // Fallback: use the raw value if parsing fails
+                $interviewTime = is_string($interview->start_time) ? $interview->start_time : '00:00';
+            }
             $duration = $interview->duration_minutes;
+            
+            // Get type in French
+            $typeInFrench = match($interview->type) {
+                'visioconference' => 'Visioconférence',
+                'presentiel' => 'Présentiel',
+                'telephonique' => 'Téléphonique',
+                default => $interview->type
+            };
             
             // Create notification title
             $title = "Nouvel entretien programmé - {$application->job->title}";
             
-            // Create notification message with all interview details
-            $message = "Bonjour {$interview->candidate->name},\n\n";
-            $message .= "Un entretien a été programmé pour le poste de {$application->job->title}.\n\n";
-            $message .= "📅 Date : {$interviewDate}\n";
-            $message .= "🕐 Heure : {$interviewTime} ({$duration} minutes)\n";
-            $message .= "📍 Type : {$interview->type_in_french}\n";
-            $message .= "🏢 Lieu : {$interview->location}\n";
-            
-            if ($interview->notes) {
-                $message .= "📝 Notes : {$interview->notes}\n";
-            }
-            
-            if ($interview->type === 'visioconference' && $interview->meeting_link) {
-                $message .= "🔗 Lien de la réunion : {$interview->meeting_link}\n";
-            }
-            
-            $message .= "\nBonne chance pour votre entretien !";
+            // Create simple notification message (details are shown in the interview details section)
+            $companyName = $application->job->company->name ?? 'l\'entreprise';
+            $message = "Un entretien a été programmé pour le poste \"{$application->job->title}\" chez {$companyName}. Consultez les détails ci-dessous.";
             
             // Send notification to the candidate
-            $notificationService->createNotification(
+            $notification = $notificationService->createNotification(
                 $title,
                 $message,
                 'interview',
                 [$interview->candidate_id]
             );
             
+            \Log::info('Interview notification sent successfully. Notification ID: ' . $notification->id);
+            
         } catch (\Exception $e) {
-            // Log the error but don't fail the interview creation
+            \Log::error('Failed to send interview notification: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            // Don't fail the interview creation, but log the error
+        }
+    }
+
+    /**
+     * Send interview update notification to candidate
+     */
+    private function sendInterviewUpdateNotification($interview)
+    {
+        try {
+            // Ensure relationships are loaded
+            if (!$interview->relationLoaded('candidate')) {
+                $interview->load('candidate');
+            }
+            if (!$interview->relationLoaded('job')) {
+                $interview->load('job.company');
+            }
+            
+            $notificationService = new NotificationService();
+            
+            // Create notification title
+            $title = "Mise à jour de votre entretien - {$interview->job->title}";
+            
+            // Create simple notification message (details shown in interview details section)
+            $companyName = $interview->job->company->name ?? 'l\'entreprise';
+            $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été confirmé. Consultez les détails ci-dessous.";
+            
+            // Send notification to the candidate
+            $notification = $notificationService->createNotification(
+                $title,
+                $message,
+                'interview_update',
+                [$interview->candidate_id]
+            );
+            
+            \Log::info('Interview update notification sent successfully. Notification ID: ' . $notification->id);
+            
+        } catch (\Exception $e) {
+            \Log::error('Failed to send interview update notification: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            // Don't fail the interview update, but log the error
+        }
+    }
+
+    /**
+     * Send interview deletion notification to candidate
+     */
+    private function sendInterviewDeletionNotification($interview)
+    {
+        try {
+            // Ensure relationships are loaded
+            if (!$interview->relationLoaded('candidate')) {
+                $interview->load('candidate');
+            }
+            if (!$interview->relationLoaded('job')) {
+                $interview->load('job.company');
+            }
+            
+            $notificationService = new NotificationService();
+            
+            // Create notification title
+            $title = "Entretien annulé - {$interview->job->title}";
+            
+            // Create simple notification message
+            $companyName = $interview->job->company->name ?? 'l\'entreprise';
+            $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été annulé.";
+            
+            // Send notification to the candidate
+            $notification = $notificationService->createNotification(
+                $title,
+                $message,
+                'interview_update',
+                [$interview->candidate_id]
+            );
+            
+            \Log::info('Interview deletion notification sent successfully. Notification ID: ' . $notification->id);
+            
+        } catch (\Exception $e) {
+            \Log::error('Failed to send interview deletion notification: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            // Don't fail the interview deletion, but log the error
         }
     }
 
@@ -414,11 +582,15 @@ class InterviewsController extends Controller
     private function sendStatusChangeNotification($interview, $oldStatus, $newStatus)
     {
         try {
-            $notificationService = new NotificationService();
+            // Ensure relationships are loaded
+            if (!$interview->relationLoaded('candidate')) {
+                $interview->load('candidate');
+            }
+            if (!$interview->relationLoaded('job')) {
+                $interview->load('job.company');
+            }
             
-            // Format the interview date and time
-            $interviewDate = Carbon::parse($interview->interview_date)->format('d/m/Y');
-            $interviewTime = Carbon::parse($interview->start_time)->format('H:i');
+            $notificationService = new NotificationService();
             
             // Status mapping
             $statusMap = [
@@ -432,39 +604,25 @@ class InterviewsController extends Controller
             // Create notification title
             $title = "Mise à jour de votre entretien - {$interview->job->title}";
             
-            // Create notification message based on status change
-            $message = "Bonjour {$interview->candidate->name},\n\n";
-            $message .= "Le statut de votre entretien pour le poste de {$interview->job->title} a été mis à jour.\n\n";
-            $message .= "📅 Date : {$interviewDate}\n";
-            $message .= "🕐 Heure : {$interviewTime}\n";
-            $message .= "📍 Type : {$interview->type_in_french}\n";
-            $message .= "🏢 Lieu : {$interview->location}\n";
-            $message .= "📊 Nouveau statut : {$statusMap[$newStatus]}\n\n";
+            // Create simple notification message based on status change (details shown in interview details section)
+            $companyName = $interview->job->company->name ?? 'l\'entreprise';
             
-            // Add specific message based on status
             switch ($newStatus) {
                 case 'confirme':
-                    $message .= "✅ Votre entretien est confirmé. Nous vous attendons !\n";
-                    if ($interview->type === 'visioconference' && $interview->meeting_link) {
-                        $message .= "🔗 Lien de la réunion : {$interview->meeting_link}\n";
-                    }
+                    $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été confirmé. Consultez les détails ci-dessous.";
                     break;
                 case 'annule':
-                    $message .= "❌ Votre entretien a été annulé. Nous vous contacterons pour reprogrammer.\n";
+                    $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été annulé. Consultez les détails ci-dessous.";
                     break;
                 case 'termine':
-                    $message .= "✅ Votre entretien est terminé. Merci pour votre participation !\n";
+                    $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} est terminé. Merci pour votre participation !";
                     break;
                 case 'en_attente':
-                    $message .= "⏳ Votre entretien est en attente de confirmation.\n";
+                    $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} est en attente de confirmation. Consultez les détails ci-dessous.";
                     break;
                 default:
-                    $message .= "📋 Votre entretien a été mis à jour.\n";
+                    $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été mis à jour. Consultez les détails ci-dessous.";
                     break;
-            }
-            
-            if ($interview->notes) {
-                $message .= "\n📝 Notes : {$interview->notes}";
             }
             
             // Send notification to the candidate

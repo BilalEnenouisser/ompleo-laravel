@@ -79,7 +79,10 @@
                 <div class="space-y-4">
                     @if($notifications->count() > 0)
                         @foreach($notifications as $userNotification)
-                            <div class="bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-[#333333] {{ !$userNotification->is_read ? 'border-l-4 border-l-[#00b6b4]' : '' }}">
+                            <div class="bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-[#333333] {{ !$userNotification->is_read ? 'border-l-4 border-l-[#00b6b4]' : '' }} {{ isset($userNotification->related_route) && $userNotification->related_route ? 'cursor-pointer hover:bg-[#333333] transition-colors' : '' }}" 
+                                 @if(isset($userNotification->related_route) && $userNotification->related_route)
+                                 onclick="window.location.href='{{ $userNotification->related_route }}'"
+                                 @endif>
                                 <div class="flex items-start gap-4">
                                     <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 {{ !$userNotification->is_read ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-6 h-6">
@@ -95,13 +98,13 @@
                                             </h3>
                                             <div class="flex items-center gap-2">
                                                 @if(!$userNotification->is_read)
-                                                    <button onclick="markAsRead({{ $userNotification->id }})" class="p-1 text-[#00b6b4] hover:text-[#009e9c] bg-[#00b6b4]/10 rounded-full" title="Marquer comme lu">
+                                                    <button onclick="event.stopPropagation(); markAsRead({{ $userNotification->id }})" class="p-1 text-[#00b6b4] hover:text-[#009e9c] bg-[#00b6b4]/10 rounded-full" title="Marquer comme lu">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4">
                                                             <path d="M20 6 9 17l-5-5"/>
                                                         </svg>
                                                     </button>
                                                 @endif
-                                                <button onclick="deleteNotification({{ $userNotification->id }})" class="p-1 text-[#9ca3af] hover:text-red-500 bg-[#333333] rounded-full" title="Supprimer">
+                                                <button onclick="event.stopPropagation(); deleteNotification({{ $userNotification->id }})" class="p-1 text-[#9ca3af] hover:text-red-500 bg-[#333333] rounded-full" title="Supprimer">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 w-4 h-4">
                                                         <path d="M3 6h18"/>
                                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>

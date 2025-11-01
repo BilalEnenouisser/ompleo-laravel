@@ -187,4 +187,110 @@ class NotificationService
             ->where('is_read', false)
             ->count();
     }
+
+    /**
+     * Notify recruiter that candidate confirmed the interview
+     */
+    public function notifyInterviewConfirmed($interview)
+    {
+        $recruiter = $interview->recruiter;
+        $candidate = $interview->candidate;
+        $job = $interview->job;
+
+        if (!$recruiter) {
+            return;
+        }
+
+        $title = "Entretien confirmé";
+        $message = "{$candidate->name} a confirmé l'entretien pour le poste \"{$job->title}\" prévu le {$interview->interview_date->format('d/m/Y')} à {$interview->formatted_start_time}.";
+
+        return $this->createNotification(
+            $title,
+            $message,
+            'success',
+            [$recruiter->id]
+        );
+    }
+
+    /**
+     * Notify recruiter that candidate cancelled the interview
+     */
+    public function notifyInterviewCancelledByCandidate($interview, $reason)
+    {
+        $recruiter = $interview->recruiter;
+        $candidate = $interview->candidate;
+        $job = $interview->job;
+
+        if (!$recruiter) {
+            return;
+        }
+
+        $title = "Entretien annulé par le candidat";
+        $message = "{$candidate->name} a annulé l'entretien pour le poste \"{$job->title}\".\n\nRaison : {$reason}";
+
+        return $this->createNotification(
+            $title,
+            $message,
+            'warning',
+            [$recruiter->id]
+        );
+    }
+
+    /**
+     * Notify recruiter that candidate requested a change
+     */
+    public function notifyInterviewChangeRequest($interview, $requestText, $suggestedDate = null, $suggestedTime = null)
+    {
+        $recruiter = $interview->recruiter;
+        $candidate = $interview->candidate;
+        $job = $interview->job;
+
+        if (!$recruiter) {
+            return;
+        }
+
+        $title = "Demande de modification d'entretien";
+        $message = "{$candidate->name} a demandé une modification pour l'entretien du poste \"{$job->title}\".\n\nDemande : {$requestText}";
+        
+        if ($suggestedDate || $suggestedTime) {
+            $message .= "\n\nSuggestions :";
+            if ($suggestedDate) {
+                $message .= "\nDate suggérée : " . \Carbon\Carbon::parse($suggestedDate)->format('d/m/Y');
+            }
+            if ($suggestedTime) {
+                $message .= "\nHeure suggérée : " . \Carbon\Carbon::parse($suggestedTime)->format('H:i');
+            }
+        }
+
+        return $this->createNotification(
+            $title,
+            $message,
+            'info',
+            [$recruiter->id]
+        );
+    }
+
+    /**
+     * Notify recruiter that candidate reported a problem
+     */
+    public function notifyInterviewProblemReport($interview, $problemDescription)
+    {
+        $recruiter = $interview->recruiter;
+        $candidate = $interview->candidate;
+        $job = $interview->job;
+
+        if (!$recruiter) {
+            return;
+        }
+
+        $title = "Problème signalé pour un entretien";
+        $message = "{$candidate->name} a signalé un problème concernant l'entretien pour le poste \"{$job->title}\".\n\nDescription : {$problemDescription}";
+
+        return $this->createNotification(
+            $title,
+            $message,
+            'warning',
+            [$recruiter->id]
+        );
+    }
 }

@@ -337,6 +337,13 @@ Route::middleware('auth')->group(function () {
     // Candidate Notifications
     Route::get('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'index'])->name('candidate.notifications');
     Route::post('/candidate/notifications/{id}/read', [App\Http\Controllers\Candidate\NotificationController::class, 'markAsRead'])->name('candidate.notifications.markAsRead');
+    
+    // Candidate Interview Routes
+    Route::get('/candidate/interviews/{interview}', [App\Http\Controllers\Candidate\InterviewController::class, 'show'])->name('candidate.interviews.show');
+    Route::post('/candidate/interviews/{interview}/confirm', [App\Http\Controllers\Candidate\InterviewController::class, 'confirm'])->name('candidate.interviews.confirm');
+    Route::post('/candidate/interviews/{interview}/cancel', [App\Http\Controllers\Candidate\InterviewController::class, 'cancel'])->name('candidate.interviews.cancel');
+    Route::post('/candidate/interviews/{interview}/request-change', [App\Http\Controllers\Candidate\InterviewController::class, 'requestChange'])->name('candidate.interviews.request-change');
+    Route::post('/candidate/interviews/{interview}/report-problem', [App\Http\Controllers\Candidate\InterviewController::class, 'reportProblem'])->name('candidate.interviews.report-problem');
     Route::post('/candidate/notifications/read-all', [App\Http\Controllers\Candidate\NotificationController::class, 'markAllAsRead'])->name('candidate.notifications.markAllAsRead');
     Route::delete('/candidate/notifications/{id}', [App\Http\Controllers\Candidate\NotificationController::class, 'destroy'])->name('candidate.notifications.destroy');
     Route::delete('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'destroyAll'])->name('candidate.notifications.destroyAll');

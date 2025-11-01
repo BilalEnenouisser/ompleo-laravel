@@ -592,7 +592,7 @@ function formatTime(date) {
 function handleNotificationClick(notificationId) {
     // Mark as read when clicked
     markAsRead(notificationId);
-    // Redirect to notifications page
+    // Redirect to notifications page (the full page will handle the routing)
     window.location.href = '{{ route("notifications") }}';
 }
 
