@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+
     <title>Mes Candidatures - OMPLEO</title>
     <style>
         body {
