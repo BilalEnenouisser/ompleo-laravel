@@ -141,7 +141,7 @@ class ProfileController extends Controller
             }
 
             $data = $request->only([
-                'phone', 'address', 'city', 'date_of_birth', 'bio', 
+                'phone', 'address', 'city', 'date_of_birth', 'bio', 'title',
                 'linkedin_url', 'portfolio_url', 'facebook_url', 'twitter_url',
                 'experience_years', 'availability'
             ]);

@@ -17,6 +17,7 @@ class CandidateProfile extends Model
         'city',
         'date_of_birth',
         'bio',
+        'title',
         'skills',
         'experience',
         'education',
