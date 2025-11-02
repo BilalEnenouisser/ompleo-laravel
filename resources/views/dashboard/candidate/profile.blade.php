@@ -119,9 +119,59 @@
                         </label>
                         <div id="locationDisplay" class="flex items-center gap-2 text-[#9ca3af]">
                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                             <span>{{ $profile->city ?? 'Alger, Algérie' }}</span>
+                             <span>{{ $profile->city ?? 'Alger' }}</span>
                         </div>
-                         <input id="location" type="text" value="{{ $profile->city ?? 'Alger, Algérie' }}" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]" />
+                         <select id="location" class="hidden w-full px-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5]">
+                            <option value="">Sélectionner une ville</option>
+                            <option value="Adrar" {{ ($profile->city ?? '') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
+                            <option value="Chlef" {{ ($profile->city ?? '') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
+                            <option value="Laghouat" {{ ($profile->city ?? '') == 'Laghouat' ? 'selected' : '' }}>Laghouat</option>
+                            <option value="Oum El Bouaghi" {{ ($profile->city ?? '') == 'Oum El Bouaghi' ? 'selected' : '' }}>Oum El Bouaghi</option>
+                            <option value="Batna" {{ ($profile->city ?? '') == 'Batna' ? 'selected' : '' }}>Batna</option>
+                            <option value="Béjaïa" {{ ($profile->city ?? '') == 'Béjaïa' ? 'selected' : '' }}>Béjaïa</option>
+                            <option value="Biskra" {{ ($profile->city ?? '') == 'Biskra' ? 'selected' : '' }}>Biskra</option>
+                            <option value="Béchar" {{ ($profile->city ?? '') == 'Béchar' ? 'selected' : '' }}>Béchar</option>
+                            <option value="Blida" {{ ($profile->city ?? '') == 'Blida' ? 'selected' : '' }}>Blida</option>
+                            <option value="Bouira" {{ ($profile->city ?? '') == 'Bouira' ? 'selected' : '' }}>Bouira</option>
+                            <option value="Tamanrasset" {{ ($profile->city ?? '') == 'Tamanrasset' ? 'selected' : '' }}>Tamanrasset</option>
+                            <option value="Tébessa" {{ ($profile->city ?? '') == 'Tébessa' ? 'selected' : '' }}>Tébessa</option>
+                            <option value="Tlemcen" {{ ($profile->city ?? '') == 'Tlemcen' ? 'selected' : '' }}>Tlemcen</option>
+                            <option value="Tiaret" {{ ($profile->city ?? '') == 'Tiaret' ? 'selected' : '' }}>Tiaret</option>
+                            <option value="Tizi Ouzou" {{ ($profile->city ?? '') == 'Tizi Ouzou' ? 'selected' : '' }}>Tizi Ouzou</option>
+                            <option value="Alger" {{ ($profile->city ?? 'Alger') == 'Alger' ? 'selected' : '' }}>Alger</option>
+                            <option value="Djelfa" {{ ($profile->city ?? '') == 'Djelfa' ? 'selected' : '' }}>Djelfa</option>
+                            <option value="Jijel" {{ ($profile->city ?? '') == 'Jijel' ? 'selected' : '' }}>Jijel</option>
+                            <option value="Sétif" {{ ($profile->city ?? '') == 'Sétif' ? 'selected' : '' }}>Sétif</option>
+                            <option value="Saïda" {{ ($profile->city ?? '') == 'Saïda' ? 'selected' : '' }}>Saïda</option>
+                            <option value="Skikda" {{ ($profile->city ?? '') == 'Skikda' ? 'selected' : '' }}>Skikda</option>
+                            <option value="Sidi Bel Abbès" {{ ($profile->city ?? '') == 'Sidi Bel Abbès' ? 'selected' : '' }}>Sidi Bel Abbès</option>
+                            <option value="Annaba" {{ ($profile->city ?? '') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                            <option value="Guelma" {{ ($profile->city ?? '') == 'Guelma' ? 'selected' : '' }}>Guelma</option>
+                            <option value="Constantine" {{ ($profile->city ?? '') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
+                            <option value="Médéa" {{ ($profile->city ?? '') == 'Médéa' ? 'selected' : '' }}>Médéa</option>
+                            <option value="Mostaganem" {{ ($profile->city ?? '') == 'Mostaganem' ? 'selected' : '' }}>Mostaganem</option>
+                            <option value="M'Sila" {{ ($profile->city ?? '') == "M'Sila" ? 'selected' : '' }}>M'Sila</option>
+                            <option value="Mascara" {{ ($profile->city ?? '') == 'Mascara' ? 'selected' : '' }}>Mascara</option>
+                            <option value="Ouargla" {{ ($profile->city ?? '') == 'Ouargla' ? 'selected' : '' }}>Ouargla</option>
+                            <option value="Oran" {{ ($profile->city ?? '') == 'Oran' ? 'selected' : '' }}>Oran</option>
+                            <option value="El Bayadh" {{ ($profile->city ?? '') == 'El Bayadh' ? 'selected' : '' }}>El Bayadh</option>
+                            <option value="Illizi" {{ ($profile->city ?? '') == 'Illizi' ? 'selected' : '' }}>Illizi</option>
+                            <option value="Bordj Bou Arreridj" {{ ($profile->city ?? '') == 'Bordj Bou Arreridj' ? 'selected' : '' }}>Bordj Bou Arreridj</option>
+                            <option value="Boumerdès" {{ ($profile->city ?? '') == 'Boumerdès' ? 'selected' : '' }}>Boumerdès</option>
+                            <option value="El Tarf" {{ ($profile->city ?? '') == 'El Tarf' ? 'selected' : '' }}>El Tarf</option>
+                            <option value="Tindouf" {{ ($profile->city ?? '') == 'Tindouf' ? 'selected' : '' }}>Tindouf</option>
+                            <option value="Tissemsilt" {{ ($profile->city ?? '') == 'Tissemsilt' ? 'selected' : '' }}>Tissemsilt</option>
+                            <option value="El Oued" {{ ($profile->city ?? '') == 'El Oued' ? 'selected' : '' }}>El Oued</option>
+                            <option value="Khenchela" {{ ($profile->city ?? '') == 'Khenchela' ? 'selected' : '' }}>Khenchela</option>
+                            <option value="Souk Ahras" {{ ($profile->city ?? '') == 'Souk Ahras' ? 'selected' : '' }}>Souk Ahras</option>
+                            <option value="Tipaza" {{ ($profile->city ?? '') == 'Tipaza' ? 'selected' : '' }}>Tipaza</option>
+                            <option value="Mila" {{ ($profile->city ?? '') == 'Mila' ? 'selected' : '' }}>Mila</option>
+                            <option value="Aïn Defla" {{ ($profile->city ?? '') == 'Aïn Defla' ? 'selected' : '' }}>Aïn Defla</option>
+                            <option value="Naâma" {{ ($profile->city ?? '') == 'Naâma' ? 'selected' : '' }}>Naâma</option>
+                            <option value="Aïn Témouchent" {{ ($profile->city ?? '') == 'Aïn Témouchent' ? 'selected' : '' }}>Aïn Témouchent</option>
+                            <option value="Ghardaïa" {{ ($profile->city ?? '') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
+                            <option value="Relizane" {{ ($profile->city ?? '') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
+                        </select>
                     </div>
 
                     <div>

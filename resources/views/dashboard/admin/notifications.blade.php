@@ -367,7 +367,7 @@
                     id="notification-canvas"
                     class="border border-[#444444] rounded-lg overflow-auto mb-4 sm:mb-6 relative"
                     style="min-height: 300px; background-color: #2b2b2b; color: #f5f5f5;"
-                    onclick="deselectAllElements()"
+                    onclick="handleCanvasClick(event)"
                 >
                     <div id="canvas-content" style="transform: scale(1); transform-origin: top left; min-height: 300px; position: relative;">
                         {{-- Elements will be added here dynamically --}}
@@ -811,6 +811,58 @@
     </div>
 </div>
 
+{{-- Button URL Editor Modal --}}
+<div id="button-url-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-xl max-w-md w-full mx-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">Éditer le bouton</h3>
+            <button onclick="closeButtonUrlModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-[#9ca3af] mb-2">Texte du bouton</label>
+                <input
+                    type="text"
+                    id="button-text-input"
+                    class="w-full px-3 py-2 border border-[#444444] rounded-lg bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none"
+                    placeholder="Ex: Cliquez ici"
+                />
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-[#9ca3af] mb-2">URL du bouton</label>
+                <input
+                    type="url"
+                    id="button-url-input"
+                    class="w-full px-3 py-2 border border-[#444444] rounded-lg bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none"
+                    placeholder="Ex: https://example.com"
+                />
+                <p class="text-xs text-[#9ca3af] mt-1">Laissez vide pour un bouton sans lien</p>
+            </div>
+            
+            <div class="flex items-center gap-3 pt-2">
+                <button
+                    onclick="saveButtonUrl()"
+                    class="flex-1 px-4 py-2 bg-[#00b6b4] hover:bg-[#009999] text-white rounded-lg font-medium transition-colors"
+                >
+                    Enregistrer
+                </button>
+                <button
+                    onclick="closeButtonUrlModal()"
+                    class="px-4 py-2 border border-[#444444] text-[#9ca3af] hover:text-[#f5f5f5] rounded-lg font-medium transition-colors"
+                >
+                    Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 // Global variables for visual editor
 let elements = [];
@@ -819,6 +871,7 @@ let canvasScale = 1;
 let isDragging = false;
 let draggedElement = null;
 let dragPosition = { x: 0, y: 0 };
+let editingButtonIndex = null;
 
 
 // Initialize editor with default content
@@ -856,49 +909,44 @@ function updateCanvas() {
         emptyCanvas.classList.add('hidden');
         canvas.innerHTML = elements.map((element, index) => renderElement(element, index)).join('');
         
-        // Add event listeners to all elements after rendering
-        setTimeout(() => {
-            elements.forEach((element, index) => {
-                const domElement = document.querySelector(`[data-element-index="${index}"]`);
-                if (domElement) {
-                    // Remove existing event listeners
-                    domElement.onclick = null;
+                    // Add event listeners to all elements after rendering
+                    setTimeout(() => {
+                        elements.forEach((element, index) => {
+                            const domElement = document.querySelector(`[data-element-index="${index}"]`);
+                            if (domElement) {
+                                // Remove existing event listeners
+                                domElement.onclick = null;
+                                
+                                // For buttons, don't add click listener that stops propagation
+                                // Let handleCanvasClick handle it
+                                if (element.type !== 'button') {
+                                    // Add new click event listener for non-button elements
+                                    domElement.addEventListener('click', function(e) {
+                                        e.stopPropagation();
+                                        selectElement(index);
+                                    });
+                                }
+                                // For buttons, don't add click listener - let handleCanvasClick handle it
+                                
+                                // Add mousedown for drag
+                                domElement.addEventListener('mousedown', function(e) {
+                                    // Don't prevent drag on buttons, just let it work
+                                    startDrag(e, index);
+                                });
                     
-                    // Add new click event listener
-                    domElement.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        selectElement(index);
-                    });
-                    
-                    // Add mousedown for drag
-                    domElement.addEventListener('mousedown', function(e) {
-                        startDrag(e, index);
-                    });
-                    
-                    // Add blur for text elements and buttons
-                    if (element.type === 'title' || element.type === 'text' || element.type === 'button') {
+                    // Add blur for text elements
+                    if (element.type === 'title' || element.type === 'text') {
                         domElement.addEventListener('blur', function(e) {
                             updateElementContent(index, e.target.textContent);
                         });
                     }
                     
+                    // Note: Button clicks are handled via event delegation on canvas-content
+                    // No need to attach individual listeners here
+                    
                     // If this is the active element, make it editable or focus it
                     if (activeElement === index) {
                         if (element.type === 'title' || element.type === 'text') {
-                            domElement.setAttribute('contenteditable', 'true');
-                            domElement.contentEditable = 'true';
-                            
-                            // Focus and select text after a short delay
-                            setTimeout(() => {
-                                domElement.focus();
-                                const range = document.createRange();
-                                range.selectNodeContents(domElement);
-                                const selection = window.getSelection();
-                                selection.removeAllRanges();
-                                selection.addRange(range);
-                            }, 100);
-                        } else if (element.type === 'button') {
-                            // For buttons, make them contenteditable too
                             domElement.setAttribute('contenteditable', 'true');
                             domElement.contentEditable = 'true';
                             
@@ -1035,17 +1083,17 @@ function renderElement(element, index) {
                 </div>
             `;
         case 'button':
+            // In the editor, buttons are always editable regardless of URL
+            // URLs only make buttons clickable when displayed in notifications
+            const buttonContent = `<button type="button" class="px-4 py-2 rounded-lg text-white font-medium transition-colors duration-200" style="background-color: ${element.backgroundColor}; color: ${element.color}; cursor: pointer; pointer-events: auto;" data-button-index="${index}">${element.content}</button>`;
             return `
                 <div 
                     data-element-index="${index}"
+                    data-button-container="${index}"
                     style="${baseStyle}"
+                    onmousedown="startDrag(event, ${index})"
                 >
-                    <button 
-                        class="px-4 py-2 rounded-lg text-white font-medium transition-colors duration-200"
-                        style="background-color: ${element.backgroundColor}; color: ${element.color};"
-                    >
-                        ${element.content}
-                    </button>
+                    ${buttonContent}
                 </div>
             `;
         case 'image':
@@ -1095,12 +1143,17 @@ function addTextElement(type) {
         y: 20 + (elements.length * 40),
         color: '#f5f5f5',
         fontSize: type === 'title' ? 18 : 14,
-        backgroundColor: type === 'button' ? '#00b6b4' : 'transparent'
+        backgroundColor: type === 'button' ? '#00b6b4' : 'transparent',
+        url: type === 'button' ? '' : undefined
     };
     
     elements.push(newElement);
     updateCanvas();
-    selectElement(elements.length - 1);
+    if (type === 'button') {
+        openButtonUrlModal(elements.length - 1);
+    } else {
+        selectElement(elements.length - 1);
+    }
     updateFormData();
 }
 
@@ -1240,17 +1293,8 @@ function selectElement(index) {
                 selection.removeAllRanges();
                 selection.addRange(range);
             } else if (elementType === 'button') {
-                // For buttons, make them contenteditable too
-                element.setAttribute('contenteditable', 'true');
-                element.contentEditable = 'true';
-                element.focus();
-                
-                // Select all text for easy editing
-                const range = document.createRange();
-                range.selectNodeContents(element);
-                const selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
+                // For buttons, open URL editor modal immediately
+                openButtonUrlModal(index);
             }
         }
     }, 200);
@@ -1263,6 +1307,29 @@ function updateElementContent(index, content) {
         elements[index].content = cleanContent;
         updateFormData();
     }
+}
+
+function handleCanvasClick(event) {
+    // Check if click is on a button first
+    const button = event.target.closest('button[data-button-index]');
+    if (button) {
+        const buttonIndex = parseInt(button.getAttribute('data-button-index'));
+        event.stopPropagation();
+        openButtonUrlModal(buttonIndex);
+        return;
+    }
+    
+    // Check if click is on button container
+    const buttonContainer = event.target.closest('[data-button-container]');
+    if (buttonContainer && !event.target.closest('button')) {
+        const containerIndex = parseInt(buttonContainer.getAttribute('data-button-container'));
+        event.stopPropagation();
+        openButtonUrlModal(containerIndex);
+        return;
+    }
+    
+    // Otherwise, deselect all elements
+    deselectAllElements();
 }
 
 function deselectAllElements() {
@@ -1303,6 +1370,44 @@ function clearCanvas() {
 }
 
 function startDrag(event, index) {
+    // Don't prevent default on buttons - allow clicks to work
+    if (elements[index] && elements[index].type === 'button') {
+        // Check if it's actually a drag (moved more than 5px) or just a click
+        const startX = event.clientX;
+        const startY = event.clientY;
+        
+        const handleMouseMove = function(moveEvent) {
+            const deltaX = Math.abs(moveEvent.clientX - startX);
+            const deltaY = Math.abs(moveEvent.clientY - startY);
+            
+            // If moved more than 5px, it's a drag
+            if (deltaX > 5 || deltaY > 5) {
+                event.preventDefault();
+                isDragging = true;
+                draggedElement = index;
+                activeElement = index;
+                dragPosition = {
+                    x: moveEvent.clientX,
+                    y: moveEvent.clientY
+                };
+                document.addEventListener('mousemove', handleDrag);
+                document.addEventListener('mouseup', endDrag);
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            }
+        };
+        
+        const handleMouseUp = function() {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        };
+        
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        return;
+    }
+    
+    // For non-button elements, start drag immediately
     event.preventDefault();
     isDragging = true;
     draggedElement = index;
@@ -1383,7 +1488,7 @@ function applyTemplate(templateType) {
                 { type: 'icon', content: 'AlertTriangle', x: 20, y: 20, color: '#e53e3e' },
                 { type: 'title', content: 'Alerte importante', x: 50, y: 20, color: '#e53e3e', fontSize: 18 },
                 { type: 'text', content: 'Une action est requise de votre part.', x: 20, y: 60, color: '#e53e3e', fontSize: 14 },
-                { type: 'button', content: 'Agir maintenant', x: 20, y: 90, color: '#ffffff', backgroundColor: '#e53e3e' }
+                { type: 'button', content: 'Agir maintenant', x: 20, y: 90, color: '#ffffff', backgroundColor: '#e53e3e', url: '' }
             ];
             break;
         case 'info':
@@ -1393,7 +1498,7 @@ function applyTemplate(templateType) {
                 { type: 'icon', content: 'Info', x: 20, y: 20, color: '#3182ce' },
                 { type: 'title', content: 'Information', x: 50, y: 20, color: '#3182ce', fontSize: 18 },
                 { type: 'text', content: 'Voici une information importante pour vous.', x: 20, y: 60, color: '#3182ce', fontSize: 14 },
-                { type: 'button', content: 'En savoir plus', x: 20, y: 90, color: '#ffffff', backgroundColor: '#3182ce' }
+                { type: 'button', content: 'En savoir plus', x: 20, y: 90, color: '#ffffff', backgroundColor: '#3182ce', url: '' }
             ];
             break;
         case 'success':
@@ -1403,7 +1508,7 @@ function applyTemplate(templateType) {
                 { type: 'icon', content: 'CheckCircle', x: 20, y: 20, color: '#38a169' },
                 { type: 'title', content: 'Succès !', x: 50, y: 20, color: '#38a169', fontSize: 18 },
                 { type: 'text', content: 'Votre action a été effectuée avec succès.', x: 20, y: 60, color: '#38a169', fontSize: 14 },
-                { type: 'button', content: 'Continuer', x: 20, y: 90, color: '#ffffff', backgroundColor: '#38a169' }
+                { type: 'button', content: 'Continuer', x: 20, y: 90, color: '#ffffff', backgroundColor: '#38a169', url: '' }
             ];
             break;
         case 'promo':
@@ -1413,7 +1518,7 @@ function applyTemplate(templateType) {
                 { type: 'icon', content: 'Gift', x: 20, y: 20, color: '#805ad5' },
                 { type: 'title', content: 'Offre spéciale', x: 50, y: 20, color: '#805ad5', fontSize: 18 },
                 { type: 'text', content: 'Profitez de cette offre limitée dans le temps.', x: 20, y: 60, color: '#805ad5', fontSize: 14 },
-                { type: 'button', content: 'En profiter', x: 20, y: 90, color: '#ffffff', backgroundColor: '#805ad5' }
+                { type: 'button', content: 'En profiter', x: 20, y: 90, color: '#ffffff', backgroundColor: '#805ad5', url: '' }
             ];
             break;
         case 'reminder':
@@ -1423,7 +1528,7 @@ function applyTemplate(templateType) {
                 { type: 'icon', content: 'Clock', x: 20, y: 20, color: '#dd6b20' },
                 { type: 'title', content: 'Rappel important', x: 50, y: 20, color: '#dd6b20', fontSize: 18 },
                 { type: 'text', content: 'N\'oubliez pas cet événement important.', x: 20, y: 60, color: '#dd6b20', fontSize: 14 },
-                { type: 'button', content: 'Voir détails', x: 20, y: 90, color: '#ffffff', backgroundColor: '#dd6b20' }
+                { type: 'button', content: 'Voir détails', x: 20, y: 90, color: '#ffffff', backgroundColor: '#dd6b20', url: '' }
             ];
             break;
     }
@@ -1835,6 +1940,95 @@ document.addEventListener('keydown', function(event) {
         if (!modal.classList.contains('hidden')) {
             closeDeleteModal();
         }
+    }
+});
+
+// Button URL Modal Functions
+function openButtonUrlModal(index) {
+    if (index === null || index === undefined || !elements[index] || elements[index].type !== 'button') {
+        return;
+    }
+    
+    editingButtonIndex = index;
+    const button = elements[index];
+    
+    const textInput = document.getElementById('button-text-input');
+    const urlInput = document.getElementById('button-url-input');
+    const modal = document.getElementById('button-url-modal');
+    
+    if (textInput) textInput.value = button.content || '';
+    if (urlInput) urlInput.value = button.url || '';
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeButtonUrlModal() {
+    document.getElementById('button-url-modal').classList.add('hidden');
+    editingButtonIndex = null;
+    document.getElementById('button-text-input').value = '';
+    document.getElementById('button-url-input').value = '';
+}
+
+function saveButtonUrl() {
+    if (editingButtonIndex === null || editingButtonIndex === undefined || !elements[editingButtonIndex]) {
+        closeButtonUrlModal();
+        return;
+    }
+    
+    const textInput = document.getElementById('button-text-input').value.trim();
+    const urlInput = document.getElementById('button-url-input').value.trim();
+    
+    if (!textInput) {
+        showToast('Erreur', 'Le texte du bouton est requis', 'error');
+        return;
+    }
+    
+    // Update the button element
+    elements[editingButtonIndex].content = textInput;
+    elements[editingButtonIndex].url = urlInput || '';
+    
+    updateCanvas();
+    updateFormData();
+    closeButtonUrlModal();
+    
+    // Select the button after updating
+    selectElement(editingButtonIndex);
+    
+    showToast('Succès', 'Bouton mis à jour avec succès', 'success');
+}
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('button-url-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeButtonUrlModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeButtonUrlModal();
+            }
+        });
+        
+        // Save with Enter key (when focused on inputs)
+        const textInput = document.getElementById('button-text-input');
+        const urlInput = document.getElementById('button-url-input');
+        
+        [textInput, urlInput].forEach(input => {
+            if (input) {
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        e.preventDefault();
+                        saveButtonUrl();
+                    }
+                });
+            }
+        });
     }
 });
 

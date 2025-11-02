@@ -1,5 +1,5 @@
-<div class="flex items-start gap-4">
-    <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 {{ !$userNotification->is_read ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]' }}">
+<div class="flex items-start gap-3 sm:gap-4">
+    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center flex-shrink-0 {{ !$userNotification->is_read ? 'bg-[#00b6b4]/10 text-[#00b6b4]' : 'bg-[#333333] text-[#9ca3af]' }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-6 h-6">
             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
             <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
@@ -7,9 +7,9 @@
     </div>
     
     <div class="flex-1 min-w-0">
-        <div class="flex items-start justify-between mb-2">
-            <div class="flex-1">
-                <h3 class="text-xl font-bold text-[#f5f5f5]">
+        <div class="flex items-start justify-between gap-2 mb-2">
+            <div class="flex-1 min-w-0">
+                <h3 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5] break-words">
                     {{ $userNotification->notification->title }}
                 </h3>
                 <div class="flex items-center gap-2 mt-1">
@@ -19,16 +19,16 @@
                     <span class="text-sm text-[#9ca3af]">{{ $userNotification->user->name }}</span>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                 @if(!$userNotification->is_read)
-                    <button onclick="markAsRead({{ $userNotification->id }})" class="p-1 text-[#00b6b4] hover:text-[#009e9c] bg-[#00b6b4]/10 rounded-full" title="Marquer comme lu">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4">
+                    <button onclick="markAsRead({{ $userNotification->id }})" class="p-2 sm:p-1 text-[#00b6b4] hover:text-[#009e9c] bg-[#00b6b4]/10 rounded-full touch-manipulation" title="Marquer comme lu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 sm:w-5 sm:h-5">
                             <path d="M20 6 9 17l-5-5"/>
                         </svg>
                     </button>
                 @endif
-                <button onclick="deleteNotification({{ $userNotification->id }})" class="p-1 text-[#9ca3af] hover:text-red-500 bg-[#333333] rounded-full" title="Supprimer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 w-4 h-4">
+                <button onclick="deleteNotification({{ $userNotification->id }})" class="p-2 sm:p-1 text-[#9ca3af] hover:text-red-500 bg-[#333333] rounded-full touch-manipulation" title="Supprimer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 w-4 h-4 sm:w-5 sm:h-5">
                         <path d="M3 6h18"/>
                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -48,7 +48,11 @@
                     @elseif($element['type'] === 'text')
                         <div style="{{ $baseStyle }}">{{ $element['content'] ?? '' }}</div>
                     @elseif($element['type'] === 'button')
-                        <div style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px;">{{ $element['content'] ?? '' }}</div>
+                        @if(!empty($element['url']))
+                            <a href="{{ $element['url'] }}" target="_blank" rel="noopener noreferrer" style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px; text-decoration: none; cursor: pointer;">{{ $element['content'] ?? '' }}</a>
+                        @else
+                            <div style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px;">{{ $element['content'] ?? '' }}</div>
+                        @endif
                     @elseif($element['type'] === 'image')
                         <img src="{{ $element['src'] ?? '' }}" style="max-width: {{ $element['width'] ?? 200 }}px; max-height: 300px; object-fit: contain; margin-top: 8px; margin-bottom: 8px; display: block;" alt="{{ $element['alt'] ?? 'Image' }}" />
                     @elseif($element['type'] === 'emoji')

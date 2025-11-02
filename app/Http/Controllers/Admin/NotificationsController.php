@@ -24,7 +24,7 @@ class NotificationsController extends Controller
                 // Calculate total recipients
                 $totalRecipients = 0;
                 if ($notification->target_users && is_array($notification->target_users)) {
-                    $totalRecipients = count($notification->target_users);
+                $totalRecipients = count($notification->target_users);
                 } else {
                     // If target_users is not set, use target_type to determine count
                     if ($notification->target_type === 'all') {

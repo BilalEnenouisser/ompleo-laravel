@@ -177,8 +177,11 @@ class ProfileController extends Controller
             }
 
             // Handle location field (maps to city)
-            if ($request->has('location')) {
+            if ($request->has('location') && $request->location !== '' && $request->location !== null) {
                 $data['city'] = $request->location;
+            } elseif ($request->has('location') && ($request->location === '' || $request->location === null)) {
+                // Allow empty city if explicitly set
+                $data['city'] = null;
             }
 
             // Handle avatar upload
@@ -217,11 +220,16 @@ class ProfileController extends Controller
                 ->with('success', 'Profil mis à jour avec succès!');
 
         } catch (\Exception $e) {
+            // Log the actual error for debugging
+            \Log::error('Candidate profile update error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['avatar', 'resume'])
+            ]);
             
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Erreur lors de la mise à jour du profil.'
+                    'message' => 'Erreur lors de la mise à jour du profil: ' . $e->getMessage()
                 ], 500);
             }
 

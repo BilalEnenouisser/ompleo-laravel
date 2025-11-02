@@ -41,15 +41,6 @@ class NotificationController extends Controller
         // Paginate with 15 per page
         $notifications = $query->paginate(15);
         
-        // If AJAX request (for Load More), return JSON
-        if ($request->ajax()) {
-            return response()->json([
-                'html' => view('admin.notifications-partial', compact('notifications'))->render(),
-                'has_more' => $notifications->hasMorePages(),
-                'next_page' => $notifications->currentPage() + 1
-            ]);
-        }
-        
         // For each notification, if it's about interview, find associated interview
         $notifications->getCollection()->transform(function($userNotification) {
             // Check if notification is about interview (interview or interview_update type)
@@ -119,6 +110,15 @@ class NotificationController extends Controller
             
             return $userNotification;
         });
+        
+        // If AJAX request (for Load More), return JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('admin.notifications-partial', compact('notifications'))->render(),
+                'has_more' => $notifications->hasMorePages(),
+                'next_page' => $notifications->currentPage() + 1
+            ]);
+        }
             
         return view('admin.notifications', compact('notifications'));
     }

@@ -42,16 +42,8 @@ class NotificationController extends Controller
         // Paginate with 15 per page
         $notifications = $query->paginate(15);
         
-        // If AJAX request (for Load More), return JSON
-        if ($request->ajax()) {
-            return response()->json([
-                'html' => view('recruiter.notifications-partial', compact('notifications'))->render(),
-                'has_more' => $notifications->hasMorePages(),
-                'next_page' => $notifications->currentPage() + 1
-            ]);
-        }
-        
         // Attach related data and routes for each notification
+        // This transformation must happen before AJAX check so both regular and AJAX requests get transformed data
         $notifications->getCollection()->transform(function($userNotification) use ($user) {
             $relatedRoute = null;
             
@@ -201,6 +193,16 @@ class NotificationController extends Controller
             $userNotification->related_route = $relatedRoute;
             return $userNotification;
         });
+        
+        // If AJAX request (for Load More), return JSON
+        // Note: Transformation happens above so AJAX requests also get related routes and interview data
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('recruiter.notifications-partial', compact('notifications'))->render(),
+                'has_more' => $notifications->hasMorePages(),
+                'next_page' => $notifications->currentPage() + 1
+            ]);
+        }
             
         return view('recruiter.notifications', compact('notifications'));
     }

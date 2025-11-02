@@ -109,9 +109,7 @@ Route::post('/admin/reports/{report}/action', [App\Http\Controllers\Admin\Report
 Route::get('/admin/reports/search-suggestions', [App\Http\Controllers\Admin\ReportsController::class, 'searchSuggestions'])->name('admin.reports.suggestions');
 Route::get('/admin/reports/export', [App\Http\Controllers\Admin\ReportsController::class, 'export'])->name('admin.reports.export');
 
-Route::get('/admin/payments', function () {
-    return view('dashboard.admin.payments');
-})->name('admin.payments');
+Route::get('/admin/payments', [App\Http\Controllers\Admin\PaymentsController::class, 'index'])->name('admin.payments');
 
 
 Route::get('/admin/blog/editor', function () {
@@ -145,6 +143,10 @@ Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create'
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.user.type:admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Admin Profile
+    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
     
     // Jobs Management
     Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('jobs');
@@ -328,8 +330,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'show'])->name('recruiter.company-profile');
     Route::put('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'update'])->name('recruiter.company-profile.update');
     
+    // Recruiter Subscription
+    Route::get('/recruiter/subscription', [App\Http\Controllers\Recruiter\SubscriptionController::class, 'index'])->name('recruiter.subscription');
+    
+    // Recruiter Settings
+    Route::get('/recruiter/settings', [App\Http\Controllers\Recruiter\SettingsController::class, 'index'])->name('recruiter.settings');
+    Route::put('/recruiter/settings', [App\Http\Controllers\Recruiter\SettingsController::class, 'update'])->name('recruiter.settings.update');
+    
     
     Route::get('/candidate/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('candidate.applications');
+    
+    // Candidate Settings
+    Route::get('/candidate/settings', [App\Http\Controllers\Candidate\SettingsController::class, 'index'])->name('candidate.settings');
+    Route::put('/candidate/settings', [App\Http\Controllers\Candidate\SettingsController::class, 'update'])->name('candidate.settings.update');
     
     Route::get('/candidate/referrals', function () {
         return view('dashboard.candidate.referrals');

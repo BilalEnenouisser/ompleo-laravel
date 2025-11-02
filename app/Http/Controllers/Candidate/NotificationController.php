@@ -43,6 +43,7 @@ class NotificationController extends Controller
         
         // For each notification, if it's about interview, try to find associated interview
         // Also attach related routes for clickable notifications
+        // This transformation must happen before AJAX check so both regular and AJAX requests get transformed data
         $notifications->getCollection()->transform(function($userNotification) use ($user) {
             $relatedRoute = null;
             // Check if notification is about interview (interview or interview_update type)
@@ -167,6 +168,7 @@ class NotificationController extends Controller
         });
         
         // If AJAX request (for Load More), return JSON
+        // Note: Transformation happens above so AJAX requests also get interview data and related routes
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('candidate.notifications-partial', compact('notifications'))->render(),
