@@ -56,6 +56,7 @@ class UserNotificationController extends Controller
                     in_array($userNotification->notification->type, ['interview', 'interview_update'])) {
                     
                     $notificationTime = $userNotification->created_at;
+                    $notificationType = $userNotification->notification->type;
                     
                     // Extract job title from notification first (most reliable method)
                     $jobTitle = null;
@@ -69,26 +70,45 @@ class UserNotificationController extends Controller
                     
                     $interview = null;
                     
-                    // First priority: Match by exact job title + candidate + time window (most precise)
-                    if ($jobTitle) {
-                        $interview = Interview::where('candidate_id', $user->id)
-                            ->whereHas('job', function($q) use ($jobTitle) {
-                                // Use exact match first, fallback to LIKE if exact doesn't work
-                                $q->where('title', $jobTitle);
-                            })
-                            ->with(['job.company', 'candidate'])
-                            ->whereBetween('created_at', [
-                                $notificationTime->copy()->subMinutes(5),
-                                $notificationTime->copy()->addMinutes(5)
-                            ])
-                            ->orderBy('created_at', 'desc')
-                            ->first();
-                        
-                        // If exact match not found, try LIKE match
-                        if (!$interview) {
+                    // For interview_update notifications, match by job title + candidate (no time constraint)
+                    // For new interview notifications, use time-based matching
+                    if ($notificationType === 'interview_update') {
+                        // Update notifications: match by candidate + job title (most recent for that job)
+                        if ($jobTitle) {
                             $interview = Interview::where('candidate_id', $user->id)
                                 ->whereHas('job', function($q) use ($jobTitle) {
-                                    $q->where('title', 'like', "%{$jobTitle}%");
+                                    $q->where('title', $jobTitle);
+                                })
+                                ->with(['job.company', 'candidate'])
+                                ->orderBy('updated_at', 'desc') // Use updated_at for updates
+                                ->first();
+                            
+                            // If exact match not found, try LIKE match
+                            if (!$interview) {
+                                $interview = Interview::where('candidate_id', $user->id)
+                                    ->whereHas('job', function($q) use ($jobTitle) {
+                                        $q->where('title', 'like', "%{$jobTitle}%");
+                                    })
+                                    ->with(['job.company', 'candidate'])
+                                    ->orderBy('updated_at', 'desc')
+                                    ->first();
+                            }
+                        }
+                        
+                        // Fallback: Get most recent interview for this candidate (if no job title)
+                        if (!$interview) {
+                            $interview = Interview::where('candidate_id', $user->id)
+                                ->with(['job.company', 'candidate'])
+                                ->orderBy('updated_at', 'desc')
+                                ->first();
+                        }
+                    } else {
+                        // New interview notifications: match by exact job title + candidate + time window
+                        if ($jobTitle) {
+                            $interview = Interview::where('candidate_id', $user->id)
+                                ->whereHas('job', function($q) use ($jobTitle) {
+                                    // Use exact match first, fallback to LIKE if exact doesn't work
+                                    $q->where('title', $jobTitle);
                                 })
                                 ->with(['job.company', 'candidate'])
                                 ->whereBetween('created_at', [
@@ -97,19 +117,34 @@ class UserNotificationController extends Controller
                                 ])
                                 ->orderBy('created_at', 'desc')
                                 ->first();
+                            
+                            // If exact match not found, try LIKE match
+                            if (!$interview) {
+                                $interview = Interview::where('candidate_id', $user->id)
+                                    ->whereHas('job', function($q) use ($jobTitle) {
+                                        $q->where('title', 'like', "%{$jobTitle}%");
+                                    })
+                                    ->with(['job.company', 'candidate'])
+                                    ->whereBetween('created_at', [
+                                        $notificationTime->copy()->subMinutes(5),
+                                        $notificationTime->copy()->addMinutes(5)
+                                    ])
+                                    ->orderBy('created_at', 'desc')
+                                    ->first();
+                            }
                         }
-                    }
-                    
-                    // Fallback: If no job title found or no match, try time-based matching (less reliable)
-                    if (!$interview) {
-                        $interview = Interview::where('candidate_id', $user->id)
-                            ->with(['job.company', 'candidate'])
-                            ->whereBetween('created_at', [
-                                $notificationTime->copy()->subMinutes(1),
-                                $notificationTime->copy()->addMinutes(1)
-                            ])
-                            ->orderBy('created_at', 'desc')
-                            ->first();
+                        
+                        // Fallback: If no job title found or no match, try time-based matching (less reliable)
+                        if (!$interview) {
+                            $interview = Interview::where('candidate_id', $user->id)
+                                ->with(['job.company', 'candidate'])
+                                ->whereBetween('created_at', [
+                                    $notificationTime->copy()->subMinutes(2),
+                                    $notificationTime->copy()->addMinutes(2)
+                                ])
+                                ->orderBy('created_at', 'desc')
+                                ->first();
+                        }
                     }
                     
                     if ($interview) {

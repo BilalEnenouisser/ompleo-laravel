@@ -517,7 +517,7 @@ class InterviewsController extends Controller
             
             // Create simple notification message (details shown in interview details section)
             $companyName = $interview->job->company->name ?? 'l\'entreprise';
-            $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été confirmé. Consultez les détails ci-dessous.";
+            $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été mis à jour. Consultez les détails ci-dessous.";
             
             // Send notification to the candidate
             $notification = $notificationService->createNotification(

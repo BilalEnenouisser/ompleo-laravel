@@ -11,12 +11,44 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Get all notifications from all users for admin
-        $notifications = UserNotification::with(['notification', 'user'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        // Build query
+        $query = UserNotification::with(['notification', 'user'])
+            ->orderBy('created_at', 'desc');
+        
+        // Apply search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('notification', function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
+            })->orWhereHas('user', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+        
+        // Apply read/unread filter
+        if ($request->filled('filter')) {
+            if ($request->filter === 'unread') {
+                $query->where('is_read', false);
+            } elseif ($request->filter === 'read') {
+                $query->where('is_read', true);
+            }
+        }
+        
+        // Paginate with 15 per page
+        $notifications = $query->paginate(15);
+        
+        // If AJAX request (for Load More), return JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('admin.notifications-partial', compact('notifications'))->render(),
+                'has_more' => $notifications->hasMorePages(),
+                'next_page' => $notifications->currentPage() + 1
+            ]);
+        }
         
         // For each notification, if it's about interview, find associated interview
         $notifications->getCollection()->transform(function($userNotification) {

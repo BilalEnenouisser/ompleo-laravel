@@ -10,8 +10,14 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative h-[80vh] md:h-screen flex items-center overflow-hidden bg-[#1f1f1f]">
+        <!-- Mobile Background Image -->
         <div 
-            class="absolute inset-0 bg-cover bg-center opacity-50" 
+            class="absolute inset-0 bg-cover bg-center opacity-50 md:hidden" 
+            style="background-image: url('{{ asset('herosectionmobile.jpg') }}')"
+        ></div>
+        <!-- Desktop Background Image -->
+        <div 
+            class="hidden md:block absolute inset-0 bg-cover bg-center opacity-50" 
             style="background-image: url('{{ asset('herosection.jpg') }}')"
         ></div>
 

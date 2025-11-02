@@ -154,11 +154,11 @@
                                     <span class="font-medium">LinkedIn</span>
                                 </button>
                                 
-                                <button class="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-gray-600 hover:bg-gray-700 text-white transition-all duration-200 hover:scale-105">
+                                <button id="copyLinkBtn" onclick="copyBlogLink()" class="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-gray-600 hover:bg-gray-700 text-white transition-all duration-200 hover:scale-105">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
-                                    <span class="font-medium">Copier le lien</span>
+                                    <span id="copyLinkText" class="font-medium">Copier le lien</span>
                                 </button>
                             </div>
                         </div>
@@ -296,4 +296,73 @@
     overflow: hidden;
 }
 </style>
+
+<script>
+function copyBlogLink() {
+    const url = window.location.href;
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const copyLinkText = document.getElementById('copyLinkText');
+    
+    // Use the Clipboard API if available
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            // Success feedback
+            copyLinkText.textContent = 'Lien copié!';
+            copyLinkBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+            copyLinkBtn.classList.add('bg-green-600');
+            
+            // Reset after 2 seconds
+            setTimeout(function() {
+                copyLinkText.textContent = 'Copier le lien';
+                copyLinkBtn.classList.remove('bg-green-600');
+                copyLinkBtn.classList.add('bg-gray-600', 'hover:bg-gray-700');
+            }, 2000);
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyTextToClipboard(url, copyLinkText, copyLinkBtn);
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyTextToClipboard(url, copyLinkText, copyLinkBtn);
+    }
+}
+
+function fallbackCopyTextToClipboard(text, textElement, buttonElement) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.width = "2em";
+    textArea.style.height = "2em";
+    textArea.style.padding = "0";
+    textArea.style.border = "none";
+    textArea.style.outline = "none";
+    textArea.style.boxShadow = "none";
+    textArea.style.background = "transparent";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            textElement.textContent = 'Lien copié!';
+            buttonElement.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+            buttonElement.classList.add('bg-green-600');
+            
+            setTimeout(function() {
+                textElement.textContent = 'Copier le lien';
+                buttonElement.classList.remove('bg-green-600');
+                buttonElement.classList.add('bg-gray-600', 'hover:bg-gray-700');
+            }, 2000);
+        }
+    } catch (err) {
+        console.error('Fallback: Failed to copy', err);
+    }
+    
+    document.body.removeChild(textArea);
+}
+</script>
 @endsection

@@ -12,15 +12,44 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         
-        // Get notifications for this recruiter only
-        $notifications = UserNotification::where('user_id', $user->id)
+        // Build query
+        $query = UserNotification::where('user_id', $user->id)
             ->with('notification')
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->orderBy('created_at', 'desc');
+        
+        // Apply search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('notification', function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+        
+        // Apply read/unread filter
+        if ($request->filled('filter')) {
+            if ($request->filter === 'unread') {
+                $query->where('is_read', false);
+            } elseif ($request->filter === 'read') {
+                $query->where('is_read', true);
+            }
+        }
+        
+        // Paginate with 15 per page
+        $notifications = $query->paginate(15);
+        
+        // If AJAX request (for Load More), return JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('recruiter.notifications-partial', compact('notifications'))->render(),
+                'has_more' => $notifications->hasMorePages(),
+                'next_page' => $notifications->currentPage() + 1
+            ]);
+        }
         
         // Attach related data and routes for each notification
         $notifications->getCollection()->transform(function($userNotification) use ($user) {

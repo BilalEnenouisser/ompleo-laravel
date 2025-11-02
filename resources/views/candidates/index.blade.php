@@ -70,9 +70,9 @@ $steps = [
                         Rejoignez OMPLEO et donnez un nouvel élan à votre carrière. 
                         Notre plateforme vous connecte avec les meilleures opportunités.
                     </p>
-                    <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95">
+                    <a href="{{ route('signup.candidate') }}" class="inline-block bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95">
                         🔵 JE CRÉE MON COMPTE CANDIDAT
-                    </button>
+                    </a>
                 </div>
                 
                 <div class="mt-12 lg:mt-0 animate-fade-in-right" data-animate="hero-image" style="animation-delay: 0.2s;">
@@ -264,9 +264,9 @@ $steps = [
             <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 animate-fade-in-up" data-animate="cta-subtitle" style="animation-delay: 0.2s;">
                 Rejoignez des milliers de candidats qui ont trouvé leur emploi idéal sur OMPLEO
             </p>
-            <button class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 animate-fade-in-up" data-animate="cta-button" style="animation-delay: 0.4s;">
+            <a href="{{ route('signup.candidate') }}" class="inline-block bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 animate-fade-in-up" data-animate="cta-button" style="animation-delay: 0.4s;">
                 Créer mon compte maintenant
-            </button>
+            </a>
         </div>
     </section>
 </div>
