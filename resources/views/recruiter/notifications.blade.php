@@ -18,6 +18,11 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- Build Assets -->
+    @if(vite_asset('resources/css/app.css'))
+    <link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
+    @endif
 </head>
 <body class="font-sans antialiased min-h-screen bg-[#1f1f1f] dark">
     @include('components.header')
@@ -276,5 +281,10 @@
             }
         });
     </script>
+    
+    <!-- Build Assets JS -->
+    @if(vite_asset('resources/js/app.js'))
+    <script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
+    @endif
 </body>
 </html>

@@ -119,6 +119,11 @@
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Build Assets -->
+    @if(vite_asset('resources/css/app.css'))
+    <link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
+    @endif
 </head>
 <body class="font-sans antialiased min-h-screen" style="background-color: #2b2b2b;">
     @include('components.header')
@@ -206,5 +211,10 @@
     </main>
     
     @include('components.footer')
+    
+    <!-- Build Assets JS -->
+    @if(vite_asset('resources/js/app.js'))
+    <script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
+    @endif
 </body>
 </html>

@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Storage;
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- Build Assets -->
+    @if(vite_asset('resources/css/app.css'))
+    <link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
+    @endif
 </head>
 <body class="font-sans antialiased">
     @include('components.header')
@@ -491,6 +496,11 @@ use Illuminate\Support\Facades\Storage;
             loadMobileNotifications();
         });
     </script>
+    
+    <!-- Build Assets JS -->
+    @if(vite_asset('resources/js/app.js'))
+    <script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
+    @endif
     
     @yield('scripts')
 </body>

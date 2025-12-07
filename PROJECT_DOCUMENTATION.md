@@ -1,6 +1,6 @@
 # OMPLEO - Project Documentation
 
-**Last Updated**: 2025-12-07  
+**Last Updated**: 2025-01-27  
 **Project Status**: Active Development  
 **Version**: 1.0
 
@@ -564,13 +564,14 @@ ompleo-laravel/
 - `layouts/dashboard.blade.php` - Dashboard layout with sidebar
 
 ### Components
-- `components/header.blade.php` - Site header
+- `components/header.blade.php` - Site header (updated navbar layout and menu items)
 - `components/footer.blade.php` - Site footer
-- `components/jobs-section.blade.php` - Jobs listing section
+- `components/jobs-section.blade.php` - Jobs listing section (removed from home page)
+- `components/companies-section.blade.php` - Companies slider section (with Swiper.js, shows 4.4 cards on desktop)
 - `components/partners-section.blade.php` - Partners section
-- `components/featured-articles.blade.php` - Blog articles
-- `components/why-choose-section.blade.php` - Features section
-- `components/recruiter-cta.blade.php` - Recruiter CTA
+- `components/featured-articles.blade.php` - Blog articles (removed from home page)
+- `components/why-choose-section.blade.php` - Features section (removed from home page)
+- `components/recruiter-cta.blade.php` - Recruiter CTA (updated route reference)
 - `components/notifications.blade.php` - Notification component
 
 ### Views by Section
@@ -581,7 +582,8 @@ ompleo-laravel/
 - `contact.blade.php` - Contact page
 - `jobs/index.blade.php` - Job listings
 - `jobs/show.blade.php` - Job details
-- `companies/index.blade.php` - Company listings
+- `companies/index.blade.php` - Company listings (with filter section, pagination, and CTA banner)
+- `companies/companies-partial.blade.php` - Company cards partial for AJAX pagination
 - `companies/show.blade.php` - Company details
 - `blog/index.blade.php` - Blog listings
 - `blog/show.blade.php` - Blog post
@@ -749,14 +751,144 @@ npm run build    # Production build
 
 ## Daily Work Log
 
+### 2025-01-27
+
+#### Work Completed
+- [x] Updated companies page to display companies instead of candidates
+- [x] Modified companies page hero section title
+- [x] Implemented custom pagination for companies (6 per page, 3x2 grid)
+- [x] Added filter section with searchable dropdowns on companies page
+- [x] Removed sections from home page
+- [x] Added new CTA banner section for companies page
+- [x] Fixed navigation arrow hover behavior
+- [x] Updated route references
+
+#### Changes Made
+
+**Companies Page (`/companies`):**
+1. **Controller Updates** (`app/Http/Controllers/CompanyController.php`):
+   - Changed from fetching candidates to fetching companies
+   - Updated pagination from 15 to 6 companies per page
+   - Added filter logic for company name, location, and industry
+   - Added queries to fetch unique company names, locations, and industries for dropdowns
+   - Changed filter parameter from `search` to `company_name`
+
+2. **View Updates** (`resources/views/companies/index.blade.php`):
+   - Changed hero title to "Découvrez l'entreprise faite pour vous"
+   - Removed hero subtitle
+   - Replaced candidate cards with company cards showing:
+     - Company logo (or initials if no logo)
+     - Company name
+     - Description
+     - Location
+     - Company size
+     - Industry/Specialisation tags (aligned to right)
+     - Job count
+     - "Voir les offres" button linking to company jobs
+   - Removed stats section (98%, 10+, 24h)
+   - Removed old CTA section
+   - Added new filter section with:
+     - Text showing number of active companies: "X entreprises actives sur Ompleo"
+     - Three searchable input fields with datalists:
+       - **Nom de l'entreprise** (Company name) - dropdown with all company names
+       - **Région, Wilaya** - dropdown with all 48 Algerian wilayas + custom locations
+       - **Secteur d'activité** (Sector of activity) - dropdown with all industries
+     - "Rechercher" (Search) button
+     - Dark theme styling (#2F2F2F background)
+   - Implemented custom pagination with:
+     - First page button (double left arrow)
+     - Previous button (single left arrow)
+     - Numbered circular buttons (1, 2, 3, etc.) in teal color
+     - Next button (single right arrow)
+     - Last page button (double right arrow)
+     - Active page highlighted in brighter teal
+     - Filter parameters preserved in pagination links
+   - Added new CTA banner section:
+     - Background: #1F1F1F (section), #2F2F2F (card)
+     - Heading: "Faites partie des entreprises mises en avant"
+     - Subheading: "Créez votre page et connectez-vous aux bons talents."
+     - Button: "En savoir plus" (background: #B3B3B3, text: #2F2F2F)
+     - Pill-shaped button (rounded-full)
+     - Links to `/signup-recruiter`
+   - Fixed dropdown arrow hover behavior (arrows stay consistent)
+   - Removed load more JavaScript functionality
+   - Updated empty state message
+
+3. **Created Partial View** (`resources/views/companies/companies-partial.blade.php`):
+   - Created new file for AJAX pagination (currently not used, but available)
+   - Displays company cards in same format as main view
+
+**Home Page Updates** (`resources/views/home.blade.php`):
+   - Removed "À la une" (Featured Articles) section
+   - Removed "Pourquoi choisir Ompleo ?" (Why Choose Section)
+
+**Route Updates** (`routes/web.php`):
+   - Removed unused `recruiter.register` route
+   - Updated references to use `signup.recruiter` route
+
+**Component Updates** (`resources/views/components/recruiter-cta.blade.php`):
+   - Updated button link from `recruiter.register` to `signup.recruiter`
+
+**Companies Section Component** (`resources/views/components/companies-section.blade.php`):
+   - Updated SVG arrow width to 50% in navigation buttons
+
+#### Technical Details
+
+**Filter Implementation:**
+- Uses HTML5 `datalist` elements for searchable dropdowns
+- Users can type to search or select from dropdown
+- All filters work together (AND logic)
+- Filter parameters preserved in pagination
+- Styled with dark theme (#2F2F2F background, white text)
+
+**Pagination Implementation:**
+- Custom pagination controls matching design requirements
+- Shows 6 companies per page (3 columns × 2 rows)
+- Teal circular buttons for page numbers
+- Navigation arrows on both sides
+- First/last page quick navigation
+- Filter parameters appended to pagination URLs
+
+**CSS Fixes:**
+- Added `appearance: none` to remove browser default dropdown indicators
+- Fixed arrow hover behavior with CSS to prevent arrow changes
+- Ensured consistent arrow display on all input states
+
+#### Files Modified
+- `app/Http/Controllers/CompanyController.php`
+- `resources/views/companies/index.blade.php`
+- `resources/views/companies/companies-partial.blade.php` (created)
+- `resources/views/home.blade.php`
+- `resources/views/components/recruiter-cta.blade.php`
+- `resources/views/components/companies-section.blade.php`
+- `routes/web.php`
+
+#### Issues Encountered
+- Arrow was changing on hover - fixed with CSS
+- Browser default dropdown indicators showing - fixed with `appearance: none`
+- Filter parameters not preserved in pagination - fixed with `appends()`
+
+#### Next Steps
+- Continue frontend improvements
+- Test filter functionality thoroughly
+- Consider adding more filter options if needed
+
+#### Notes
+- Companies page now fully functional with filtering and pagination
+- Home page simplified by removing featured sections
+- All routes updated and cleaned up
+- Documentation updated with today's work
+
+---
+
 ### 2025-12-07
 
 #### Work Completed
-- [ ] Initial project documentation created
-- [ ] Project structure documented
-- [ ] Database schema documented
-- [ ] Routes and API endpoints documented
-- [ ] Frontend structure documented
+- [x] Initial project documentation created
+- [x] Project structure documented
+- [x] Database schema documented
+- [x] Routes and API endpoints documented
+- [x] Frontend structure documented
 
 #### Changes Made
 - Created PROJECT_DOCUMENTATION.md file

@@ -21,6 +21,11 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
+    <!-- Build Assets -->
+    @if(vite_asset('resources/css/app.css'))
+    <link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
+    @endif
+    
     @stack('styles')
 </head>
 <body class="font-sans antialiased bg-[#1f1f1f] text-gray-100">
@@ -38,6 +43,10 @@
 
 
     <!-- Scripts -->
+    @if(vite_asset('resources/js/app.js'))
+    <script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
+    @endif
+    
     @stack('scripts')
     
     <!-- Dark mode toggle functionality -->
