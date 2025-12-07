@@ -18,16 +18,9 @@ class CompanyController extends Controller
                 $query->where('status', 'published');
             }]);
 
-        // Apply search filter
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('industry', 'like', "%{$search}%")
-                  ->orWhere('specialisation', 'like', "%{$search}%")
-                  ->orWhere('location', 'like', "%{$search}%");
-            });
+        // Company name filter
+        if ($request->filled('company_name')) {
+            $query->where('name', 'like', "%{$request->company_name}%");
         }
 
         // Location filter
@@ -47,6 +40,27 @@ class CompanyController extends Controller
         // Get company count for stats
         $companyCount = Company::where('is_active', true)->count();
 
+        // Get unique values for filters
+        $companyNames = Company::where('is_active', true)
+            ->orderBy('name')
+            ->pluck('name')
+            ->unique()
+            ->values();
+        
+        $locations = Company::where('is_active', true)
+            ->whereNotNull('location')
+            ->orderBy('location')
+            ->pluck('location')
+            ->unique()
+            ->values();
+        
+        $industries = Company::where('is_active', true)
+            ->whereNotNull('industry')
+            ->orderBy('industry')
+            ->pluck('industry')
+            ->unique()
+            ->values();
+
         // Handle AJAX load more request
         if ($request->ajax()) {
             return response()->json([
@@ -56,7 +70,7 @@ class CompanyController extends Controller
             ]);
         }
 
-        return view('companies.index', compact('companies', 'companyCount'));
+        return view('companies.index', compact('companies', 'companyCount', 'companyNames', 'locations', 'industries'));
     }
 
     public function search(Request $request)

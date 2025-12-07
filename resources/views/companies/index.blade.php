@@ -19,6 +19,146 @@ use Illuminate\Support\Facades\Storage;
     </section>
 
 
+    <!-- Filter Section -->
+    <section class="py-8 bg-[#1f1f1f] dark:bg-[#1f1f1f]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-white text-center mb-6 text-lg">
+                {{ number_format($companyCount) }} entreprises actives sur Ompleo
+            </p>
+            
+            <form method="GET" action="{{ route('companies.index') }}" class="bg-[#2F2F2F] rounded-xl p-4 md:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Company Name Dropdown -->
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="company_name"
+                            id="company_name"
+                            value="{{ request('company_name') }}"
+                            placeholder="Nom de l'entreprise"
+                            list="company_names_list"
+                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            autocomplete="off"
+                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        />
+                        <datalist id="company_names_list">
+                            @foreach($companyNames as $name)
+                                <option value="{{ $name }}">{{ $name }}</option>
+                            @endforeach
+                        </datalist>
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Region/Wilaya Dropdown -->
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            value="{{ request('location') }}"
+                            placeholder="Région, Wilaya"
+                            list="locations_list"
+                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            autocomplete="off"
+                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        />
+                        <datalist id="locations_list">
+                            <option value="Adrar">Adrar</option>
+                            <option value="Chlef">Chlef</option>
+                            <option value="Laghouat">Laghouat</option>
+                            <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+                            <option value="Batna">Batna</option>
+                            <option value="Béjaïa">Béjaïa</option>
+                            <option value="Biskra">Biskra</option>
+                            <option value="Béchar">Béchar</option>
+                            <option value="Blida">Blida</option>
+                            <option value="Bouira">Bouira</option>
+                            <option value="Tamanrasset">Tamanrasset</option>
+                            <option value="Tébessa">Tébessa</option>
+                            <option value="Tlemcen">Tlemcen</option>
+                            <option value="Tiaret">Tiaret</option>
+                            <option value="Tizi Ouzou">Tizi Ouzou</option>
+                            <option value="Alger">Alger</option>
+                            <option value="Djelfa">Djelfa</option>
+                            <option value="Jijel">Jijel</option>
+                            <option value="Sétif">Sétif</option>
+                            <option value="Saïda">Saïda</option>
+                            <option value="Skikda">Skikda</option>
+                            <option value="Sidi Bel Abbès">Sidi Bel Abbès</option>
+                            <option value="Annaba">Annaba</option>
+                            <option value="Guelma">Guelma</option>
+                            <option value="Constantine">Constantine</option>
+                            <option value="Médéa">Médéa</option>
+                            <option value="Mostaganem">Mostaganem</option>
+                            <option value="M'Sila">M'Sila</option>
+                            <option value="Mascara">Mascara</option>
+                            <option value="Ouargla">Ouargla</option>
+                            <option value="Oran">Oran</option>
+                            <option value="El Bayadh">El Bayadh</option>
+                            <option value="Illizi">Illizi</option>
+                            <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
+                            <option value="Boumerdès">Boumerdès</option>
+                            <option value="El Tarf">El Tarf</option>
+                            <option value="Tindouf">Tindouf</option>
+                            <option value="Tissemsilt">Tissemsilt</option>
+                            <option value="El Oued">El Oued</option>
+                            <option value="Khenchela">Khenchela</option>
+                            <option value="Souk Ahras">Souk Ahras</option>
+                            <option value="Tipaza">Tipaza</option>
+                            <option value="Mila">Mila</option>
+                            <option value="Aïn Defla">Aïn Defla</option>
+                            <option value="Naâma">Naâma</option>
+                            <option value="Aïn Témouchent">Aïn Témouchent</option>
+                            <option value="Ghardaïa">Ghardaïa</option>
+                            <option value="Relizane">Relizane</option>
+                            @foreach($locations as $loc)
+                                @if(!in_array($loc, ['Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar', 'Blida', 'Bouira', 'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger', 'Djelfa', 'Jijel', 'Sétif', 'Saïda', 'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma', 'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla', 'Oran', 'El Bayadh', 'Illizi', 'Bordj Bou Arreridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued', 'Khenchela', 'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent', 'Ghardaïa', 'Relizane']))
+                                    <option value="{{ $loc }}">{{ $loc }}</option>
+                                @endif
+                            @endforeach
+                        </datalist>
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Sector of Activity Dropdown -->
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="industry"
+                            id="industry"
+                            value="{{ request('industry') }}"
+                            placeholder="Secteur d'activité"
+                            list="industries_list"
+                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            autocomplete="off"
+                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        />
+                        <datalist id="industries_list">
+                            @foreach($industries as $ind)
+                                <option value="{{ $ind }}">{{ $ind }}</option>
+                            @endforeach
+                        </datalist>
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Search Button -->
+                    <button
+                        type="submit"
+                        class="w-full h-12 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+                    >
+                        Rechercher
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <!-- Companies Grid -->
     <section class="py-16 relative z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,6 +260,10 @@ use Illuminate\Support\Facades\Storage;
             {{-- Pagination --}}
             @if($companies->hasPages())
             <div class="mt-12 flex items-center justify-center gap-2">
+                @php
+                    // Preserve filter parameters in pagination
+                    $companies->appends(request()->query());
+                @endphp
                 {{-- First Page Button (Double Left Arrow) --}}
                 @if($companies->currentPage() > 1)
                     <a href="{{ $companies->url(1) }}" class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-[#00b6b4] transition-colors">
@@ -250,5 +394,41 @@ use Illuminate\Support\Facades\Storage;
 </div>
 
 @include('components.footer')
+
+<style>
+    /* Keep arrow consistent - no changes on hover */
+    .relative > svg {
+        transition: none !important;
+        pointer-events: none !important;
+        color: rgb(156 163 175) !important; /* text-gray-400 */
+        transform: translateY(-50%) !important;
+    }
+    
+    /* Ensure arrow stays the same on all states */
+    .relative:hover > svg,
+    .relative input:hover ~ svg,
+    .relative input:focus ~ svg,
+    .relative input:active ~ svg {
+        color: rgb(156 163 175) !important;
+        transform: translateY(-50%) !important;
+        opacity: 1 !important;
+        display: block !important;
+    }
+    
+    /* Hide any browser default dropdown arrows */
+    input[list]::-webkit-calendar-picker-indicator {
+        display: none !important;
+        opacity: 0 !important;
+    }
+    
+    input[list]::-webkit-list-button {
+        display: none !important;
+    }
+    
+    /* Ensure the SVG path doesn't change */
+    .relative > svg > path {
+        d: path("M19 9l-7 7-7-7") !important;
+    }
+</style>
 
 @endsection

@@ -156,11 +156,6 @@
         </div>
     </section>
 
-    <!-- Why Choose Section -->
-    <div class="animate-on-scroll">
-        @include('components.why-choose-section')
-    </div>
-
     <!-- Companies Section -->
     <div class="animate-on-scroll">
         @include('components.companies-section')
@@ -169,12 +164,6 @@
     <!-- Partners Section -->
     <div class="animate-on-scroll">
         @include('components.partners-section')
-    </div>
-
-
-    <!-- Featured Articles Section -->
-    <div class="animate-on-scroll">
-        @include('components.featured-articles')
     </div>
 
 
