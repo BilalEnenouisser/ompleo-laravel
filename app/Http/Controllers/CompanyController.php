@@ -12,64 +12,51 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {
-        // Get all candidate users with their profiles
-        $query = User::where('user_type', 'candidate')
-            ->whereHas('candidateProfile')
-            ->with(['candidateProfile']);
+        // Get all active companies with their job counts
+        $query = Company::where('is_active', true)
+            ->withCount(['jobs' => function($query) {
+                $query->where('status', 'published');
+            }]);
 
         // Apply search filter
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhereHas('candidateProfile', function($profileQuery) use ($search) {
-                      $profileQuery->where('bio', 'like', "%{$search}%")
-                                   ->orWhere('title', 'like', "%{$search}%")
-                                   ->orWhere('skills', 'like', "%{$search}%")
-                                   ->orWhere('city', 'like', "%{$search}%");
-                  });
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('industry', 'like', "%{$search}%")
+                  ->orWhere('specialisation', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
             });
         }
 
         // Location filter
         if ($request->filled('location')) {
-            $query->whereHas('candidateProfile', function($profileQuery) use ($request) {
-                $profileQuery->where('city', 'like', "%{$request->location}%");
-            });
+            $query->where('location', 'like', "%{$request->location}%");
         }
 
-        // Skills filter
-        if ($request->filled('skills')) {
-            $query->whereHas('candidateProfile', function($profileQuery) use ($request) {
-                $profileQuery->where('skills', 'like', "%{$request->skills}%");
-            });
+        // Industry filter
+        if ($request->filled('industry')) {
+            $query->where('industry', 'like', "%{$request->industry}%");
         }
 
-        // Experience filter
-        if ($request->filled('experience')) {
-            $query->whereHas('candidateProfile', function($profileQuery) use ($request) {
-                $profileQuery->where('experience_years', 'like', "%{$request->experience}%");
-            });
-        }
-
-        $candidates = $query->orderBy('created_at', 'desc')->paginate(15);
+        $companies = $query->orderBy('jobs_count', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
         
-        // Get candidate count for stats
-        $candidateCount = User::where('user_type', 'candidate')
-            ->whereHas('candidateProfile')
-            ->count();
+        // Get company count for stats
+        $companyCount = Company::where('is_active', true)->count();
 
         // Handle AJAX load more request
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('companies.candidates-partial', compact('candidates'))->render(),
-                'has_more' => $candidates->hasMorePages(),
-                'next_page' => $candidates->currentPage() + 1
+                'html' => view('companies.companies-partial', compact('companies'))->render(),
+                'has_more' => $companies->hasMorePages(),
+                'next_page' => $companies->currentPage() + 1
             ]);
         }
 
-        return view('companies.index', compact('candidates', 'candidateCount'));
+        return view('companies.index', compact('companies', 'companyCount'));
     }
 
     public function search(Request $request)

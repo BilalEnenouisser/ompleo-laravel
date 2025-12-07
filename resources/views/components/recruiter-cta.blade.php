@@ -27,7 +27,7 @@
                 
                 <div class="md:w-1/3 flex justify-center">
                     <a 
-                        href="{{ route('recruiter.register') }}"
+                        href="{{ route('signup.recruiter') }}"
                         class="bg-[#00b6b4] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:bg-[#009e9c] shadow-md hover:shadow-lg flex items-center gap-3"
                     >
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

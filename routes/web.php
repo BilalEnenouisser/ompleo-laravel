@@ -49,11 +49,6 @@ Route::middleware('guest')->group(function () {
     
     // Handle registration form submissions
     Route::post('/register', [RegisterController::class, 'register']);
-    
-    // Recruiter Registration
-    Route::get('/recruiter/register', function () {
-        return view('auth.recruiter-register');
-    })->name('recruiter.register');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

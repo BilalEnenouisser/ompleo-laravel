@@ -30,6 +30,11 @@ class JobController extends Controller
             });
         }
 
+        // Company filter
+        if ($request->filled('company')) {
+            $query->where('company_id', $request->company);
+        }
+
         // Location filter
         if ($request->filled('location')) {
             $query->where('location', 'like', "%{$request->location}%");

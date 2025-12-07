@@ -3,40 +3,36 @@ use Illuminate\Support\Facades\Storage;
 @endphp
 <header class="w-full z-50 bg-[#1f1f1f]">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-            <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex-shrink-0 group">
-                <div class="flex items-center  px-4">
-                  
-                    <!-- Dark mode logo -->
-                    <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto  dark:block">
-                </div>
-            </a>
+        <div class="flex justify-between items-center h-24">
+            <!-- Left Side: Logo and Navigation -->
+            <div class="flex items-center space-x-6">
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="flex-shrink-0 group">
+                    <div class="flex items-center px-4">
+                        <!-- Dark mode logo -->
+                        <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto dark:block">
+                    </div>
+                </a>
 
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-1">
-                @php
-                    $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
-                @endphp
-                <a href="{{ route('home') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('home') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Accueil</span>
-                </a>
-                <a href="{{ route('jobs.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('jobs.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Emplois</span>
-                </a>
-                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('companies.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Entreprises</span>
-                </a>
-                <a href="{{ route('candidates') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('candidates') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Candidats</span>
-                </a>
-                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('blog.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Blog</span>
-                </a>
-                <a href="{{ route('contact') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('contact') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                    <span class="relative z-10">Contact</span>
-                </a>
-            </nav>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1">
+                    @php
+                        $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
+                    @endphp
+                    <a href="{{ route('jobs.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('jobs.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
+                        <span class="relative z-10">Offres d'emploi</span>
+                    </a>
+                    <a href="{{ route('companies.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('companies.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
+                        <span class="relative z-10">Découvrir les recruteurs</span>
+                    </a>
+                    <a href="{{ route('blog.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('blog.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
+                        <span class="relative z-10">Blog</span>
+                    </a>
+                    <a href="{{ route('contact') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('contact') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
+                        <span class="relative z-10">Contact</span>
+                    </a>
+                </nav>
+            </div>
 
             <!-- Right Side -->
             <div class="hidden md:flex items-center space-x-4">
@@ -248,16 +244,7 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 text-[#00b6b4] hover:bg-[#2b2b2b]">
-                        <!-- User icon from Lucide React -->
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <span>Connexion</span>
-                    </a>
-                    
-                    <a href="{{ route('register') }}" class="flex items-center space-x-2 px-4 py-2 bg-[#00b6b4] text-white rounded-lg hover:bg-[#009e9c] transition-all duration-300 hover:scale-105 shadow-sm">
+                    <a href="{{ route('signup.recruiter') }}" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 text-[#00b6b4] hover:bg-[#2b2b2b]">
                         <!-- Building2 icon from Lucide React -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
@@ -268,7 +255,16 @@ use Illuminate\Support\Facades\Storage;
                             <path d="M10 14h4"></path>
                             <path d="M10 18h4"></path>
                         </svg>
-                        <span>S'inscrire</span>
+                        <span>Espace recruteurs</span>
+                    </a>
+                    
+                    <a href="{{ route('login') }}" class="flex items-center space-x-2 px-4 py-2 bg-[#00b6b4] text-white rounded-lg hover:bg-[#009e9c] transition-all duration-300 hover:scale-105 shadow-sm">
+                        <!-- User icon from Lucide React -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Connexion</span>
                     </a>
                 @endauth
             </div>
@@ -294,17 +290,11 @@ use Illuminate\Support\Facades\Storage;
         <!-- Mobile Navigation -->
         <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
-                <a href="{{ route('home') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('home') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
-                    Accueil
-                </a>
                 <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
-                    Emplois
+                    Offres d'emploi
                 </a>
                 <a href="{{ route('companies.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
-                    Entreprises
-                </a>
-                <a href="{{ route('candidates') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('candidates') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
-                    Candidats
+                    Découvrir les recruteurs
                 </a>
                 <a href="{{ route('blog.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('blog.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Blog
@@ -341,11 +331,11 @@ use Illuminate\Support\Facades\Storage;
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
-                                Connexion
+                            <a href="{{ route('signup.recruiter') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                Espace recruteurs
                             </a>
-                            <a href="{{ route('register') }}" onclick="closeMobileMenu()" class="block w-full bg-[#00b6b4] text-white px-4 py-3 rounded-lg text-base font-medium text-center hover:bg-[#009e9c] transition-all duration-300 shadow-sm">
-                                S'inscrire
+                            <a href="{{ route('login') }}" onclick="closeMobileMenu()" class="block w-full bg-[#00b6b4] text-white px-4 py-3 rounded-lg text-base font-medium text-center hover:bg-[#009e9c] transition-all duration-300 shadow-sm">
+                                Connexion
                             </a>
                         @endauth
                     </div>

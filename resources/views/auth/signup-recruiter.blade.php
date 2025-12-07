@@ -17,15 +17,8 @@
                 Retour au choix
             </a>
             
-            <div class="flex items-center justify-center space-x-3 mb-6">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0058f0] to-[#00f0a8] flex items-center justify-center p-2">
-                    <img 
-                        src="{{ asset('icon.png') }}" 
-                        alt="OMPLEO" 
-                        class="w-full h-full object-contain filter brightness-0 invert"
-                    />
-                </div>
-                <h1 class="text-3xl font-bold gradient-text">OMPLEO</h1>
+            <div class="flex items-center justify-center mb-6">
+                <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-16 w-auto">
             </div>
             <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 Créer un compte recruteur

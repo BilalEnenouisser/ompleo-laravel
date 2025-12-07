@@ -16,17 +16,8 @@
     
     <div class="max-w-4xl w-full space-y-8 relative z-10">
         <div class="text-center animate-fade-in-up">
-            <div class="flex items-center justify-center space-x-3 mb-6">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center p-2 shadow-glass-glow hover:scale-110 transition-transform duration-200">
-                    <img 
-                        src="{{ asset('icon.png') }}" 
-                        alt="OMPLEO" 
-                        class="w-full h-full object-contain filter brightness-0 invert"
-                    />
-                </div>
-                <h1 class="text-3xl font-semibold gradient-text hover:scale-105 transition-transform duration-200">
-                    OMPLEO
-                </h1>
+            <div class="flex items-center justify-center mb-6">
+                <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-16 w-auto">
             </div>
             <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
                 Rejoignez OMPLEO

@@ -161,9 +161,9 @@
         @include('components.why-choose-section')
     </div>
 
-    <!-- Jobs Section -->
+    <!-- Companies Section -->
     <div class="animate-on-scroll">
-        @include('components.jobs-section')
+        @include('components.companies-section')
     </div>
 
     <!-- Partners Section -->

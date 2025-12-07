@@ -18,11 +18,15 @@ class HomeController extends Controller
             'candidates_count' => User::where('user_type', 'candidate')->count()
         ];
 
-        // Get 6 latest published jobs with company information
-        $jobs = Job::with('company')
-            ->published()
+        // Get companies with published job counts
+        $companies = Company::where('is_active', true)
+            ->withCount(['jobs' => function($query) {
+                $query->where('status', 'published');
+            }])
+            ->having('jobs_count', '>', 0)
+            ->orderBy('jobs_count', 'desc')
             ->orderBy('created_at', 'desc')
-            ->limit(6)
+            ->limit(20)
             ->get();
 
         // Get 6 latest published blogs for featured articles
@@ -64,7 +68,7 @@ class HomeController extends Controller
             ]
         ];
 
-        return view('home', compact('stats', 'features', 'jobs', 'featuredBlogs'));
+        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs'));
     }
 }
 
