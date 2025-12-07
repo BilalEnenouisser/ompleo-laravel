@@ -2,20 +2,20 @@
 use Illuminate\Support\Facades\Storage;
 @endphp
 <header class="w-full z-50 bg-[#1f1f1f]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full px-[2%]">
         <div class="flex justify-between items-center h-24">
             <!-- Left Side: Logo and Navigation -->
             <div class="flex items-center space-x-6">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex-shrink-0 group">
-                    <div class="flex items-center px-4">
+                    <div class="flex items-center">
                         <!-- Dark mode logo -->
                         <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto dark:block">
                     </div>
                 </a>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-1">
+                <nav class="hidden xl:flex space-x-1 desktop-nav">
                     @php
                         $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
                     @endphp
@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Storage;
             </div>
 
             <!-- Right Side -->
-            <div class="hidden md:flex items-center space-x-4">
+            <div class="hidden xl:flex items-center space-x-4 desktop-right">
                 <!-- Language Selector -->
                 <div class="relative">
                     <button onclick="toggleLanguageMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
@@ -270,7 +270,7 @@ use Illuminate\Support\Facades\Storage;
             </div>
 
             <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center space-x-2">
+            <div class="xl:hidden flex items-center space-x-2 mobile-menu-btn">
                 <button onclick="toggleMobileMenu()" class="p-2 rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
                     <!-- Menu icon from Lucide React -->
                     <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -288,7 +288,7 @@ use Illuminate\Support\Facades\Storage;
         </div>
 
         <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
+        <div id="mobileMenu" class="hidden xl:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
                 <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
                     Offres d'emploi
@@ -344,6 +344,33 @@ use Illuminate\Support\Facades\Storage;
         </div>
     </div>
 </header>
+
+<style>
+    /* Custom breakpoint at 1150px */
+    @media (max-width: 1150px) {
+        .desktop-nav {
+            display: none !important;
+        }
+        .desktop-right {
+            display: none !important;
+        }
+        .mobile-menu-btn {
+            display: flex !important;
+        }
+    }
+    
+    @media (min-width: 1151px) {
+        .desktop-nav {
+            display: flex !important;
+        }
+        .desktop-right {
+            display: flex !important;
+        }
+        .mobile-menu-btn {
+            display: none !important;
+        }
+    }
+</style>
 
 <script>
 function toggleLanguageMenu() {
