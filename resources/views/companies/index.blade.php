@@ -20,13 +20,14 @@ use Illuminate\Support\Facades\Storage;
 
 
     <!-- Filter Section -->
-    <section class="py-8 bg-[#1f1f1f] dark:bg-[#1f1f1f]">
+    <section class="py-8 bg-[#1F1F1F] dark:bg-[#1F1F1F]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-white text-center mb-6 text-lg">
-                {{ number_format($companyCount) }} entreprises actives sur Ompleo
-            </p>
-            
-            <form method="GET" action="{{ route('companies.index') }}" class="bg-[#2F2F2F] rounded-xl p-4 md:p-6">
+            <div class="bg-[#161616] rounded-xl p-4 md:p-6">
+                <p class="text-white text-left text-lg mb-6">
+                    {{ number_format($companyCount) }} entreprises actives sur Ompleo
+                </p>
+                
+                <form method="GET" action="{{ route('companies.index') }}" class="bg-[#414141] rounded-xl p-4 md:p-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <!-- Company Name Dropdown -->
                     <div class="relative">
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\Storage;
                             value="{{ request('company_name') }}"
                             placeholder="Nom de l'entreprise"
                             list="company_names_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
                             autocomplete="off"
                             style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
                         />
@@ -60,7 +61,7 @@ use Illuminate\Support\Facades\Storage;
                             value="{{ request('location') }}"
                             placeholder="Région, Wilaya"
                             list="locations_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
                             autocomplete="off"
                             style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
                         />
@@ -133,7 +134,7 @@ use Illuminate\Support\Facades\Storage;
                             value="{{ request('industry') }}"
                             placeholder="Secteur d'activité"
                             list="industries_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-lg border border-white/20 bg-[#1f1f1f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
+                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
                             autocomplete="off"
                             style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
                         />
@@ -150,12 +151,13 @@ use Illuminate\Support\Facades\Storage;
                     <!-- Search Button -->
                     <button
                         type="submit"
-                        class="w-full h-12 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+                        class="w-full h-12 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
                     >
                         Rechercher
                     </button>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -175,7 +177,7 @@ use Illuminate\Support\Facades\Storage;
                         }
                     @endphp
                     
-                    <div class="bg-white dark:bg-[#2b2b2b] rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-[#333333] flex flex-col">
+                    <div class="bg-[#282828] rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-[#333333] flex flex-col">
                         {{-- Top Section: Logo on Left, Industry on Right --}}
                         <div class="flex gap-4 mb-4 items-center">
                             {{-- Company Logo on Left --}}
@@ -194,10 +196,10 @@ use Illuminate\Support\Facades\Storage;
                                 @if($company->industry || $company->specialisation)
                                 <div class="flex flex-wrap gap-1.5 justify-end">
                                     @if($company->industry)
-                                        <span class="px-2.5 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full border border-[#00b6b4]/30 text-xs font-medium">{{ $company->industry }}</span>
+                                        <span class="px-2.5 py-1 bg-[#322D23] text-[#71695B] rounded-full border border-[#5E5440] text-xs font-medium">{{ $company->industry }}</span>
                                     @endif
                                     @if($company->specialisation)
-                                        <span class="px-2.5 py-1 bg-[#00b6b4]/20 text-[#00b6b4] rounded-full border border-[#00b6b4]/30 text-xs font-medium">{{ $company->specialisation }}</span>
+                                        <span class="px-2.5 py-1 bg-[#322D23] text-[#71695B] rounded-full border border-[#5E5440] text-xs font-medium">{{ $company->specialisation }}</span>
                                     @endif
                                 </div>
                                 @endif
@@ -207,38 +209,38 @@ use Illuminate\Support\Facades\Storage;
                         {{-- Bottom Section: Name, Description, Details --}}
                         <div class="mb-4 flex-1">
                             {{-- Company Name --}}
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1.5">{{ $company->name }}</h3>
+                            <h3 class="text-lg font-bold text-white mb-1.5">{{ $company->name }}</h3>
 
                             {{-- Description --}}
                             @if($company->description)
-                            <p class="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 leading-relaxed">{{ $company->description }}</p>
+                            <p class="text-sm text-[#86878C] mb-3 line-clamp-2 leading-relaxed">{{ $company->description }}</p>
                             @endif
 
                             {{-- Location --}}
                             @if($company->location)
-                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-1.5">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
+                                <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <span>{{ $company->location }}</span>
                             </div>
                             @endif
 
                             {{-- Company Size --}}
                             @if($company->size)
-                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-1.5">
-                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
+                                <svg class="w-5 h-5 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 <span>{{ $company->size }}</span>
                             </div>
                             @endif
 
                             {{-- Job Count --}}
-                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                <span>{{ $company->jobs_count }} {{ $company->jobs_count == 1 ? 'offre d\'emploi' : 'offres d\'emploi' }}</span>
+                            <div class="flex items-center gap-2 text-sm text-[#646464]">
+                                <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span>{{ $company->jobs_count }} postes</span>
                             </div>
                         </div>
 
                         {{-- Button at Bottom --}}
-                        <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#00b6b4] hover:bg-[#009999] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                        <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                             Voir les offres
                         </a>
                     </div>

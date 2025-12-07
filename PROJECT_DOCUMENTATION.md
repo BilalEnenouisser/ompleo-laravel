@@ -1,6 +1,6 @@
 # OMPLEO - Project Documentation
 
-**Last Updated**: 2025-01-27  
+**Last Updated**: 2025-01-28  
 **Project Status**: Active Development  
 **Version**: 1.0
 
@@ -750,6 +750,127 @@ npm run build    # Production build
 ---
 
 ## Daily Work Log
+
+### 2025-01-28
+
+#### Work Completed
+- [x] Implemented dynamic asset loading system using Vite manifest.json
+- [x] Updated all Blade templates with `<head>` sections to use dynamic asset loading
+- [x] Created custom `vite_asset()` helper function for production builds
+- [x] Updated companies page color scheme and layout structure
+- [x] Changed company card colors (background, buttons, text, icons)
+- [x] Updated filter section layout and styling
+- [x] Made all filter inputs and search button fully rounded (rounded-full)
+- [x] Restructured filter section with nested background colors
+
+#### Changes Made
+
+**Dynamic Asset Loading System:**
+1. **Created Helper Function** (`app/Helpers/AssetHelper.php`):
+   - Created `vite_asset()` function to dynamically load CSS and JS assets
+   - Reads `public/build/manifest.json` to get hashed filenames
+   - Handles both development and production environments
+   - Returns correct asset paths based on Vite build output
+   - Graceful fallback for local development when manifest doesn't exist
+
+2. **Updated Composer Autoload** (`composer.json`):
+   - Added `app/Helpers/AssetHelper.php` to `autoload.files` array
+   - Ran `composer dump-autoload` to register the helper globally
+
+3. **Updated All Blade Templates with `<head>` Sections:**
+   - **`resources/views/layouts/app.blade.php`**: Replaced hardcoded asset links with `vite_asset()` helper
+   - **`resources/views/layouts/dashboard.blade.php`**: Replaced hardcoded asset links with `vite_asset()` helper
+   - **`resources/views/notifications.blade.php`**: Replaced `@vite` directive with `vite_asset()` helper
+   - **`resources/views/admin/notifications.blade.php`**: Replaced `@vite` directive with `vite_asset()` helper
+   - **`resources/views/candidate/notifications.blade.php`**: Replaced `@vite` directive with `vite_asset()` helper
+   - **`resources/views/recruiter/notifications.blade.php`**: Replaced `@vite` directive with `vite_asset()` helper
+   - **`resources/views/errors/404.blade.php`**: Added `vite_asset()` helper alongside `@vite` directive
+
+**Companies Page Color Updates** (`resources/views/companies/index.blade.php`):
+1. **Company Card Colors:**
+   - Card background: Changed to `#282828`
+   - "Voir les offres" button: Background changed to `#646464` (hover: `#757575`)
+   - Job Count text and icons: Changed to `#646464`
+   - Company Size, Location, Description text: Changed to `#86878C`
+   - Company Name: Changed to white color
+   - Industry/Specialisation tags:
+     - Background: `#322D23`
+     - Border: `#5E5440`
+     - Text: `#71695B`
+   - Changed "offre d'emploi" / "offres d'emploi" text to "postes"
+
+2. **Filter Section Updates:**
+   - Filter form background: Changed to `#414141`
+   - All input backgrounds: Changed to `#414141`
+   - All filter inputs: Changed to fully rounded (`rounded-full`)
+   - Search button: Changed to fully rounded (`rounded-full`)
+   - Main section background: Changed to `#1F1F1F`
+   - Inner section background: Changed to `#161616`
+   - Text "X entreprises actives sur Ompleo": Now directly on `#161616` background (not in separate card)
+   - Filter form aligned with text (left-aligned, not centered)
+
+3. **Layout Structure:**
+   - Restructured to have nested sections:
+     - Main section: `#1F1F1F` background
+     - Container: Page width (not full width)
+     - Inner section: `#161616` background (same width as page layout)
+     - Text and filter: Both inside `#161616` section, aligned together
+
+#### Technical Details
+
+**Dynamic Asset Loading:**
+- Uses Vite's `manifest.json` file generated during `npm run build`
+- Automatically resolves hashed filenames (e.g., `app-14a5a2c9.css` → `app-b03074ff.css`)
+- Eliminates need to manually update asset filenames after each build
+- Works seamlessly with Laravel's `asset()` helper
+- Includes conditional checks to ensure function exists before use
+
+**Asset Loading Pattern:**
+```blade
+@if(function_exists('vite_asset') && vite_asset('resources/css/app.css'))
+<link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
+@endif
+
+@if(function_exists('vite_asset') && vite_asset('resources/js/app.js'))
+<script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
+@endif
+```
+
+**Color Scheme:**
+- Dark theme with multiple gray shades for depth
+- Teal accent color (`#00b6b4`) for primary actions
+- Muted gold/brown tones for industry tags
+- Consistent color palette across all elements
+
+#### Files Modified
+- `app/Helpers/AssetHelper.php` (created)
+- `composer.json`
+- `resources/views/layouts/app.blade.php`
+- `resources/views/layouts/dashboard.blade.php`
+- `resources/views/notifications.blade.php`
+- `resources/views/admin/notifications.blade.php`
+- `resources/views/candidate/notifications.blade.php`
+- `resources/views/recruiter/notifications.blade.php`
+- `resources/views/errors/404.blade.php`
+- `resources/views/companies/index.blade.php`
+
+#### Issues Encountered
+- Hardcoded asset filenames breaking after `npm run build` - fixed with dynamic manifest reading
+- Asset filenames changing with each build - solved with `vite_asset()` helper
+- Need to ensure all pages with `<head>` sections load assets dynamically - completed
+
+#### Next Steps
+- Test dynamic asset loading on production server
+- Verify all pages load CSS/JS correctly after builds
+- Continue UI/UX improvements
+
+#### Notes
+- Dynamic asset loading system ensures build process is robust and maintainable
+- Color scheme updates improve visual consistency and hierarchy
+- Layout restructuring improves visual organization and user experience
+- All changes tested locally and ready for deployment
+
+---
 
 ### 2025-01-27
 
