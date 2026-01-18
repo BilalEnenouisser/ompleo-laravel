@@ -18,7 +18,7 @@ class HomeController extends Controller
             'candidates_count' => User::where('user_type', 'candidate')->count()
         ];
 
-        // Get companies with published job counts
+        // Get 6 companies with published job counts for home page (3x2 grid)
         $companies = Company::where('is_active', true)
             ->withCount(['jobs' => function($query) {
                 $query->where('status', 'published');
@@ -26,13 +26,21 @@ class HomeController extends Controller
             ->having('jobs_count', '>', 0)
             ->orderBy('jobs_count', 'desc')
             ->orderBy('created_at', 'desc')
-            ->limit(20)
+            ->limit(6)
             ->get();
 
         // Get 6 latest published blogs for featured articles
         $featuredBlogs = \App\Models\Blog::where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->limit(6)
+            ->get();
+
+        // Get 3 featured jobs (prioritize featured, then most recent)
+        $jobs = Job::published()
+            ->with('company')
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
             ->get();
 
         $features = [
@@ -68,7 +76,7 @@ class HomeController extends Controller
             ]
         ];
 
-        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs'));
+        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs', 'jobs'));
     }
 }
 

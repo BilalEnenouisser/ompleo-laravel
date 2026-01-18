@@ -9,9 +9,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['monospace'],
-        display: ['Space Grotesk', 'sans-serif']
+        display: ['Inter', 'sans-serif']
       },
       colors: {
         primary: {

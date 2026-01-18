@@ -100,5 +100,18 @@
     100% { transform: scale(1.1) rotate(1deg); }
   }
   
+  /* Marquee animation for brand logos */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
  
 }

@@ -4,84 +4,105 @@ use Illuminate\Support\Facades\Storage;
 $companies = $companies ?? collect();
 @endphp
 
-<section class="lg:py-20 bg-[#dadad2] dark:bg-[#1f1f1f] relative overflow-hidden">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="text-center mb-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
-                Entreprises qui recrutent
+<section class="relative py-20 bg-[#1f1f1f] overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-12 pb-8">
+            <div class="flex items-center justify-center gap-2 mb-4 pb-2">
+                <img src="{{ asset('storage/home_page/job/icon2.svg') }}" alt="Icon" class="w-5 h-5">
+                <span class="text-base" style="color: #d9d9d9;">Entreprises à la une</span>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-bold text-white pb-4">
+                Les meilleures entreprises
             </h2>
+            <p class="text-lg text-white">
+                Entreprises qui recrutent activement
+            </p>
         </div>
 
+        <!-- Companies Grid (3x2) -->
         @if($companies->count() > 0)
-        <!-- Navigation Arrows (Between title and slider) -->
-        <div class="flex items-center justify-center gap-3 mb-6">
-            <div class="swiper-button-prev companies-swiper-button-prev">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M19 12H5"></path>
-                    <path d="m12 19-7-7 7-7"></path>
-                </svg>
-            </div>
-            <div class="swiper-button-next companies-swiper-button-next">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                </svg>
-            </div>
-        </div>
-        <!-- Companies Slider Container - Full width for partial cards -->
-        <div class="w-full overflow-hidden">
-            <!-- Slider Wrapper with same container constraints -->
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="swiper companiesSwiper -mx-4 sm:-mx-6 lg:-mx-8">
-                    <div class="swiper-wrapper px-4 sm:px-6 lg:px-8" style="padding-left: 2rem; padding-right: 2rem;">
-                        @foreach($companies as $company)
-                        <div class="swiper-slide">
-                        <div class="bg-[#141414] rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-[#141414] hover:-translate-y-2 h-full flex flex-col items-center text-center" style="width: 90%;">
-                            <!-- Company Logo -->
-                            <div class="mb-4 flex items-center justify-center h-20 w-40 mx-auto bg-[#141414] border border-[#9B9B9B] rounded-xl p-3">
-                                @if($company->logo)
-                                    <img 
-                                        src="{{ Storage::url($company->logo) }}" 
-                                        alt="{{ $company->name }}" 
-                                        class="max-h-12 max-w-full object-contain"
-                                    >
-                                @else
-                                    <div class="w-12 h-12 bg-[#141414] border border-[#9B9B9B] rounded-lg flex items-center justify-center">
-                                        <span class="text-white font-bold text-lg">
-                                            {{ strtoupper(substr($company->name, 0, 2)) }}
-                                        </span>
-                                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            @foreach($companies->take(6) as $company)
+                @php
+                    $initials = '';
+                    if ($company->name) {
+                        $nameParts = explode(' ', $company->name);
+                        $initials = strtoupper(substr($nameParts[0], 0, 1));
+                        if (count($nameParts) > 1) {
+                            $initials .= strtoupper(substr($nameParts[1], 0, 1));
+                        }
+                    }
+                @endphp
+                
+                <div class="rounded-xl p-5 transition-all duration-300 flex flex-col" style="background-color: #2B2B2B;">
+                    {{-- Top Section: Logo on Left, Industry on Right --}}
+                    <div class="flex gap-4 mb-4 items-center">
+                        {{-- Company Logo on Left --}}
+                        <div class="flex-shrink-0">
+                            @if($company->logo)
+                                <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-20 h-20 rounded-lg object-cover">
+                            @else
+                                <div class="w-20 h-20 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center border border-[#00b6b4]/30">
+                                    <span class="text-[#00b6b4] font-bold text-2xl">{{ $initials ?: 'C' }}</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Industry/Specialisation on Right --}}
+                        <div class="flex-1 min-w-0 flex justify-end">
+                            @if($company->industry || $company->specialisation)
+                            <div class="flex flex-wrap gap-1.5 justify-end">
+                                @if($company->industry)
+                                    <span class="px-2.5 py-1 bg-[#322D23] text-[#71695B] rounded-full border border-[#5E5440] text-xs font-medium">{{ $company->industry }}</span>
+                                @endif
+                                @if($company->specialisation)
+                                    <span class="px-2.5 py-1 bg-[#322D23] text-[#71695B] rounded-full border border-[#5E5440] text-xs font-medium">{{ $company->specialisation }}</span>
                                 @endif
                             </div>
-                            
-                            <!-- Company Name -->
-                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-2">
-                                {{ $company->name }}
-                            </h3>
-                            
-                            <!-- Job Count -->
-                            <p class="text-lg text-[#9B9B9B]">
-                                {{ $company->jobs_count }} {{ $company->jobs_count == 1 ? 'offre d\'emploi' : 'offres d\'emploi' }}
-                            </p>
-                            
-                            <!-- View Offers Button -->
-                            <a 
-                                href="{{ route('jobs.index', ['company' => $company->id]) }}"
-                                class="mt-auto text-sm w-full text-[#9B9B9B] py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 hover:backdrop-blur-md hover:bg-white/5 hover:text-white/80"
-                            >
-                                Voir ces offres
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
+                            @endif
                         </div>
                     </div>
-                    @endforeach
+
+                    {{-- Bottom Section: Name, Description, Details --}}
+                    <div class="mb-4 flex-1">
+                        {{-- Company Name --}}
+                        <h3 class="text-lg font-bold text-white mb-1.5">{{ $company->name }}</h3>
+
+                        {{-- Description --}}
+                        @if($company->description)
+                        <p class="text-sm text-[#86878C] mb-3 line-clamp-2 leading-relaxed">{{ $company->description }}</p>
+                        @endif
+
+                        {{-- Location --}}
+                        @if($company->location)
+                        <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
+                            <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>{{ $company->location }}</span>
+                        </div>
+                        @endif
+
+                        {{-- Company Size --}}
+                        @if($company->size)
+                        <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
+                            <svg class="w-5 h-5 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>{{ $company->size }}</span>
+                        </div>
+                        @endif
+
+                        {{-- Job Count --}}
+                        <div class="flex items-center gap-2 text-sm text-[#646464]">
+                            <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <span>{{ $company->jobs_count }} postes</span>
+                        </div>
                     </div>
+
+                    {{-- Button at Bottom --}}
+                    <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                        Voir les offres
+                    </a>
                 </div>
-            </div>
+            @endforeach
         </div>
         @else
         <div class="text-center py-12">
@@ -96,104 +117,17 @@ $companies = $companies ?? collect();
                     <path d="M10 18h4"></path>
                 </svg>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Aucune entreprise disponible</h3>
-            <p class="text-gray-600 dark:text-gray-400">Revenez bientôt pour découvrir de nouvelles entreprises !</p>
+            <h3 class="text-xl font-bold text-white mb-2">Aucune entreprise disponible</h3>
+            <p class="text-gray-400">Revenez bientôt pour découvrir de nouvelles entreprises !</p>
         </div>
         @endif
+
+        <!-- Bottom Button -->
+        <div class="text-center">
+            <a href="{{ route('companies.index') }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
+                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7">
+                <span>Toutes les entreprises</span>
+            </a>
+        </div>
     </div>
 </section>
-
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-<style>
-/* Swiper Container */
-.companiesSwiper {
-    overflow: visible !important;
-    padding: 0 !important;
-}
-
-.companiesSwiper .swiper-wrapper {
-    align-items: stretch;
-}
-
-.companiesSwiper .swiper-slide {
-    height: auto;
-    display: flex;
-}
-
-/* Custom Navigation Buttons */
-.companies-swiper-button-prev,
-.companies-swiper-button-next {
-    position: static !important;
-    width: 52px !important;
-    height: 52px !important;
-    margin: 0 !important;
-    background: #00b6b4 !important;
-    border-radius: 50% !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.companies-swiper-button-prev:after,
-.companies-swiper-button-next:after {
-    display: none !important;
-}
-
-.companies-swiper-button-prev svg,
-.companies-swiper-button-next svg {
-    width: 50% !important;
-}
-
-.companies-swiper-button-prev:hover,
-.companies-swiper-button-next:hover {
-    background: #009e9c !important;
-}
-
-.companies-swiper-button-prev.swiper-button-disabled,
-.companies-swiper-button-next.swiper-button-disabled {
-    opacity: 0.5 !important;
-    cursor: not-allowed !important;
-}
-</style>
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper
-    const swiper = new Swiper('.companiesSwiper', {
-        slidesPerView: 1, // Mobile: 1 card at a time
-        spaceBetween: 24, // 1.5rem = 24px
-        speed: 500,
-        grabCursor: true,
-        allowTouchMove: true, // Enable touch on all devices
-        navigation: {
-            nextEl: '.companies-swiper-button-next',
-            prevEl: '.companies-swiper-button-prev',
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 12,
-            },
-            640: {
-                slidesPerView: 1.2, // Show 1 full card + 20% of next
-                spaceBetween: 12,
-            },
-            768: {
-                slidesPerView: 2.2, // Show 2 full cards + 20% of next
-                spaceBetween: 12,
-            },
-            1024: {
-                slidesPerView: 4.4, // Desktop: 4 full cards + 20% partial on edges
-                spaceBetween: 12,
-            },
-        },
-    });
-});
-</script>
-

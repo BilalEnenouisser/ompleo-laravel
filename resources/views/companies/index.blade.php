@@ -9,155 +9,260 @@ use Illuminate\Support\Facades\Storage;
 
 <div class="min-h-screen bg-white dark:bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#00b6b4] text-white py-20 relative overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
-            <h1 class="text-4xl lg:text-5xl font-bold mb-6" data-animate="hero-title">
+    <section class="bg-[#00b6b4] text-white py-16 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-6">
                 Découvrez l'entreprise faite pour vous
             </h1>
-            
         </div>
     </section>
 
 
-    <!-- Filter Section -->
-    <section class="py-8 bg-[#1F1F1F] dark:bg-[#1F1F1F]">
+    <!-- Search and Filters -->
+    <section class="py-8 relative z-10 -mt-8 bg-white dark:bg-[#1f1f1f] animate-on-scroll">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-[#161616] rounded-xl p-4 md:p-6">
-                <p class="text-white text-left text-lg mb-6">
-                    {{ number_format($companyCount) }} entreprises actives sur Ompleo
-                </p>
-                
-                <form method="GET" action="{{ route('companies.index') }}" class="bg-[#414141] rounded-xl p-4 md:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <!-- Company Name Dropdown -->
-                    <div class="relative">
-                        <input
-                            type="text"
-                            name="company_name"
-                            id="company_name"
-                            value="{{ request('company_name') }}"
-                            placeholder="Nom de l'entreprise"
-                            list="company_names_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
-                            autocomplete="off"
-                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
-                        />
-                        <datalist id="company_names_list">
-                            @foreach($companyNames as $name)
-                                <option value="{{ $name }}">{{ $name }}</option>
-                            @endforeach
-                        </datalist>
-                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M19 9l-7 7-7-7"></path>
-                        </svg>
+            <form method="GET" action="{{ route('companies.index') }}" class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-[#333333]">
+                <!-- Company Count - Top -->
+                <div class="mb-6">
+                    <div class="text-lg lg:text-xl text-white text-center lg:text-left">
+                        <span class="font-medium">{{ number_format($companyCount) }}</span> entreprises actives sur Ompleo
                     </div>
-
-                    <!-- Region/Wilaya Dropdown -->
-                    <div class="relative">
-                        <input
-                            type="text"
-                            name="location"
-                            id="location"
-                            value="{{ request('location') }}"
-                            placeholder="Région, Wilaya"
-                            list="locations_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
-                            autocomplete="off"
-                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
-                        />
-                        <datalist id="locations_list">
-                            <option value="Adrar">Adrar</option>
-                            <option value="Chlef">Chlef</option>
-                            <option value="Laghouat">Laghouat</option>
-                            <option value="Oum El Bouaghi">Oum El Bouaghi</option>
-                            <option value="Batna">Batna</option>
-                            <option value="Béjaïa">Béjaïa</option>
-                            <option value="Biskra">Biskra</option>
-                            <option value="Béchar">Béchar</option>
-                            <option value="Blida">Blida</option>
-                            <option value="Bouira">Bouira</option>
-                            <option value="Tamanrasset">Tamanrasset</option>
-                            <option value="Tébessa">Tébessa</option>
-                            <option value="Tlemcen">Tlemcen</option>
-                            <option value="Tiaret">Tiaret</option>
-                            <option value="Tizi Ouzou">Tizi Ouzou</option>
-                            <option value="Alger">Alger</option>
-                            <option value="Djelfa">Djelfa</option>
-                            <option value="Jijel">Jijel</option>
-                            <option value="Sétif">Sétif</option>
-                            <option value="Saïda">Saïda</option>
-                            <option value="Skikda">Skikda</option>
-                            <option value="Sidi Bel Abbès">Sidi Bel Abbès</option>
-                            <option value="Annaba">Annaba</option>
-                            <option value="Guelma">Guelma</option>
-                            <option value="Constantine">Constantine</option>
-                            <option value="Médéa">Médéa</option>
-                            <option value="Mostaganem">Mostaganem</option>
-                            <option value="M'Sila">M'Sila</option>
-                            <option value="Mascara">Mascara</option>
-                            <option value="Ouargla">Ouargla</option>
-                            <option value="Oran">Oran</option>
-                            <option value="El Bayadh">El Bayadh</option>
-                            <option value="Illizi">Illizi</option>
-                            <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
-                            <option value="Boumerdès">Boumerdès</option>
-                            <option value="El Tarf">El Tarf</option>
-                            <option value="Tindouf">Tindouf</option>
-                            <option value="Tissemsilt">Tissemsilt</option>
-                            <option value="El Oued">El Oued</option>
-                            <option value="Khenchela">Khenchela</option>
-                            <option value="Souk Ahras">Souk Ahras</option>
-                            <option value="Tipaza">Tipaza</option>
-                            <option value="Mila">Mila</option>
-                            <option value="Aïn Defla">Aïn Defla</option>
-                            <option value="Naâma">Naâma</option>
-                            <option value="Aïn Témouchent">Aïn Témouchent</option>
-                            <option value="Ghardaïa">Ghardaïa</option>
-                            <option value="Relizane">Relizane</option>
-                            @foreach($locations as $loc)
-                                @if(!in_array($loc, ['Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar', 'Blida', 'Bouira', 'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger', 'Djelfa', 'Jijel', 'Sétif', 'Saïda', 'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma', 'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla', 'Oran', 'El Bayadh', 'Illizi', 'Bordj Bou Arreridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued', 'Khenchela', 'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent', 'Ghardaïa', 'Relizane']))
-                                    <option value="{{ $loc }}">{{ $loc }}</option>
-                                @endif
-                            @endforeach
-                        </datalist>
-                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Sector of Activity Dropdown -->
-                    <div class="relative">
-                        <input
-                            type="text"
-                            name="industry"
-                            id="industry"
-                            value="{{ request('industry') }}"
-                            placeholder="Secteur d'activité"
-                            list="industries_list"
-                            class="w-full h-12 pl-4 pr-10 rounded-full border border-white/20 bg-[#414141] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00b6b4] focus:border-transparent"
-                            autocomplete="off"
-                            style="appearance: none; -webkit-appearance: none; -moz-appearance: none;"
-                        />
-                        <datalist id="industries_list">
-                            @foreach($industries as $ind)
-                                <option value="{{ $ind }}">{{ $ind }}</option>
-                            @endforeach
-                        </datalist>
-                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" style="transition: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Search Button -->
-                    <button
-                        type="submit"
-                        class="w-full h-12 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
-                    >
-                        Rechercher
-                    </button>
                 </div>
-                </form>
-            </div>
+                
+                <!-- Mobile Layout -->
+                <div class="block lg:hidden space-y-4">
+                    <!-- Company Name Select - Full Width -->
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <select name="company_name" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <option value="">Nom de l'entreprise</option>
+                            @foreach($companyNames as $name)
+                                <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    
+                    <!-- Location and Industry - Same Line -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Location Filter -->
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <select name="location" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                                <option value="">Région, Wilaya</option>
+                                <option value="Adrar" {{ request('location') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
+                                <option value="Chlef" {{ request('location') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
+                                <option value="Laghouat" {{ request('location') == 'Laghouat' ? 'selected' : '' }}>Laghouat</option>
+                                <option value="Oum El Bouaghi" {{ request('location') == 'Oum El Bouaghi' ? 'selected' : '' }}>Oum El Bouaghi</option>
+                                <option value="Batna" {{ request('location') == 'Batna' ? 'selected' : '' }}>Batna</option>
+                                <option value="Béjaïa" {{ request('location') == 'Béjaïa' ? 'selected' : '' }}>Béjaïa</option>
+                                <option value="Biskra" {{ request('location') == 'Biskra' ? 'selected' : '' }}>Biskra</option>
+                                <option value="Béchar" {{ request('location') == 'Béchar' ? 'selected' : '' }}>Béchar</option>
+                                <option value="Blida" {{ request('location') == 'Blida' ? 'selected' : '' }}>Blida</option>
+                                <option value="Bouira" {{ request('location') == 'Bouira' ? 'selected' : '' }}>Bouira</option>
+                                <option value="Tamanrasset" {{ request('location') == 'Tamanrasset' ? 'selected' : '' }}>Tamanrasset</option>
+                                <option value="Tébessa" {{ request('location') == 'Tébessa' ? 'selected' : '' }}>Tébessa</option>
+                                <option value="Tlemcen" {{ request('location') == 'Tlemcen' ? 'selected' : '' }}>Tlemcen</option>
+                                <option value="Tiaret" {{ request('location') == 'Tiaret' ? 'selected' : '' }}>Tiaret</option>
+                                <option value="Tizi Ouzou" {{ request('location') == 'Tizi Ouzou' ? 'selected' : '' }}>Tizi Ouzou</option>
+                                <option value="Alger" {{ request('location') == 'Alger' ? 'selected' : '' }}>Alger</option>
+                                <option value="Djelfa" {{ request('location') == 'Djelfa' ? 'selected' : '' }}>Djelfa</option>
+                                <option value="Jijel" {{ request('location') == 'Jijel' ? 'selected' : '' }}>Jijel</option>
+                                <option value="Sétif" {{ request('location') == 'Sétif' ? 'selected' : '' }}>Sétif</option>
+                                <option value="Saïda" {{ request('location') == 'Saïda' ? 'selected' : '' }}>Saïda</option>
+                                <option value="Skikda" {{ request('location') == 'Skikda' ? 'selected' : '' }}>Skikda</option>
+                                <option value="Sidi Bel Abbès" {{ request('location') == 'Sidi Bel Abbès' ? 'selected' : '' }}>Sidi Bel Abbès</option>
+                                <option value="Annaba" {{ request('location') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                                <option value="Guelma" {{ request('location') == 'Guelma' ? 'selected' : '' }}>Guelma</option>
+                                <option value="Constantine" {{ request('location') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
+                                <option value="Médéa" {{ request('location') == 'Médéa' ? 'selected' : '' }}>Médéa</option>
+                                <option value="Mostaganem" {{ request('location') == 'Mostaganem' ? 'selected' : '' }}>Mostaganem</option>
+                                <option value="M'Sila" {{ request('location') == "M'Sila" ? 'selected' : '' }}>M'Sila</option>
+                                <option value="Mascara" {{ request('location') == 'Mascara' ? 'selected' : '' }}>Mascara</option>
+                                <option value="Ouargla" {{ request('location') == 'Ouargla' ? 'selected' : '' }}>Ouargla</option>
+                                <option value="Oran" {{ request('location') == 'Oran' ? 'selected' : '' }}>Oran</option>
+                                <option value="El Bayadh" {{ request('location') == 'El Bayadh' ? 'selected' : '' }}>El Bayadh</option>
+                                <option value="Illizi" {{ request('location') == 'Illizi' ? 'selected' : '' }}>Illizi</option>
+                                <option value="Bordj Bou Arreridj" {{ request('location') == 'Bordj Bou Arreridj' ? 'selected' : '' }}>Bordj Bou Arreridj</option>
+                                <option value="Boumerdès" {{ request('location') == 'Boumerdès' ? 'selected' : '' }}>Boumerdès</option>
+                                <option value="El Tarf" {{ request('location') == 'El Tarf' ? 'selected' : '' }}>El Tarf</option>
+                                <option value="Tindouf" {{ request('location') == 'Tindouf' ? 'selected' : '' }}>Tindouf</option>
+                                <option value="Tissemsilt" {{ request('location') == 'Tissemsilt' ? 'selected' : '' }}>Tissemsilt</option>
+                                <option value="El Oued" {{ request('location') == 'El Oued' ? 'selected' : '' }}>El Oued</option>
+                                <option value="Khenchela" {{ request('location') == 'Khenchela' ? 'selected' : '' }}>Khenchela</option>
+                                <option value="Souk Ahras" {{ request('location') == 'Souk Ahras' ? 'selected' : '' }}>Souk Ahras</option>
+                                <option value="Tipaza" {{ request('location') == 'Tipaza' ? 'selected' : '' }}>Tipaza</option>
+                                <option value="Mila" {{ request('location') == 'Mila' ? 'selected' : '' }}>Mila</option>
+                                <option value="Aïn Defla" {{ request('location') == 'Aïn Defla' ? 'selected' : '' }}>Aïn Defla</option>
+                                <option value="Naâma" {{ request('location') == 'Naâma' ? 'selected' : '' }}>Naâma</option>
+                                <option value="Aïn Témouchent" {{ request('location') == 'Aïn Témouchent' ? 'selected' : '' }}>Aïn Témouchent</option>
+                                <option value="Ghardaïa" {{ request('location') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
+                                <option value="Relizane" {{ request('location') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
+                                @foreach($locations as $loc)
+                                    @if(!in_array($loc, ['Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar', 'Blida', 'Bouira', 'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger', 'Djelfa', 'Jijel', 'Sétif', 'Saïda', 'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma', 'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla', 'Oran', 'El Bayadh', 'Illizi', 'Bordj Bou Arreridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued', 'Khenchela', 'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent', 'Ghardaïa', 'Relizane']))
+                                        <option value="{{ $loc }}" {{ request('location') == $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Industry Filter -->
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            <select name="industry" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                                <option value="">Secteur d'activité</option>
+                                @foreach($industries as $ind)
+                                    <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons - Same Line -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
+                            Rechercher
+                        </button>
+                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Desktop Layout -->
+                <div class="hidden lg:flex flex-col lg:flex-row gap-4 items-end mb-4">
+                    <!-- Left side - All filters in one line -->
+                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                        <!-- Company Name Select -->
+                        <div class="lg:col-span-3 relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <select name="company_name" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                                <option value="">Nom de l'entreprise</option>
+                                @foreach($companyNames as $name)
+                                    <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Location Filter -->
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <select name="location" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                                <option value="">Région, Wilaya</option>
+                                <option value="Adrar" {{ request('location') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
+                                <option value="Chlef" {{ request('location') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
+                                <option value="Laghouat" {{ request('location') == 'Laghouat' ? 'selected' : '' }}>Laghouat</option>
+                                <option value="Oum El Bouaghi" {{ request('location') == 'Oum El Bouaghi' ? 'selected' : '' }}>Oum El Bouaghi</option>
+                                <option value="Batna" {{ request('location') == 'Batna' ? 'selected' : '' }}>Batna</option>
+                                <option value="Béjaïa" {{ request('location') == 'Béjaïa' ? 'selected' : '' }}>Béjaïa</option>
+                                <option value="Biskra" {{ request('location') == 'Biskra' ? 'selected' : '' }}>Biskra</option>
+                                <option value="Béchar" {{ request('location') == 'Béchar' ? 'selected' : '' }}>Béchar</option>
+                                <option value="Blida" {{ request('location') == 'Blida' ? 'selected' : '' }}>Blida</option>
+                                <option value="Bouira" {{ request('location') == 'Bouira' ? 'selected' : '' }}>Bouira</option>
+                                <option value="Tamanrasset" {{ request('location') == 'Tamanrasset' ? 'selected' : '' }}>Tamanrasset</option>
+                                <option value="Tébessa" {{ request('location') == 'Tébessa' ? 'selected' : '' }}>Tébessa</option>
+                                <option value="Tlemcen" {{ request('location') == 'Tlemcen' ? 'selected' : '' }}>Tlemcen</option>
+                                <option value="Tiaret" {{ request('location') == 'Tiaret' ? 'selected' : '' }}>Tiaret</option>
+                                <option value="Tizi Ouzou" {{ request('location') == 'Tizi Ouzou' ? 'selected' : '' }}>Tizi Ouzou</option>
+                                <option value="Alger" {{ request('location') == 'Alger' ? 'selected' : '' }}>Alger</option>
+                                <option value="Djelfa" {{ request('location') == 'Djelfa' ? 'selected' : '' }}>Djelfa</option>
+                                <option value="Jijel" {{ request('location') == 'Jijel' ? 'selected' : '' }}>Jijel</option>
+                                <option value="Sétif" {{ request('location') == 'Sétif' ? 'selected' : '' }}>Sétif</option>
+                                <option value="Saïda" {{ request('location') == 'Saïda' ? 'selected' : '' }}>Saïda</option>
+                                <option value="Skikda" {{ request('location') == 'Skikda' ? 'selected' : '' }}>Skikda</option>
+                                <option value="Sidi Bel Abbès" {{ request('location') == 'Sidi Bel Abbès' ? 'selected' : '' }}>Sidi Bel Abbès</option>
+                                <option value="Annaba" {{ request('location') == 'Annaba' ? 'selected' : '' }}>Annaba</option>
+                                <option value="Guelma" {{ request('location') == 'Guelma' ? 'selected' : '' }}>Guelma</option>
+                                <option value="Constantine" {{ request('location') == 'Constantine' ? 'selected' : '' }}>Constantine</option>
+                                <option value="Médéa" {{ request('location') == 'Médéa' ? 'selected' : '' }}>Médéa</option>
+                                <option value="Mostaganem" {{ request('location') == 'Mostaganem' ? 'selected' : '' }}>Mostaganem</option>
+                                <option value="M'Sila" {{ request('location') == "M'Sila" ? 'selected' : '' }}>M'Sila</option>
+                                <option value="Mascara" {{ request('location') == 'Mascara' ? 'selected' : '' }}>Mascara</option>
+                                <option value="Ouargla" {{ request('location') == 'Ouargla' ? 'selected' : '' }}>Ouargla</option>
+                                <option value="Oran" {{ request('location') == 'Oran' ? 'selected' : '' }}>Oran</option>
+                                <option value="El Bayadh" {{ request('location') == 'El Bayadh' ? 'selected' : '' }}>El Bayadh</option>
+                                <option value="Illizi" {{ request('location') == 'Illizi' ? 'selected' : '' }}>Illizi</option>
+                                <option value="Bordj Bou Arreridj" {{ request('location') == 'Bordj Bou Arreridj' ? 'selected' : '' }}>Bordj Bou Arreridj</option>
+                                <option value="Boumerdès" {{ request('location') == 'Boumerdès' ? 'selected' : '' }}>Boumerdès</option>
+                                <option value="El Tarf" {{ request('location') == 'El Tarf' ? 'selected' : '' }}>El Tarf</option>
+                                <option value="Tindouf" {{ request('location') == 'Tindouf' ? 'selected' : '' }}>Tindouf</option>
+                                <option value="Tissemsilt" {{ request('location') == 'Tissemsilt' ? 'selected' : '' }}>Tissemsilt</option>
+                                <option value="El Oued" {{ request('location') == 'El Oued' ? 'selected' : '' }}>El Oued</option>
+                                <option value="Khenchela" {{ request('location') == 'Khenchela' ? 'selected' : '' }}>Khenchela</option>
+                                <option value="Souk Ahras" {{ request('location') == 'Souk Ahras' ? 'selected' : '' }}>Souk Ahras</option>
+                                <option value="Tipaza" {{ request('location') == 'Tipaza' ? 'selected' : '' }}>Tipaza</option>
+                                <option value="Mila" {{ request('location') == 'Mila' ? 'selected' : '' }}>Mila</option>
+                                <option value="Aïn Defla" {{ request('location') == 'Aïn Defla' ? 'selected' : '' }}>Aïn Defla</option>
+                                <option value="Naâma" {{ request('location') == 'Naâma' ? 'selected' : '' }}>Naâma</option>
+                                <option value="Aïn Témouchent" {{ request('location') == 'Aïn Témouchent' ? 'selected' : '' }}>Aïn Témouchent</option>
+                                <option value="Ghardaïa" {{ request('location') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
+                                <option value="Relizane" {{ request('location') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
+                                @foreach($locations as $loc)
+                                    @if(!in_array($loc, ['Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar', 'Blida', 'Bouira', 'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger', 'Djelfa', 'Jijel', 'Sétif', 'Saïda', 'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma', 'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla', 'Oran', 'El Bayadh', 'Illizi', 'Bordj Bou Arreridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued', 'Khenchela', 'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent', 'Ghardaïa', 'Relizane']))
+                                        <option value="{{ $loc }}" {{ request('location') == $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Industry Filter -->
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            <select name="industry" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                                <option value="">Secteur d'activité</option>
+                                @foreach($industries as $ind)
+                                    <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Right side - Action buttons -->
+                    <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0 w-full sm:w-auto">
+                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto min-w-[140px]">
+                            Rechercher
+                        </button>
+                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center w-full sm:w-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -396,41 +501,4 @@ use Illuminate\Support\Facades\Storage;
 </div>
 
 @include('components.footer')
-
-<style>
-    /* Keep arrow consistent - no changes on hover */
-    .relative > svg {
-        transition: none !important;
-        pointer-events: none !important;
-        color: rgb(156 163 175) !important; /* text-gray-400 */
-        transform: translateY(-50%) !important;
-    }
-    
-    /* Ensure arrow stays the same on all states */
-    .relative:hover > svg,
-    .relative input:hover ~ svg,
-    .relative input:focus ~ svg,
-    .relative input:active ~ svg {
-        color: rgb(156 163 175) !important;
-        transform: translateY(-50%) !important;
-        opacity: 1 !important;
-        display: block !important;
-    }
-    
-    /* Hide any browser default dropdown arrows */
-    input[list]::-webkit-calendar-picker-indicator {
-        display: none !important;
-        opacity: 0 !important;
-    }
-    
-    input[list]::-webkit-list-button {
-        display: none !important;
-    }
-    
-    /* Ensure the SVG path doesn't change */
-    .relative > svg > path {
-        d: path("M19 9l-7 7-7-7") !important;
-    }
-</style>
-
 @endsection

@@ -1,38 +1,66 @@
 @php
 use Illuminate\Support\Facades\Storage;
 @endphp
-<header class="w-full z-50 bg-[#1f1f1f]">
-    <div class="w-full px-[2%]">
-        <div class="flex justify-between items-center h-24">
-            <!-- Left Side: Logo and Navigation -->
-            <div class="flex items-center space-x-6">
-                <!-- Logo -->
+<header class="w-full z-50 bg-transparent" style="background: transparent !important;">
+    <div class="w-full px-[2%]" style="background: transparent;">
+        <div class="relative flex justify-between items-center h-24" style="background: transparent;">
+            <!-- Left Side: Logo -->
+            <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex-shrink-0 group">
                     <div class="flex items-center">
                         <!-- Dark mode logo -->
                         <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-14 w-auto dark:block">
                     </div>
                 </a>
-
-                <!-- Desktop Navigation -->
-                <nav class="hidden xl:flex space-x-1 desktop-nav">
-                    @php
-                        $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
-                    @endphp
-                    <a href="{{ route('jobs.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('jobs.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                        <span class="relative z-10">Offres d'emploi</span>
-                    </a>
-                    <a href="{{ route('companies.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('companies.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                        <span class="relative z-10">Découvrir les recruteurs</span>
-                    </a>
-                    <a href="{{ route('blog.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('blog.*') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                        <span class="relative z-10">Blog</span>
-                    </a>
-                    <a href="{{ route('contact') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 relative overflow-hidden group {{ request()->routeIs('contact') ? 'bg-[#2b2b2b] text-[#00b6b4] font-semibold' : ($isDashboard ? 'text-[#00b6b4] hover:bg-[#2b2b2b]' : 'text-[#00b6b4] hover:bg-gray-50 dark:hover:bg-[#2b2b2b]') }}">
-                        <span class="relative z-10">Contact</span>
-                    </a>
-                </nav>
             </div>
+
+            <!-- Center: Desktop Navigation -->
+            <nav class="hidden xl:flex space-x-1 desktop-nav absolute left-1/2 transform -translate-x-1/2">
+                @php
+                    $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
+                @endphp
+                <!-- Parcourir les offres with dropdown -->
+                <div class="relative group z-[9999]">
+                    <button class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc] flex items-center gap-1">
+                        <span>Parcourir les offres</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-[#2b2b2b]/95 backdrop-blur-sm rounded-lg shadow-lg border border-[#333333] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
+                        <div class="py-2">
+                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Dernières offres
+                            </a>
+                            <a href="{{ route('jobs.index', ['work_type' => 'remote']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Offres à distance
+                            </a>
+                            <a href="{{ route('jobs.index', ['type' => 'Stage']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Stages
+                            </a>
+                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Offres par catégorie
+                            </a>
+                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Offres par localisation
+                            </a>
+                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                                Offres par type
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                    Entreprises
+                </a>
+                <a href="{{ route('about') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                    À propos
+                </a>
+                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                    Blog
+                </a>
+            </nav>
 
             <!-- Right Side -->
             <div class="hidden xl:flex items-center space-x-4 desktop-right">
@@ -244,28 +272,17 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('signup.recruiter') }}" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 text-[#00b6b4] hover:bg-[#2b2b2b]">
-                        <!-- Building2 icon from Lucide React -->
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                            <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
-                            <path d="M10 6h4"></path>
-                            <path d="M10 10h4"></path>
-                            <path d="M10 14h4"></path>
-                            <path d="M10 18h4"></path>
-                        </svg>
-                        <span>Espace recruteurs</span>
+                    <!-- Publier une offre d'emploi button -->
+                    <a href="{{ route('signup.recruiter') }}" class="px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
+                        Publier une offre d'emploi
                     </a>
                     
-                    <a href="{{ route('login') }}" class="flex items-center space-x-2 px-4 py-2 bg-[#00b6b4] text-white rounded-lg hover:bg-[#009e9c] transition-all duration-300 hover:scale-105 shadow-sm">
-                        <!-- User icon from Lucide React -->
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <span>Connexion</span>
-                    </a>
+                    <!-- Se connecter button with gradient border -->
+                    <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
+                        <a href="{{ route('login') }}" class="block px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
+                            Se connecter
+                        </a>
+                    </div>
                 @endauth
             </div>
 
@@ -771,15 +788,15 @@ document.addEventListener('click', function(event) {
     const notificationMenu = document.getElementById('notificationMenu');
     
     if (!event.target.closest('[onclick="toggleLanguageMenu()"]')) {
-        languageMenu.classList.add('hidden');
+        if (languageMenu) languageMenu.classList.add('hidden');
     }
     
     if (!event.target.closest('[onclick="toggleUserMenu()"]')) {
-        userMenu.classList.add('hidden');
+        if (userMenu) userMenu.classList.add('hidden');
     }
     
     if (!event.target.closest('[onclick="toggleNotificationMenu()"]')) {
-        notificationMenu.classList.add('hidden');
+        if (notificationMenu) notificationMenu.classList.add('hidden');
     }
 });
 </script>

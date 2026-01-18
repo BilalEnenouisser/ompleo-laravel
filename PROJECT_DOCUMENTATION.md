@@ -751,6 +751,189 @@ npm run build    # Production build
 
 ## Daily Work Log
 
+### 2025-01-29
+
+#### Work Completed
+- [x] Redesigned navbar with new UI/UX layout and styling
+- [x] Completely redesigned hero section with new content, layout, and styling
+- [x] Updated website font to Inter throughout
+- [x] Implemented gradient buttons with custom borders
+- [x] Added marquee slider for brand logos with fade effects
+- [x] Configured transparent navbar background
+- [x] Updated Tailwind CSS configuration for Inter font and marquee animation
+
+#### Changes Made
+
+**Navbar Redesign** (`resources/views/components/header.blade.php`):
+1. **Layout Structure:**
+   - Logo positioned on the left
+   - Navigation menu centered using `absolute left-1/2 transform -translate-x-1/2`
+   - Two action buttons on the right (for non-authenticated users)
+   - Transparent background (`bg-transparent` with inline `style="background: transparent !important;"`)
+
+2. **Navigation Menu Items:**
+   - Menu items: "Parcourir les offres", "Entreprises", "À propos", "Blog"
+   - Text size: `text-base` (increased by 2px from default)
+   - Font weight: `font-normal` (not bold)
+   - Text color: White (`text-white`)
+   - Hover color: `#39fffc` (teal)
+   - "Parcourir les offres" includes dropdown menu with:
+     - Dernières offres
+     - Offres à distance
+     - Stages
+     - Offres par catégorie
+     - Offres par localisation
+     - Offres par type
+   - Dropdown z-index: `z-[9999]` to ensure it appears on top
+
+3. **Action Buttons (Right Side):**
+   - **"Publier une offre d'emploi" button:**
+     - Background: Linear gradient 135°: `#1aa2a0` to `#39fffc`
+     - Border: `1px solid #47fffd`
+     - Shape: Fully rounded (`rounded-full`)
+     - Text: White, bold, with shadow (`text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)`)
+     - Font: Inter, bold
+   
+   - **"Se connecter" button:**
+     - Background: Linear gradient 135°: `#136b6a` to `#004948`
+     - Border: Linear gradient 135°: `#39fffc` to `#1aa2a0` (implemented using wrapper div with gradient background and `p-[1px]`)
+     - Shape: Fully rounded (`rounded-full`)
+     - Text: White, bold, with shadow (`text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)`)
+     - Font: Inter, bold
+
+4. **JavaScript Enhancements:**
+   - Added click-outside handler to close dropdowns when clicking outside
+   - Maintained existing notification and user menu functionality
+
+**Hero Section Redesign** (`resources/views/home.blade.php`):
+1. **Layout Structure:**
+   - Background image positioned on the right edge of screen
+   - Image acts as background with `absolute` positioning
+   - Content overlay with 90% width and 20px padding on each side
+   - All text content left-aligned
+
+2. **Content Elements:**
+   - **Icon + Text Badge:**
+     - Icon: `heroico.svg`
+     - Text: "La plateforme d'offres d'emploi n°1"
+     - Color: `#2cbcba`
+     - Font size: `text-xl`
+   
+   - **Headline:**
+     - Line 1: "Là où les offres d'emploi" - Color: `#ffffff`, Font size: `83px`
+     - Line 2: "Gagnent en visibilité." - Color: `#d9d9d9`, Font size: `83px`
+     - Font weight: Bold
+   
+   - **Sub-headline:**
+     - Text: "Postulez gratuitement ou publiez une offre et amplifiez votre recrutement."
+     - Color: `#ffffff`
+     - Font size: `34px`
+   
+   - **Action Buttons:**
+     - **"Publier une annonce" button:**
+       - Background: Linear gradient 135°: `#1aa2a0` to `#39fffc`
+       - Border: `1px solid #47fffd`
+       - Icon: `botton1.svg` on the left
+       - Text: White, bold, with shadow
+       - Shape: Fully rounded (`rounded-full`)
+     
+     - **"Rechercher toutes les offres" button:**
+       - Background: Linear gradient 135°: `#136b6a` to `#004948`
+       - Border: Linear gradient 135°: `#39fffc` to `#1aa2a0` (wrapper div technique)
+       - Icon: `btton2.svg` on the left
+       - Text: White, bold, with shadow
+       - Shape: Fully rounded (`rounded-full`)
+   
+   - **Trust Section:**
+     - Text: "Ils nous font confiance:" - Color: `#a6a6a6`, Font size: `20px`
+     - Marquee slider with brand logos (`brand1.png` to `brand8.png`)
+     - Logos duplicated for seamless loop
+     - Fade gradients on left and right edges using:
+       - Left: `linear-gradient(to right, #1f1f1f, transparent)`
+       - Right: `linear-gradient(to left, #1f1f1f, transparent)`
+     - Logo opacity: 70% default, 100% on hover
+
+3. **Background Image:**
+   - Image: `hero.png`
+   - Position: Absolute, right edge, full height
+   - Object position: Right edge
+   - Hidden on mobile (`hidden lg:block`)
+
+**Font Configuration:**
+1. **Google Fonts** (`resources/views/layouts/app.blade.php`):
+   - Updated from `Space Grotesk` to `Inter`
+   - Font weights: 300, 400, 500, 600, 700, 800, 900
+
+2. **Tailwind CSS Configuration** (`tailwind.config.js`):
+   - Updated `fontFamily.sans` to `['Inter', ...]`
+   - Updated `fontFamily.display` to `['Inter', 'sans-serif']`
+
+3. **CSS Base Styles** (`resources/css/app.css`):
+   - Updated `@layer base` to use `'Inter'` as primary font family
+
+**Marquee Animation** (`resources/css/app.css`):
+1. **Keyframes:**
+   - Created `@keyframes marquee` animation
+   - Transforms from `translateX(0)` to `translateX(-50%)` for seamless loop
+   - Duration: 30s, linear, infinite
+
+2. **Animation Class:**
+   - Added `.animate-marquee` utility class
+   - Applied to brand logo container
+
+#### Technical Details
+
+**Navbar Transparency:**
+- Multiple layers of transparency enforcement:
+  - `bg-transparent` class on `<header>` element
+  - Inline `style="background: transparent !important;"` on header and immediate child divs
+  - Ensures no background color appears even with conflicting styles
+
+**Gradient Border Technique:**
+- For buttons with gradient borders, used wrapper div technique:
+  - Outer div: Gradient background with `p-[1px]` padding
+  - Inner element: Solid background matching button design
+  - Creates visual effect of gradient border
+
+**Marquee Fade Effect:**
+- Two absolutely positioned divs with gradient backgrounds
+- Left gradient: Fades from `#1f1f1f` to transparent (right direction)
+- Right gradient: Fades from `#1f1f1f` to transparent (left direction)
+- `pointer-events-none` to allow interaction with underlying content
+- `z-10` to appear above marquee content
+
+**Responsive Design:**
+- Hero section background image hidden on mobile
+- Content remains accessible on all screen sizes
+- Buttons stack vertically on small screens (`flex-col sm:flex-row`)
+
+#### Files Modified
+- `resources/views/components/header.blade.php`
+- `resources/views/home.blade.php`
+- `resources/views/layouts/app.blade.php`
+- `resources/css/app.css`
+- `tailwind.config.js`
+
+#### Issues Encountered
+- Dropdown appearing behind other content - fixed with `z-[9999]`
+- Navbar background not fully transparent - fixed with inline styles and `!important`
+- Gradient border implementation - solved with wrapper div technique
+- Hero image positioning - changed from grid to absolute positioning
+
+#### Next Steps
+- Continue with next section redesign (Why Choose Section)
+- Test responsive behavior on various devices
+- Verify all assets load correctly
+
+#### Notes
+- All text on website now uses Inter font
+- Navbar and hero section match new UI/UX design specifications
+- Gradient buttons with custom borders implemented successfully
+- Marquee slider with fade effects creates smooth visual experience
+- All changes tested and working correctly
+
+---
+
 ### 2025-01-28
 
 #### Work Completed
