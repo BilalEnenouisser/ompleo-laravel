@@ -43,6 +43,12 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
+        // Get latest jobs for search job section (8 jobs for the grid)
+        $latestJobs = Job::published()
+            ->orderBy('created_at', 'desc')
+            ->limit(8)
+            ->get();
+
         $features = [
             [
                 'icon' => 'search',
@@ -76,7 +82,7 @@ class HomeController extends Controller
             ]
         ];
 
-        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs', 'jobs'));
+        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs', 'jobs', 'latestJobs'));
     }
 }
 

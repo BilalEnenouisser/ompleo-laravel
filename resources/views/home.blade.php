@@ -83,9 +83,9 @@
 
 
     <!-- Why Choose Section -->
-    <div class="animate-on-scroll">
+    {{-- <div class="animate-on-scroll">
         @include('components.why-choose-section')
-    </div>
+    </div> --}}
     
     <!-- Popular Jobs Section -->
     <div class="animate-on-scroll">
@@ -106,20 +106,35 @@
         @include('components.categories-section')
     </div>
 
-    <!-- Partners Section -->
+    <!-- Search Job Section -->
     <div class="animate-on-scroll">
-        @include('components.partners-section')
+        @include('components.search-job-section')
     </div>
+
+    <!-- FAQ Section -->
+    <div class="animate-on-scroll">
+        @include('components.faq-section')
+    </div>
+
+    <!-- CTA Section -->
+    <div class="animate-on-scroll">
+        @include('components.cta-section')
+    </div>
+
+    <!-- Partners Section -->
+    {{-- <div class="animate-on-scroll">
+        @include('components.partners-section')
+    </div> --}}
 
     <!-- Featured Articles Section -->
-    <div class="animate-on-scroll">
+    {{-- <div class="animate-on-scroll">
         @include('components.featured-articles')
-    </div>
+    </div> --}}
 
     <!-- Recruiter CTA Section -->
-    <div class="animate-on-scroll">
+    {{-- <div class="animate-on-scroll">
         @include('components.recruiter-cta')
-    </div>
+    </div> --}}
 </div>
 
 <!-- Footer -->
