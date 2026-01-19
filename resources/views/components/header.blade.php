@@ -1,7 +1,7 @@
 @php
 use Illuminate\Support\Facades\Storage;
 @endphp
-<header class="w-full z-50 bg-transparent" style="background: transparent !important;">
+<header class="w-full z-[10000] bg-transparent relative" style="background: transparent !important;">
     <div class="w-full px-[2%]" style="background: transparent;">
         <div class="relative flex justify-between items-center h-24" style="background: transparent;">
             <!-- Left Side: Logo -->
@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Storage;
             </div>
 
             <!-- Center: Desktop Navigation -->
-            <nav class="hidden xl:flex space-x-1 desktop-nav absolute left-1/2 transform -translate-x-1/2">
-                @php
-                    $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
-                @endphp
+            <nav class="hidden xl:flex space-x-1 desktop-nav absolute left-1/2 transform -translate-x-1/2 z-[10001]">
+                    @php
+                        $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
+                    @endphp
                 <!-- Parcourir les offres with dropdown -->
-                <div class="relative group z-[9999]">
+                <div class="relative group z-[10001]">
                     <button class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc] flex items-center gap-1">
                         <span>Parcourir les offres</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Storage;
                         </svg>
                     </button>
                     <!-- Dropdown Menu -->
-                    <div class="absolute top-full left-0 mt-2 w-64 bg-[#2b2b2b]/95 backdrop-blur-sm rounded-lg shadow-lg border border-[#333333] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-[#2b2b2b]/95 backdrop-blur-sm rounded-lg shadow-lg border border-[#333333] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[10001]">
                         <div class="py-2">
                             <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Dernières offres
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Storage;
                             </a>
                             <a href="{{ route('jobs.index', ['type' => 'Stage']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Stages
-                            </a>
+                    </a>
                             <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Offres par catégorie
                             </a>
@@ -59,8 +59,8 @@ use Illuminate\Support\Facades\Storage;
                 </a>
                 <a href="{{ route('blog.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
                     Blog
-                </a>
-            </nav>
+                    </a>
+                </nav>
 
             <!-- Right Side -->
             <div class="hidden xl:flex items-center space-x-4 desktop-right">
