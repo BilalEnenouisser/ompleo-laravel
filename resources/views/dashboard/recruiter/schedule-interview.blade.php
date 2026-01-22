@@ -178,7 +178,15 @@
             </div>
 
             {{-- Submit Button --}}
-            <div class="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-[#333333]">
+            <div class="flex flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-[#333333] schedule-interview-buttons">
+                <style>
+                    /* Desktop is default - buttons on same line */
+                    @media (max-width: 767px) {
+                        .schedule-interview-buttons {
+                            flex-wrap: wrap !important;
+                        }
+                    }
+                </style>
                 <a href="{{ route('recruiter.interviews') }}" class="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors text-center text-xs sm:text-sm md:text-base">
                     Annuler
                 </a>

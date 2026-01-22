@@ -210,7 +210,6 @@
         </div>
     </main>
     
-    @include('components.footer')
     
     <!-- Build Assets JS -->
     @if(vite_asset('resources/js/app.js'))

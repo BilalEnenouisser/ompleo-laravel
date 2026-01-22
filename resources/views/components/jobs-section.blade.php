@@ -4,7 +4,25 @@ use Illuminate\Support\Facades\Storage;
 $jobs = $jobs ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#1f1f1f] overflow-hidden">
+<section class="relative py-20 bg-[#1f1f1f] overflow-hidden jobs-section">
+    <style>
+        /* Desktop is default - py-20 */
+        @media (max-width: 1023px) {
+            .jobs-section {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+        }
+        @media (max-width: 767px) {
+            .jobs-section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            .jobs-section h2 {
+                font-size: 2rem !important;
+            }
+        }
+    </style>
     <!-- Background Images -->
     <div class="absolute top-0 left-0 bottom-0 hidden lg:block pointer-events-none">
         <img src="{{ asset('storage/home_page/job/left.png') }}" alt="Background" class="h-full w-auto object-cover" style="object-position: left;">

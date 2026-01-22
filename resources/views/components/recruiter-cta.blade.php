@@ -1,7 +1,15 @@
 <section class="py-16 bg-[#00b6b4]/10 dark:bg-[#00b6b4]/5 relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 md:p-12 shadow-lg border border-[#00b6b4]/20 dark:border-[#00b6b4]/10">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex flex-row items-center justify-between gap-8 recruiter-cta-layout">
+                <style>
+                    /* Desktop is default - flex-row */
+                    @media (max-width: 767px) {
+                        .recruiter-cta-layout {
+                            flex-direction: column !important;
+                        }
+                    }
+                </style>
                 <div class="md:w-2/3">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         Vous êtes une entreprise ?

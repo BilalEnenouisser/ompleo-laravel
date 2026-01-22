@@ -121,7 +121,6 @@
         </div>
     </div>
 
-    @include('components.footer')
 
     <script>
         let currentPage = {{ $notifications->currentPage() }};

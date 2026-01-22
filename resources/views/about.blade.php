@@ -305,7 +305,5 @@
     </div>
 </section>
 
-<!-- Footer -->
-@include('components.footer')
 @endsection
 

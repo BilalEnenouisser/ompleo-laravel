@@ -88,11 +88,23 @@
     </div>
 
     <!-- Main Content -->
-    <section class="py-16 relative z-10">
+    <section class="py-16 relative z-10 blog-show-section">
+        <style>
+            /* Desktop is default - py-16, grid-cols-3 */
+            @media (max-width: 1023px) {
+                .blog-show-section {
+                    padding-top: 3rem !important;
+                    padding-bottom: 3rem !important;
+                }
+                .blog-show-grid {
+                    grid-template-columns: 1fr !important;
+                }
+            }
+        </style>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+            <div class="grid grid-cols-3 gap-8 blog-show-grid">
                 <!-- Main Article -->
-                <article class="lg:col-span-2">
+                <article class="col-span-2">
                     <div class="bg-white/10 dark:bg-[#2b2b2b]/50 backdrop-blur-lg border border-white/20 dark:border-[#333333] rounded-2xl p-8 lg:p-16">
                         <div class="prose prose-xl max-w-none dark:prose-invert prose-headings:font-bold prose-p:leading-relaxed prose-p:text-lg">
                             {!! $blog->content !!}
@@ -134,7 +146,7 @@
                 </article>
 
                 <!-- Sidebar -->
-                <aside class="lg:col-span-1 mt-8 lg:mt-0">
+                <aside class="col-span-1 mt-8 lg:mt-0">
                     <div class="sticky top-24 space-y-8">
                         <!-- Share Buttons -->
                         <div class="bg-white/10 dark:bg-[#2b2b2b]/50 backdrop-blur-lg border border-white/20 dark:border-[#333333] rounded-2xl p-8">
@@ -208,8 +220,6 @@
     </section>
 </div>
 
-<!-- Footer -->
-@include('components.footer')
 
 <style>
 .liquid-shape {

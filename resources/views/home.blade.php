@@ -9,44 +9,172 @@
     @include('components.header')
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#1f1f1f] mb-16">
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#1f1f1f] mb-16 hero-section">
         <!-- Background Image -->
         <div class="absolute top-0 right-0 bottom-0  hidden lg:block">
             <img src="{{ asset('storage/home_page/hero.png') }}" alt="Hero" class="w-full h-full object-cover" style="object-position: right;">
         </div>
         
         <!-- Content Overlay -->
-        <div class="w-[90%] mx-auto relative z-10" style="padding-left: 20px; padding-right: 700px;">
-            <div class="text-left">
+        <div class="w-[90%] mx-auto relative z-10 hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
+            <style>
+                /* Desktop is default - no media query needed */
+                
+                /* Tablet (768px - 1023px) */
+                @media (max-width: 1023px) {
+                    .hero-content-wrapper {
+                        width: 95% !important;
+                        padding-left: 20px !important;
+                        padding-right: 20px !important;
+                    }
+                    .hero-content-overlay {
+                        width: 100% !important;
+                    }
+                    .hero-headline {
+                        font-size: 48px !important;
+                    }
+                    .hero-subheadline {
+                        font-size: 24px !important;
+                        margin-top: 1.5rem !important;
+                        margin-bottom: 2rem !important;
+                    }
+                    .hero-badge-text {
+                        font-size: 18px !important;
+                    }
+                }
+                
+                /* Mobile (max-width: 767px) */
+                @media (max-width: 767px) {
+                    section#home.hero-section {
+                        min-height: auto !important;
+                        padding-top: 2rem !important;
+                        padding-bottom: 2rem !important;
+                        margin-bottom: 2rem !important;
+                    }
+                    .hero-content-wrapper {
+                        width: 100% !important;
+                        padding-left: 20px !important;
+                        padding-right: 20px !important;
+                    }
+                    .hero-content-overlay {
+                        width: 100% !important;
+                    }
+                    h1.hero-headline {
+                        font-size: 32px !important;
+                        margin-bottom: 1rem !important;
+                        line-height: 1.2 !important;
+                    }
+                    h1.hero-headline span {
+                        display: block !important;
+                    }
+                    p.hero-subheadline {
+                        font-size: 18px !important;
+                        margin-top: 1rem !important;
+                        margin-bottom: 1.5rem !important;
+                    }
+                    .hero-buttons {
+                        flex-direction: row !important;
+                        flex-wrap: nowrap !important;
+                        gap: 0.25rem !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                    }
+                    .hero-buttons a,
+                    .hero-buttons > div {
+                        flex: 1 1 0 !important;
+                        min-width: 0 !important;
+                        overflow: hidden !important;
+                        max-width: calc(50% - 0.125rem) !important;
+                    }
+                    .hero-buttons a {
+                        padding-left: 0.5rem !important;
+                        padding-right: 0.5rem !important;
+                        padding-top: 0.5rem !important;
+                        padding-bottom: 0.5rem !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        text-align: center !important;
+                        overflow: hidden !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
+                    }
+                    .hero-buttons a span {
+                        font-size: 0.6rem !important;
+                        line-height: 1.2 !important;
+                        white-space: nowrap !important;
+                        overflow: hidden !important;
+                        text-overflow: ellipsis !important;
+                        display: inline-block !important;
+                        max-width: 100% !important;
+                        flex-shrink: 1 !important;
+                    }
+                    .hero-buttons img {
+                        flex-shrink: 0 !important;
+                        width: 0.875rem !important;
+                        height: 0.875rem !important;
+                        margin-right: 0.25rem !important;
+                    }
+                    .hero-buttons > div {
+                        overflow: hidden !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
+                    }
+                    .hero-buttons > div a {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                    }
+                    span.hero-badge-text {
+                        font-size: 16px !important;
+                    }
+                    img.hero-brand-logo {
+                        height: 1.5rem !important;
+                    }
+                    img.hero-badge-icon {
+                        width: 1.25rem !important;
+                        height: 1.25rem !important;
+                    }
+                    img.hero-button-icon {
+                        width: 1rem !important;
+                        height: 1rem !important;
+                    }
+                    .hero-badge-container {
+                        margin-bottom: 1rem !important;
+                    }
+                }
+            </style>
+            <div class="text-left hero-content-overlay">
                 <!-- Icon + Text Badge -->
-                <div class="flex items-center gap-3 mb-6">
-                    <img src="{{ asset('storage/home_page/heroico.svg') }}" alt="Icon" class="w-6 h-6">
-                    <span class="text-xl font-normal" style="color: #2cbcba;">La plateforme d'offres d'emploi n°1</span>
+                <div class="flex items-center gap-3 mb-6 hero-badge-container">
+                    <img src="{{ asset('storage/home_page/heroico.svg') }}" alt="Icon" class="w-6 h-6 hero-badge-icon">
+                    <span class="text-xl font-normal hero-badge-text" style="color: #2cbcba;">La plateforme d'offres d'emploi n°1</span>
                 </div>
 
                 <!-- Headline -->
-                <h1 class="font-bold mb-6 leading-tight" style="font-size: 83px;">
+                <h1 class="font-bold mb-6 leading-tight hero-headline" style="font-size: 83px; color: #ffffff;">
                     <span class="block" style="color: #ffffff;">Là où les offres d'emploi</span>
                     <span class="block" style="color: #d9d9d9;">Gagnent en visibilité.</span>
                 </h1>
 
                 <!-- Sub-headline -->
-                <p class="mb-12 mt-12" style="color: #ffffff; font-size: 34px;">
+                <p class="mb-12 mt-12 hero-subheadline" style="color: #ffffff; font-size: 34px;">
                     Postulez gratuitement ou publiez une offre et amplifiez votre recrutement.
                 </p>
 
                 <!-- Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                <div class="flex flex-row gap-4 mb-12 hero-buttons">
                     <!-- Button 1: Publier une annonce -->
                     <a href="{{ route('signup.recruiter') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-5 h-5">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-5 h-5 hero-button-icon">
                         <span>Publier une annonce</span>
                     </a>
 
                     <!-- Button 2: Rechercher toutes les offres -->
                     <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
                         <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="w-5 h-5">
+                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="w-5 h-5 hero-button-icon">
                             <span>Rechercher toutes les offres</span>
                         </a>
                     </div>
@@ -65,13 +193,13 @@
                         <div class="flex animate-marquee gap-4">
                             @for($i = 1; $i <= 8; $i++)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-6 sm:h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
                                 </div>
                             @endfor
                             <!-- Duplicate for seamless loop -->
                             @for($i = 1; $i <= 8; $i++)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-6 sm:h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
                                 </div>
                             @endfor
                         </div>
@@ -137,8 +265,6 @@
     </div> --}}
 </div>
 
-<!-- Footer -->
-@include('components.footer')
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

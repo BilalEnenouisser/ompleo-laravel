@@ -106,7 +106,15 @@
 
     {{-- Filters --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
-        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div class="flex flex-row gap-3 sm:gap-4 jobs-filters-row">
+            <style>
+                /* Desktop is default - flex-row */
+                @media (max-width: 767px) {
+                    .jobs-filters-row {
+                        flex-direction: column !important;
+                    }
+                }
+            </style>
             <div class="flex-1 relative">
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"/>

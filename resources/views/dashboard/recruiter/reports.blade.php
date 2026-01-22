@@ -13,7 +13,14 @@
                 Analysez les performances de vos recrutements
             </p>
         </div>
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 flex-shrink-0">
+        <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0 reports-action-buttons">
+            <style>
+                @media (max-width: 767px) {
+                    .reports-action-buttons {
+                        flex-wrap: wrap !important;
+                    }
+                }
+            </style>
             <select class="px-2 sm:px-3 md:px-4 py-2 border border-[#444444] rounded-lg bg-[#333333] text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none text-xs sm:text-sm md:text-base">
                 <option value="7">7 derniers jours</option>
                 <option value="30" selected>30 derniers jours</option>

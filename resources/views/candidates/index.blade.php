@@ -271,5 +271,4 @@ $steps = [
     </section>
 </div>
 
-@include('components.footer')
 @endsection

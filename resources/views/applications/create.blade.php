@@ -192,6 +192,4 @@
     </div>
 </div>
 
-<!-- Footer -->
-@include('components.footer')
 @endsection

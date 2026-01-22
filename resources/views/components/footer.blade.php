@@ -140,7 +140,17 @@
 
         <!-- Bottom Section -->
         <div class="mt-12 pt-8 border-t border-gray-300 dark:border-[#333333]">
-            <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex flex-row justify-between items-center footer-bottom">
+                <style>
+                    /* Desktop is default - flex-row */
+                    @media (max-width: 767px) {
+                        .footer-bottom {
+                            flex-direction: column !important;
+                            gap: 1rem !important;
+                            text-align: center !important;
+                        }
+                    }
+                </style>
                 <div class="text-[#cccccc] text-sm mb-4 md:mb-0">
                     © 2025 OMPLEO. Tous droits réservés.
                 </div>

@@ -442,7 +442,15 @@
                 </div>
                 
                 {{-- Submit Buttons --}}
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 sm:gap-4">
+                <div class="flex flex-row items-center justify-end gap-3 sm:gap-4 admin-notification-buttons">
+                    <style>
+                        /* Desktop is default - buttons on same line */
+                        @media (max-width: 767px) {
+                            .admin-notification-buttons {
+                                flex-wrap: wrap !important;
+                            }
+                        }
+                    </style>
                     <button
                         type="button"
                         onclick="resetForm()"

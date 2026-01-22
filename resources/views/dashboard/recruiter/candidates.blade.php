@@ -134,7 +134,15 @@
     </form>
 
     {{-- Results Count --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+    <div class="flex flex-row items-center justify-between gap-2 sm:gap-3 candidates-header-row">
+        <style>
+            @media (max-width: 767px) {
+                .candidates-header-row {
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                }
+            }
+        </style>
         <p class="text-xs sm:text-sm md:text-base text-[#9ca3af]">{{ $candidates->total() }} candidat(s) trouvé(s)</p>
         <form method="GET" action="{{ route('recruiter.candidates') }}" class="flex items-center gap-2">
             @if(request('search'))
@@ -322,8 +330,16 @@
                 @endif
 
                 {{-- Buttons --}}
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <button class="flex-1 bg-[#00b6b4] hover:bg-[#009999] text-white py-2 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <div class="flex flex-row items-center gap-2 candidate-action-buttons">
+                <style>
+                    /* Desktop is default - buttons on same line */
+                    @media (max-width: 767px) {
+                        .candidate-action-buttons {
+                            flex-wrap: wrap !important;
+                        }
+                    }
+                </style>
+                <button class="bg-[#00b6b4] hover:bg-[#009999] text-white py-2 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 sm:w-4 sm:h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     Contacter
                 </button>

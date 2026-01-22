@@ -222,7 +222,6 @@
     </div>
 </div>
 
-@include('components.footer')
 
 <script>
 function togglePassword() {

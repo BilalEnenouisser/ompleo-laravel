@@ -933,7 +933,16 @@
                     </div>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row lg:flex-col lg:items-end gap-2 sm:gap-3 w-full sm:w-auto">
+                <div class="flex flex-row items-end gap-2 sm:gap-3 interview-action-buttons">
+                    <style>
+                        /* Desktop is default - flex-row */
+                        @media (max-width: 1023px) {
+                            .interview-action-buttons {
+                                flex-direction: column !important;
+                                align-items: flex-end !important;
+                            }
+                        }
+                    </style>
                     <div class="flex items-center gap-2 justify-end sm:justify-end w-full sm:w-auto">
                             {{-- Status Update Dropdown --}}
                             <form method="POST" action="{{ route('recruiter.interviews.update-status', $interview) }}" class="inline flex-1 sm:flex-none">
@@ -955,7 +964,14 @@
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                         </button>
                     </div>
-                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                    <div class="flex flex-row gap-2 interview-buttons-row">
+                        <style>
+                            @media (max-width: 767px) {
+                                .interview-buttons-row {
+                                    flex-wrap: wrap !important;
+                                }
+                            }
+                        </style>
                         <button class="w-full sm:w-auto px-3 sm:px-4 py-2 border border-[#444444] rounded-lg text-[#9ca3af] hover:bg-[#333333] transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                             <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                             Contacter

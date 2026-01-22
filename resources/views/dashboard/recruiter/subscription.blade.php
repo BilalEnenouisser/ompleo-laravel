@@ -21,7 +21,15 @@
     {{-- Current Subscription Card --}}
     @if($currentSubscription)
     <div class="bg-gradient-to-r from-[#00b6b4] to-[#009e9c] rounded-2xl p-4 sm:p-6 md:p-8 text-white">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex flex-row items-center justify-between gap-4 subscription-header-row">
+            <style>
+                @media (max-width: 767px) {
+                    .subscription-header-row {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                    }
+                }
+            </style>
             <div>
                 <h2 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">
                     @if($currentSubscription->status === 'active')

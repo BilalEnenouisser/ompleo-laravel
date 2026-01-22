@@ -4,7 +4,31 @@ use Illuminate\Support\Facades\Storage;
 $companies = $companies ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#1f1f1f] overflow-hidden">
+<section class="relative py-20 bg-[#1f1f1f] overflow-hidden companies-section">
+    <style>
+        /* Desktop is default - py-20, grid-cols-3 */
+        @media (max-width: 1023px) {
+            .companies-section {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+            .companies-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+        @media (max-width: 767px) {
+            .companies-section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            .companies-section h2 {
+                font-size: 2.5rem !important;
+            }
+            .companies-grid {
+                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            }
+        }
+    </style>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Header -->
         <div class="text-center mb-12 pb-8">
@@ -22,7 +46,7 @@ $companies = $companies ?? collect();
 
         <!-- Companies Grid (3x2) -->
         @if($companies->count() > 0)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-3 gap-6 mb-12 companies-grid">
             @foreach($companies->take(6) as $company)
                 @php
                     $initials = '';

@@ -112,7 +112,16 @@
 
     {{-- Revenue Chart --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <div class="flex flex-row items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 payments-header-row">
+            <style>
+                /* Desktop is default - flex-row */
+                @media (max-width: 767px) {
+                    .payments-header-row {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                    }
+                }
+            </style>
             <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">
                 Évolution des revenus
             </h2>
@@ -125,7 +134,15 @@
             </div>
         </div>
         <div class="space-y-3 sm:space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex flex-row items-center justify-between gap-3 payment-item-row">
+                <style>
+                    @media (max-width: 767px) {
+                        .payment-item-row {
+                            flex-direction: column !important;
+                            align-items: flex-start !important;
+                        }
+                    }
+                </style>
                 <div class="flex items-center gap-2 sm:gap-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
                         <span class="text-sm sm:text-base font-bold text-[#00b6b4]">Oct</span>
@@ -141,7 +158,15 @@
                     <div class="h-full bg-[#00b6b4] rounded-full" style="width: 62.4%"></div>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex flex-row items-center justify-between gap-3 payment-item-row">
+                <style>
+                    @media (max-width: 767px) {
+                        .payment-item-row {
+                            flex-direction: column !important;
+                            align-items: flex-start !important;
+                        }
+                    }
+                </style>
                 <div class="flex items-center gap-2 sm:gap-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
                         <span class="text-sm sm:text-base font-bold text-[#00b6b4]">Nov</span>
@@ -157,7 +182,15 @@
                     <div class="h-full bg-[#00b6b4] rounded-full" style="width: 75.6%"></div>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex flex-row items-center justify-between gap-3 payment-item-row">
+                <style>
+                    @media (max-width: 767px) {
+                        .payment-item-row {
+                            flex-direction: column !important;
+                            align-items: flex-start !important;
+                        }
+                    }
+                </style>
                 <div class="flex items-center gap-2 sm:gap-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
                         <span class="text-sm sm:text-base font-bold text-[#00b6b4]">Déc</span>
@@ -173,7 +206,15 @@
                     <div class="h-full bg-[#00b6b4] rounded-full" style="width: 93.6%"></div>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex flex-row items-center justify-between gap-3 payment-item-row">
+                <style>
+                    @media (max-width: 767px) {
+                        .payment-item-row {
+                            flex-direction: column !important;
+                            align-items: flex-start !important;
+                        }
+                    }
+                </style>
                 <div class="flex items-center gap-2 sm:gap-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center">
                         <span class="text-sm sm:text-base font-bold text-[#00b6b4]">Jan</span>
@@ -384,7 +425,14 @@
     </div>
 
     {{-- Pagination --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+    <div class="flex flex-row items-center justify-between gap-3 sm:gap-4 payments-bottom-row">
+        <style>
+            @media (max-width: 767px) {
+                .payments-bottom-row {
+                    flex-direction: column !important;
+                }
+            }
+        </style>
         <p class="text-sm sm:text-base text-[#9ca3af]">
             Affichage de {{ $subscriptions->firstItem() ?? 0 }} à {{ $subscriptions->lastItem() ?? 0 }} sur {{ $subscriptions->total() }} paiement(s)
         </p>

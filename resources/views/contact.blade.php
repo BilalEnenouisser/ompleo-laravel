@@ -263,8 +263,6 @@ $contactInfo = [
     </section>
 </div>
 
-<!-- Footer -->
-@include('components.footer')
 
 @push('styles')
 <style>

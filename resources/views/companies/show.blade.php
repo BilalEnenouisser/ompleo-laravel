@@ -231,7 +231,6 @@ use Illuminate\Support\Facades\Storage;
     </div>
 </div>
 
-@include('components.footer')
 
 <!-- Message Modal -->
 @auth

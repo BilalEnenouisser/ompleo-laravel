@@ -445,6 +445,4 @@ function applyForJob(jobId) {
 }
 </script>
 
-<!-- Footer -->
-@include('components.footer')
 @endsection

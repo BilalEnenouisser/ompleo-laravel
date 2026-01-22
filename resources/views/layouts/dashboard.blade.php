@@ -336,7 +336,6 @@ use Illuminate\Support\Facades\Storage;
         ></div>
     </div>
 
-    @include('components.footer')
 
     <script>
         function toggleSidebar() {

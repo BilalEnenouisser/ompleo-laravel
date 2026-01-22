@@ -147,7 +147,7 @@ use Illuminate\Support\Facades\Storage;
                 </div>
 
                 <!-- Desktop Layout -->
-                <div class="hidden lg:flex flex-col lg:flex-row gap-4 items-end mb-4">
+                <div class="hidden lg:flex flex-row gap-4 items-end mb-4">
                     <!-- Left side - All filters in one line -->
                     <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                         <!-- Company Name Select -->
@@ -251,11 +251,19 @@ use Illuminate\Support\Facades\Storage;
                     </div>
                     
                     <!-- Right side - Action buttons -->
-                    <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0 w-full sm:w-auto">
-                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto min-w-[140px]">
+                    <div class="flex flex-row gap-2 flex-shrink-0 companies-action-buttons">
+                        <style>
+                            /* Desktop is default - buttons on same line */
+                            @media (max-width: 767px) {
+                                .companies-action-buttons {
+                                    flex-wrap: wrap !important;
+                                }
+                            }
+                        </style>
+                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 min-w-[140px]">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center w-full sm:w-auto">
+                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -500,5 +508,4 @@ use Illuminate\Support\Facades\Storage;
     </section>
 </div>
 
-@include('components.footer')
 @endsection

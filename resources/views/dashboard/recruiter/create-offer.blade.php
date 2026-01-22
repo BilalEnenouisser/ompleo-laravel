@@ -478,7 +478,15 @@
         </div>
 
         {{-- Submit Buttons --}}
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 md:gap-4">
+        <div class="flex flex-row items-center justify-end gap-2 sm:gap-3 md:gap-4 create-offer-buttons">
+            <style>
+                /* Desktop is default - buttons on same line */
+                @media (max-width: 767px) {
+                    .create-offer-buttons {
+                        flex-wrap: wrap !important;
+                    }
+                }
+            </style>
             <button
                 type="button"
                 onclick="window.location.href='{{ route('recruiter.jobs') }}'"

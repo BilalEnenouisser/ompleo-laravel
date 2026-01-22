@@ -7,7 +7,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <!-- Left Section -->
-            <div class="text-left flex flex-col items-start justify-center mx-auto">
+            <div class="text-left lg:text-left text-center flex flex-col items-center lg:items-start justify-center mx-auto">
                 <!-- Title -->
                 <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
                     Foire Aux<br>Questions

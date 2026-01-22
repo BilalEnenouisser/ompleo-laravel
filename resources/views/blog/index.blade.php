@@ -26,10 +26,29 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-        <div class="lg:grid lg:grid-cols-4 lg:gap-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 blog-container">
+        <style>
+            /* Desktop is default - grid-cols-4 */
+            @media (max-width: 1023px) {
+                .blog-container {
+                    padding-top: 3rem !important;
+                    padding-bottom: 3rem !important;
+                }
+                .blog-main-grid {
+                    grid-template-columns: 1fr !important;
+                }
+            }
+        </style>
+        <div class="grid grid-cols-4 gap-8 blog-main-grid">
             <!-- Sidebar -->
-            <div class="lg:col-span-1 mb-8 lg:mb-0">
+            <div class="col-span-1 mb-8 lg:mb-0 blog-sidebar">
+                <style>
+                    @media (max-width: 1023px) {
+                        .blog-sidebar {
+                            order: 2 !important;
+                        }
+                    }
+                </style>
                 <div class="bg-white/10 dark:bg-[#2b2b2b]/50 backdrop-blur-lg border border-white/20 dark:border-[#333333] rounded-2xl p-6 sticky top-24">
                     <!-- Search -->
                     <div class="mb-8">
@@ -98,8 +117,18 @@
             </div>
 
             <!-- Main Content -->
-            <div class="lg:col-span-3">
-                <div id="blogContainer" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="col-span-3 blog-main-content">
+                <style>
+                    @media (max-width: 1023px) {
+                        .blog-main-content {
+                            order: 1 !important;
+                        }
+                        .blog-posts-grid {
+                            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+                        }
+                    }
+                </style>
+                <div id="blogContainer" class="grid grid-cols-2 gap-8 blog-posts-grid">
                     @forelse($blogs as $blog)
                     <article class="blog-card bg-white/10 dark:bg-[#2b2b2b]/50 backdrop-blur-lg border border-white/20 dark:border-[#333333] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
                         <div class="relative h-48 overflow-hidden">
@@ -194,8 +223,6 @@
     </div>
 </div>
 
-<!-- Footer -->
-@include('components.footer')
 
 <style>
 .liquid-shape {
