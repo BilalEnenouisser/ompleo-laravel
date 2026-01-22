@@ -1,28 +1,71 @@
-// OMPLEO Animations - React to Laravel Animation Migration
+// OMPLEO Smooth Scroll Animations
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Intersection Observer for scroll-triggered animations
+    // Enhanced Intersection Observer for smooth scroll animations
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -100px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    // Main scroll animation observer for .animate-on-scroll elements
+    const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
+                // Add animated class to trigger CSS animation
+                entry.target.classList.add('animated');
                 
-                // Trigger counter animation if element has counter
-                if (entry.target.classList.contains('counter-element')) {
-                    animateCounter(entry.target);
+                // Handle stagger animations for child elements
+                const staggerDelay = parseFloat(entry.target.dataset.staggerDelay) || 0.1;
+                const staggerSelector = entry.target.dataset.staggerSelector || '.animate-stagger-item';
+                
+                const staggerItems = entry.target.querySelectorAll(staggerSelector);
+                if (staggerItems.length > 0) {
+                    staggerItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('animated');
+                        }, index * staggerDelay * 1000);
+                    });
                 }
+                
+                // Once animated, stop observing
+                scrollObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe all animated elements
-    document.querySelectorAll('[data-animate]').forEach(el => {
-        observer.observe(el);
+    // Observe all elements with animate-on-scroll class
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        scrollObserver.observe(el);
+    });
+
+    // Special handling for job cards, company cards, and category cards
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('card-animated');
+                cardObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    // Observe job cards
+    document.querySelectorAll('.job-card-link, .job-card-inner').forEach(el => {
+        cardObserver.observe(el);
+    });
+
+    // Observe company cards
+    document.querySelectorAll('.companies-grid > div').forEach(el => {
+        cardObserver.observe(el);
+    });
+
+    // Observe category cards
+    document.querySelectorAll('.categories-section a').forEach(el => {
+        cardObserver.observe(el);
+    });
+
+    // Observe FAQ items
+    document.querySelectorAll('.faq-item').forEach(el => {
+        cardObserver.observe(el);
     });
 
     // Counter Animation (similar to React AnimatedCounter)
@@ -53,6 +96,19 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animateCounterStep);
     }
 
+    // Trigger counter animation if element has counter
+    document.querySelectorAll('.counter-element').forEach(el => {
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        counterObserver.observe(el);
+    });
+
     // Hover animations for cards and buttons
     document.querySelectorAll('.hover-lift').forEach(element => {
         element.addEventListener('mouseenter', function() {
@@ -65,50 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.boxShadow = '';
         });
     });
-
-    // Stagger animation for lists
-    function staggerAnimation(container, selector, delay = 0.1) {
-        const elements = container.querySelectorAll(selector);
-        elements.forEach((element, index) => {
-            element.style.animationDelay = `${index * delay}s`;
-            element.classList.add('animate-stagger-fade-in');
-        });
-    }
-
-    // Apply stagger animations
-    document.querySelectorAll('.stagger-container').forEach(container => {
-        staggerAnimation(container, '.stagger-item');
-    });
-
-    // Liquid shape animations
-    document.querySelectorAll('.liquid-shape').forEach(shape => {
-        shape.style.animation = 'liquidMorph 8s ease-in-out infinite';
-    });
-
-    // Pulse glow animations
-    document.querySelectorAll('.pulse-glow').forEach(element => {
-        element.style.animation = 'pulseGlow 2s ease-in-out infinite';
-    });
-
-    // Shimmer effect for loading states
-    function addShimmerEffect(element) {
-        element.style.position = 'relative';
-        element.style.overflow = 'hidden';
-        
-        const shimmer = document.createElement('div');
-        shimmer.style.position = 'absolute';
-        shimmer.style.top = '0';
-        shimmer.style.left = '-100%';
-        shimmer.style.width = '100%';
-        shimmer.style.height = '100%';
-        shimmer.style.background = 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)';
-        shimmer.style.animation = 'shimmer 2s infinite';
-        
-        element.appendChild(shimmer);
-    }
-
-    // Add shimmer to loading elements
-    document.querySelectorAll('.shimmer-loading').forEach(addShimmerEffect);
 
     // Scale animations for buttons
     document.querySelectorAll('.scale-on-hover').forEach(button => {
@@ -128,63 +140,135 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'scale(1.05)';
         });
     });
-
-    // Fade in animations for sections
-    function fadeInOnScroll() {
-        const sections = document.querySelectorAll('.fade-in-section');
-        
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-            
-            if (isVisible) {
-                section.classList.add('animate-fade-in-up');
-            }
-        });
-    }
-
-    // Throttled scroll handler
-    let scrollTimeout;
-    window.addEventListener('scroll', function() {
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-        }
-        scrollTimeout = setTimeout(fadeInOnScroll, 10);
-    });
-
-    // Initial check
-    fadeInOnScroll();
 });
 
-// CSS Animation Classes (to be added to CSS)
+// Enhanced CSS Animation Styles
 const animationStyles = `
-    .animate-fade-in {
+    /* Base animation styles for scroll-triggered elements */
+    .animate-on-scroll {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: opacity, transform;
     }
     
-    .animate-fade-in.animate-fade-in {
+    .animate-on-scroll.animated {
         opacity: 1;
         transform: translateY(0);
     }
     
+    /* Stagger animation for child elements */
+    .animate-stagger-item {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .animate-stagger-item.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Card animations */
+    .job-card-link,
+    .job-card-inner,
+    .companies-grid > div,
+    .categories-section a,
+    .faq-item {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .job-card-link.card-animated,
+    .job-card-inner.card-animated,
+    .companies-grid > div.card-animated,
+    .categories-section a.card-animated,
+    .faq-item.card-animated {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    
+    /* Stagger delay for job cards */
+    .jobs-section .job-card-link:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+    
+    .jobs-section .job-card-link:nth-child(2) {
+        transition-delay: 0.2s;
+    }
+    
+    .jobs-section .job-card-link:nth-child(3) {
+        transition-delay: 0.3s;
+    }
+    
+    /* Stagger delay for company cards */
+    .companies-grid > div:nth-child(1) { transition-delay: 0.05s; }
+    .companies-grid > div:nth-child(2) { transition-delay: 0.1s; }
+    .companies-grid > div:nth-child(3) { transition-delay: 0.15s; }
+    .companies-grid > div:nth-child(4) { transition-delay: 0.2s; }
+    .companies-grid > div:nth-child(5) { transition-delay: 0.25s; }
+    .companies-grid > div:nth-child(6) { transition-delay: 0.3s; }
+    
+    /* Stagger delay for category cards */
+    .categories-section a:nth-child(1) { transition-delay: 0.05s; }
+    .categories-section a:nth-child(2) { transition-delay: 0.1s; }
+    .categories-section a:nth-child(3) { transition-delay: 0.15s; }
+    .categories-section a:nth-child(4) { transition-delay: 0.2s; }
+    .categories-section a:nth-child(5) { transition-delay: 0.25s; }
+    .categories-section a:nth-child(6) { transition-delay: 0.3s; }
+    .categories-section a:nth-child(7) { transition-delay: 0.35s; }
+    .categories-section a:nth-child(8) { transition-delay: 0.4s; }
+    
+    /* Stagger delay for FAQ items */
+    .faq-item:nth-child(1) { transition-delay: 0.1s; }
+    .faq-item:nth-child(2) { transition-delay: 0.2s; }
+    .faq-item:nth-child(3) { transition-delay: 0.3s; }
+    .faq-item:nth-child(4) { transition-delay: 0.4s; }
+    
+    /* Hover lift effect */
     .hover-lift {
         transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
+    /* Scale on hover */
     .scale-on-hover {
         transition: transform 0.2s ease;
     }
     
-    .shimmer-loading {
-        position: relative;
-        overflow: hidden;
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
     }
     
-    @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+    /* Performance optimizations */
+    .animate-on-scroll,
+    .animate-stagger-item,
+    .job-card-link,
+    .job-card-inner,
+    .companies-grid > div,
+    .categories-section a,
+    .faq-item {
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+    
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        .animate-on-scroll,
+        .animate-stagger-item,
+        .job-card-link,
+        .job-card-inner,
+        .companies-grid > div,
+        .categories-section a,
+        .faq-item {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
     }
 `;
 

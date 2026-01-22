@@ -47,77 +47,102 @@
                 @media (max-width: 767px) {
                     section#home.hero-section {
                         min-height: auto !important;
-                        padding-top: 2rem !important;
-                        padding-bottom: 2rem !important;
+                        padding-top: 3rem !important;
+                        padding-bottom: 3rem !important;
                         margin-bottom: 2rem !important;
+                        display: flex !important;
+                        align-items: flex-start !important;
                     }
                     .hero-content-wrapper {
                         width: 100% !important;
-                        padding-left: 20px !important;
-                        padding-right: 20px !important;
+                        padding-left: 1rem !important;
+                        padding-right: 1rem !important;
+                        margin: 0 auto !important;
                     }
                     .hero-content-overlay {
                         width: 100% !important;
+                        max-width: 100% !important;
                     }
                     h1.hero-headline {
-                        font-size: 32px !important;
-                        margin-bottom: 1rem !important;
-                        line-height: 1.2 !important;
+                        font-size: 28px !important;
+                        margin-bottom: 1.5rem !important;
+                        line-height: 1.3 !important;
+                        letter-spacing: -0.5px !important;
+                        word-wrap: break-word !important;
+                        overflow-wrap: break-word !important;
                     }
                     h1.hero-headline span {
                         display: block !important;
                     }
+                    h1.hero-headline .hero-headline-line-1,
+                    h1.hero-headline .hero-headline-line-2 {
+                        display: block !important;
+                        width: 100% !important;
+                    }
+                    /* Fix for hero characters to display horizontally */
+                    .hero-headline .hero-char,
+                    .hero-subheadline .hero-char {
+                        display: inline-block !important;
+                        vertical-align: baseline !important;
+                        line-height: inherit !important;
+                    }
+                    .hero-headline span[style*="white-space:nowrap"],
+                    .hero-subheadline span[style*="white-space:nowrap"] {
+                        white-space: normal !important;
+                        display: inline !important;
+                    }
                     p.hero-subheadline {
-                        font-size: 18px !important;
+                        font-size: 16px !important;
                         margin-top: 1rem !important;
-                        margin-bottom: 1.5rem !important;
+                        margin-bottom: 2rem !important;
+                        line-height: 1.5 !important;
+                        word-wrap: break-word !important;
+                        overflow-wrap: break-word !important;
                     }
                     .hero-buttons {
-                        flex-direction: row !important;
-                        flex-wrap: nowrap !important;
-                        gap: 0.25rem !important;
+                        flex-direction: column !important;
+                        flex-wrap: wrap !important;
+                        gap: 0.75rem !important;
                         width: 100% !important;
                         max-width: 100% !important;
+                        margin-bottom: 2rem !important;
                     }
                     .hero-buttons a,
                     .hero-buttons > div {
-                        flex: 1 1 0 !important;
-                        min-width: 0 !important;
-                        overflow: hidden !important;
-                        max-width: calc(50% - 0.125rem) !important;
+                        flex: 1 1 auto !important;
+                        min-width: 100% !important;
+                        max-width: 100% !important;
+                        width: 100% !important;
                     }
                     .hero-buttons a {
-                        padding-left: 0.5rem !important;
-                        padding-right: 0.5rem !important;
-                        padding-top: 0.5rem !important;
-                        padding-bottom: 0.5rem !important;
+                        padding-left: 1.25rem !important;
+                        padding-right: 1.25rem !important;
+                        padding-top: 0.875rem !important;
+                        padding-bottom: 0.875rem !important;
                         display: flex !important;
                         align-items: center !important;
                         justify-content: center !important;
                         text-align: center !important;
-                        overflow: hidden !important;
                         width: 100% !important;
                         max-width: 100% !important;
                         box-sizing: border-box !important;
+                        border-radius: 9999px !important;
                     }
                     .hero-buttons a span {
-                        font-size: 0.6rem !important;
-                        line-height: 1.2 !important;
-                        white-space: nowrap !important;
-                        overflow: hidden !important;
-                        text-overflow: ellipsis !important;
-                        display: inline-block !important;
-                        max-width: 100% !important;
-                        flex-shrink: 1 !important;
+                        font-size: 0.875rem !important;
+                        line-height: 1.4 !important;
+                        white-space: normal !important;
+                        word-break: break-word !important;
+                        display: block !important;
+                        text-align: center !important;
                     }
                     .hero-buttons img {
                         flex-shrink: 0 !important;
-                        width: 0.875rem !important;
-                        height: 0.875rem !important;
-                        margin-right: 0.25rem !important;
+                        width: 1rem !important;
+                        height: 1rem !important;
+                        margin-right: 0.5rem !important;
                     }
                     .hero-buttons > div {
-                        overflow: hidden !important;
                         width: 100% !important;
                         max-width: 100% !important;
                         box-sizing: border-box !important;
@@ -125,23 +150,139 @@
                     .hero-buttons > div a {
                         width: 100% !important;
                         max-width: 100% !important;
+                        padding-left: 1.25rem !important;
+                        padding-right: 1.25rem !important;
+                        padding-top: 0.875rem !important;
+                        padding-bottom: 0.875rem !important;
+                    }
+                    .hero-buttons > div a span {
+                        font-size: 0.875rem !important;
+                        line-height: 1.4 !important;
+                        white-space: normal !important;
+                        word-break: break-word !important;
                     }
                     span.hero-badge-text {
-                        font-size: 16px !important;
+                        font-size: 14px !important;
+                        line-height: 1.4 !important;
                     }
                     img.hero-brand-logo {
-                        height: 1.5rem !important;
+                        height: 1.25rem !important;
                     }
                     img.hero-badge-icon {
-                        width: 1.25rem !important;
-                        height: 1.25rem !important;
+                        width: 1.125rem !important;
+                        height: 1.125rem !important;
                     }
                     img.hero-button-icon {
                         width: 1rem !important;
                         height: 1rem !important;
                     }
                     .hero-badge-container {
+                        margin-bottom: 1.5rem !important;
+                        flex-wrap: wrap !important;
+                    }
+                    .hero-badge-container img {
+                        flex-shrink: 0 !important;
+                    }
+                    /* Trust section mobile */
+                    .hero-trust-section {
+                        margin-top: 2rem !important;
+                    }
+                    .hero-trust-text {
+                        font-size: 14px !important;
                         margin-bottom: 1rem !important;
+                    }
+                    .hero-marquee {
+                        gap: 1.5rem !important;
+                    }
+                    .hero-marquee-container {
+                        margin-top: 0.5rem !important;
+                    }
+                    /* Better spacing overall */
+                    .hero-content-overlay > * {
+                        margin-bottom: 1rem !important;
+                    }
+                    .hero-content-overlay > *:last-child {
+                        margin-bottom: 0 !important;
+                    }
+                }
+            </style>
+            <style>
+                /* Hero Text Animation */
+                .hero-char {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: heroCharFadeIn 0.6s ease forwards;
+                    display: inline-block !important;
+                    vertical-align: baseline !important;
+                    line-height: inherit !important;
+                }
+                
+                @keyframes heroCharFadeIn {
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                /* Ensure hero text displays horizontally */
+                .hero-headline,
+                .hero-subheadline {
+                    display: block !important;
+                    white-space: normal !important;
+                }
+                
+                .hero-headline .hero-headline-line-1,
+                .hero-headline .hero-headline-line-2 {
+                    display: block !important;
+                    white-space: normal !important;
+                }
+                
+                /* Force all hero characters to display inline */
+                .hero-headline span,
+                .hero-subheadline span {
+                    display: inline !important;
+                    white-space: normal !important;
+                }
+                
+                .hero-headline span[style*="white-space:nowrap"],
+                .hero-subheadline span[style*="white-space:nowrap"] {
+                    white-space: normal !important;
+                    display: inline !important;
+                }
+                
+                /* Mobile fixes for hero text */
+                @media (max-width: 767px) {
+                    .hero-char {
+                        display: inline-block !important;
+                        vertical-align: baseline !important;
+                        line-height: 1.3 !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+                    
+                    .hero-headline,
+                    .hero-subheadline {
+                        display: block !important;
+                        white-space: normal !important;
+                    }
+                    
+                    .hero-headline .hero-headline-line-1,
+                    .hero-headline .hero-headline-line-2 {
+                        display: block !important;
+                        white-space: normal !important;
+                        line-height: 1.3 !important;
+                    }
+                    
+                    .hero-headline span,
+                    .hero-subheadline span {
+                        display: inline !important;
+                        white-space: normal !important;
+                    }
+                    
+                    .hero-headline span[style*="white-space:nowrap"],
+                    .hero-subheadline span[style*="white-space:nowrap"] {
+                        white-space: normal !important;
+                        display: inline !important;
                     }
                 }
             </style>
@@ -154,13 +295,17 @@
 
                 <!-- Headline -->
                 <h1 class="font-bold mb-6 leading-tight hero-headline" style="font-size: 83px; color: #ffffff;">
-                    <span class="block" style="color: #ffffff;">Là où les offres d'emploi</span>
-                    <span class="block" style="color: #d9d9d9;">Gagnent en visibilité.</span>
+                    <span class="block hero-headline-line-1" style="color: #ffffff;">
+                        <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">L</span><span class="hero-char" style="display: inline-block; will-change: transform;">à</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">ù</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">d</span><span class="hero-char" style="display: inline-block; will-change: transform;">'</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span></span>
+                    </span>
+                    <span class="block hero-headline-line-2" style="color: #d9d9d9;">
+                        <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">G</span><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">g</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">v</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">b</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">é</span><span class="hero-char" style="display: inline-block; will-change: transform;">.</span></span>
+                    </span>
                 </h1>
 
                 <!-- Sub-headline -->
                 <p class="mb-12 mt-12 hero-subheadline" style="color: #ffffff; font-size: 34px;">
-                    Postulez gratuitement ou publiez une offre et amplifiez votre recrutement.
+                    <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">P</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">g</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">b</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">v</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">c</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">.</span></span>
                 </p>
 
                 <!-- Buttons -->
@@ -181,16 +326,16 @@
                 </div>
 
                 <!-- Trust Section -->
-                <div>
-                    <p class="mb-3" style="color: #a6a6a6; font-size: 16px;">Ils nous font confiance:</p>
+                <div class="hero-trust-section">
+                    <p class="mb-3 hero-trust-text" style="color: #a6a6a6; font-size: 16px;">Ils nous font confiance:</p>
                     
                     <!-- Marquee/Slider for Brand Logos -->
-                    <div class="overflow-hidden relative">
+                    <div class="overflow-hidden relative hero-marquee-container">
                         <!-- Left fade gradient -->
-                        <div class="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style="background: linear-gradient(to right, #1f1f1f, transparent);"></div>
+                        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to right, #1f1f1f, transparent);"></div>
                         <!-- Right fade gradient -->
-                        <div class="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style="background: linear-gradient(to left, #1f1f1f, transparent);"></div>
-                        <div class="flex animate-marquee gap-4">
+                        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to left, #1f1f1f, transparent);"></div>
+                        <div class="flex animate-marquee gap-4 hero-marquee">
                             @for($i = 1; $i <= 8; $i++)
                                 <div class="flex-shrink-0">
                                     <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
@@ -268,6 +413,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Hero text character animation
+    function animateHeroChars() {
+        const chars = document.querySelectorAll('.hero-char');
+        let charIndex = 0;
+        
+        chars.forEach((char, index) => {
+            // Calculate delay based on character index (0.05s per character)
+            const delay = charIndex * 0.05;
+            char.style.animationDelay = delay + 's';
+            charIndex++;
+        });
+    }
+    
+    // Initialize hero animation
+    animateHeroChars();
+    
     // Handle popular search buttons
     window.searchPopular = function(keyword) {
         const searchInput = document.getElementById('homeSearchInput');

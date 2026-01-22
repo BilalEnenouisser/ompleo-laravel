@@ -114,6 +114,94 @@
     animation: marquee 30s linear infinite;
   }
 
+  /* Smooth scroll animations */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+  }
+  
+  .animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card animations with stagger effect */
+  .job-card-link,
+  .job-card-inner,
+  .companies-grid > div,
+  .categories-section a,
+  .faq-item {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .job-card-link.card-animated,
+  .job-card-inner.card-animated,
+  .companies-grid > div.card-animated,
+  .categories-section a.card-animated,
+  .faq-item.card-animated {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Stagger delays for job cards */
+  .jobs-section .job-card-link:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  
+  .jobs-section .job-card-link:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+  
+  .jobs-section .job-card-link:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  /* Stagger delays for company cards */
+  .companies-grid > div:nth-child(1) { transition-delay: 0.05s; }
+  .companies-grid > div:nth-child(2) { transition-delay: 0.1s; }
+  .companies-grid > div:nth-child(3) { transition-delay: 0.15s; }
+  .companies-grid > div:nth-child(4) { transition-delay: 0.2s; }
+  .companies-grid > div:nth-child(5) { transition-delay: 0.25s; }
+  .companies-grid > div:nth-child(6) { transition-delay: 0.3s; }
+
+  /* Stagger delays for category cards */
+  .categories-section a:nth-child(1) { transition-delay: 0.05s; }
+  .categories-section a:nth-child(2) { transition-delay: 0.1s; }
+  .categories-section a:nth-child(3) { transition-delay: 0.15s; }
+  .categories-section a:nth-child(4) { transition-delay: 0.2s; }
+  .categories-section a:nth-child(5) { transition-delay: 0.25s; }
+  .categories-section a:nth-child(6) { transition-delay: 0.3s; }
+  .categories-section a:nth-child(7) { transition-delay: 0.35s; }
+  .categories-section a:nth-child(8) { transition-delay: 0.4s; }
+
+  /* Stagger delays for FAQ items */
+  .faq-item:nth-child(1) { transition-delay: 0.1s; }
+  .faq-item:nth-child(2) { transition-delay: 0.2s; }
+  .faq-item:nth-child(3) { transition-delay: 0.3s; }
+  .faq-item:nth-child(4) { transition-delay: 0.4s; }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll,
+    .job-card-link,
+    .job-card-inner,
+    .companies-grid > div,
+    .categories-section a,
+    .faq-item {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
   /* Desktop-First Responsive Utilities */
   /* Desktop is default, mobile/tablet override with max-width media queries */
   @media (max-width: 1023px) {
