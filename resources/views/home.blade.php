@@ -408,9 +408,12 @@
     {{-- <div class="animate-on-scroll">
         @include('components.recruiter-cta')
     </div> --}}
+
+    <!-- Footer -->
+    @include('components.footer')
 </div>
 
-
+        
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Hero text character animation

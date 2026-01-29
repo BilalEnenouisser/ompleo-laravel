@@ -1,4 +1,4 @@
-<footer class="bg-[#2b2b2b] text-[#cccccc] relative overflow-hidden">
+<footer class="bg-[#212221] text-[#cccccc] relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Company Info -->

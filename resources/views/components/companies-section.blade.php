@@ -28,6 +28,15 @@ $companies = $companies ?? collect();
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
         }
+        
+        /* Company card hover border effect */
+        .company-card-wrapper {
+            background: transparent !important;
+            transition: background 0.3s ease;
+        }
+        .company-card-wrapper:hover {
+            background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) !important;
+        }
     </style>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Header -->
@@ -59,7 +68,8 @@ $companies = $companies ?? collect();
                     }
                 @endphp
                 
-                <div class="rounded-xl p-5 transition-all duration-300 flex flex-col" style="background-color: #2B2B2B;">
+                <div class="company-card-wrapper rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
+                <div class="rounded-xl p-5 transition-all duration-300 flex flex-col h-full" style="background-color: #2B2B2B; border-radius: 11px;">
                     {{-- Top Section: Logo on Left, Industry on Right --}}
                     <div class="flex gap-4 mb-4 items-center">
                         {{-- Company Logo on Left --}}
@@ -125,6 +135,7 @@ $companies = $companies ?? collect();
                     <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                         Voir les offres
                     </a>
+                </div>
                 </div>
             @endforeach
         </div>

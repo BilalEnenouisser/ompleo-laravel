@@ -276,7 +276,7 @@ $jobs = $jobs ?? collect();
                             </div>
 
                             <!-- Right: Posted Date / View Job -->
-                            <div class="flex-shrink-0 job-card-date-container" style="min-width: 150px;">
+                            <div class="flex-shrink-0 job-card-date-container" style="min-width: 210px;">
                                 <!-- Posted Date (default) -->
                                 <p class="text-sm text-gray-400 job-card-date">
                                     Posted on: {{ $job->created_at->format('M d, Y') }}
