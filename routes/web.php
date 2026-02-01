@@ -24,6 +24,11 @@ use App\Http\Controllers\LocaleController;
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Nos Solutions (Recruiter Solutions Page)
+Route::get('/nos-solutions', function () {
+    return view('nos-solutions');
+})->name('nos-solutions');
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

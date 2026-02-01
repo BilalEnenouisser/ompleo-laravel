@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
                     @endphp
                 <!-- Parcourir les offres with dropdown -->
                 <div class="relative group z-[10001]">
-                    <button class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc] flex items-center gap-1">
+                    <button class="px-4 py-2 text-base font-normal transition-all duration-300 flex items-center gap-1 {{ request()->routeIs('jobs.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }}">
                         <span>Parcourir les offres</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="m6 9 6 6 6-6"></path>
@@ -51,13 +51,13 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                <a href="{{ route('companies.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 {{ request()->routeIs('companies.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }}">
                     Entreprises
                 </a>
-                <a href="{{ route('about') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                <a href="{{ route('about') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 {{ request()->routeIs('about') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }}">
                     À propos
                 </a>
-                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 text-white hover:text-[#39fffc]">
+                <a href="{{ route('blog.index') }}" class="px-4 py-2 text-base font-normal transition-all duration-300 {{ request()->routeIs('blog.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }}">
                     Blog
                     </a>
                 </nav>
@@ -273,7 +273,7 @@ use Illuminate\Support\Facades\Storage;
                     </div>
                 @else
                     <!-- Publier une offre d'emploi button -->
-                    <a href="{{ route('signup.recruiter') }}" class="px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
+                    <a href="{{ route('nos-solutions') }}" class="px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
                         Publier une offre d'emploi
                     </a>
                     

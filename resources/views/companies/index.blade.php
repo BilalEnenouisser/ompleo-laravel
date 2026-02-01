@@ -7,27 +7,76 @@
 use Illuminate\Support\Facades\Storage;
 @endphp
 
-<div class="min-h-screen bg-white dark:bg-[#1f1f1f] relative overflow-hidden">
+<div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#00b6b4] text-white py-16 relative overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl lg:text-5xl font-bold mb-6">
-                Découvrez l'entreprise faite pour vous
+    <section class="bg-transparent text-white pt-32 pb-12 relative overflow-hidden z-10 companies-hero">
+        <style>
+            .companies-hero h1 {
+                font-size: 70px;
+            }
+            @media (max-width: 1023px) {
+                .companies-hero h1 {
+                    font-size: 48px !important;
+                }
+            }
+            @media (max-width: 767px) {
+                .companies-hero {
+                    padding-top: 6rem !important;
+                    padding-bottom: 2rem !important;
+                }
+                .companies-hero h1 {
+                    font-size: 32px !important;
+                }
+                .companies-hero p {
+                    font-size: 16px !important;
+                }
+            }
+        </style>
+        <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
+            <h1 class="font-bold mb-6 leading-tight">
+                <span style="color: #ffffff;">Découvrez les entreprises</span><br>
+                <span style="color: #d9d9d9;">qui recrutent</span>
             </h1>
+            <p class="text-xl" style="color: #ffffff;">
+                Explorez les entreprises actuellement à la recherche de talents qualifiés
+            </p>
         </div>
     </section>
 
-
     <!-- Search and Filters -->
-    <section class="py-8 relative z-10 -mt-8 bg-white dark:bg-[#1f1f1f] animate-on-scroll">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <form method="GET" action="{{ route('companies.index') }}" class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-[#333333]">
+    <section class="py-8 relative z-10 animate-on-scroll">
+        <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
+            <form method="GET" action="{{ route('companies.index') }}" class="rounded-2xl p-6" style="background: rgba(43, 43, 43, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
                 <!-- Company Count - Top -->
                 <div class="mb-6">
                     <div class="text-lg lg:text-xl text-white text-center lg:text-left">
                         <span class="font-medium">{{ number_format($companyCount) }}</span> entreprises actives sur Ompleo
                     </div>
                 </div>
+                
+                <style>
+                    .companies-filter-select {
+                        background-color: rgba(33, 34, 33, 0.8) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                        color: #f5f5f5 !important;
+                    }
+                    .companies-filter-select:focus {
+                        border-color: #00b6b4 !important;
+                    }
+                    .companies-filter-select option {
+                        background-color: #212221 !important;
+                        color: #f5f5f5 !important;
+                    }
+                    
+                    /* Company card hover border effect */
+                    .company-card-wrapper {
+                        background: transparent;
+                        transition: background 0.3s ease;
+                    }
+                    .company-card-wrapper:hover {
+                        background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) !important;
+                    }
+                </style>
                 
                 <!-- Mobile Layout -->
                 <div class="block lg:hidden space-y-4">
@@ -36,7 +85,7 @@ use Illuminate\Support\Facades\Storage;
                         <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        <select name="company_name" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                        <select name="company_name" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                             <option value="">Nom de l'entreprise</option>
                             @foreach($companyNames as $name)
                                 <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
@@ -55,7 +104,7 @@ use Illuminate\Support\Facades\Storage;
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            <select name="location" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <select name="location" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                                 <option value="">Région, Wilaya</option>
                                 <option value="Adrar" {{ request('location') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
                                 <option value="Chlef" {{ request('location') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
@@ -121,7 +170,7 @@ use Illuminate\Support\Facades\Storage;
                             <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
-                            <select name="industry" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <select name="industry" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                                 <option value="">Secteur d'activité</option>
                                 @foreach($industries as $ind)
                                     <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
@@ -135,10 +184,10 @@ use Illuminate\Support\Facades\Storage;
                     
                     <!-- Action Buttons - Same Line -->
                     <div class="grid grid-cols-2 gap-3">
-                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
+                        <button type="submit" class="text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
+                        <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -155,7 +204,7 @@ use Illuminate\Support\Facades\Storage;
                             <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
-                            <select name="company_name" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <select name="company_name" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                                 <option value="">Nom de l'entreprise</option>
                                 @foreach($companyNames as $name)
                                     <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
@@ -172,7 +221,7 @@ use Illuminate\Support\Facades\Storage;
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            <select name="location" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <select name="location" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                                 <option value="">Région, Wilaya</option>
                                 <option value="Adrar" {{ request('location') == 'Adrar' ? 'selected' : '' }}>Adrar</option>
                                 <option value="Chlef" {{ request('location') == 'Chlef' ? 'selected' : '' }}>Chlef</option>
@@ -238,7 +287,7 @@ use Illuminate\Support\Facades\Storage;
                             <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
-                            <select name="industry" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
+                            <select name="industry" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
                                 <option value="">Secteur d'activité</option>
                                 @foreach($industries as $ind)
                                     <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
@@ -260,10 +309,10 @@ use Illuminate\Support\Facades\Storage;
                                 }
                             }
                         </style>
-                        <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 min-w-[140px]">
+                        <button type="submit" class="text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 min-w-[140px]" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
+                        <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -276,7 +325,15 @@ use Illuminate\Support\Facades\Storage;
 
     <!-- Companies Grid -->
     <section class="py-16 relative z-10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Background Images -->
+        <div class="absolute top-0 left-0 hidden lg:block pointer-events-none z-0" style="width: 25%; max-width: 450px;">
+            <img src="{{ asset('storage/company_page/left.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: left top;">
+        </div>
+        <div class="absolute top-0 right-0 hidden lg:block pointer-events-none z-0" style="width: 25%; max-width: 450px;">
+            <img src="{{ asset('storage/company_page/right.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: right top;">
+        </div>
+        
+        <div class="w-[90%] mx-auto relative z-10" style="padding-left: 20px; padding-right: 20px;">
             <div id="companiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($companies as $company)
                     @php
@@ -290,7 +347,8 @@ use Illuminate\Support\Facades\Storage;
                         }
                     @endphp
                     
-                    <div class="bg-[#282828] rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-[#333333] flex flex-col">
+                    <div class="company-card-wrapper rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
+                    <div class="bg-[#282828] rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full" style="border-radius: 11px;">
                         {{-- Top Section: Logo on Left, Industry on Right --}}
                         <div class="flex gap-4 mb-4 items-center">
                             {{-- Company Logo on Left --}}
@@ -356,6 +414,7 @@ use Illuminate\Support\Facades\Storage;
                         <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                             Voir les offres
                         </a>
+                    </div>
                     </div>
                 @empty
                     <div class="col-span-3 text-center py-16">
@@ -486,26 +545,65 @@ use Illuminate\Support\Facades\Storage;
         </div>
     </section>
 
-    <!-- Featured Companies Banner -->
-    <section class="py-16 bg-[#1F1F1F]">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-[#2F2F2F] rounded-3xl p-8 md:p-10 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-                <div class="flex-1">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">
-                        Faites partie des entreprises mises en avant
+    <!-- CTA Section -->
+    <section class="relative bg-[#1f1f1f] overflow-hidden cta-section">
+        <style>
+            /* Desktop (1024px and above) */
+            @media (min-width: 1024px) {
+                section.cta-section {
+                    padding-top: 10rem;
+                    padding-bottom: 10rem;
+                }
+            }
+            
+            /* Tablet (768px - 1023px) */
+            @media (min-width: 768px) and (max-width: 1023px) {
+                section.cta-section {
+                    padding-top: 6rem;
+                    padding-bottom: 6rem;
+                }
+            }
+            
+            /* Mobile (max-width: 767px) */
+            @media (max-width: 767px) {
+                section.cta-section {
+                    padding-top: 5rem;
+                    padding-bottom: 5rem;
+                }
+            }
+        </style>
+        
+        <!-- Background Image - Center Bottom -->
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 pointer-events-none z-0" style="width: 50%; max-width: 540px;">
+            <img src="{{ asset('storage/company_page/midbotom.png') }}" alt="Background" class="w-full h-auto object-cover">
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <!-- Card -->
+                <div class="p-6 sm:p-8 md:p-12 rounded-lg text-center" style="background-color: rgba(43, 43, 43, 0.73); border-radius: 10px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid transparent; border-image: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) 1; border-image-slice: 1;">
+                    <!-- Title -->
+                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                        Prêt(e) à booster la visibilité de vos offres d'emploi ?
                     </h2>
-                    <p class="text-base md:text-lg text-white">
-                        Créez votre page et connectez-vous aux bons talents.
+                    
+                    <!-- Description -->
+                    <p class="text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-2 sm:px-4 md:px-8" style="color: #d9d9d9;">
+                        Publiez, diffusez et atteignez les candidats qui correspondent vraiment à vos besoins.
                     </p>
-                </div>
-                <div class="flex-shrink-0">
-                    <a href="{{ route('signup.recruiter') }}" class="inline-block bg-[#B3B3B3] hover:bg-[#A0A0A0] text-[#2F2F2F] px-10 py-4 rounded-full font-semibold text-base md:text-lg transition-all duration-300 whitespace-nowrap">
-                        En savoir plus
+                    
+                    <!-- Button -->
+                    <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-white text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border-radius: 9999px;">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-4 h-4 sm:w-5 sm:h-5">
+                        <span class="whitespace-nowrap">Découvrir nos solutions</span>
                     </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    @include('components.footer')
 </div>
 
 @endsection
