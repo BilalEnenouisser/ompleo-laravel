@@ -1,170 +1,334 @@
 @extends('layouts.app')
 
-@section('title', 'Choisir votre profil - OMPLEO')
-@section('description', 'Choisissez votre profil pour commencer votre parcours professionnel sur OMPLEO.')
+@section('title', 'Inscription - OMPLEO')
+@section('description', 'Créez votre compte sur OMPLEO pour trouver un emploi ou recruter les meilleurs talents.')
 
 @section('content')
 @include('components.header')
 
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-    <!-- Background Shapes -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="liquid-shape w-96 h-96 bg-gradient-to-br from-primary-200/20 to-accent-200/20 dark:from-primary-800/10 dark:to-accent-800/10 top-20 -left-20"></div>
-        <div class="liquid-shape w-80 h-80 bg-gradient-to-br from-accent-200/20 to-primary-200/20 dark:from-accent-800/10 dark:to-primary-800/10 bottom-20 -right-20" style="animation-delay: 2s;"></div>
-        <div class="liquid-shape w-64 h-64 bg-gradient-to-br from-primary-100/20 to-accent-100/20 dark:from-primary-900/10 dark:to-accent-900/10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation-delay: 4s;"></div>
+<div class="bg-[#1f1f1f] relative overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="{{ asset('storage/nos_solutions/midsing.png') }}" alt="Background" class="w-full h-full object-cover opacity-80">
     </div>
     
-    <div class="max-w-4xl w-full space-y-8 relative z-10">
-        <div class="text-center animate-fade-in-up">
-            <div class="flex items-center justify-center mb-6">
-                <img src="{{ asset('logo mode nuit.png') }}" alt="OMPLEO" class="h-16 w-auto">
-            </div>
-            <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                Rejoignez OMPLEO
-            </h2>
-            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Choisissez votre profil pour commencer votre parcours professionnel
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <!-- Candidat -->
-            <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
-                <a href="{{ route('signup.candidate') }}" class="group liquid-glass-card p-8 block h-full hover:-translate-y-2 transition-all duration-300">
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 shadow-glass-glow">
-                            <svg class="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                                <circle cx="12" cy="7" r="4"/>
-                            </svg>
+    <style>
+        /* Page load animation */
+        .page-fade-in {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            animation: pageFadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes pageFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .signup-card {
+            background: rgba(54, 54, 54, 0.7);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px;
+            border: 1px solid #16b6b4;
+            max-width: 470px;
+            margin: 0 auto;
+        }
+        .signup-tab {
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #16b6b4;
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .signup-tab:hover {
+            background: rgba(22, 182, 180, 0.15);
+        }
+        .signup-tab.active {
+            background: rgba(22, 182, 180, 0.25);
+            border-color: #00fadc;
+            color: #ffffff;
+        }
+        .signup-input {
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #16b6b4;
+            border-radius: 10px;
+            padding: 14px 16px;
+            padding-left: 44px;
+            color: white;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .signup-input::placeholder {
+            color: #888;
+        }
+        .signup-input:focus {
+            outline: none;
+            border-color: #00fadc;
+            background: rgba(40, 40, 40, 0.95);
+            box-shadow: 0 0 10px rgba(22, 182, 180, 0.2);
+        }
+        .signup-input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            width: 20px;
+            height: 20px;
+        }
+        .signup-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border: 2px solid #16b6b4;
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .signup-checkbox:checked {
+            background: #16b6b4;
+            border-color: #16b6b4;
+        }
+        .signup-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .signup-submit-btn {
+            background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b);
+            background-size: 200% 200%;
+            background-position: 0% 50%;
+            color: white;
+            font-weight: 600;
+            padding: 14px 40px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+        .signup-submit-btn:hover {
+            background-position: 100% 50%;
+            transform: translateY(-2px);
+        }
+        .signup-link {
+            color: #16b6b4;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .signup-link:hover {
+            color: #00fadc;
+        }
+        .form-label {
+            color: #d8d4d4;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+    </style>
+    
+    <div class="signup-page min-h-screen flex items-center justify-center py-24 md:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="w-full">
+            <div class="signup-card p-6 sm:p-8 page-fade-in">
+                <!-- Header -->
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-white mb-2">
+                        Trouvez l'emploi qui vous correspond
+                    </h2>
+                    <p class="text-sm leading-relaxed">
+                        Accédez aux offres d'emploi, postulez facilement et recevez des opportunités adaptées à votre profil.
+                    </p>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="mb-6">
+                    <p class="text-center  text-sm mb-4">Quel est votre besoin ?*</p>
+                    <div class="flex justify-center gap-3">
+                        <button type="button" id="tabRecruiter" class="signup-tab" onclick="switchTab('recruiter')">
+                            Je souhaite recruter
+                        </button>
+                        <button type="button" id="tabCandidate" class="signup-tab active" onclick="switchTab('candidate')">
+                            Je cherche un emploi
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Error Messages -->
+                @if($errors->any())
+                    <div class="mb-4 p-3 bg-red-900/30 border border-red-500/50 rounded-lg text-red-400 text-sm">
+                        @foreach($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
+                
+                <!-- Candidate Form -->
+                <form id="candidateForm" method="POST" action="{{ route('register') }}" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="user_type" value="candidate">
+                    
+                    <!-- Name Fields -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Prénom *</label>
+                            <div class="relative">
+                                <svg class="signup-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                <input type="text" name="firstName" class="signup-input" placeholder="Prenom" value="{{ old('firstName') }}" required>
+                            </div>
                         </div>
-                        
-                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4 gradient-text">
-                            Je suis candidat
-                        </h3>
-                        
-                        <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            Créez votre profil, postulez aux offres qui vous correspondent et boostez votre carrière
-                        </p>
-                        
-                        <ul class="text-left space-y-3 mb-8">
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-primary-500 dark:text-primary-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Accès à toutes les offres d'emploi</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-primary-500 dark:text-primary-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Profil professionnel valorisant</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-primary-500 dark:text-primary-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Profil mis en avant</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-primary-500 dark:text-primary-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Suivi des candidatures</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="flex items-center justify-center gap-2 text-primary-600 dark:text-primary-400 font-medium group-hover:gap-4 transition-all duration-300">
-                            <span>Créer mon compte candidat</span>
-                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"/>
-                                <path d="m12 5 7 7-7 7"/>
-                            </svg>
+                        <div>
+                            <label class="form-label">Nom *</label>
+                            <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Nom" value="{{ old('lastName') }}" required>
                         </div>
                     </div>
-                </a>
-            </div>
 
-            <!-- Recruteur -->
-            <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
-                <a href="{{ route('signup.recruiter') }}" class="group liquid-glass-card p-8 block h-full hover:-translate-y-2 transition-all duration-300">
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 shadow-glass-glow">
-                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6h4"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 10h4"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14h4"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 18h4"></path>
-                            </svg>
+                    <!-- Email -->
+                    <div>
+                        <label class="form-label">Adresse e-mail*</label>
+                        <input type="email" name="email" class="signup-input" style="padding-left: 16px;" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label class="form-label">Mot de passe *</label>
+                        <input type="password" name="password" id="passwordCandidate" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label class="form-label">Confirmer le mot de passe *</label>
+                        <input type="password" name="password_confirmation" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="flex items-start gap-3 mt-6">
+                        <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
+                        <span class="text-xs  leading-relaxed">
+                            J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
+                        </span>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="signup-submit-btn mt-6">
+                        Commencer mon essai gratuit
+                    </button>
+                </form>
+                
+                <!-- Recruiter Form (Hidden by default) -->
+                <form id="recruiterForm" method="POST" action="{{ route('register') }}" class="space-y-4 hidden">
+                    @csrf
+                    <input type="hidden" name="user_type" value="recruiter">
+                    
+                    <!-- Name Fields -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Prénom *</label>
+                            <div class="relative">
+                                <svg class="signup-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                <input type="text" name="firstName" class="signup-input" placeholder="Prenom" value="{{ old('firstName') }}" required>
+                            </div>
                         </div>
-                        
-                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4 gradient-text">
-                            Je suis recruteur
-                        </h3>
-                        
-                        <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            Publiez vos offres, trouvez les meilleurs talents et gérez vos recrutements efficacement
-                        </p>
-                        
-                        <ul class="text-left space-y-3 mb-8">
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-accent-500 dark:text-accent-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Essai gratuit 24h (1 offre)</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-accent-500 dark:text-accent-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Accès aux profils certifiés</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-accent-500 dark:text-accent-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Outils de gestion avancés</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                                <svg class="w-5 h-5 text-accent-500 dark:text-accent-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                    <path d="m9 11 3 3L22 4"/>
-                                </svg>
-                                <span>Support prioritaire</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="flex items-center justify-center gap-2 text-accent-600 dark:text-accent-400 font-medium group-hover:gap-4 transition-all duration-300">
-                            <span>Créer mon compte recruteur</span>
-                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"/>
-                                <path d="m12 5 7 7-7 7"/>
-                            </svg>
+                        <div>
+                            <label class="form-label">Nom *</label>
+                            <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Nom" value="{{ old('lastName') }}" required>
                         </div>
                     </div>
-                </a>
-            </div>
-        </div>
 
-        <div class="text-center mt-8 animate-fade-in-up" style="animation-delay: 0.6s;">
-            <p class="text-gray-600 dark:text-gray-400">
-                Vous avez déjà un compte ? 
-                <a href="{{ route('login') }}" class="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors duration-200">
-                    Se connecter
-                </a>
-            </p>
+                    <!-- Company -->
+                    <div>
+                        <label class="form-label">Entreprise *</label>
+                        <input type="text" name="company" class="signup-input" style="padding-left: 16px;" placeholder="Nom de votre entreprise" value="{{ old('company') }}" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label class="form-label">Adresse e-mail*</label>
+                        <input type="email" name="email" class="signup-input" style="padding-left: 16px;" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label class="form-label">Mot de passe *</label>
+                        <input type="password" name="password" id="passwordRecruiter" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label class="form-label">Confirmer le mot de passe *</label>
+                        <input type="password" name="password_confirmation" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="flex items-start gap-3 mt-6">
+                        <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
+                        <span class="text-xs text-gray-400 leading-relaxed">
+                            J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
+                        </span>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="signup-submit-btn mt-6">
+                        Commencer mon essai gratuit
+                    </button>
+                </form>
+                
+                <!-- Login Link -->
+                <div class="text-center mt-6">
+                    <p class="text-sm">
+                        Déjà inscrit ? <a href="{{ route('login') }}" class="signup-link">Connectez-vous</a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <!-- Footer -->
+    @include('components.footer')
 </div>
 
+<script>
+function switchTab(tab) {
+    const tabCandidate = document.getElementById('tabCandidate');
+    const tabRecruiter = document.getElementById('tabRecruiter');
+    const candidateForm = document.getElementById('candidateForm');
+    const recruiterForm = document.getElementById('recruiterForm');
+    
+    if (tab === 'candidate') {
+        tabCandidate.classList.add('active');
+        tabRecruiter.classList.remove('active');
+        candidateForm.classList.remove('hidden');
+        recruiterForm.classList.add('hidden');
+    } else {
+        tabRecruiter.classList.add('active');
+        tabCandidate.classList.remove('active');
+        recruiterForm.classList.remove('hidden');
+        candidateForm.classList.add('hidden');
+    }
+}
+</script>
 @endsection

@@ -76,30 +76,75 @@
                         font-size: 14px !important;
                     }
                 }
+                /* Hero Character Animation */
+                .hero-char {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: heroCharFadeIn 0.6s ease forwards;
+                    display: inline-block;
+                }
+                @keyframes heroCharFadeIn {
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                .hero-subtitle-animate {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: heroCharFadeIn 0.6s ease forwards;
+                }
+                .hero-btn-animate {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: heroCharFadeIn 0.6s ease forwards;
+                }
             </style>
             <div class="nos-solutions-hero">
                 <!-- Title -->
-                <h1 class="font-bold mb-8 leading-tight text-white">
-                    Recrutez plus vite, avec les bons profils
+                <h1 class="font-bold mb-8 leading-tight text-white nos-solutions-hero-title">
+                    <span class="hero-char">R</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">r</span><span class="hero-char">u</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">z</span><span class="hero-char">&nbsp;</span><span class="hero-char">p</span><span class="hero-char">l</span><span class="hero-char">u</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">v</span><span class="hero-char">i</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">,</span><span class="hero-char">&nbsp;</span><span class="hero-char">a</span><span class="hero-char">v</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">&nbsp;</span><span class="hero-char">l</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">b</span><span class="hero-char">o</span><span class="hero-char">n</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">p</span><span class="hero-char">r</span><span class="hero-char">o</span><span class="hero-char">f</span><span class="hero-char">i</span><span class="hero-char">l</span><span class="hero-char">s</span>
                 </h1>
                 
                 <!-- Subtitle with left border -->
-                <div class="mb-10 pl-6 hero-subtitle" style="border-left: 3px solid #16b6b4;">
+                <div class="mb-10 pl-6 hero-subtitle hero-subtitle-animate" style="border-left: 3px solid #16b6b4;">
                     <p class="text-white leading-relaxed">
                         Publiez vos offres et améliorez leur visibilité auprès des candidats qualifiés.
                     </p>
                 </div>
                 
                 <!-- Button -->
-                <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full text-white text-sm md:text-base font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
+                <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full text-white text-sm md:text-base font-bold transition-all duration-300 hover:scale-105 hero-btn-animate" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
                     <span>Essayez gratuitement</span>
                 </a>
             </div>
         </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate hero characters with stagger
+            const heroChars = document.querySelectorAll('.nos-solutions-hero-title .hero-char');
+            heroChars.forEach((char, index) => {
+                char.style.animationDelay = (index * 0.03) + 's';
+            });
+            
+            // Animate subtitle after title
+            const subtitle = document.querySelector('.nos-solutions-hero .hero-subtitle-animate');
+            if (subtitle) {
+                subtitle.style.animationDelay = (heroChars.length * 0.03 + 0.2) + 's';
+            }
+            
+            // Animate button after subtitle
+            const btn = document.querySelector('.nos-solutions-hero .hero-btn-animate');
+            if (btn) {
+                btn.style.animationDelay = (heroChars.length * 0.03 + 0.4) + 's';
+            }
+        });
+        </script>
     </section>
 
     <!-- Pricing Section -->
-    <section class="relative py-20 md:py-32 lg:py-72 overflow-hidden">
+    <section class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll">
         <style>
             .pricing-card {
                 position: relative;
@@ -547,7 +592,7 @@
     </section>
 
     <!-- Contact Form Section -->
-    <section class="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1f1f1f]">
+    <section class="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1f1f1f] animate-on-scroll">
         <!-- Background Image at Bottom -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('storage/nos_solutions/bottom.png') }}" alt="Background" class="w-full h-full object-cover">

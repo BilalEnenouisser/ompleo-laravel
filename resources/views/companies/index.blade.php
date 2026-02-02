@@ -31,17 +31,55 @@ use Illuminate\Support\Facades\Storage;
                     font-size: 16px !important;
                 }
             }
+            /* Hero Character Animation */
+            .hero-char {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: heroCharFadeIn 0.6s ease forwards;
+                display: inline-block;
+            }
+            @keyframes heroCharFadeIn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .hero-subtitle-animate {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: heroCharFadeIn 0.6s ease forwards;
+            }
         </style>
         <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
-            <h1 class="font-bold mb-6 leading-tight">
-                <span style="color: #ffffff;">Découvrez les entreprises</span><br>
-                <span style="color: #d9d9d9;">qui recrutent</span>
+            <h1 class="font-bold mb-6 leading-tight companies-hero-title">
+                <span class="block" style="color: #ffffff;">
+                    <span class="hero-char">D</span><span class="hero-char">é</span><span class="hero-char">c</span><span class="hero-char">o</span><span class="hero-char">u</span><span class="hero-char">v</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">z</span><span class="hero-char">&nbsp;</span><span class="hero-char">l</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">p</span><span class="hero-char">r</span><span class="hero-char">i</span><span class="hero-char">s</span><span class="hero-char">e</span><span class="hero-char">s</span>
+                </span>
+                <span class="block" style="color: #d9d9d9;">
+                    <span class="hero-char">q</span><span class="hero-char">u</span><span class="hero-char">i</span><span class="hero-char">&nbsp;</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">r</span><span class="hero-char">u</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span>
+                </span>
             </h1>
-            <p class="text-xl" style="color: #ffffff;">
+            <p class="text-xl hero-subtitle-animate" style="color: #ffffff;">
                 Explorez les entreprises actuellement à la recherche de talents qualifiés
             </p>
         </div>
     </section>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate hero characters with stagger
+        const heroChars = document.querySelectorAll('.companies-hero .hero-char');
+        heroChars.forEach((char, index) => {
+            char.style.animationDelay = (index * 0.03) + 's';
+        });
+        
+        // Animate subtitle after title
+        const subtitle = document.querySelector('.companies-hero .hero-subtitle-animate');
+        if (subtitle) {
+            subtitle.style.animationDelay = (heroChars.length * 0.03 + 0.2) + 's';
+        }
+    });
+    </script>
 
     <!-- Search and Filters -->
     <section class="py-8 relative z-10 animate-on-scroll">
