@@ -7,7 +7,7 @@
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-[#333333] bg-[#2b2b2b] gap-4">
         <div class="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
             <a href="{{ route('admin.blog') }}" class="flex items-center gap-2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors flex-shrink-0">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 12H5"/>
                     <path d="M12 19l-7-7 7-7"/>
                 </svg>
@@ -20,7 +20,7 @@
         
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button id="fullscreenBtn" class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] rounded-lg transition-colors">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
                     <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
                     <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
@@ -29,14 +29,14 @@
                 <span class="hidden sm:inline">Plein écran</span>
             </button>
             <button id="previewBtn" class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] rounded-lg transition-colors">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                     <circle cx="12" cy="12" r="3"/>
                 </svg>
                 <span class="hidden sm:inline">Aperçu</span>
             </button>
             <button id="saveBtn" class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-[#333333] hover:bg-[#444444] text-[#f5f5f5] rounded-lg transition-colors">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                     <polyline points="17,21 17,13 7,13 7,21"/>
                     <polyline points="7,3 7,8 15,8"/>
@@ -44,7 +44,7 @@
                 <span class="hidden sm:inline">Sauvegarder</span>
             </button>
             <button id="publishBtn" class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg transition-colors">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
                 <span class="hidden sm:inline">Publier</span>
@@ -102,7 +102,7 @@
                             class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
                             onclick="event.stopPropagation(); uploadFeaturedImage()"
                         >
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                                 <circle cx="12" cy="13" r="3"/>
                             </svg>
@@ -119,7 +119,7 @@
                 
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
                     <button onclick="addBlock('title')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 12h8"/>
                             <path d="M4 18V6"/>
                             <path d="M12 18V6"/>
@@ -129,7 +129,7 @@
                     </button>
                     
                     <button onclick="addBlock('subtitle')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 12h8"/>
                             <path d="M4 18V6"/>
                             <path d="M12 18V6"/>
@@ -139,7 +139,7 @@
                     </button>
                     
                     <button onclick="addBlock('paragraph')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
                             <path d="M6 12h9"/>
                         </svg>
@@ -147,7 +147,7 @@
                     </button>
                     
                     <button onclick="addBlock('image')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
                             <circle cx="9" cy="9" r="2"/>
                             <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
@@ -156,7 +156,7 @@
                     </button>
                     
                     <button onclick="addBlock('quote')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
                             <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
                         </svg>
@@ -164,7 +164,7 @@
                     </button>
                     
                     <button onclick="addBlock('list')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="8" x2="21" y1="6" y2="6"/>
                             <line x1="8" x2="21" y1="12" y2="12"/>
                             <line x1="8" x2="21" y1="18" y2="18"/>
@@ -176,7 +176,7 @@
                     </button>
                     
                     <button onclick="addBlock('code')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="16,18 22,12 16,6"/>
                             <polyline points="8,6 2,12 8,18"/>
                         </svg>
@@ -184,7 +184,7 @@
                     </button>
                     
                     <button onclick="addBlock('separator')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="3" x2="21" y1="12" y2="12"/>
                             <line x1="3" x2="21" y1="6" y2="6"/>
                             <line x1="3" x2="21" y1="18" y2="18"/>
@@ -193,7 +193,7 @@
                     </button>
                     
                     <button onclick="addBlock('columns')" class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 border border-[#e5e7eb] rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#333333] transition-colors">
-                        <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect width="18" height="18" x="3" y="3" rx="2"/>
                             <path d="M3 9h18"/>
                             <path d="M9 21V9"/>
@@ -479,7 +479,7 @@ function generateBlockHTML(blockId, type, content = '') {
                                     class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
                                     onclick="event.stopPropagation(); uploadImage('${blockId}')"
                                 >
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                                         <circle cx="12" cy="13" r="3"/>
                                     </svg>
@@ -739,7 +739,7 @@ document.getElementById('previewBtn').addEventListener('click', function(e) {
     if (isPreview) {
         // Switch to preview mode - hide sidebar
         this.innerHTML = `
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
             </svg>
@@ -757,7 +757,7 @@ document.getElementById('previewBtn').addEventListener('click', function(e) {
     } else {
         // Switch to edit mode - show sidebar
         this.innerHTML = `
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                 <circle cx="12" cy="12" r="3"/>
             </svg>
@@ -911,7 +911,7 @@ function updateFeaturedImageDisplay(imageUrl) {
                     class="px-4 py-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white rounded-lg flex items-center gap-2 transition-colors"
                     onclick="uploadFeaturedImage()"
                 >
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                         <circle cx="12" cy="13" r="3"/>
                     </svg>
@@ -1277,10 +1277,10 @@ async function saveArticle(status) {
     const originalSaveText = saveBtn.innerHTML;
     
     if (status === 'published') {
-        publishBtn.innerHTML = '<svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Publication...';
+        publishBtn.innerHTML = '<svg class="w-7 h-7 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Publication...';
         publishBtn.disabled = true;
     } else {
-        saveBtn.innerHTML = '<svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Sauvegarde...';
+        saveBtn.innerHTML = '<svg class="w-7 h-7 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Sauvegarde...';
         saveBtn.disabled = true;
     }
     
@@ -1369,15 +1369,15 @@ function showNotification(message, type = 'success') {
         <div class="flex items-start gap-3">
             <div class="flex-shrink-0">
                 ${type === 'success' ? 
-                    '<svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
-                    '<svg class="w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                    '<svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                    '<svg class="w-7 h-7 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
                 }
             </div>
             <div class="flex-1">
                 <p class="text-sm font-medium text-white">${message}</p>
             </div>
             <button onclick="this.parentElement.parentElement.remove()" class="text-gray-300 hover:text-white">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
             </button>
         </div>
     `;

@@ -68,7 +68,7 @@
             <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                     <div class="bg-blue-100 text-blue-600 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                     </div>
                     <div class="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-3 h-3 sm:w-4 sm:h-4"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
@@ -82,7 +82,7 @@
             <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                     <div class="bg-green-100 text-green-600 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </div>
                     <div class="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-3 h-3 sm:w-4 sm:h-4"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
@@ -96,7 +96,7 @@
             <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                     <div class="bg-purple-100 text-purple-600 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
                     <div class="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-3 h-3 sm:w-4 sm:h-4"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
@@ -110,7 +110,7 @@
             <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                     <div class="bg-orange-100 text-orange-600 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                     </div>
                     <div class="flex items-center gap-1 text-xs sm:text-sm font-medium text-green-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-3 h-3 sm:w-4 sm:h-4"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
@@ -233,7 +233,7 @@
                 <div class="space-y-3 sm:space-y-4">
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-blue-400/20 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                            <svg class="w-7 h-7 sm:w-8 sm:h-8 text-blue-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">En cours</p>
                                 <p class="text-xs sm:text-sm text-[#9ca3af]">Candidatures en attente</p>
@@ -244,7 +244,7 @@
                     
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-green-400/20 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                            <svg class="w-7 h-7 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Acceptées</p>
                                 <p class="text-xs sm:text-sm text-[#9ca3af]">Candidatures retenues</p>
@@ -255,7 +255,7 @@
                     
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-red-400/20 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-red-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                            <svg class="w-7 h-7 sm:w-8 sm:h-8 text-red-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Refusées</p>
                                 <p class="text-xs sm:text-sm text-[#9ca3af]">Candidatures non retenues</p>
@@ -381,7 +381,7 @@
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-[#00b6b4]/10 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Candidatures totales</p>
@@ -394,7 +394,7 @@
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-green-400/10 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Taux de conversion</p>
@@ -407,7 +407,7 @@
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-blue-400/10 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Offres actives</p>
@@ -420,7 +420,7 @@
                     <div class="flex items-center justify-between p-3 sm:p-4 bg-purple-400/10 rounded-lg">
                         <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 bg-purple-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5 text-purple-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-semibold text-[#f5f5f5] text-xs sm:text-sm md:text-base">Vues totales</p>

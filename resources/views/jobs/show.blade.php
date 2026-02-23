@@ -13,7 +13,7 @@
         @if(session('success'))
             <div class="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                 <div class="flex items-center gap-2 text-green-700 dark:text-green-400">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     <span class="font-medium">{{ session('success') }}</span>
@@ -24,7 +24,7 @@
         @if(session('error'))
             <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <div class="flex items-center gap-2 text-red-700 dark:text-red-400">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     <span class="font-medium">{{ session('error') }}</span>
@@ -90,7 +90,7 @@
                             </div>
                             
                             <div class="flex items-center gap-1 mb-4">
-                                <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
                                     <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
                                     <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
@@ -106,21 +106,21 @@
                             
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 dark:text-gray-400">
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                                         <circle cx="12" cy="10" r="3"></circle>
                                     </svg>
                                     <span>{{ $job->location }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12,6 12,12 16,14"></polyline>
                                     </svg>
                                     <span>{{ $job->type }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>
                                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -129,7 +129,7 @@
                                     <span>{{ $job->experience_level ?? 'Non spécifié' }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
                                         <line x1="16" x2="16" y1="2" y2="6"></line>
                                         <line x1="8" x2="8" y1="2" y2="6"></line>
@@ -153,12 +153,12 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"></path>
                                 </svg>
                             </button>
                             <button class="p-2 text-gray-400 hover:text-[#00b6b4] transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <circle cx="18" cy="5" r="3"></circle>
                                     <circle cx="6" cy="12" r="3"></circle>
                                     <circle cx="18" cy="19" r="3"></circle>
@@ -261,7 +261,7 @@
                             @if($existingApplication)
                                 <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                                     <div class="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 mb-2">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <span class="font-semibold">Candidature envoyée</span>
@@ -289,7 +289,7 @@
                                     href="{{ route('applications.create', $job) }}"
                                     class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                                 >
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <line x1="22" y1="2" x2="11" y2="13"></line>
                                         <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                                     </svg>
@@ -308,7 +308,7 @@
                             href="{{ route('login') }}"
                             class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                         >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <line x1="22" y1="2" x2="11" y2="13"></line>
                                 <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                             </svg>
@@ -365,7 +365,7 @@
                                 </div>
                                 
                                 <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                    <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
                                         <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
                                         <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
@@ -379,21 +379,21 @@
                                 
                                 <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
                                     <div class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
                                         </svg>
                                         <span>{{ $relatedJob->location }}</span>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <polyline points="12,6 12,12 16,14"></polyline>
                                         </svg>
                                         <span>{{ $relatedJob->type }}</span>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <polyline points="12,6 12,12 16,14"></polyline>
                                         </svg>
@@ -411,7 +411,7 @@
                                             Salaire non spécifié
                                         @endif
                                     </p>
-                                    <svg class="w-4 h-4 text-gray-400 group-hover:text-[#00b6b4] transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-gray-400 group-hover:text-[#00b6b4] transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M5 12h14"></path>
                                         <path d="m12 5 7 7-7 7"></path>
                                     </svg>
@@ -426,7 +426,7 @@
                             class="text-[#00b6b4] hover:text-[#009e9c] font-medium text-sm flex items-center gap-1"
                         >
                             Voir toutes les offres
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M5 12h14"></path>
                                 <path d="m12 5 7 7-7 7"></path>
                             </svg>

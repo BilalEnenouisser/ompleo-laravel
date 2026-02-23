@@ -193,6 +193,7 @@ Route::middleware('auth')->group(function () {
 // Companies Routes (now shows candidates)
 Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
 Route::get('/companies/{id}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.show');
+Route::get('/company/{slug}', [App\Http\Controllers\CompanyController::class, 'showCompany'])->name('company.detail');
 Route::post('/companies/{id}/message', [App\Http\Controllers\CompanyController::class, 'sendMessage'])->name('companies.sendMessage')->middleware('auth');
 
 // Public Jobs Routes (duplicate removed - already defined above)

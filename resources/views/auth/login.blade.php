@@ -36,7 +36,7 @@
                         Adresse email
                     </label>
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                         <input 
@@ -61,7 +61,7 @@
                         Mot de passe
                     </label>
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                             <circle cx="12" cy="16" r="1"></circle>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -80,11 +80,11 @@
                             onclick="togglePassword()" 
                             class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                         >
-                            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <svg id="eyeIcon" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
-                            <svg id="eyeOffIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <svg id="eyeOffIcon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
@@ -104,7 +104,7 @@
                             id="remember" 
                             name="remember" 
                             type="checkbox" 
-                            class="w-4 h-4 bg-white dark:bg-[#2b2b2b] border-gray-300 dark:border-[#444444] rounded focus:ring-[#00b6b4] text-[#00b6b4]"
+                            class="w-7 h-7 bg-white dark:bg-[#2b2b2b] border-gray-300 dark:border-[#444444] rounded focus:ring-[#00b6b4] text-[#00b6b4]"
                         >
                         <span class="ml-2 text-sm text-[#111111] dark:text-[#cccccc]">Se souvenir de moi</span>
                     </label>
@@ -118,7 +118,7 @@
                     type="submit" 
                     class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-3 rounded-xl flex items-center justify-center gap-2 shadow-sm hover:scale-102 transition-all duration-200"
                 >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
                         <polyline points="10,17 15,12 10,7"></polyline>
                         <line x1="15" x2="3" y1="12" y2="12"></line>
@@ -141,7 +141,7 @@
                         type="button" 
                         class="w-full inline-flex justify-center py-2 px-4 bg-white dark:bg-[#2b2b2b] border border-gray-200 dark:border-[#333333] text-[#111111] dark:text-[#f5f5f5] rounded-lg hover:bg-gray-50 dark:hover:bg-[#333333] hover:scale-102 transition-all duration-200"
                     >
-                        <svg class="w-5 h-5 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <svg class="w-7 h-7 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <circle cx="12" cy="12" r="4"></circle>
                             <path d="M21.17 8H12"></path>
@@ -154,7 +154,7 @@
                         type="button" 
                         class="w-full inline-flex justify-center py-2 px-4 bg-white dark:bg-[#2b2b2b] border border-gray-200 dark:border-[#333333] text-[#111111] dark:text-[#f5f5f5] rounded-lg hover:bg-gray-50 dark:hover:bg-[#333333] hover:scale-102 transition-all duration-200"
                     >
-                        <svg class="w-5 h-5 text-[#00b6b4]" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 text-[#00b6b4]" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                         <span class="ml-2">Facebook</span>

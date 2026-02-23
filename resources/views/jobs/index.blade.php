@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Storage;
                 <div class="block lg:hidden space-y-4">
                     <!-- Search Input - Full Width -->
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                         <input
@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Storage;
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Location Filter -->
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
@@ -109,14 +109,14 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="Ghardaïa" {{ request('location') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
                                 <option value="Relizane" {{ request('location') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                     </div>
                     
                         <!-- Work Type Filter -->
-                    <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                             <select name="type" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
@@ -125,7 +125,7 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="onsite" {{ request('type') == 'onsite' ? 'selected' : '' }}>Présentiel</option>
                                 <option value="hybrid" {{ request('type') == 'hybrid' ? 'selected' : '' }}>Hybride</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
@@ -134,8 +134,8 @@ use Illuminate\Support\Facades\Storage;
                     <!-- Experience and Sort - Same Line -->
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Experience Filter -->
-                    <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <select id="experience" name="experience" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
@@ -153,14 +153,14 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="Senior" {{ request('experience') == 'Senior' ? 'selected' : '' }}>Senior</option>
                                 <option value="Expert" {{ request('experience') == 'Expert' ? 'selected' : '' }}>Expert</option>
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                         
                         <!-- Sort Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
                             </svg>
                             <select name="sort" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none">
@@ -169,7 +169,7 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="salary_desc" {{ request('sort') == 'salary_desc' ? 'selected' : '' }}>Salaire décroissant</option>
                                 <option value="title" {{ request('sort') == 'title' ? 'selected' : '' }}>Titre A-Z</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                     </div>
@@ -181,7 +181,7 @@ use Illuminate\Support\Facades\Storage;
                             Rechercher
                         </button>
                         <a href="{{ route('jobs.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -194,7 +194,7 @@ use Illuminate\Support\Facades\Storage;
                     <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
                     <!-- Search Input -->
                     <div class="lg:col-span-2 relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                         <input 
@@ -208,7 +208,7 @@ use Illuminate\Support\Facades\Storage;
                     
                     <!-- Location Filter -->
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
@@ -263,14 +263,14 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="Ghardaïa" {{ request('location') == 'Ghardaïa' ? 'selected' : '' }}>Ghardaïa</option>
                                 <option value="Relizane" {{ request('location') == 'Relizane' ? 'selected' : '' }}>Relizane</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                     </div>
                     
                         <!-- Work Type Filter -->
-                    <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                             <select name="type" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
@@ -279,14 +279,14 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="onsite" {{ request('type') == 'onsite' ? 'selected' : '' }}>Présentiel</option>
                                 <option value="hybrid" {{ request('type') == 'hybrid' ? 'selected' : '' }}>Hybride</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                 </div>
                 
                         <!-- Experience Filter -->
-                    <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <select id="experience" name="experience" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5]">
@@ -304,14 +304,14 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="Senior" {{ request('experience') == 'Senior' ? 'selected' : '' }}>Senior</option>
                                 <option value="Expert" {{ request('experience') == 'Expert' ? 'selected' : '' }}>Expert</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                         
                         <!-- Sort Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
                             </svg>
                             <select name="sort" class="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-[#333333] rounded-lg bg-white dark:bg-[#2b2b2b] text-[#111111] dark:text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none">
@@ -320,7 +320,7 @@ use Illuminate\Support\Facades\Storage;
                             <option value="salary_desc" {{ request('sort') == 'salary_desc' ? 'selected' : '' }}>Salaire décroissant</option>
                             <option value="title" {{ request('sort') == 'title' ? 'selected' : '' }}>Titre A-Z</option>
                         </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
@@ -340,7 +340,7 @@ use Illuminate\Support\Facades\Storage;
                             Rechercher
                         </button>
                         <a href="{{ route('jobs.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -398,7 +398,7 @@ use Illuminate\Support\Facades\Storage;
                     data-loading="false"
                 >
                     <span class="btn-text">Voir plus d'offres</span>
-                    <svg id="loading-spinner" class="w-5 h-5 animate-spin hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="loading-spinner" class="w-6 h-6 animate-spin hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
                             </button>

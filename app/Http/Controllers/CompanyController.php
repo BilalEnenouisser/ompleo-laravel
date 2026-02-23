@@ -116,6 +116,24 @@ class CompanyController extends Controller
         return view('companies.show', compact('candidate', 'profile'));
     }
 
+    public function showCompany($slug)
+    {
+        // Find company by slug or ID
+        $company = Company::where('slug', $slug)
+            ->orWhere('id', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        // Get published jobs for this company
+        $jobs = $company->jobs()
+            ->where('status', 'published')
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('companies.company-detail', compact('company', 'jobs'));
+    }
+
     public function sendMessage(Request $request, $id)
     {
         $request->validate([

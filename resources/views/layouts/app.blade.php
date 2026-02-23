@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     
     <!-- Vite Assets - Automatically handles both dev and production builds -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/hero-animations.css', 'resources/js/app.js'])
     
     @stack('styles')
 </head>

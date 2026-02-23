@@ -22,7 +22,7 @@
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg overflow-hidden">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
                 <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] flex items-center gap-2">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
                         <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
                     </svg>
@@ -35,7 +35,7 @@
                         class="p-1.5 sm:p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                         title="Modèles"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panels-top-left w-4 h-4 sm:w-5 sm:h-5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panels-top-left w-7 h-7 sm:w-5 sm:h-5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
                     </button>
                     <button
                         onclick="togglePreview()"
@@ -43,7 +43,7 @@
                         class="p-1.5 sm:p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                         title="Aperçu"
                     >
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                             <circle cx="12" cy="12" r="3"/>
                         </svg>
@@ -54,7 +54,7 @@
                             class="p-1.5 sm:p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                             title="Zoom arrière"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minimize w-4 h-4 sm:w-5 sm:h-5"><path d="M8 3v3a2 2 0 0 1-2 2H3"></path><path d="M21 8h-3a2 2 0 0 1-2-2V3"></path><path d="M3 16h3a2 2 0 0 1 2 2v3"></path><path d="M16 21v-3a2 2 0 0 1 2-2h3"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minimize w-7 h-7 sm:w-5 sm:h-5"><path d="M8 3v3a2 2 0 0 1-2 2H3"></path><path d="M21 8h-3a2 2 0 0 1-2-2V3"></path><path d="M3 16h3a2 2 0 0 1 2 2v3"></path><path d="M16 21v-3a2 2 0 0 1 2-2h3"></path></svg>
                         </button>
                         <span class="text-xs sm:text-sm text-[#9ca3af]" id="zoom-level">100%</span>
                         <button
@@ -62,7 +62,7 @@
                             class="p-1.5 sm:p-2 rounded-lg text-[#9ca3af] hover:text-[#00b6b4] hover:bg-[#00b6b4]/10 transition-colors"
                             title="Zoom avant"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize w-4 h-4 sm:w-5 sm:h-5"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize w-7 h-7 sm:w-5 sm:h-5"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
                         </button>
                     </div>
                 </div>
@@ -213,16 +213,16 @@
             {{-- Color Picker Popup --}}
             <div id="color-picker" class="absolute bg-[#333333] rounded-lg shadow-lg border border-[#444444] p-2 z-10 hidden" style="opacity: 1; transform: none;">
                 <div class="flex flex-wrap gap-1.5 sm:gap-2 p-1.5 sm:p-2">
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(0, 182, 180);" onclick="selectColor('#00b6b4')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(17, 17, 17);" onclick="selectColor('#111111')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(245, 245, 245);" onclick="selectColor('#f5f5f5')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 71, 87);" onclick="selectColor('#ff4757')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(46, 213, 115);" onclick="selectColor('#2ed573')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(30, 144, 255);" onclick="selectColor('#1e90ff')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 165, 2);" onclick="selectColor('#ffa502')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(83, 82, 237);" onclick="selectColor('#5352ed')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 255, 255);" onclick="selectColor('#ffffff')"></button>
-                    <button type="button" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(43, 43, 43);" onclick="selectColor('#2b2b2b')">
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(0, 182, 180);" onclick="selectColor('#00b6b4')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(17, 17, 17);" onclick="selectColor('#111111')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(245, 245, 245);" onclick="selectColor('#f5f5f5')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 71, 87);" onclick="selectColor('#ff4757')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(46, 213, 115);" onclick="selectColor('#2ed573')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(30, 144, 255);" onclick="selectColor('#1e90ff')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 165, 2);" onclick="selectColor('#ffa502')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(83, 82, 237);" onclick="selectColor('#5352ed')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(255, 255, 255);" onclick="selectColor('#ffffff')"></button>
+                    <button type="button" class="w-7 h-7 sm:w-6 sm:h-6 rounded-full border border-[#444444] flex items-center justify-center" style="background-color: rgb(43, 43, 43);" onclick="selectColor('#2b2b2b')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-3 h-3 sm:w-4 sm:h-4 text-white"><path d="M20 6 9 17l-5-5"></path></svg>
                     </button>
                 </div>
@@ -233,46 +233,46 @@
                 <div class="bg-[#333333] border border-[#444444] rounded-lg p-3 sm:p-4">
                     <h3 class="font-medium text-[#f5f5f5] mb-3 sm:mb-4 text-sm sm:text-base">Sélectionner un emoji</h3>
                     <div class="grid grid-cols-8 sm:grid-cols-10 gap-1.5 sm:gap-2 max-w-xs">
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😀')">😀</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😃')">😃</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😄')">😄</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😁')">😁</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😆')">😆</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😅')">😅</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😂')">😂</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🤣')">🤣</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😊')">😊</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😇')">😇</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙂')">🙂</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙃')">🙃</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😉')">😉</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😌')">😌</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😍')">😍</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🥰')">🥰</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😘')">😘</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😗')">😗</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😙')">😙</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😚')">😚</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👍')">👍</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👎')">👎</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👏')">👏</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙌')">🙌</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🤝')">🤝</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👨‍💻')">👨‍💻</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👩‍💻')">👩‍💻</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🏆')">🏆</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎯')">🎯</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('✅')">✅</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('⭐')">⭐</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🔥')">🔥</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('💯')">💯</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎉')">🎉</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎊')">🎊</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎁')">🎁</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📢')">📢</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📣')">📣</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('💬')">💬</button>
-                        <button class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📝')">📝</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😀')">😀</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😃')">😃</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😄')">😄</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😁')">😁</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😆')">😆</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😅')">😅</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😂')">😂</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🤣')">🤣</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😊')">😊</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😇')">😇</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙂')">🙂</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙃')">🙃</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😉')">😉</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😌')">😌</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😍')">😍</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🥰')">🥰</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😘')">😘</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😗')">😗</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😙')">😙</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('😚')">😚</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👍')">👍</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👎')">👎</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👏')">👏</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🙌')">🙌</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🤝')">🤝</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👨‍💻')">👨‍💻</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('👩‍💻')">👩‍💻</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🏆')">🏆</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎯')">🎯</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('✅')">✅</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('⭐')">⭐</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🔥')">🔥</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('💯')">💯</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎉')">🎉</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎊')">🎊</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('🎁')">🎁</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📢')">📢</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📣')">📣</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('💬')">💬</button>
+                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#444444] rounded text-sm sm:text-lg" onclick="addEmoji('📝')">📝</button>
                     </div>
                 </div>
             </div>
@@ -342,7 +342,7 @@
                             class="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded text-[#9ca3af] hover:bg-[#444444] hover:text-[#00b6b4] text-xs sm:text-sm transition-colors"
                             title="Agrandir le canvas"
                         >
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
                             </svg>
                             <span class="hidden sm:inline">Agrandir</span>
@@ -398,7 +398,7 @@
                         Destinataires *
                     </label>
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -422,7 +422,7 @@
                         Type de notification *
                     </label>
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 16v-4"/>
                             <path d="M12 8h.01"/>
@@ -463,7 +463,7 @@
                         type="submit"
                         class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
                     >
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 2L11 13"/>
                             <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
                         </svg>
@@ -476,7 +476,7 @@
         {{-- Preview --}}
         <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg overflow-hidden">
             <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6 flex items-center gap-2">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
                 </svg>
@@ -538,7 +538,7 @@
     {{-- Notification History --}}
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-4 sm:p-6 shadow-lg mt-6 sm:mt-8">
         <h2 class="text-lg sm:text-xl font-bold text-[#f5f5f5] mb-4 sm:mb-6 flex items-center gap-2">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7 sm:w-5 sm:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="12 6 12 12 16 14"/>
             </svg>
@@ -548,7 +548,7 @@
         {{-- Filters --}}
         <div class="flex flex-col md:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div class="flex-1 relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"/>
                     <path d="m21 21-4.35-4.35"/>
                 </svg>
@@ -561,7 +561,7 @@
                 />
             </div>
             <div class="relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
                 </svg>
                 <select
@@ -772,7 +772,7 @@
             <!-- Header -->
             <div class="flex items-center gap-4 mb-6">
                 <div class="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 6h18"/>
                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -807,7 +807,7 @@
                     onclick="confirmDeleteNotification()"
                     class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
                 >
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 6h18"/>
                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -825,7 +825,7 @@
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">Éditer le bouton</h3>
             <button onclick="closeButtonUrlModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7">
                     <path d="M18 6L6 18M6 6l12 12"/>
                 </svg>
             </button>
@@ -1247,16 +1247,16 @@ function addIconElement() {
 
 function getIconSVG(iconName) {
     const iconMap = {
-        'Bell': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
-        'AlertTriangle': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
-        'Info': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
-        'CheckCircle': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>',
-        'Gift': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift w-6 h-6"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>',
-        'Clock': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-        'Star': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-        'Heart': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>',
-        'ThumbsUp': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>',
-        'MessageCircle': '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>'
+        'Bell': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+        'AlertTriangle': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
+        'Info': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+        'CheckCircle': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>',
+        'Gift': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift w-7 h-7"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>',
+        'Clock': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+        'Star': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+        'Heart': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>',
+        'ThumbsUp': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>',
+        'MessageCircle': '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>'
     };
     return iconMap[iconName] || iconMap['Bell'];
 }
@@ -2058,8 +2058,8 @@ function showToast(title, message, type = 'success') {
             <div class="flex-shrink-0">
                 <div class="w-8 h-8 rounded-full ${type === 'success' ? 'bg-green-500/20' : 'bg-red-500/20'} flex items-center justify-center">
                     ${type === 'success' ? 
-                        '<svg class="w-5 h-5 text-green-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
-                        '<svg class="w-5 h-5 text-red-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                        '<svg class="w-7 h-7 text-green-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                        '<svg class="w-7 h-7 text-red-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
                     }
                 </div>
             </div>
@@ -2069,7 +2069,7 @@ function showToast(title, message, type = 'success') {
                 ${type === 'error' ? '<p class="text-xs text-gray-400 mt-1 italic">Survolez pour garder visible</p>' : ''}
             </div>
             <button onclick="this.parentElement.parentElement.remove()" class="flex-shrink-0 text-gray-400 hover:text-white transition-colors duration-200 p-1 rounded-full hover:bg-white/10">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
             </button>
         </div>
                 <div class="absolute bottom-0 left-0 h-1 ${type === 'success' ? 'bg-green-400' : 'bg-red-400'} rounded-b-xl animate-pulse"></div>

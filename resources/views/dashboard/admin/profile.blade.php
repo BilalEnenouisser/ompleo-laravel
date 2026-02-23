@@ -69,7 +69,7 @@
                         <img id="avatarPreview" src="" alt="Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-[#00b6b4] hidden">
                     @endif
                     <label for="avatar" class="absolute bottom-0 right-0 w-10 h-10 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer shadow-lg">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
                             <circle cx="12" cy="13" r="3"></circle>
                         </svg>
@@ -143,7 +143,7 @@
                                 class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors"
                                 id="passwordToggle"
                             >
-                                <svg id="passwordToggleIcon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg id="passwordToggleIcon" class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
@@ -171,7 +171,7 @@
                                 class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors"
                                 id="passwordConfirmToggle"
                             >
-                                <svg id="passwordConfirmToggleIcon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg id="passwordConfirmToggleIcon" class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
@@ -190,7 +190,7 @@
                     type="submit" 
                     class="bg-[#00b6b4] hover:bg-[#009999] text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
                 >
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                         <polyline points="17,21 17,13 7,13 7,21"></polyline>
                         <polyline points="7,3 7,8 15,8"></polyline>

@@ -62,7 +62,7 @@ $latestJobs = $latestJobs ?? collect();
                                     type="submit"
                                     class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-[#00fadc] transition-colors"
                                 >
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <path d="m21 21-4.35-4.35"></path>
                                     </svg>
@@ -150,14 +150,14 @@ $latestJobs = $latestJobs ?? collect();
                     </style>
                     <!-- Button 1: Parcourir toutes les offres -->
                     <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon" class="w-5 h-5">
+                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon" class="w-7 h-7">
                         <span>Parcourir toutes les offres</span>
                     </a>
 
                     <!-- Button 2: Recevoir les offres par email -->
                     <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
                         <a href="#" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                            <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon" class="w-5 h-5">
+                            <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon" class="w-7 h-7">
                             <span>Recevoir les offres par email</span>
                         </a>
                     </div>

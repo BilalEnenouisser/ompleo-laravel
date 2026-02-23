@@ -42,7 +42,7 @@
                 </h2>
                 <div class="space-y-2 text-sm sm:text-base">
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                             <line x1="16" x2="16" y1="2" y2="6"/>
                             <line x1="8" x2="8" y1="2" y2="6"/>
@@ -51,7 +51,7 @@
                         <span>Du {{ $currentSubscription->start_date->format('d/m/Y') }} au {{ $currentSubscription->end_date->format('d/m/Y') }}</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12,6 12,12 16,14"/>
                         </svg>
@@ -64,7 +64,7 @@
                         </span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="12" x2="12" y1="1" y2="23"/>
                             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                         </svg>
@@ -110,14 +110,14 @@
                 <button onclick="togglePaymentInfo('banque')" class="w-full flex items-center justify-between p-4 text-left hover:bg-[#333333] transition-colors">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-900/30 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-6 sm:h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="20" height="14" x="2" y="5" rx="2"/>
                                 <line x1="2" x2="22" y1="10" y2="10"/>
                             </svg>
                         </div>
                         <span class="font-medium text-[#f5f5f5] text-sm sm:text-base">Banque</span>
                     </div>
-                    <svg id="banque-icon" class="w-5 h-5 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="banque-icon" class="w-7 h-7 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6,9 12,15 18,9"/>
                     </svg>
                 </button>
@@ -140,7 +140,7 @@
                 <button onclick="togglePaymentInfo('ccp')" class="w-full flex items-center justify-between p-4 text-left hover:bg-[#333333] transition-colors">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-900/30 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-6 sm:h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -149,7 +149,7 @@
                         </div>
                         <span class="font-medium text-[#f5f5f5] text-sm sm:text-base">CCP</span>
                     </div>
-                    <svg id="ccp-icon" class="w-5 h-5 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="ccp-icon" class="w-7 h-7 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6,9 12,15 18,9"/>
                     </svg>
                 </button>
@@ -172,7 +172,7 @@
                 <button onclick="togglePaymentInfo('especes')" class="w-full flex items-center justify-between p-4 text-left hover:bg-[#333333] transition-colors">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-900/30 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-6 sm:h-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"/>
                                 <line x1="12" x2="12" y1="2" y2="6"/>
                                 <line x1="12" x2="12" y1="18" y2="22"/>
@@ -186,7 +186,7 @@
                         </div>
                         <span class="font-medium text-[#f5f5f5] text-sm sm:text-base">Espèces</span>
                     </div>
-                    <svg id="especes-icon" class="w-5 h-5 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="especes-icon" class="w-7 h-7 text-[#9ca3af] transform transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6,9 12,15 18,9"/>
                     </svg>
                 </button>
@@ -196,7 +196,7 @@
                             Pour le paiement en espèces, veuillez nous contacter directement ou vous rendre à notre bureau.
                         </p>
                         <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 text-[#00b6b4] hover:text-[#009999] text-sm sm:text-base font-medium transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                             </svg>
                             Contact

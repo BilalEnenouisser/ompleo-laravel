@@ -42,7 +42,7 @@ $companies = $companies ?? collect();
         <!-- Header -->
         <div class="text-center mb-12 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
-                <img src="{{ asset('storage/home_page/job/icon2.svg') }}" alt="Icon" class="w-5 h-5">
+                <img src="{{ asset('storage/home_page/job/icon2.svg') }}" alt="Icon" class="w-7 h-7">
                 <span class="text-base" style="color: #d9d9d9;">Entreprises à la une</span>
             </div>
             <h2 class="text-5xl md:text-6xl font-bold text-white pb-4">
@@ -111,7 +111,7 @@ $companies = $companies ?? collect();
                         {{-- Location --}}
                         @if($company->location)
                         <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
-                            <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                             <span>{{ $company->location }}</span>
                         </div>
                         @endif
@@ -119,20 +119,20 @@ $companies = $companies ?? collect();
                         {{-- Company Size --}}
                         @if($company->size)
                         <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
-                            <svg class="w-5 h-5 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             <span>{{ $company->size }}</span>
                         </div>
                         @endif
 
                         {{-- Job Count --}}
                         <div class="flex items-center gap-2 text-sm text-[#646464]">
-                            <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             <span>{{ $company->jobs_count }} postes</span>
                         </div>
                     </div>
 
                     {{-- Button at Bottom --}}
-                    <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                    <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                         Voir les offres
                     </a>
                 </div>

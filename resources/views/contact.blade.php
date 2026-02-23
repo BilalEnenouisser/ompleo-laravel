@@ -60,24 +60,24 @@ $contactInfo = [
                     <div class="{{ $info['bgColor'] }} {{ $info['color'] }} w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                         @if($index === 0)
                             <!-- MapPin icon from Lucide React -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                                 <circle cx="12" cy="10" r="3"></circle>
                             </svg>
                         @elseif($index === 1)
                             <!-- Mail icon from Lucide React -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                                 <path d="m22 7-10 5L2 7"></path>
                             </svg>
                         @elseif($index === 2)
                             <!-- Phone icon from Lucide React -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"></path>
                             </svg>
                         @else
                             <!-- Clock icon from Lucide React -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12,6 12,12 16,14"></polyline>
                             </svg>
@@ -104,7 +104,7 @@ $contactInfo = [
                     <div class="flex items-center gap-3 mb-6">
                         <div class="bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400 w-10 h-10 rounded-lg flex items-center justify-center">
                             <!-- MessageCircle icon from Lucide React -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                             </svg>
                         </div>
@@ -185,7 +185,7 @@ $contactInfo = [
                             id="submit-btn"
                         >
                             <!-- Send icon from Lucide React -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="m22 2-7 20-4-9-9-4Z"></path>
                                 <path d="M22 2 11 13"></path>
                             </svg>
@@ -223,7 +223,7 @@ $contactInfo = [
                         <div class="space-y-4">
                             <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg">
                                 <!-- Mail icon from Lucide React -->
-                                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-7 h-7 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                                     <path d="m22 7-10 5L2 7"></path>
                                 </svg>
@@ -235,7 +235,7 @@ $contactInfo = [
                             
                             <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg">
                                 <!-- Phone icon from Lucide React -->
-                                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-7 h-7 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"></path>
                                 </svg>
                                 <div>
@@ -246,7 +246,7 @@ $contactInfo = [
                             
                             <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg">
                                 <!-- Clock icon from Lucide React -->
-                                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-7 h-7 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12,6 12,12 16,14"></polyline>
                                 </svg>
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show loading state
         submitBtn.innerHTML = `
-            <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div class="w-7 h-7 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             Envoi en cours...
         `;
         submitBtn.disabled = true;
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Reset button
             submitBtn.innerHTML = `
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="m22 2-7 20-4-9-9-4Z"></path>
                     <path d="M22 2 11 13"></path>
                 </svg>

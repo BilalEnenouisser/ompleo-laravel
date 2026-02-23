@@ -31,7 +31,7 @@ $articles = $featuredBlogs ?? collect();
                             <div class="flex items-center gap-4 mb-3 text-sm">
                                 <div class="flex items-center gap-1">
                                     <!-- Calendar icon from Lucide React -->
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                         <line x1="16" y1="2" x2="16" y2="6"></line>
                                         <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -41,7 +41,7 @@ $articles = $featuredBlogs ?? collect();
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <!-- User icon from Lucide React -->
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
@@ -98,7 +98,7 @@ $articles = $featuredBlogs ?? collect();
                 class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 dark:bg-[#2b2b2b]/80 hover:bg-white dark:hover:bg-[#333333] text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-lg z-10 transition-all duration-300 hover:scale-110"
             >
                 <!-- ChevronLeft icon from Lucide React -->
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <polyline points="15,18 9,12 15,6"></polyline>
                 </svg>
             </button>
@@ -108,7 +108,7 @@ $articles = $featuredBlogs ?? collect();
                 class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 dark:bg-[#2b2b2b]/80 hover:bg-white dark:hover:bg-[#333333] text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-lg z-10 transition-all duration-300 hover:scale-110"
             >
                 <!-- ChevronRight icon from Lucide React -->
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <polyline points="9,18 15,12 9,6"></polyline>
                 </svg>
             </button>

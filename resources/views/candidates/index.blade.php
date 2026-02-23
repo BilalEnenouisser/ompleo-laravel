@@ -216,7 +216,7 @@ $steps = [
             <div class="grid grid-cols-3 gap-2 sm:gap-8 text-center">
                 <div class="animate-fade-in-up" data-animate="stat-1">
                     <div class="flex items-center justify-center mb-2 sm:mb-4 animate-bounce-gentle">
-                        <svg class="w-6 h-6 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"></polyline>
                             <polyline points="16,7 22,7 22,13"></polyline>
                         </svg>
@@ -229,7 +229,7 @@ $steps = [
                 
                 <div class="animate-fade-in-up" data-animate="stat-2" style="animation-delay: 0.2s;">
                     <div class="flex items-center justify-center mb-2 sm:mb-4 animate-bounce-gentle" style="animation-delay: 0.5s;">
-                        <svg class="w-6 h-6 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
                         </svg>
                     </div>
@@ -241,7 +241,7 @@ $steps = [
                 
                 <div class="animate-fade-in-up" data-animate="stat-3" style="animation-delay: 0.4s;">
                     <div class="flex items-center justify-center mb-2 sm:mb-4 animate-bounce-gentle" style="animation-delay: 1s;">
-                        <svg class="w-6 h-6 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                             <polyline points="22,4 12,14.01 9,11.01"></polyline>
                         </svg>

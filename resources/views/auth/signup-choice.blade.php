@@ -45,6 +45,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         .signup-tab:hover {
             background: rgba(22, 182, 180, 0.15);
@@ -55,23 +56,23 @@
             color: #ffffff;
         }
         .signup-input {
-            background: rgba(40, 40, 40, 0.8);
+            background: repeating-linear-gradient(45deg, #28282879, #11111186);
             border: 1px solid #16b6b4;
             border-radius: 10px;
             padding: 14px 16px;
             padding-left: 44px;
-            color: white;
+            color: #ffffff;
             width: 100%;
             font-size: 14px;
             transition: all 0.3s ease;
         }
         .signup-input::placeholder {
-            color: #888;
+            color: #ffffff;
         }
         .signup-input:focus {
             outline: none;
             border-color: #00fadc;
-            background: rgba(40, 40, 40, 0.95);
+            background: repeating-linear-gradient(45deg, #28282879, #11111186);
             box-shadow: 0 0 10px rgba(22, 182, 180, 0.2);
         }
         .signup-input-icon {
@@ -79,9 +80,18 @@
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #666;
+            color: #d9d9d9;
             width: 20px;
             height: 20px;
+            filter: invert(0) brightness(1);
+            opacity: 0.9;
+        }
+        .signup-input:focus ~ .signup-input-icon,
+        .signup-input-icon {
+            transition: opacity 0.3s ease;
+        }
+        .signup-input:focus ~ .signup-input-icon {
+            opacity: 1;
         }
         .signup-checkbox {
             appearance: none;
@@ -140,23 +150,69 @@
             color: #00fadc;
         }
         .form-label {
-            color: #d8d4d4;
+            color: #ffffff;
             font-size: 13px;
             font-weight: 500;
             margin-bottom: 8px;
             display: block;
+        }
+        /* Recruiter Badge Styling */
+        #recruiterFormContainer {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        /* Icon styling for image elements */
+        .relative img.signup-input-icon {
+            filter: brightness(0.8) opacity(0.7);
+            transition: all 0.3s ease;
+        }
+        .relative:focus-within img.signup-input-icon {
+            filter: brightness(1) opacity(1);
+        }
+        /* Enhanced recruiter form styling */
+        #recruiterFormContainer input.signup-input::placeholder {
+            color: #ffffff;
+            font-weight: 300;
+        }
+        #recruiterFormContainer .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
         }
     </style>
     
     <div class="signup-page min-h-screen flex items-center justify-center py-24 md:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="w-full">
             <div class="signup-card p-6 sm:p-8 page-fade-in">
-                <!-- Header -->
-                <div class="text-center mb-6">
+                <!-- Recruiter Header (Shown/Hidden based on tab) -->
+                <div id="recruiterHeader" class="hidden text-center mb-6">
+                    <div class="relative flex justify-center mb-4">
+                        <img src="{{ asset('storage/login-icons/48h.png') }}" alt="48H essais" class="inline-block">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white text-2xl font-semibold tracking-wide">48H d'essais gratuit</span>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white pt-3 mb-3 mt-4">
+                        Recrutez mieux et plus rapidement
+                    </h2>
+                    <p class="text-sm  leading-relaxed max-w-md mx-auto">
+                        Publiez vos offres d'emploi, gagnez en visibilité et recrutez plus efficacement avec <span class="text-white">OMPLEO</span>
+                    </p>
+                </div>
+
+                <!-- Candidate Header -->
+                <div id="candidateHeader" class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-white mb-2">
                         Trouvez l'emploi qui vous correspond
                     </h2>
-                    <p class="text-sm leading-relaxed">
+                    <p class="text-sm text-white leading-relaxed">
                         Accédez aux offres d'emploi, postulez facilement et recevez des opportunités adaptées à votre profil.
                     </p>
                 </div>
@@ -184,118 +240,139 @@
                 @endif
                 
                 <!-- Candidate Form -->
-                <form id="candidateForm" method="POST" action="{{ route('register') }}" class="space-y-4">
-                    @csrf
-                    <input type="hidden" name="user_type" value="candidate">
-                    
-                    <!-- Name Fields -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="form-label">Prénom *</label>
-                            <div class="relative">
-                                <svg class="signup-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <input type="text" name="firstName" class="signup-input" placeholder="Prenom" value="{{ old('firstName') }}" required>
+                <div id="candidateFormContainer">
+                    <form id="candidateForm" method="POST" action="{{ route('register') }}" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="user_type" value="candidate">
+                        
+                        <!-- Name Fields -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Prénom *</label>
+                                <div class="relative">
+                                    <img src="{{ asset('storage/login-icons/name.svg') }}" alt="Prénom" class="signup-input-icon w-7 h-7">
+                                    <input type="text" name="firstName" class="signup-input" placeholder="Votre prenom" value="{{ old('firstName') }}" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Nom *</label>
+                                <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Votre nom" value="{{ old('lastName') }}" required>
                             </div>
                         </div>
+
+                        <!-- Email -->
                         <div>
-                            <label class="form-label">Nom *</label>
-                            <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Nom" value="{{ old('lastName') }}" required>
+                            <label class="form-label">Adresse e-mail *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/email.svg') }}" alt="Email" class="signup-input-icon w-7 h-7">
+                                <input type="email" name="email" class="signup-input" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div>
-                        <label class="form-label">Adresse e-mail*</label>
-                        <input type="email" name="email" class="signup-input" style="padding-left: 16px;" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
-                    </div>
+                        <!-- Password -->
+                        <div>
+                            <label class="form-label">Mot de passe *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/pass.svg') }}" alt="Password" class="signup-input-icon w-7 h-7">
+                                <input type="password" name="password" id="passwordCandidate" class="signup-input" placeholder="••••••••" required>
+                            </div>
+                        </div>
 
-                    <!-- Password -->
-                    <div>
-                        <label class="form-label">Mot de passe *</label>
-                        <input type="password" name="password" id="passwordCandidate" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
-                    </div>
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="form-label">Confirmer le mot de passe *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/pass.svg') }}" alt="Confirm Password" class="signup-input-icon w-7 h-7">
+                                <input type="password" name="password_confirmation" class="signup-input" placeholder="••••••••" required>
+                            </div>
+                        </div>
 
-                    <!-- Confirm Password -->
-                    <div>
-                        <label class="form-label">Confirmer le mot de passe *</label>
-                        <input type="password" name="password_confirmation" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
-                    </div>
+                        <!-- Terms -->
+                        <div class="flex items-start gap-3 mt-6">
+                            <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
+                            <span class="text-xs  leading-relaxed">
+                                J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
+                            </span>
+                        </div>
 
-                    <!-- Terms -->
-                    <div class="flex items-start gap-3 mt-6">
-                        <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
-                        <span class="text-xs  leading-relaxed">
-                            J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
-                        </span>
-                    </div>
-
-                    <!-- Submit -->
-                    <button type="submit" class="signup-submit-btn mt-6">
-                        Commencer mon essai gratuit
-                    </button>
-                </form>
+                        <!-- Submit -->
+                        <button type="submit" class="signup-submit-btn mt-6">
+                            Commencer mon essai gratuit
+                        </button>
+                    </form>
+                </div>
                 
                 <!-- Recruiter Form (Hidden by default) -->
-                <form id="recruiterForm" method="POST" action="{{ route('register') }}" class="space-y-4 hidden">
-                    @csrf
-                    <input type="hidden" name="user_type" value="recruiter">
-                    
-                    <!-- Name Fields -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="form-label">Prénom *</label>
-                            <div class="relative">
-                                <svg class="signup-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <input type="text" name="firstName" class="signup-input" placeholder="Prenom" value="{{ old('firstName') }}" required>
+                <div id="recruiterFormContainer" class="hidden">
+                    <form id="recruiterForm" method="POST" action="{{ route('register') }}" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="user_type" value="recruiter">
+                        
+                        <!-- Name Fields -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Prénom *</label>
+                                <div class="relative">
+                                    <img src="{{ asset('storage/login-icons/name.svg') }}" alt="Prénom" class="signup-input-icon w-7 h-7">
+                                    <input type="text" name="firstName" class="signup-input" placeholder="Votre prenom" value="{{ old('firstName') }}" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Nom *</label>
+                                <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Votre nom" value="{{ old('lastName') }}" required>
                             </div>
                         </div>
+
+                        <!-- Company -->
                         <div>
-                            <label class="form-label">Nom *</label>
-                            <input type="text" name="lastName" class="signup-input" style="padding-left: 16px;" placeholder="Nom" value="{{ old('lastName') }}" required>
+                            <label class="form-label">Entreprise *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/entreprise.svg') }}" alt="Entreprise" class="signup-input-icon w-7 h-7">
+                                <input type="text" name="company" class="signup-input" placeholder="Nom de votre entreprise" value="{{ old('company') }}" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Company -->
-                    <div>
-                        <label class="form-label">Entreprise *</label>
-                        <input type="text" name="company" class="signup-input" style="padding-left: 16px;" placeholder="Nom de votre entreprise" value="{{ old('company') }}" required>
-                    </div>
+                        <!-- Email -->
+                        <div>
+                            <label class="form-label">Adresse e-mail *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/email.svg') }}" alt="Email" class="signup-input-icon w-7 h-7">
+                                <input type="email" name="email" class="signup-input" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
+                            </div>
+                        </div>
 
-                    <!-- Email -->
-                    <div>
-                        <label class="form-label">Adresse e-mail*</label>
-                        <input type="email" name="email" class="signup-input" style="padding-left: 16px;" placeholder="Votre@gmail.com" value="{{ old('email') }}" required>
-                    </div>
+                        <!-- Password -->
+                        <div>
+                            <label class="form-label">Mot de passe *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/pass.svg') }}" alt="Password" class="signup-input-icon w-7 h-7">
+                                <input type="password" name="password" id="passwordRecruiter" class="signup-input" placeholder="••••••••" required>
+                            </div>
+                        </div>
 
-                    <!-- Password -->
-                    <div>
-                        <label class="form-label">Mot de passe *</label>
-                        <input type="password" name="password" id="passwordRecruiter" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
-                    </div>
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="form-label">Confirmer le mot de passe *</label>
+                            <div class="relative">
+                                <img src="{{ asset('storage/login-icons/pass.svg') }}" alt="Confirm Password" class="signup-input-icon w-7 h-7">
+                                <input type="password" name="password_confirmation" class="signup-input" placeholder="••••••••" required>
+                            </div>
+                        </div>
 
-                    <!-- Confirm Password -->
-                    <div>
-                        <label class="form-label">Confirmer le mot de passe *</label>
-                        <input type="password" name="password_confirmation" class="signup-input" style="padding-left: 16px;" placeholder="••••••••" required>
-                    </div>
+                        <!-- Terms -->
+                        <div class="flex items-start gap-3 mt-6">
+                            <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
+                            <span class="text-xs leading-relaxed">
+                                J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
+                            </span>
+                        </div>
 
-                    <!-- Terms -->
-                    <div class="flex items-start gap-3 mt-6">
-                        <input type="checkbox" name="acceptTerms" class="signup-checkbox mt-0.5" required>
-                        <span class="text-xs text-gray-400 leading-relaxed">
-                            J'accepte les <a href="#" class="signup-link">conditions d'utilisation</a> et la <a href="#" class="signup-link">politique de confidentialité</a>
-                        </span>
-                    </div>
-
-                    <!-- Submit -->
-                    <button type="submit" class="signup-submit-btn mt-6">
-                        Commencer mon essai gratuit
-                    </button>
-                </form>
+                        <!-- Submit -->
+                        <button type="submit" class="signup-submit-btn mt-6">
+                            Commencer mon essai gratuit
+                        </button>
+                    </form>
+                </div>
                 
                 <!-- Login Link -->
                 <div class="text-center mt-6">
@@ -315,19 +392,27 @@
 function switchTab(tab) {
     const tabCandidate = document.getElementById('tabCandidate');
     const tabRecruiter = document.getElementById('tabRecruiter');
-    const candidateForm = document.getElementById('candidateForm');
-    const recruiterForm = document.getElementById('recruiterForm');
+    const candidateHeader = document.getElementById('candidateHeader');
+    const recruiterHeader = document.getElementById('recruiterHeader');
+    const candidateFormContainer = document.getElementById('candidateFormContainer');
+    const recruiterFormContainer = document.getElementById('recruiterFormContainer');
     
     if (tab === 'candidate') {
+        // Show candidate content
         tabCandidate.classList.add('active');
         tabRecruiter.classList.remove('active');
-        candidateForm.classList.remove('hidden');
-        recruiterForm.classList.add('hidden');
+        candidateHeader.classList.remove('hidden');
+        recruiterHeader.classList.add('hidden');
+        candidateFormContainer.classList.remove('hidden');
+        recruiterFormContainer.classList.add('hidden');
     } else {
+        // Show recruiter content
         tabRecruiter.classList.add('active');
         tabCandidate.classList.remove('active');
-        recruiterForm.classList.remove('hidden');
-        candidateForm.classList.add('hidden');
+        candidateHeader.classList.add('hidden');
+        recruiterHeader.classList.remove('hidden');
+        candidateFormContainer.classList.add('hidden');
+        recruiterFormContainer.classList.remove('hidden');
     }
 }
 </script>

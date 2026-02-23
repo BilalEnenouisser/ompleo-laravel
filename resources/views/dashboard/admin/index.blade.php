@@ -24,7 +24,7 @@
                     </div>
                     <div class="hidden sm:block flex-shrink-0 ml-2">
                         <div class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                                 <path d="M9 12l2 2 4-4"/>
                             </svg>
@@ -36,7 +36,7 @@
             <!-- Quick Actions -->
             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
                 <button onclick="window.location.href='{{ route('admin.blog.editor') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-1 sm:gap-2 md:gap-3 hover:scale-105">
-                    <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                             <path d="M14 2v6h6"/>
@@ -55,7 +55,7 @@
                 </button>
 
                 <button onclick="window.location.href='{{ route('admin.notifications') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-1 sm:gap-2 md:gap-3 hover:scale-105">
-                    <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
@@ -71,7 +71,7 @@
                 </button>
 
                 <button onclick="showExportModal()" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-1 sm:gap-2 md:gap-3 hover:scale-105">
-                    <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <path d="M7 10l5 5 5-5"/>
@@ -88,7 +88,7 @@
                 </button>
 
                 <button onclick="window.location.href='{{ route('admin.payments') }}'" class="bg-[#2b2b2b] border border-[#333333] rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 hover:bg-[#333333] transition-all duration-300 flex items-center gap-1 sm:gap-2 md:gap-3 hover:scale-105">
-                    <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart3 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#00b6b4]"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
                     </div>
                     <div class="text-left min-w-0 flex-1">
@@ -104,7 +104,7 @@
                 <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                         <div class="bg-[#00b6b4]/10 text-[#00b6b4] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -122,7 +122,7 @@
                 <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                         <div class="bg-[#00b6b4]/10 text-[#00b6b4] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6">
                                 <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                             </svg>
@@ -138,7 +138,7 @@
                 <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                         <div class="bg-[#00b6b4]/10 text-[#00b6b4] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" x2="12" y1="2" y2="22"/>
                                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                             </svg>
@@ -154,7 +154,7 @@
                 <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
                         <div class="bg-[#00b6b4]/10 text-[#00b6b4] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                             </svg>
                         </div>
@@ -170,7 +170,7 @@
             <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 md:mb-6 gap-3 sm:gap-4">
                     <h2 class="text-base sm:text-lg md:text-xl font-bold text-[#f5f5f5] flex items-center gap-2 md:gap-3">
-                        <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                         </svg>
                         <span class="hidden sm:inline">Tracking en temps réel</span>
@@ -242,7 +242,7 @@
                          data-user-type="{{ $activity['user_type'] ?? '' }}"
                          data-time="{{ isset($activity['time']) ? $activity['time']->toISOString() : '' }}"
                          data-type="{{ $activity['type'] ?? '' }}">
-                        <div class="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center 
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center 
                             @if(isset($activity['icon_color']) && $activity['icon_color'] == 'blue') text-blue-400 bg-blue-900/30
                             @elseif(isset($activity['icon_color']) && $activity['icon_color'] == 'green') text-green-400 bg-green-900/30
                             @else text-purple-400 bg-purple-900/30
@@ -319,7 +319,7 @@
                     <div class="border border-[#444444] rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300 hover:transform hover:scale-105 bg-[#333333]">
                         <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center bg-red-900/30 text-red-400 flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
                                     <path d="M12 9v4"/>
                                     <path d="M12 17h.01"/>
@@ -336,7 +336,7 @@
                     <div class="border border-[#444444] rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300 hover:transform hover:scale-105 bg-[#333333]">
                         <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center bg-yellow-900/30 text-yellow-400 flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
@@ -352,7 +352,7 @@
                     <div class="border border-[#444444] rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300 hover:transform hover:scale-105 bg-[#333333]">
                         <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center bg-green-900/30 text-green-400 flex-shrink-0">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                     <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                                     <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -425,7 +425,7 @@
                         @empty
                         <div class="text-center py-6 sm:py-8">
                             <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="9" cy="7" r="4"></circle>
                                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -457,7 +457,7 @@
                                     @if($company->logo)
                                         <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-full h-full rounded-full object-cover">
                                     @else
-                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                             <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                                             <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -494,7 +494,7 @@
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
                     <div class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-green-900/20 border border-green-800 rounded-lg">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <path d="m9 11 3 3L22 4"/>
                         </svg>
@@ -505,7 +505,7 @@
                     </div>
                     
                     <div class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-green-900/20 border border-green-800 rounded-lg">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <path d="m9 11 3 3L22 4"/>
                         </svg>
@@ -516,7 +516,7 @@
                     </div>
 
                     <div class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-green-900/20 border border-green-800 rounded-lg">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <path d="m9 11 3 3L22 4"/>
                         </svg>
@@ -580,7 +580,7 @@
                 @empty
                 <div class="text-center py-6 sm:py-8">
                     <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                             <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -610,7 +610,7 @@
                             @if($company->logo)
                                 <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-full h-full rounded-full object-cover">
                             @else
-                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 sm:w-6 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                                     <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                                     <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Refresh tracking data
     function refreshTracking() {
         refreshButton.innerHTML = `
-            <svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7 animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
             </svg>
         `;
@@ -924,7 +924,7 @@ function exportStats(format) {
         <div class="flex items-center justify-between mb-4 sm:mb-6">
             <h3 class="text-lg sm:text-xl font-bold text-[#f5f5f5]">Exporter les statistiques</h3>
             <button onclick="hideExportModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 6L6 18"/>
                     <path d="M6 6l12 12"/>
                 </svg>
@@ -935,7 +935,7 @@ function exportStats(format) {
         
         <div class="space-y-2 sm:space-y-3">
             <button onclick="exportStats('excel')" class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                     <path d="M7 10l5 5 5-5"/>
                     <path d="M12 15V3"/>
@@ -944,7 +944,7 @@ function exportStats(format) {
             </button>
             
             <button onclick="exportStats('pdf')" class="w-full bg-red-600 hover:bg-red-700 text-white py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <path d="M14 2v6h6"/>
                     <path d="M16 13H8"/>

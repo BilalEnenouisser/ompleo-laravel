@@ -10,7 +10,7 @@
     @if(session('success'))
         <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300">
             <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
                 {{ session('success') }}
@@ -21,7 +21,7 @@
     @if(session('error'))
         <div id="errorNotification" class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300">
             <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
                 {{ session('error') }}
@@ -199,7 +199,7 @@
                             placeholder="Ex: 3 ans d'expérience en React"
                         />
                         <button type="button" onclick="removeRequirement(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 6h18"/>
                                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -211,7 +211,7 @@
             </div>
             
             <button type="button" onclick="addRequirement()" class="bg-[#333333] hover:bg-[#444444] text-[#f5f5f5] px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/>
                     <path d="M12 5v14"/>
                 </svg>
@@ -237,7 +237,7 @@
                             placeholder="Ex: Assurance santé"
                         />
                         <button type="button" onclick="removeBenefit(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 6h18"/>
                                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -249,7 +249,7 @@
             </div>
             
             <button type="button" onclick="addBenefit()" class="bg-[#333333] hover:bg-[#444444] text-[#f5f5f5] px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/>
                     <path d="M12 5v14"/>
                 </svg>
@@ -275,7 +275,7 @@
                             placeholder="Ex: React, JavaScript, HTML/CSS"
                         />
                         <button type="button" onclick="removeSkill(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 6h18"/>
                                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -287,7 +287,7 @@
             </div>
             
             <button type="button" onclick="addSkill()" class="bg-[#333333] hover:bg-[#444444] text-[#f5f5f5] px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/>
                     <path d="M12 5v14"/>
                 </svg>
@@ -304,7 +304,7 @@
                     name="featured" 
                     value="1"
                     {{ old('featured', $job->is_featured) ? 'checked' : '' }}
-                    class="w-4 h-4 text-[#00b6b4] bg-[#333333] border-[#444444] rounded focus:ring-[#00b6b4] focus:ring-2"
+                    class="w-7 h-7 text-[#00b6b4] bg-[#333333] border-[#444444] rounded focus:ring-[#00b6b4] focus:ring-2"
                 />
                 <label for="featured" class="text-sm sm:text-base text-[#f5f5f5]">
                     Mettre en vedette cette offre (recommandé)
@@ -386,7 +386,7 @@ function addRequirement() {
             placeholder="Ex: 3 ans d'expérience en React"
         />
         <button type="button" onclick="removeRequirement(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -412,7 +412,7 @@ function addBenefit() {
             placeholder="Ex: Assurance santé"
         />
         <button type="button" onclick="removeBenefit(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -438,7 +438,7 @@ function addSkill() {
             placeholder="Ex: React, JavaScript, HTML/CSS"
         />
         <button type="button" onclick="removeSkill(this)" class="p-2 text-red-400 hover:text-red-300 transition-colors">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>

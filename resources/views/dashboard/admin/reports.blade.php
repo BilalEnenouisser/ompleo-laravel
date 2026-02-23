@@ -36,7 +36,7 @@
                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-[#f5f5f5] truncate">{{ $stats['total'] }}</p>
                 </div>
                 <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-[#00b6b4]/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
                         <line x1="4" x2="4" y1="22" y2="15"/>
                     </svg>
@@ -51,7 +51,7 @@
                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-400 truncate">{{ $stats['pending'] }}</p>
                 </div>
                 <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-yellow-900/30 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
@@ -66,7 +66,7 @@
                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-blue-400 truncate">{{ $stats['reviewed'] }}</p>
                 </div>
                 <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-blue-900/30 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-blue-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-blue-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-green-400 truncate">{{ $stats['resolved'] }}</p>
                 </div>
                 <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-green-900/30 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <path d="M22 4 12 14.01l-3-3"/>
                     </svg>
@@ -93,7 +93,7 @@
                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-400 truncate">{{ $stats['dismissed'] }}</p>
                 </div>
                 <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-900/30 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="15" x2="9" y1="9" y2="15"/>
                         <line x1="9" x2="15" y1="9" y2="15"/>
@@ -611,8 +611,8 @@ function showToast(title, message, type) {
         <div class="flex items-start gap-3">
             <div class="flex-shrink-0">
                 ${type === 'success' ? 
-                    '<svg class="w-5 h-5 text-green-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
-                    '<svg class="w-5 h-5 text-red-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                    '<svg class="w-7 h-7 text-green-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                    '<svg class="w-7 h-7 text-red-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
                 }
             </div>
             <div class="flex-1 min-w-0">
@@ -620,7 +620,7 @@ function showToast(title, message, type) {
                 <p class="text-xs text-gray-300 leading-relaxed">${message}</p>
             </div>
             <button onclick="this.parentElement.parentElement.parentElement.remove()" class="flex-shrink-0 text-gray-400 hover:text-white transition-colors duration-200 p-1 rounded-full hover:bg-white/10">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="absolute bottom-0 left-0 h-1 ${type === 'success' ? 'bg-green-400' : 'bg-red-400'} rounded-b-xl animate-pulse"></div>

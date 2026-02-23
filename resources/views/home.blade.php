@@ -10,10 +10,17 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#1f1f1f] mb-16 hero-section">
-        <!-- Background Image -->
-        <div class="absolute top-0 right-0 bottom-0  hidden lg:block">
-            <img src="{{ asset('storage/home_page/hero.png') }}" alt="Hero" class="w-full h-full object-cover" style="object-position: right;">
+        <!-- Background Image with Parallax & Blur Effect -->
+        <div class="absolute top-0 right-0 bottom-0 hidden lg:block hero-image-container" style="overflow: hidden;">
+            <img src="{{ asset('storage/home_page/hero.png') }}" 
+                 alt="Hero" 
+                 class="w-full h-full object-cover hero-parallax-image" 
+                 data-parallax="hero-image"
+                 style="object-position: right; will-change: transform; backface-visibility: hidden; transition: filter 0.3s ease, transform 0.02s linear;">
         </div>
+        
+        <!-- Blur Overlay for Smooth Transition -->
+        <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none" style="background: linear-gradient(to left, rgba(31, 31, 31, 0.3), transparent);"></div>
         
         <!-- Content Overlay -->
         <div class="w-[90%] mx-auto relative z-10 hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
@@ -287,8 +294,8 @@
                 }
             </style>
             <div class="text-left hero-content-overlay">
-                <!-- Icon + Text Badge -->
-                <div class="flex items-center gap-3 mb-6 hero-badge-container">
+                <!-- Icon + Text Badge with Float Animation -->
+                <div class="flex items-center gap-3 mb-6 hero-badge-container badge-float" style="animation: badgeFloat 3s ease-in-out infinite;">
                     <img src="{{ asset('storage/home_page/heroico.svg') }}" alt="Icon" class="w-6 h-6 hero-badge-icon">
                     <span class="text-xl font-normal hero-badge-text" style="color: #2cbcba;">La plateforme d'offres d'emploi n°1</span>
                 </div>
@@ -308,18 +315,18 @@
                     <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">P</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">g</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">b</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">v</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">c</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">.</span></span>
                 </p>
 
-                <!-- Buttons -->
+                <!-- Buttons with Glow Animation -->
                 <div class="flex flex-row gap-4 mb-12 hero-buttons">
-                    <!-- Button 1: Publier une annonce -->
-                    <a href="{{ route('signup.recruiter') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-5 h-5 hero-button-icon">
+                    <!-- Button 1: Publier une annonce with Glow Effect -->
+                    <a href="{{ route('signup.recruiter') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105 hero-button-glow" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-6 h-6 hero-button-icon">
                         <span>Publier une annonce</span>
                     </a>
 
-                    <!-- Button 2: Rechercher toutes les offres -->
+                    <!-- Button 2: Rechercher toutes les offres with Glow Effect -->
                     <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
-                        <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="w-5 h-5 hero-button-icon">
+                        <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105 hero-button-glow" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
+                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="w-6 h-6 hero-button-icon">
                             <span>Rechercher toutes les offres</span>
                         </a>
                     </div>
@@ -416,30 +423,117 @@
         
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Hero text character animation
+    // ======================================
+    // Hero Text Character Animation
+    // ======================================
     function animateHeroChars() {
         const chars = document.querySelectorAll('.hero-char');
-        let charIndex = 0;
-        
         chars.forEach((char, index) => {
-            // Calculate delay based on character index (0.05s per character)
-            const delay = charIndex * 0.05;
+            // Calculate staggered delay: 40ms per character
+            const delay = index * 0.04;
             char.style.animationDelay = delay + 's';
-            charIndex++;
+            char.style.opacity = '0';
+            char.style.transform = 'translateY(20px)';
         });
     }
     
-    // Initialize hero animation
-    animateHeroChars();
+    // ======================================
+    // Hero Parallax with Blur Effect
+    // ======================================
+    function initParallaxWithBlur() {
+        const heroImage = document.querySelector('[data-parallax="hero-image"]');
+        const heroSection = document.querySelector('section#home');
+        
+        if (!heroImage || !heroSection) return;
+        
+        let ticking = false;
+        
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const heroRect = heroSection.getBoundingClientRect();
+            const heroBottom = heroRect.top + heroRect.height;
+            
+            // Parallax effect (slower scroll)
+            const parallaxOffset = scrolled * 0.5;
+            heroImage.style.transform = `translateY(${parallaxOffset}px)`;
+            
+            // Blur effect based on scroll (more blur as user scrolls down past hero)
+            if (scrolled < heroRect.height) {
+                const blurAmount = (scrolled / heroRect.height) * 5;
+                heroImage.style.filter = `blur(${blurAmount}px)`;
+            } else {
+                heroImage.style.filter = 'blur(5px)';
+            }
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true });
+    }
     
-    // Handle popular search buttons
+    // ======================================
+    // Button Glow Animation Handler
+    // ======================================
+    function initButtonGlowAnimation() {
+        const buttons = document.querySelectorAll('.hero-button-glow');
+        
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function(e) {
+                this.classList.add('button-glow-active');
+                this.style.boxShadow = '0 0 30px rgba(57, 255, 252, 0.5), 0 0 60px rgba(26, 162, 160, 0.3)';
+                this.style.borderColor = '#39fffc';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('button-glow-active');
+                this.style.boxShadow = '';
+                this.style.borderColor = '#47fffd';
+            });
+        });
+    }
+    
+    // ======================================
+    // Badge Float Animation Trigger
+    // ======================================
+    function initBadgeAnimation() {
+        const badge = document.querySelector('.hero-badge-container');
+        if (badge) {
+            // Animation is handled by CSS badgeFloat keyframes
+            badge.style.animationPlayState = 'running';
+        }
+    }
+    
+    // ======================================
+    // Hero Marquee Animation
+    // ======================================
+    function initMarqueeAnimation() {
+        const marquee = document.querySelector('.hero-marquee');
+        if (marquee) {
+            marquee.style.animation = 'marqueeScroll 30s linear infinite';
+        }
+    }
+    
+    // Initialize all animations
+    animateHeroChars();
+    initParallaxWithBlur();
+    initButtonGlowAnimation();
+    initBadgeAnimation();
+    initMarqueeAnimation();
+    
+    // ======================================
+    // Popular Search Functionality
+    // ======================================
     window.searchPopular = function(keyword) {
         const searchInput = document.getElementById('homeSearchInput');
         if (searchInput) {
             searchInput.value = keyword;
         }
         
-        // Submit the form
         const form = document.getElementById('homeSearchForm');
         if (form) {
             form.submit();
@@ -453,17 +547,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('homeSearchInput');
             const locationSelect = document.getElementById('homeLocationSelect');
             
-            // If both search and location are empty, prevent submission
             if (!searchInput.value.trim() && !locationSelect.value) {
                 e.preventDefault();
-                // Focus on search input to encourage user to enter something
                 searchInput.focus();
                 return false;
             }
-            
-            // Form will submit normally with GET parameters
         });
     }
+    
+    console.log('✨ Hero animations fully initialized!');
 });
 </script>
 @endsection

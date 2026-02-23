@@ -35,7 +35,7 @@ $jobs = $jobs ?? collect();
         <!-- Header -->
         <div class="text-center mb-6 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
-                <img src="{{ asset('storage/home_page/job/icon.svg') }}" alt="Icon" class="w-5 h-5">
+                <img src="{{ asset('storage/home_page/job/icon.svg') }}" alt="Icon" class="w-7 h-7">
                 <span class="text-base" style="color: #d9d9d9;">Les meilleurs emplois</span>
             </div>
             <h2 class="text-4xl md:text-5xl font-bold text-white pb-4">
@@ -59,7 +59,7 @@ $jobs = $jobs ?? collect();
                             type="submit"
                             class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-[#00fadc] transition-colors"
                         >
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
@@ -284,7 +284,7 @@ $jobs = $jobs ?? collect();
                                 <!-- View Job (on hover) -->
                                 <p class="text-sm text-[#00fadc] font-medium job-card-view">
                                     <span>View Job</span>
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </p>
@@ -315,7 +315,7 @@ $jobs = $jobs ?? collect();
         <!-- View All Jobs Button -->
         <div class="text-center mt-12">
             <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-5 h-5">
+                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7">
                 <span>Voir toutes les offres</span>
             </a>
         </div>

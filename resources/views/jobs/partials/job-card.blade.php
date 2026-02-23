@@ -28,13 +28,13 @@
                     
                     <div class="grid grid-cols-2 sm:flex sm:flex-row gap-4 text-[#111111] dark:text-[#cccccc] mb-3">
                         <div class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                             <span class="font-medium text-[#111111] dark:text-[#f5f5f5] text-sm sm:text-base">{{ $job->company->name ?? 'Entreprise' }}</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
@@ -45,13 +45,13 @@
                             <span class="text-sm sm:text-base">{{ getWorkTypeLabel($job->work_type) }}</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <span class="text-sm sm:text-base">{{ $job->experience ?? $job->experience_level ?? 'Non spécifié' }}</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                             <span class="text-sm sm:text-base">{{ $job->type ?? 'Non spécifié' }}</span>
@@ -92,7 +92,7 @@
         
         <div class="flex items-center justify-between sm:justify-end gap-3 lg:flex-col lg:items-end">
             <button class="p-2 text-gray-400 hover:text-red-500 transition-colors duration-200 hover:scale-110">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#111111] dark:text-[#cccccc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 sm:w-5 sm:h-5 text-[#111111] dark:text-[#cccccc]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                 </svg>
             </button>
@@ -107,7 +107,7 @@
                     
                     @if($existingApplication)
                         <div class="bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                             @if($existingApplication->status === 'pending')
@@ -122,7 +122,7 @@
                         </div>
                     @else
                         <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <line x1="22" y1="2" x2="11" y2="13"></line>
                                 <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                             </svg>
@@ -131,7 +131,7 @@
                     @endif
                 @else
                     <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
                             <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                         </svg>
@@ -140,7 +140,7 @@
                 @endif
             @else
                 <a href="{{ route('jobs.show', $job->slug) }}" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 whitespace-nowrap hover:scale-105 text-sm sm:text-base inline-flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                     </svg>

@@ -97,9 +97,9 @@
         <div class="bg-[#2b2b2b] border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300" style="border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-6 h-6" style="color: rgb(37 99 235 / var(--tw-text-opacity, 1));"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-7 h-7" style="color: rgb(37 99 235 / var(--tw-text-opacity, 1));"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </div>
-                <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
                     <polyline points="16,7 22,7 22,13"/>
                 </svg>
@@ -119,14 +119,14 @@
         <div class="bg-[#2b2b2b] border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300" style="border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1));">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(22 163 74 / var(--tw-text-opacity, 1));">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                     </svg>
                 </div>
-                <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
                     <polyline points="16,7 22,7 22,13"/>
                 </svg>
@@ -146,12 +146,12 @@
         <div class="bg-[#2b2b2b] border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300" style="border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(243 232 255 / var(--tw-bg-opacity, 1));">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(147 51 234 / var(--tw-text-opacity, 1));">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(147 51 234 / var(--tw-text-opacity, 1));">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
                     </svg>
                 </div>
-                <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
                     <polyline points="16,7 22,7 22,13"/>
                 </svg>
@@ -171,14 +171,14 @@
         <div class="bg-[#2b2b2b] border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300" style="border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: rgb(255 237 213 / var(--tw-bg-opacity, 1));">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(234 88 12 / var(--tw-text-opacity, 1));">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgb(234 88 12 / var(--tw-text-opacity, 1));">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                         <line x1="16" x2="16" y1="2" y2="6"/>
                         <line x1="8" x2="8" y1="2" y2="6"/>
                         <line x1="3" x2="21" y1="10" y2="10"/>
                     </svg>
                 </div>
-                <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
                     <polyline points="16,7 22,7 22,13"/>
                 </svg>
@@ -216,7 +216,7 @@
             </style>
             <a href="{{ route('recruiter.create-offer') }}" class="flex items-center gap-3 p-4 border-2 border-dashed border-[#00b6b4]/30 rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-10 h-10 bg-[#00b6b4]/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                    <svg class="w-5 h-5 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/>
                         <path d="M12 5v14"/>
                     </svg>
@@ -229,7 +229,7 @@
 
             <a href="{{ route('recruiter.candidates') }}" class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-10 h-10 bg-green-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                    <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 text-green-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -244,7 +244,7 @@
 
             <a href="{{ route('recruiter.interviews.create') }}" class="flex items-center gap-3 p-4 border-2 border-dashed border-[#333333] rounded-xl hover:border-[#00b6b4]/50 hover:bg-[#00b6b4]/10 transition-all duration-200 group">
                 <div class="w-10 h-10 bg-orange-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                    <svg class="w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                         <line x1="16" x2="16" y1="2" y2="6"/>
                         <line x1="8" x2="8" y1="2" y2="6"/>
@@ -378,7 +378,7 @@
                         </style>
                         <div class="flex flex-wrap items-center gap-4">
                             <span class="flex items-center gap-1 whitespace-nowrap">
-                                <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                     <circle cx="9" cy="7" r="4"/>
                                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -387,7 +387,7 @@
                                 <span class="truncate">{{ $job->applications()->count() }} candidatures</span>
                             </span>
                             <span class="flex items-center gap-1 whitespace-nowrap">
-                                <svg class="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
@@ -510,7 +510,7 @@
                 <h3 class="text-lg font-semibold text-[#f5f5f5] mb-2">Aucun entretien programmé</h3>
                 <p class="text-[#9ca3af] mb-4">Vous n'avez pas encore programmé d'entretiens.</p>
                 <a href="{{ route('recruiter.interviews.create') }}" class="inline-flex items-center gap-2 bg-[#00b6b4] hover:bg-[#009e9c] text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium">
-                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/>
                         <path d="M12 5v14"/>
                     </svg>

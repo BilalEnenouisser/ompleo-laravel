@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
                 onclick="showAddModal()"
                 class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-4 sm:px-6 py-2 sm:py-3 flex items-center gap-2 rounded-lg transition-colors text-sm sm:text-base"
             >
-                <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/>
                     <path d="M12 5v14"/>
                 </svg>
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Storage;
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
         <div class="flex flex-col lg:flex-row gap-4">
             <div class="flex-1 relative">
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"/>
                     <path d="m21 21-4.35-4.35"/>
                 </svg>
@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\Storage;
                         type="checkbox"
                         id="featured-filter"
                         onchange="filterPartners()"
-                        class="w-4 h-4 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
+                        class="w-7 h-7 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
                     />
                     <span class="text-[#cccccc] text-sm sm:text-base">Afficher uniquement les partenaires mis en avant</span>
                 </label>
@@ -109,12 +109,12 @@ use Illuminate\Support\Facades\Storage;
                                 class="p-2 rounded-lg {{ $partner->is_featured ? 'bg-green-900/30 text-green-600' : 'bg-[#333333] text-[#9ca3af]' }}"
                             >
                                 @if($partner->is_featured)
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
                                 @else
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
                                         <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/>
                                         <path d="M3 3l18 18"/>
@@ -129,7 +129,7 @@ use Illuminate\Support\Facades\Storage;
                                     onclick="editPartner({{ $partner->id }})"
                                     class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200"
                                 >
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                         <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                     </svg>
@@ -138,7 +138,7 @@ use Illuminate\Support\Facades\Storage;
                                     onclick="deletePartner({{ $partner->id }}, '{{ $partner->name }}')"
                                     class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200"
                                 >
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M3 6h18"/>
                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
@@ -190,7 +190,7 @@ use Illuminate\Support\Facades\Storage;
                     onclick="hideAddModal()"
                     class="text-[#9ca3af] hover:text-[#f5f5f5]"
                 >
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6L6 18"/>
                         <path d="M6 6l12 12"/>
                     </svg>
@@ -229,7 +229,7 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                             </div>
                             <button type="button" onclick="clearLogo()" class="text-red-500 hover:text-red-700">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M18 6L6 18"/>
                                     <path d="M6 6l12 12"/>
                                 </svg>
@@ -284,7 +284,7 @@ use Illuminate\Support\Facades\Storage;
                 <input
                     type="checkbox"
                     id="partner-featured"
-                    class="w-4 h-4 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
+                    class="w-7 h-7 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
                 />
                 <label for="partner-featured" class="ml-2 text-sm text-[#cccccc]">
                     Mettre en avant sur la page d'accueil
@@ -321,7 +321,7 @@ use Illuminate\Support\Facades\Storage;
                     onclick="hideEditModal()"
                     class="text-[#9ca3af] hover:text-[#f5f5f5]"
                 >
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6L6 18"/>
                         <path d="M6 6l12 12"/>
                     </svg>
@@ -360,7 +360,7 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                             </div>
                             <button type="button" onclick="clearEditLogo()" class="text-red-500 hover:text-red-700">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M18 6L6 18"/>
                                     <path d="M6 6l12 12"/>
                                 </svg>
@@ -416,7 +416,7 @@ use Illuminate\Support\Facades\Storage;
                 <input
                     type="checkbox"
                     id="edit-partner-featured"
-                    class="w-4 h-4 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
+                    class="w-7 h-7 text-[#00b6b4] border-gray-300 rounded focus:ring-[#00b6b4]"
                 />
                 <label for="edit-partner-featured" class="ml-2 text-sm text-[#cccccc]">
                     Mettre en avant sur la page d'accueil
@@ -453,7 +453,7 @@ use Illuminate\Support\Facades\Storage;
                     onclick="hideDeleteModal()"
                     class="text-[#9ca3af] hover:text-[#f5f5f5]"
                 >
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6L6 18"/>
                         <path d="M6 6l12 12"/>
                     </svg>
@@ -464,7 +464,7 @@ use Illuminate\Support\Facades\Storage;
         <div class="p-4 sm:p-6">
             <div class="flex items-center gap-4 mb-6">
                 <div class="w-12 h-12 bg-red-900/30 rounded-full flex items-center justify-center">
-                    <svg class="w-6 h-6 text-red-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 text-red-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="m15 9-6 6"/>
                         <path d="m9 9 6 6"/>
@@ -550,10 +550,10 @@ function toggleFeatured(id, button) {
             
             if (data.is_featured) {
                 button.className = 'p-2 rounded-lg bg-green-900/30 text-green-600';
-                button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+                button.innerHTML = '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
             } else {
                 button.className = 'p-2 rounded-lg bg-[#333333] text-[#9ca3af]';
-                button.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
+                button.innerHTML = '<svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a18.5 18.5 0 0 1-2.27 3.14"/><path d="M3 3l18 18"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8c1.98 0 3.75-.51 5.39-1.39"/></svg>';
             }
             
             showToast('Succès', data.message, 'success');
@@ -928,8 +928,8 @@ function showToast(title, message, type = 'success') {
         <div class="flex items-start gap-3">
             <div class="flex-shrink-0">
                 ${type === 'success' ? 
-                    '<svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
-                    '<svg class="w-5 h-5 text-red-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
+                    '<svg class="w-7 h-7 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>' :
+                    '<svg class="w-7 h-7 text-red-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'
                 }
             </div>
             <div class="flex-1">
@@ -937,7 +937,7 @@ function showToast(title, message, type = 'success') {
                 <p class="text-xs text-[#9ca3af] mt-1">${message}</p>
             </div>
             <button onclick="this.parentElement.parentElement.remove()" class="text-[#9ca3af] hover:text-[#f5f5f5]">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
             </button>
         </div>
     `;

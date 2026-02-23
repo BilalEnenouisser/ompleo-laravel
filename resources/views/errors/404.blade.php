@@ -158,7 +158,7 @@
 
             <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2 btn-primary px-8 py-4 text-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-5 h-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-6 h-6">
                         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
@@ -166,7 +166,7 @@
                 </a>
                 
                 <button onclick="window.history.back()" class="inline-flex items-center gap-2 btn-secondary px-8 py-4 text-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-5 h-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-6 h-6">
                         <path d="m12 19-7-7 7-7"></path>
                         <path d="M19 12H5"></path>
                     </svg>
@@ -182,7 +182,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                     <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary-900/30 transition-colors duration-200 group">
                         <div class="w-10 h-10 bg-primary-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-5 h-5 text-primary-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-6 h-6 text-primary-400">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.3-4.3"></path>
                             </svg>
@@ -195,7 +195,7 @@
                     
                     <a href="{{ route('companies.index') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary-900/30 transition-colors duration-200 group">
                         <div class="w-10 h-10 bg-primary-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-5 h-5 text-primary-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-6 h-6 text-primary-400">
                                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>

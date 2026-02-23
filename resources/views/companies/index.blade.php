@@ -120,7 +120,7 @@ use Illuminate\Support\Facades\Storage;
                 <div class="block lg:hidden space-y-4">
                     <!-- Company Name Select - Full Width -->
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                         <select name="company_name" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
@@ -129,7 +129,7 @@ use Illuminate\Support\Facades\Storage;
                                 <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
-                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
@@ -138,7 +138,7 @@ use Illuminate\Support\Facades\Storage;
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Location Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
@@ -198,14 +198,14 @@ use Illuminate\Support\Facades\Storage;
                                     @endif
                                 @endforeach
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                         
                         <!-- Industry Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                             <select name="industry" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
@@ -214,7 +214,7 @@ use Illuminate\Support\Facades\Storage;
                                     <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
                                 @endforeach
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
@@ -226,7 +226,7 @@ use Illuminate\Support\Facades\Storage;
                             Rechercher
                         </button>
                         <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -239,7 +239,7 @@ use Illuminate\Support\Facades\Storage;
                     <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                         <!-- Company Name Select -->
                         <div class="lg:col-span-3 relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                             <select name="company_name" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
@@ -248,14 +248,14 @@ use Illuminate\Support\Facades\Storage;
                                     <option value="{{ $name }}" {{ request('company_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                         
                         <!-- Location Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
@@ -315,14 +315,14 @@ use Illuminate\Support\Facades\Storage;
                                     @endif
                                 @endforeach
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                         
                         <!-- Industry Filter -->
                         <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                             <select name="industry" class="companies-filter-select w-full pl-10 pr-10 py-3 rounded-lg focus:ring-2 focus:ring-[#00b6b4] outline-none appearance-none">
@@ -331,7 +331,7 @@ use Illuminate\Support\Facades\Storage;
                                     <option value="{{ $ind }}" {{ request('industry') == $ind ? 'selected' : '' }}>{{ $ind }}</option>
                                 @endforeach
                             </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-7 h-7 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
@@ -351,7 +351,7 @@ use Illuminate\Support\Facades\Storage;
                             Rechercher
                         </button>
                         <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -428,7 +428,7 @@ use Illuminate\Support\Facades\Storage;
                             {{-- Location --}}
                             @if($company->location)
                             <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
-                                <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <span>{{ $company->location }}</span>
                             </div>
                             @endif
@@ -436,20 +436,20 @@ use Illuminate\Support\Facades\Storage;
                             {{-- Company Size --}}
                             @if($company->size)
                             <div class="flex items-center gap-2 text-sm text-[#86878C] mb-1.5">
-                                <svg class="w-5 h-5 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 <span>{{ $company->size }}</span>
                             </div>
                             @endif
 
                             {{-- Job Count --}}
                             <div class="flex items-center gap-2 text-sm text-[#646464]">
-                                <svg class="w-4 h-4 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <svg class="w-7 h-7 text-[#646464] flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                                 <span>{{ $company->jobs_count }} postes</span>
                             </div>
                         </div>
 
                         {{-- Button at Bottom --}}
-                        <a href="{{ route('jobs.index', ['company' => $company->id]) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                        <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                             Voir les offres
                         </a>
                     </div>
@@ -479,13 +479,13 @@ use Illuminate\Support\Facades\Storage;
                 {{-- First Page Button (Double Left Arrow) --}}
                 @if($companies->currentPage() > 1)
                     <a href="{{ $companies->url(1) }}" class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-[#00b6b4] transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"></path>
                         </svg>
                     </a>
                 @else
                     <span class="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"></path>
                         </svg>
                     </span>
@@ -494,13 +494,13 @@ use Illuminate\Support\Facades\Storage;
                 {{-- Previous Button (Single Left Arrow) --}}
                 @if($companies->onFirstPage())
                     <span class="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M15 18l-6-6 6-6"></path>
                         </svg>
                     </span>
                 @else
                     <a href="{{ $companies->previousPageUrl() }}" class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-[#00b6b4] transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M15 18l-6-6 6-6"></path>
                         </svg>
                     </a>
@@ -552,13 +552,13 @@ use Illuminate\Support\Facades\Storage;
                 {{-- Next Button (Single Right Arrow) --}}
                 @if($companies->hasMorePages())
                     <a href="{{ $companies->nextPageUrl() }}" class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-[#00b6b4] transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M9 18l6-6-6-6"></path>
                         </svg>
                     </a>
                 @else
                     <span class="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M9 18l6-6-6-6"></path>
                         </svg>
                     </span>
@@ -567,13 +567,13 @@ use Illuminate\Support\Facades\Storage;
                 {{-- Last Page Button (Double Right Arrow) --}}
                 @if($companies->currentPage() < $companies->lastPage())
                     <a href="{{ $companies->url($companies->lastPage()) }}" class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-[#00b6b4] transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M13 7l5 5-5 5M6 7l5 5-5 5"></path>
                         </svg>
                     </a>
                 @else
                     <span class="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M13 7l5 5-5 5M6 7l5 5-5 5"></path>
                         </svg>
                     </span>
@@ -632,7 +632,7 @@ use Illuminate\Support\Facades\Storage;
                     
                     <!-- Button -->
                     <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-white text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border-radius: 9999px;">
-                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-4 h-4 sm:w-5 sm:h-5">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7 sm:w-5 sm:h-5">
                         <span class="whitespace-nowrap">Découvrir nos solutions</span>
                     </a>
                 </div>

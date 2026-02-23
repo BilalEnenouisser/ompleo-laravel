@@ -28,7 +28,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-[#f5f5f5]">{{ $stats['total_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-[#333333] rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                         <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                         <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -49,7 +49,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-green-600">{{ $stats['published_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-green-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <path d="M22 4 12 14.01l-3-3"/>
                     </svg>
@@ -65,7 +65,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-yellow-600">{{ $stats['pending_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-yellow-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12,6 12,12 16,14"/>
                     </svg>
@@ -81,7 +81,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-red-600">{{ $stats['expired_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-red-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="m15 9-6 6"/>
                         <path d="m9 9 6 6"/>
@@ -98,7 +98,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-[#9ca3af]">{{ $stats['suspended_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-[#333333] rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#9ca3af]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="m15 9-6 6"/>
                         <path d="m9 9 6 6"/>
@@ -115,7 +115,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-orange-600">{{ $stats['draft_jobs'] }}</p>
                 </div>
                 <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-orange-900/30 rounded-lg md:rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-orange-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-orange-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
                         <path d="M12 9v4"/>
                         <path d="M12 17h.01"/>
@@ -130,7 +130,7 @@
         <form method="GET" action="{{ route('admin.jobs') }}" id="filterForm">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
                 <div class="relative">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"/>
                         <path d="m21 21-4.35-4.35"/>
                     </svg>
@@ -145,7 +145,7 @@
                 </div>
                 
                 <div class="relative">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
                     </svg>
                     <select name="status" id="statusFilter" class="w-full pl-9 sm:pl-10 pr-8 py-2 sm:py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none appearance-none bg-[#333333] text-[#f5f5f5] text-sm sm:text-base">
@@ -160,7 +160,7 @@
                 </div>
                 
                 <div class="relative">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
                         <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
                         <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/>
@@ -174,7 +174,7 @@
                 </div>
 
                 <div class="relative">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                         <line x1="16" x2="16" y1="2" y2="6"/>
                         <line x1="8" x2="8" y1="2" y2="6"/>
@@ -191,7 +191,7 @@
                 
                 <div class="flex gap-2">
                     <button type="submit" class="bg-[#00b6b4] hover:bg-[#009e9c] text-white px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-center gap-2 rounded-lg transition-colors text-sm sm:text-base flex-1">
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
                         </svg>
                         <span class="hidden sm:inline">Filtrer</span>
@@ -230,7 +230,7 @@
                                 </div>
                                 <div class="text-sm text-[#9ca3af] flex items-center gap-2 mt-1 flex-wrap">
                                     <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                                             <circle cx="12" cy="10" r="3"/>
                                         </svg>
@@ -282,7 +282,7 @@
                         <td class="py-4 px-6">
                             <div class="space-y-1">
                                 <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                         <circle cx="9" cy="7" r="4"/>
                                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
@@ -291,7 +291,7 @@
                                     {{ $job->applications_count }} candidatures
                                 </div>
                                 <div class="flex items-center gap-2 text-sm text-[#9ca3af]">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
@@ -302,7 +302,7 @@
                         <td class="py-4 px-6">
                             <div class="space-y-1">
                                 <div class="flex items-center gap-1 text-sm text-[#9ca3af]">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                                         <line x1="16" x2="16" y1="2" y2="6"/>
                                         <line x1="8" x2="8" y1="2" y2="6"/>
@@ -320,26 +320,26 @@
                         <td class="py-4 px-6">
                             <div class="flex items-center gap-2">
                                 <button onclick="viewJob({{ $job->id }})" class="p-2 text-[#9ca3af] hover:text-[#00b6b4] transition-colors duration-200" title="Voir les détails">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
                                 </button>
                                 <button onclick="editJob({{ $job->id }})" class="p-2 text-[#9ca3af] hover:text-blue-600 transition-colors duration-200" title="Modifier">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                         <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                     </svg>
                                 </button>
                                 <button onclick="deleteJob({{ $job->id }}, '{{ $job->title }}')" class="p-2 text-[#9ca3af] hover:text-red-600 transition-colors duration-200" title="Supprimer">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M3 6h18"/>
                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
                                     </svg>
                                 </button>
                                 <button class="p-2 text-[#9ca3af] hover:text-[#9ca3af] transition-colors duration-200">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="12" cy="12" r="1"/>
                                         <circle cx="19" cy="12" r="1"/>
                                         <circle cx="5" cy="12" r="1"/>
@@ -432,7 +432,7 @@
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-semibold text-[#f5f5f5]">Détails de l'offre</h3>
                 <button onclick="closeViewModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" x2="6" y1="6" y2="18"/>
                         <line x1="6" x2="18" y1="6" y2="18"/>
                     </svg>
@@ -462,7 +462,7 @@
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-semibold text-[#f5f5f5]">Modifier l'offre</h3>
                 <button onclick="closeEditModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" x2="6" y1="6" y2="18"/>
                         <line x1="6" x2="18" y1="6" y2="18"/>
                     </svg>
@@ -496,7 +496,7 @@
                                 Localisation *
                             </label>
                             <div class="relative">
-                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                                     <circle cx="12" cy="10" r="3"/>
                                 </svg>
@@ -589,7 +589,7 @@
                                 Date d'expiration *
                             </label>
                             <div class="relative">
-                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
                                     <line x1="16" x2="16" y1="2" y2="6"/>
                                     <line x1="8" x2="8" y1="2" y2="6"/>
@@ -626,7 +626,7 @@
                             <input
                                 type="checkbox"
                                 id="editIsFeatured"
-                                class="w-4 h-4 text-[#00b6b4] border-[#444444] rounded focus:ring-[#00b6b4] bg-[#333333]"
+                                class="w-7 h-7 text-[#00b6b4] border-[#444444] rounded focus:ring-[#00b6b4] bg-[#333333]"
                             />
                             <label for="editIsFeatured" class="ml-2 text-xs sm:text-sm text-[#9ca3af] flex items-center gap-1 sm:gap-2">
                                 Mettre en avant cette offre
@@ -839,7 +839,7 @@
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-xl font-semibold text-[#f5f5f5]">Supprimer l'offre</h3>
                 <button onclick="closeDeleteModal()" class="text-[#9ca3af] hover:text-[#f5f5f5] transition-colors">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" x2="6" y1="6" y2="18"/>
                         <line x1="6" x2="18" y1="6" y2="18"/>
                     </svg>

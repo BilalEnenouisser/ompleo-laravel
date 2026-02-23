@@ -343,31 +343,31 @@
                         <div class="card-features">
                             <ul class="space-y-2 text-left">
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>1 annonce d'emploi publiée sur OMPLEO</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Diffusion standard sur la plateforme</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Accès aux candidatures reçues</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Gestion simple des candidatures</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Aucune commission</span>
@@ -379,7 +379,7 @@
                         <div class="card-discover">
                             <a href="{{ route('jobs.index') }}" class="discover-link inline-flex items-center gap-2 text-[#16b6b4] hover:text-[#39fffc] transition-colors text-sm font-medium">
                                 <span>Découvrir nos offres</span>
-                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-5 h-5">
+                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-6 h-6">
                             </a>
                         </div>
                     </div>
@@ -411,25 +411,25 @@
                         <div class="card-features">
                             <ul class="space-y-2 text-left">
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Boost de l'annonce</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Visibilité maximale</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Ads ciblées</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Support VIP</span>
@@ -441,7 +441,7 @@
                         <div class="card-discover">
                             <a href="{{ route('jobs.index') }}" class="discover-link inline-flex items-center gap-2 text-[#16b6b4] hover:text-[#39fffc] transition-colors text-sm font-medium">
                                 <span>Découvrir nos offres</span>
-                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-5 h-5">
+                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-6 h-6">
                             </a>
                         </div>
                     </div>
@@ -473,31 +473,31 @@
                         <div class="card-features">
                             <ul class="space-y-2 text-left">
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>5 annonces d'emploi publiées</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Visibilité renforcée sur la plateforme</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Accès complet aux candidatures</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Priorité d'affichage</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Support client standard</span>
@@ -509,7 +509,7 @@
                         <div class="card-discover">
                             <a href="{{ route('jobs.index') }}" class="discover-link inline-flex items-center gap-2 text-[#16b6b4] hover:text-[#39fffc] transition-colors text-sm font-medium">
                                 <span>Découvrir nos offres</span>
-                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-5 h-5">
+                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-6 h-6">
                             </a>
                         </div>
                     </div>
@@ -545,31 +545,31 @@
                         <div class="card-features">
                             <ul class="space-y-2 text-left">
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>10 annonces d'emploi publiées</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Mise en avant des annonces sur la plateforme</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Visibilité maximale auprès des candidats</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Accès prioritaire aux candidatures</span>
                                 </li>
                                 <li class="flex items-start gap-3 text-white text-sm">
-                                    <svg class="w-5 h-5 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-[#16b6b4] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <span>Support client prioritaire</span>
@@ -581,7 +581,7 @@
                         <div class="card-discover">
                             <a href="{{ route('jobs.index') }}" class="discover-link inline-flex items-center gap-2 text-[#16b6b4] hover:text-[#39fffc] transition-colors text-sm font-medium">
                                 <span>Découvrir nos offres</span>
-                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-5 h-5">
+                                <img src="{{ asset('storage/nos_solutions/arrow.svg') }}" alt="Arrow" class="w-6 h-6">
                             </a>
                         </div>
                     </div>

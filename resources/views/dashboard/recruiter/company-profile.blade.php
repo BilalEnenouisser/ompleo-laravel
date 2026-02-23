@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                     @endif
                     <label for="logo" class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#00b6b4] rounded-full flex items-center justify-center text-white hover:bg-[#009999] transition-colors cursor-pointer">
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                             <circle cx="12" cy="13" r="3"/>
                         </svg>
@@ -234,7 +234,7 @@ use Illuminate\Support\Facades\Storage;
                     type="submit" 
                     class="bg-[#00b6b4] hover:bg-[#009999] text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
                 >
-                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 6 9 17l-5-5"/>
                     </svg>
                     Sauvegarder
