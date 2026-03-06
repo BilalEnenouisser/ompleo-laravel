@@ -19,7 +19,7 @@
                 </p>
 
                 <!-- Contact Button -->
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
+                <a href="{{ route('contact') }}" class="btn-premium-green mx-auto lg:mx-0">
                     <img src="{{ asset('storage/home_page/search_job/icon3.svg') }}" alt="Icon" class="w-7 h-7">
                     <span>Nous contacter</span>
                 </a>

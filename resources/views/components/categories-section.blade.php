@@ -79,8 +79,8 @@ $categories = [
 
         <!-- Bottom Button -->
         <div class="text-center">
-            <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-6 py-2 rounded-full text-white font-bold transition-all duration-300 hover:scale-105 text-sm" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <a href="{{ route('jobs.index') }}" class="btn-premium-green mx-auto">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.35-4.35"></path>
                 </svg>

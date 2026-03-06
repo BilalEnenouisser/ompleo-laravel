@@ -52,18 +52,16 @@ $jobs = $jobs ?? collect();
                             type="text" 
                             name="search"
                             placeholder="Rechercher des offres d'emploi" 
-                            class="w-full px-6 py-4 pr-14 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00fadc]/50 transition-all"
+                            class="w-full px-6 py-4 pr-14 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00fadc]/50 transition-all font-medium"
                             style="background-color: #212221; border-radius: 10px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);"
                         >
-                        <button 
-                            type="submit"
-                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-[#00fadc] transition-colors"
-                        >
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <!-- Right Icon -->
+                        <div class="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -314,10 +312,10 @@ $jobs = $jobs ?? collect();
 
         <!-- View All Jobs Button -->
         <div class="text-center mt-12">
-            <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7">
-                <span>Voir toutes les offres</span>
-            </a>
+                    <a href="{{ route('jobs.index') }}" class="btn-premium-green mx-auto">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
+                        <span>Voir toutes les offres</span>
+                    </a>
         </div>
     </div>
 </section>

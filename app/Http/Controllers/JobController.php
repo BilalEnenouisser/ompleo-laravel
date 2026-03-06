@@ -40,9 +40,19 @@ class JobController extends Controller
             $query->where('location', 'like', "%{$request->location}%");
         }
 
-        // Type filter (work type)
+        // Contract Type filter (CDI, Stage, etc.)
         if ($request->filled('type')) {
-            $query->where('work_type', $request->type);
+            $query->where('type', $request->type);
+        }
+
+        // Work Mode filter (remote, onsite, hybrid)
+        if ($request->filled('work_type')) {
+            $query->where('work_type', $request->work_type);
+        }
+
+        // Category / Tags filter
+        if ($request->filled('category')) {
+            $query->whereJsonContains('tags', $request->category);
         }
 
         // Experience level filter
@@ -98,13 +108,53 @@ class JobController extends Controller
             ]);
         }
         
+        // For the new layout tabs
+        $tab = $request->get('tab', 'all');
+        
+        // Gather unique locations
+        $locations = Job::where('status', 'published')
+            ->whereNotNull('location')
+            ->distinct()
+            ->pluck('location')
+            ->sort()
+            ->values();
+
+        // Gather unique categories from tags
+        $categories = Job::where('status', 'published')
+            ->whereNotNull('tags')
+            ->get()
+            ->pluck('tags')
+            ->flatten()
+            ->unique()
+            ->values()
+            ->sort()
+            ->values();
+            
+        // Fallback categories if none found in tags
+        if ($categories->isEmpty()) {
+            $categories = collect(['Design', 'Développement', 'Informatique', 'Marketing', 'Finance', 'Ventes', 'Ressources Humaines', 'Support']);
+        }
+
+        // Gather unique contract types (CDI, Stage, etc.)
+        $types = Job::where('status', 'published')
+            ->whereNotNull('type')
+            ->distinct()
+            ->pluck('type')
+            ->sort()
+            ->values();
+            
+        // Fallback if none found
+        if ($types->isEmpty()) {
+            $types = collect(['CDI', 'CDD', 'Stage', 'Freelance', 'Alternance']);
+        }
+
         // Initial load - show first 10 jobs
         $jobs = $query->paginate(10);
         
         // Get total count of published jobs for the hero section
         $totalPublishedJobs = Job::where('status', 'published')->count();
             
-        return view('jobs.index', compact('jobs', 'totalPublishedJobs'));
+        return view('jobs.index', compact('jobs', 'totalPublishedJobs', 'tab', 'locations', 'categories', 'types'));
     }
 
     public function show(Job $job)
@@ -169,6 +219,14 @@ class JobController extends Controller
         // Limit to 3 jobs
         $relatedJobs = $relatedJobs->take(3);
         
+        // Get last 4 recent jobs
+        $recentJobs = Job::where('status', 'published')
+            ->where('id', '!=', $job->id)
+            ->latest()
+            ->with('company')
+            ->limit(4)
+            ->get();
+        
         // Check if user has already applied to this job
         $existingApplication = null;
         if (auth()->check() && auth()->user()->isCandidate()) {
@@ -177,6 +235,6 @@ class JobController extends Controller
                 ->first();
         }
         
-        return view('jobs.show', compact('job', 'relatedJobs', 'existingApplication'));
+        return view('jobs.show', compact('job', 'relatedJobs', 'existingApplication', 'recentJobs'));
     }
 }

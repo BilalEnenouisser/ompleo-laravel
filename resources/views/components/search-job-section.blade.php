@@ -35,9 +35,9 @@ $latestJobs = $latestJobs ?? collect();
             </div>
 
             <!-- Right Section: Content -->
-            <div class="text-left">
+            <div class="text-center lg:text-left">
                 <!-- Title -->
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
                     Trouvez votre prochain poste
                 </h2>
                 
@@ -45,7 +45,6 @@ $latestJobs = $latestJobs ?? collect();
                 <p class="text-lg text-white mb-8">
                     Découvrez les dernières offres d'emploi sur OMPLEO
                 </p>
-
                 <!-- Search Input -->
                 <div class="mb-8">
                     <form action="{{ route('jobs.index') }}" method="GET" class="relative">
@@ -75,7 +74,7 @@ $latestJobs = $latestJobs ?? collect();
                 <!-- Latest Offers -->
                 <div class="mb-8">
                     <p class="text-white mb-4 font-bold text-base">Dernières offres publiées :</p>
-                    <div class="flex flex-wrap gap-3 items-center">
+                    <div class="flex flex-wrap gap-3 items-center justify-center lg:justify-start">
                         @forelse($latestJobs as $job)
                             <a href="{{ route('jobs.show', $job->slug) }}" class="text-white hover:text-[#00fadc] transition-colors text-base">
                                 {{ $job->title }}
@@ -87,77 +86,15 @@ $latestJobs = $latestJobs ?? collect();
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex flex-row gap-4 search-job-buttons">
-                    <style>
-                        /* Desktop is default - buttons on same line */
-                        /* Mobile - keep on same line, adjust size if needed */
-                        @media (max-width: 767px) {
-                            .search-job-buttons {
-                                flex-wrap: nowrap !important;
-                                gap: 0.25rem !important;
-                                width: 100% !important;
-                                max-width: 100% !important;
-                            }
-                            .search-job-buttons a,
-                            .search-job-buttons > div {
-                                flex: 1 1 0 !important;
-                                min-width: 0 !important;
-                                overflow: hidden !important;
-                                max-width: calc(50% - 0.125rem) !important;
-                            }
-                            .search-job-buttons a {
-                                padding-left: 0.5rem !important;
-                                padding-right: 0.5rem !important;
-                                padding-top: 0.5rem !important;
-                                padding-bottom: 0.5rem !important;
-                                display: flex !important;
-                                align-items: center !important;
-                                justify-content: center !important;
-                                text-align: center !important;
-                                overflow: hidden !important;
-                                width: 100% !important;
-                                max-width: 100% !important;
-                                box-sizing: border-box !important;
-                            }
-                            .search-job-buttons a span,
-                            .search-job-buttons > div a span {
-                                font-size: 0.6rem !important;
-                                line-height: 1.2 !important;
-                                white-space: nowrap !important;
-                                overflow: hidden !important;
-                                text-overflow: ellipsis !important;
-                                display: inline-block !important;
-                                max-width: 100% !important;
-                                flex-shrink: 1 !important;
-                            }
-                            .search-job-buttons img {
-                                width: 0.875rem !important;
-                                height: 0.875rem !important;
-                                flex-shrink: 0 !important;
-                                margin-right: 0.25rem !important;
-                            }
-                            .search-job-buttons > div {
-                                overflow: hidden !important;
-                                width: 100% !important;
-                                max-width: 100% !important;
-                                box-sizing: border-box !important;
-                            }
-                            .search-job-buttons > div a {
-                                width: 100% !important;
-                                max-width: 100% !important;
-                            }
-                        }
-                    </style>
-                    <!-- Button 1: Parcourir toutes les offres -->
-                    <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon" class="w-7 h-7">
+                <div class="flex flex-col sm:flex-row gap-4 items-center lg:items-start search-job-buttons justify-center lg:justify-start">
+                    <a href="{{ route('jobs.index') }}" class="btn-premium-green mx-auto lg:mx-0">
+                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon">
                         <span>Parcourir toutes les offres</span>
                     </a>
 
-                    <!-- Button 2: Recevoir les offres par email -->
-                    <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
-                        <a href="#" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                            <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon" class="w-7 h-7">
+                    <div class="rounded-full overflow-hidden">
+                        <a href="#" class="btn-premium-dark mx-auto lg:mx-0">
+                            <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon">
                             <span>Recevoir les offres par email</span>
                         </a>
                     </div>

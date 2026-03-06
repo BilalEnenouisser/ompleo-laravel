@@ -7,22 +7,23 @@
   html {
     font-family: 'Inter', system-ui, sans-serif;
   }
-  
+
   body {
     @apply bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100;
   }
 }
 
 @layer components {
+
   /* Glass morphism effects */
   .glass-card {
     @apply bg-white/80 dark:bg-dark-800/80 backdrop-blur-sm border border-gray-200/20 dark:border-dark-700/20 shadow-glass;
   }
-  
+
   .glass-button {
     @apply bg-white/20 dark:bg-dark-700/20 backdrop-blur-sm border border-gray-200/30 dark:border-dark-600/30 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-dark-600/30 transition-all duration-300;
   }
-  
+
   .glass-button-highlight {
     border-radius: 0.75rem;
     --tw-bg-opacity: 1;
@@ -37,30 +38,95 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
   }
-  
+
   .glass-button-highlight:hover {
     transform: scale(1.05);
   }
-  
+
   .glass-input {
     @apply bg-white/50 dark:bg-dark-700/50 backdrop-blur-sm border border-gray-200/30 dark:border-dark-600/30 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none;
   }
-  
+
   .glass-badge {
     @apply bg-white/20 dark:bg-dark-700/20 backdrop-blur-sm border border-gray-200/30 dark:border-dark-600/30 text-gray-600 dark:text-gray-400;
   }
-  
+
   .glass-badge-highlight {
     @apply bg-primary-500/20 backdrop-blur-sm border border-primary-400/30 text-primary-700;
   }
-  
+
   /* Button styles */
   .btn-primary {
     @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
   }
-  
+
   .btn-secondary {
     @apply bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 text-gray-700 dark:text-gray-300 font-medium py-2 px-4 rounded-lg transition-all duration-300 border border-gray-200 dark:border-dark-600;
+  }
+
+  /* Standardized Ompleo Button */
+  .ompleo-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 11px 20px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    transition: opacity 0.3s ease !important;
+    border-radius: 9999px !important;
+    line-height: 1.2 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .ompleo-btn {
+      font-size: 16px !important;
+      padding: 10px 18px !important;
+    }
+  }
+
+  .ompleo-btn:hover {
+    opacity: 0.85 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .ompleo-btn img,
+  .ompleo-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Premium Button System */
+  .btn-premium {
+    @apply px-8 py-[13px] rounded-full font-semibold flex items-center justify-center gap-2 w-fit;
+  }
+
+  .btn-premium svg,
+  .btn-premium img {
+    @apply w-5 h-5;
+  }
+
+  .btn-premium-green {
+    @apply btn-premium text-white;
+    background: linear-gradient(135deg, #1aa2a0, #39fffc);
+    border: 1px solid #47fffd;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 66%);
+  }
+
+  .btn-premium-green:hover {
+    box-shadow: none !important;
+  }
+
+  .btn-premium-dark {
+    @apply btn-premium text-white;
+    background: linear-gradient(135deg, #136b6a, #004948);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 67%);
+    border: none;
   }
 }
 
@@ -68,14 +134,14 @@
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -89,27 +155,38 @@
   }
 
   .step-icon-hover:hover {
-    transform: scale(1.1) rotate(1deg);
-    animation: step-rotate 0.8s ease-in-out;
+    filter: brightness(1.1);
   }
-  
+
   @keyframes step-rotate {
-    0% { transform: scale(1.1) rotate(1deg); }
-    20% { transform: scale(1.1) rotate(-3deg); }
-    60% { transform: scale(1.1) rotate(5deg); }
-    100% { transform: scale(1.1) rotate(1deg); }
+    0% {
+      transform: scale(1.1) rotate(1deg);
+    }
+
+    20% {
+      transform: scale(1.1) rotate(-3deg);
+    }
+
+    60% {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    100% {
+      transform: scale(1.1) rotate(1deg);
+    }
   }
-  
+
   /* Marquee animation for brand logos */
   @keyframes marquee {
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }
   }
-  
+
   .animate-marquee {
     animation: marquee 30s linear infinite;
   }
@@ -119,10 +196,10 @@
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: opacity, transform;
   }
-  
+
   .animate-on-scroll.animated {
     opacity: 1;
     transform: translateY(0);
@@ -131,20 +208,20 @@
   /* Card animations with stagger effect */
   .job-card-link,
   .job-card-inner,
-  .companies-grid > div,
+  .companies-grid>div,
   .categories-section a,
   .faq-item {
     opacity: 0;
     transform: translateY(30px) scale(0.95);
     transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     backface-visibility: hidden;
     perspective: 1000px;
   }
-  
+
   .job-card-link.card-animated,
   .job-card-inner.card-animated,
-  .companies-grid > div.card-animated,
+  .companies-grid>div.card-animated,
   .categories-section a.card-animated,
   .faq-item.card-animated {
     opacity: 1;
@@ -155,45 +232,97 @@
   .jobs-section .job-card-link:nth-child(1) {
     transition-delay: 0.1s;
   }
-  
+
   .jobs-section .job-card-link:nth-child(2) {
     transition-delay: 0.2s;
   }
-  
+
   .jobs-section .job-card-link:nth-child(3) {
     transition-delay: 0.3s;
   }
 
   /* Stagger delays for company cards */
-  .companies-grid > div:nth-child(1) { transition-delay: 0.05s; }
-  .companies-grid > div:nth-child(2) { transition-delay: 0.1s; }
-  .companies-grid > div:nth-child(3) { transition-delay: 0.15s; }
-  .companies-grid > div:nth-child(4) { transition-delay: 0.2s; }
-  .companies-grid > div:nth-child(5) { transition-delay: 0.25s; }
-  .companies-grid > div:nth-child(6) { transition-delay: 0.3s; }
+  .companies-grid>div:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+
+  .companies-grid>div:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .companies-grid>div:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+
+  .companies-grid>div:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+
+  .companies-grid>div:nth-child(5) {
+    transition-delay: 0.25s;
+  }
+
+  .companies-grid>div:nth-child(6) {
+    transition-delay: 0.3s;
+  }
 
   /* Stagger delays for category cards */
-  .categories-section a:nth-child(1) { transition-delay: 0.05s; }
-  .categories-section a:nth-child(2) { transition-delay: 0.1s; }
-  .categories-section a:nth-child(3) { transition-delay: 0.15s; }
-  .categories-section a:nth-child(4) { transition-delay: 0.2s; }
-  .categories-section a:nth-child(5) { transition-delay: 0.25s; }
-  .categories-section a:nth-child(6) { transition-delay: 0.3s; }
-  .categories-section a:nth-child(7) { transition-delay: 0.35s; }
-  .categories-section a:nth-child(8) { transition-delay: 0.4s; }
+  .categories-section a:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+
+  .categories-section a:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .categories-section a:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+
+  .categories-section a:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+
+  .categories-section a:nth-child(5) {
+    transition-delay: 0.25s;
+  }
+
+  .categories-section a:nth-child(6) {
+    transition-delay: 0.3s;
+  }
+
+  .categories-section a:nth-child(7) {
+    transition-delay: 0.35s;
+  }
+
+  .categories-section a:nth-child(8) {
+    transition-delay: 0.4s;
+  }
 
   /* Stagger delays for FAQ items */
-  .faq-item:nth-child(1) { transition-delay: 0.1s; }
-  .faq-item:nth-child(2) { transition-delay: 0.2s; }
-  .faq-item:nth-child(3) { transition-delay: 0.3s; }
-  .faq-item:nth-child(4) { transition-delay: 0.4s; }
+  .faq-item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .faq-item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .faq-item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .faq-item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
 
   /* Reduce motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
+
     .animate-on-scroll,
     .job-card-link,
     .job-card-inner,
-    .companies-grid > div,
+    .companies-grid>div,
     .categories-section a,
     .faq-item {
       opacity: 1 !important;
@@ -211,5 +340,5 @@
   @media (max-width: 767px) {
     /* Mobile styles */
   }
- 
+
 }

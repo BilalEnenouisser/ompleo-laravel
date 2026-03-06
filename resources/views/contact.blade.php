@@ -181,11 +181,11 @@ $contactInfo = [
                         
                         <button
                             type="submit"
-                            class="w-full btn-primary px-6 py-4 flex items-center justify-center gap-2 transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
+                            class="ompleo-btn w-full btn-primary"
                             id="submit-btn"
                         >
                             <!-- Send icon from Lucide React -->
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="m22 2-7 20-4-9-9-4Z"></path>
                                 <path d="M22 2 11 13"></path>
                             </svg>

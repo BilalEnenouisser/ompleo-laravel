@@ -42,27 +42,75 @@
             .hero-char {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
                 display: inline-block;
+                will-change: transform, opacity, filter;
             }
             @keyframes heroCharFadeIn {
                 to {
                     opacity: 1;
                     transform: translateY(0);
+                    filter: blur(0);
                 }
             }
             .hero-subtitle-animate {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
+                will-change: transform, opacity, filter;
             }
         </style>
         <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
-            <h1 class="font-bold mb-6 leading-tight blog-hero-title">
-                <span class="block" style="color: #ffffff;">
-                    <span class="hero-char">B</span><span class="hero-char">l</span><span class="hero-char">o</span><span class="hero-char">g</span><span class="hero-char">&nbsp;</span><span class="hero-char">-</span><span class="hero-char">&nbsp;</span><span class="hero-char">G</span><span class="hero-char">u</span><span class="hero-char">i</span><span class="hero-char">d</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">e</span><span class="hero-char">t</span><span class="hero-char">&nbsp;</span><br><span class="hero-char">R</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">s</span><span class="hero-char">o</span><span class="hero-char">u</span><span class="hero-char">r</span><span class="hero-char">c</span><span class="hero-char">e</span><span class="hero-char">s</span>
-                </span>
+            <h1 class="font-bold mb-6 leading-tight tracking-tighter blog-hero-title" style="font-size: 0;">
+                @php
+                    $heroTitle = "Blog - Guides et Ressources";
+                    
+                    if (!function_exists('renderAnimateTextBlog')) {
+                        function renderAnimateTextBlog($text) {
+                            $words = explode(' ', $text);
+                            $output = '';
+                            foreach ($words as $wIndex => $word) {
+                                $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                $chars = mb_str_split($word);
+                                foreach ($chars as $char) {
+                                    $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                }
+                                $output .= '</span>';
+                                if ($wIndex < count($words) - 1) {
+                                    $output .= '<span class="hero-space">&nbsp;</span>';
+                                }
+                            }
+                            return $output;
+                        }
+                    }
+                @endphp
+                {!! renderAnimateTextBlog($heroTitle) !!}
             </h1>
+            
+            <style>
+                .blog-hero-title .hero-char {
+                    font-size: 70px;
+                    color: #ffffff;
+                }
+                .blog-hero-title .hero-space {
+                    font-size: 70px;
+                }
+                @media (max-width: 1023px) {
+                    .blog-hero-title .hero-char,
+                    .blog-hero-title .hero-space {
+                        font-size: 48px !important;
+                    }
+                }
+                @media (max-width: 767px) {
+                    .blog-hero-title .hero-char,
+                    .blog-hero-title .hero-space {
+                        font-size: 32px !important;
+                    }
+                }
+            </style>
+            
             <p class="text-xl hero-subtitle-animate" style="color: #ffffff;">
                 Restez informé des dernières tendances en IA et du marché du travail
             </p>
@@ -72,7 +120,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Animate hero characters with stagger
-        const heroChars = document.querySelectorAll('.blog-hero .hero-char');
+        const heroChars = document.querySelectorAll('.blog-hero .hero-char, .blog-hero .hero-space');
         heroChars.forEach((char, index) => {
             char.style.animationDelay = (index * 0.03) + 's';
         });

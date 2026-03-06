@@ -59,8 +59,8 @@
                     </p>
 
                     <!-- Button -->
-                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-white text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border-radius: 9999px;">
-                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon" class="w-7 h-7 sm:w-5 sm:h-5">
+                    <a href="{{ route('jobs.index') }}" class="btn-premium-green mx-auto">
+                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon">
                         <span class="whitespace-nowrap">Parcourir toutes les offres</span>
                     </a>
                 </div>

@@ -217,18 +217,38 @@
                 /* Hero Text Animation */
                 .hero-char {
                     opacity: 0;
-                    transform: translateY(20px);
-                    animation: heroCharFadeIn 0.6s ease forwards;
+                    transform: translateY(10px);
+                    filter: blur(8px);
+                    animation: heroCharFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
                     display: inline-block !important;
                     vertical-align: baseline !important;
                     line-height: inherit !important;
+                    will-change: transform, opacity, filter;
                 }
                 
                 @keyframes heroCharFadeIn {
                     to {
                         opacity: 1;
                         transform: translateY(0);
+                        filter: blur(0);
                     }
+                }
+
+                /* Initially hide non-text elements for sequence */
+                .hero-badge-container,
+                .hero-buttons,
+                .hero-trust-section {
+                    opacity: 0;
+                    transform: translateY(10px);
+                    filter: blur(4px);
+                    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease;
+                    will-change: opacity, transform, filter;
+                }
+
+                .hero-reveal-active {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                    filter: blur(0) !important;
                 }
                 
                 /* Ensure hero text displays horizontally */
@@ -312,22 +332,22 @@
 
                 <!-- Sub-headline -->
                 <p class="mb-12 mt-12 hero-subheadline" style="color: #ffffff; font-size: 34px;">
-                    <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">P</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">s</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">g</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">b</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">a</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">p</span><span class="hero-char" style="display: inline-block; will-change: transform;">l</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">f</span><span class="hero-char" style="display: inline-block; will-change: transform;">i</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">z</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">v</span><span class="hero-char" style="display: inline-block; will-change: transform;">o</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span></span> <span style="white-space:nowrap"><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">c</span><span class="hero-char" style="display: inline-block; will-change: transform;">r</span><span class="hero-char" style="display: inline-block; will-change: transform;">u</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">m</span><span class="hero-char" style="display: inline-block; will-change: transform;">e</span><span class="hero-char" style="display: inline-block; will-change: transform;">n</span><span class="hero-char" style="display: inline-block; will-change: transform;">t</span><span class="hero-char" style="display: inline-block; will-change: transform;">.</span></span>
+                    <span style="white-space:nowrap"><span class="hero-char">P</span><span class="hero-char">o</span><span class="hero-char">s</span><span class="hero-char">t</span><span class="hero-char">u</span><span class="hero-char">l</span><span class="hero-char">e</span><span class="hero-char">z</span></span> <span style="white-space:nowrap"><span class="hero-char">g</span><span class="hero-char">r</span><span class="hero-char">a</span><span class="hero-char">t</span><span class="hero-char">u</span><span class="hero-char">i</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">m</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span></span> <span style="white-space:nowrap"><span class="hero-char">o</span><span class="hero-char">u</span></span> <span style="white-space:nowrap"><span class="hero-char">p</span><span class="hero-char">u</span><span class="hero-char">b</span><span class="hero-char">l</span><span class="hero-char">i</span><span class="hero-char">e</span><span class="hero-char">z</span></span> <span style="white-space:nowrap"><span class="hero-char">u</span><span class="hero-char">n</span><span class="hero-char">e</span></span> <span style="white-space:nowrap"><span class="hero-char">o</span><span class="hero-char">f</span><span class="hero-char">f</span><span class="hero-char">r</span><span class="hero-char">e</span></span> <span style="white-space:nowrap"><span class="hero-char">e</span><span class="hero-char">t</span></span> <span style="white-space:nowrap"><span class="hero-char">a</span><span class="hero-char">m</span><span class="hero-char">p</span><span class="hero-char">l</span><span class="hero-char">i</span><span class="hero-char">f</span><span class="hero-char">i</span><span class="hero-char">e</span><span class="hero-char">z</span></span> <span style="white-space:nowrap"><span class="hero-char">v</span><span class="hero-char">o</span><span class="hero-char">t</span><span class="hero-char">r</span><span class="hero-char">e</span></span> <span style="white-space:nowrap"><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">r</span><span class="hero-char">u</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">m</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span><span class="hero-char">.</span></span>
                 </p>
 
                 <!-- Buttons with Glow Animation -->
-                <div class="flex flex-row gap-4 mb-12 hero-buttons">
+                <div class="flex flex-wrap flex-row gap-2 mb-12 hero-buttons justify-center lg:justify-start">
                     <!-- Button 1: Publier une annonce with Glow Effect -->
-                    <a href="{{ route('signup.recruiter') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105 hero-button-glow" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
-                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-6 h-6 hero-button-icon">
-                        <span>Publier une annonce</span>
+                    <a href="{{ route('nos-solutions') }}" class="btn-premium-green mx-auto lg:mx-0">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="hero-button-icon">
+                        <span class="text-sm sm:text-lg">Publier une annonce</span>
                     </a>
 
                     <!-- Button 2: Rechercher toutes les offres with Glow Effect -->
-                    <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
-                        <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105 hero-button-glow" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
-                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="w-6 h-6 hero-button-icon">
-                            <span>Rechercher toutes les offres</span>
+                    <div class="rounded-full overflow-hidden">
+                        <a href="{{ route('jobs.index') }}" class="btn-premium-dark mx-auto lg:mx-0">
+                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="hero-button-icon">
+                            <span class="text-sm sm:text-lg">Rechercher toutes les offres</span>
                         </a>
                     </div>
                 </div>
@@ -424,22 +444,46 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // ======================================
-    // Hero Text Character Animation
+    // Hero Text Character Animation Sequence
     // ======================================
-    function animateHeroChars() {
-        const chars = document.querySelectorAll('.hero-char');
-        chars.forEach((char, index) => {
-            // Calculate staggered delay: 40ms per character
-            const delay = index * 0.04;
-            char.style.animationDelay = delay + 's';
+    function animateHeroSequence() {
+        const headlineChars = document.querySelectorAll('.hero-headline .hero-char');
+        const subheadlineChars = document.querySelectorAll('.hero-subheadline .hero-char');
+        const secondaryElements = document.querySelectorAll('.hero-badge-container, .hero-buttons, .hero-trust-section');
+        
+        // Ensure initial states
+        headlineChars.forEach(char => {
             char.style.opacity = '0';
-            char.style.transform = 'translateY(20px)';
+            char.style.transform = 'translateY(10px)';
+            char.style.filter = 'blur(8px)';
         });
+        subheadlineChars.forEach(char => {
+            char.style.opacity = '0';
+            char.style.transform = 'translateY(10px)';
+            char.style.filter = 'blur(8px)';
+        });
+
+        // 1. Animate Headline (35ms stagger)
+        headlineChars.forEach((char, index) => {
+            const delay = index * 0.035;
+            char.style.animationDelay = delay + 's';
+        });
+
+        // 2. Animate Sub-headline (starts at ~1.7s, 12ms stagger)
+        const subHeadlineStart = 1.7;
+        subheadlineChars.forEach((char, index) => {
+            const delay = subHeadlineStart + (index * 0.012);
+            char.style.animationDelay = delay + 's';
+        });
+
+        // 3. Reveal secondary elements (triggers when sub-headline reaches "et amplifiez", ~2.2s total)
+        const finalRevealDelay = 2.2; 
+        setTimeout(() => {
+            secondaryElements.forEach(el => {
+                el.classList.add('hero-reveal-active');
+            });
+        }, finalRevealDelay * 1000);
     }
-    
-    // ======================================
-    // Hero Parallax with Blur Effect
-    // ======================================
     function initParallaxWithBlur() {
         const heroImage = document.querySelector('[data-parallax="hero-image"]');
         const heroSection = document.querySelector('section#home');
@@ -519,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize all animations
-    animateHeroChars();
+    animateHeroSequence();
     initParallaxWithBlur();
     initButtonGlowAnimation();
     initBadgeAnimation();

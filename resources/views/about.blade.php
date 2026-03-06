@@ -15,24 +15,31 @@
             .hero-char {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
                 display: inline-block;
+                will-change: transform, opacity, filter;
             }
             @keyframes heroCharFadeIn {
                 to {
                     opacity: 1;
                     transform: translateY(0);
+                    filter: blur(0);
                 }
             }
             .hero-subtitle-animate {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
+                will-change: transform, opacity, filter;
             }
             .hero-content-animate {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
+                will-change: transform, opacity, filter;
             }
         </style>
         
@@ -91,20 +98,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Animate title characters with stagger
     const titleChars = document.querySelectorAll('.about-hero-title .hero-char');
     titleChars.forEach((char, index) => {
-        char.style.animationDelay = (index * 0.03) + 's';
+        char.style.animationDelay = (index * 0.035) + 's';
     });
     
-    // Animate subtitle characters after title
+    // Animate subtitle characters after title (starts later for more deliberate feel)
     const subtitleChars = document.querySelectorAll('.about-hero-subtitle .hero-char');
-    const subtitleStartDelay = titleChars.length * 0.03 + 0.1;
+    const subtitleStartDelay = 1.2; // Deliberate delay before subtitle starts
     subtitleChars.forEach((char, index) => {
-        char.style.animationDelay = (subtitleStartDelay + index * 0.02) + 's';
+        char.style.animationDelay = (subtitleStartDelay + index * 0.015) + 's';
     });
     
     // Animate content after subtitle
     const content = document.querySelector('.hero-content-animate');
     if (content) {
-        content.style.animationDelay = (subtitleStartDelay + subtitleChars.length * 0.02 + 0.2) + 's';
+        content.style.animationDelay = (subtitleStartDelay + subtitleChars.length * 0.015 + 0.3) + 's';
     }
 });
 </script>

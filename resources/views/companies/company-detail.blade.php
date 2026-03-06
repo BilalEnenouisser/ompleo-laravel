@@ -83,7 +83,7 @@ use Illuminate\Support\Facades\Storage;
 
                     <!-- Jobs Cards -->
                     @if($jobs->count() > 0)
-                    <div class="space-y-4">
+                    <div class="space-y-4 animate-on-scroll">
                         @foreach($jobs as $job)
                         <a href="{{ route('jobs.show', $job->slug) }}" class="block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 job-card-link" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
                             <style>
@@ -216,7 +216,7 @@ use Illuminate\Support\Facades\Storage;
                 <!-- Right: Sidebar (1/3) -->
                 <div class="lg:col-span-1 space-y-6">
                     <!-- Search All Jobs -->
-                    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6">
+                    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 animate-on-scroll">
                         <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
                             <svg class="w-6 h-6 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"/>
@@ -325,7 +325,7 @@ use Illuminate\Support\Facades\Storage;
                     </script>
 
                     <!-- Newsletter Signup -->
-                    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6">
+                    <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 animate-on-scroll">
                         <h3 class="text-xl font-bold text-white mb-3">
                             Sign-up to stay updated
                         </h3>
@@ -342,7 +342,7 @@ use Illuminate\Support\Facades\Storage;
                             >
                             <button 
                                 type="submit" 
-                                class="w-full px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                                class="w-full px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 hover:brightness-110"
                                 style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);"
                             >
                                 Subscribe

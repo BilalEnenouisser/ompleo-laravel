@@ -98,7 +98,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('contact') }}" class="text-[#cccccc] hover:text-[#00b6b4] transition-colors duration-200">
+                        <a href="{{ route('contact') }}" class="ompleo-btn text-white" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); margin-top: 10px;">
                             Nous contacter
                         </a>
                     </li>

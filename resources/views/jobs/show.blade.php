@@ -7,442 +7,371 @@
 <!-- Header -->
 @include('components.header')
 
-<div class="min-h-screen bg-gray-50 dark:bg-[#1f1f1f] pt-20">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Success/Error Messages -->
-        @if(session('success'))
-            <div class="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                <div class="flex items-center gap-2 text-green-700 dark:text-green-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span class="font-medium">{{ session('success') }}</span>
-                </div>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <div class="flex items-center gap-2 text-red-700 dark:text-red-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span class="font-medium">{{ session('error') }}</span>
-                </div>
-            </div>
-        @endif
-
-        <!-- Header -->
-        <div class="flex items-center gap-4 mb-8">
-            <button
-                onclick="history.back()"
-                class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2b2b2b] transition-colors"
-            >
-                <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+<div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
+    <!-- Hero Section -->
+    <section class="bg-[#1a1a1a] pt-32 pb-12 relative overflow-hidden z-10 job-details-hero">
+        <style>
+            /* Hero Character Animation */
+            .hero-char {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(8px);
+                animation: heroCharFadeIn 0.6s ease forwards;
+                display: inline-block;
+                will-change: transform, opacity, filter;
+            }
+            @keyframes heroCharFadeIn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                    filter: blur(0);
+                }
+            }
+            .hero-subtitle-animate {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(8px);
+                animation: heroCharFadeIn 0.6s ease forwards;
+                will-change: transform, opacity, filter;
+            }
+        </style>
+        <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1200px;">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-2 text-[#9ca3af] text-sm mb-8 hero-subtitle-animate" style="animation-delay: 0.1s;">
+                <a href="{{ route('jobs.index') }}" class="hover:text-[#00b6b4] transition-colors">All Jobs</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                 </svg>
-            </button>
-            <div class="flex-1">
-                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
-                    <span>Offres d'emploi</span>
-                    <span>/</span>
-                    <span>{{ $job->company->name }}</span>
-                </div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                    {{ $job->title }}
+                <span class="text-white">{{ $job->title }}</span>
+            </div>
+
+            <div class="mb-8">
+                <h1 class="font-bold text-white mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
+                    @php
+                        if (!function_exists('renderAnimateTextJob')) {
+                            function renderAnimateTextJob($text) {
+                                $words = explode(' ', $text);
+                                $output = '';
+                                foreach ($words as $wIndex => $word) {
+                                    $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                    $chars = mb_str_split($word);
+                                    foreach ($chars as $char) {
+                                        $output .= '<span class="hero-char text-5xl md:text-7xl" style="display: inline-block;">' . $char . '</span>';
+                                    }
+                                    $output .= '</span>';
+                                    if ($wIndex < count($words) - 1) {
+                                        $output .= '<span class="text-5xl md:text-7xl">&nbsp;</span>';
+                                    }
+                                }
+                                return $output;
+                            }
+                        }
+                    @endphp
+                    {!! renderAnimateTextJob($job->title) !!}
                 </h1>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Main Content -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Job Header -->
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg">
-                    <div class="flex items-start gap-6 mb-6">
-                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0">
-                            @if($job->company->logo)
-                                <img
-                                    src="{{ asset('storage/' . $job->company->logo) }}"
-                                    alt="{{ $job->company->name }}"
-                                    class="w-full h-full object-cover"
-                                />
-                            @else
-                                <div class="w-full h-full bg-gradient-to-br from-[#00b6b4] to-[#009e9c] flex items-center justify-center text-white font-bold text-xl">
-                                    {{ strtoupper(substr($job->company->name, 0, 2)) }}
-                                </div>
-                            @endif
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                    {{ $job->title }}
-                                </h2>
-                                @if($job->is_featured)
-                                    <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                        </svg>
-                                        Vedette
-                                    </span>
-                                @endif
+                
+                <!-- Company Row -->
+                <div class="flex items-center gap-4 mb-6 hero-subtitle-animate" style="animation-delay: 0.4s;">
+                    <div class="w-10 h-10 bg-[#2b2b2b] rounded-lg border border-[#333333] flex items-center justify-center overflow-hidden">
+                        @if($job->company->logo)
+                            <img src="{{ asset('storage/' . $job->company->logo) }}" alt="{{ $job->company->name }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-[#00b6b4] to-[#009e9c] flex items-center justify-center text-white font-bold text-sm">
+                                {{ strtoupper(substr($job->company->name, 0, 2)) }}
                             </div>
-                            
-                            <div class="flex items-center gap-1 mb-4">
-                                <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                                    <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                                    <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
-                                    <path d="M10 6h4"></path>
-                                    <path d="M10 10h4"></path>
-                                    <path d="M10 14h4"></path>
-                                    <path d="M10 18h4"></path>
-                                </svg>
-                                <span class="text-lg font-medium text-[#00b6b4]">
-                                    {{ $job->company->name }}
-                                </span>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 dark:text-gray-400">
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                    <span>{{ $job->location }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12,6 12,12 16,14"></polyline>
-                                    </svg>
-                                    <span>{{ $job->type }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
-                                    <span>{{ $job->experience_level ?? 'Non spécifié' }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                                    </svg>
-                                    <span>Publié {{ $job->created_at->diffForHumans() }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            @if($job->salary_min && $job->salary_max)
-                                {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA
-                            @elseif($job->salary_min)
-                                À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA
-                            @else
-                                Salaire non spécifié
-                            @endif
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"></path>
-                                </svg>
-                            </button>
-                            <button class="p-2 text-gray-400 hover:text-[#00b6b4] transition-colors">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Job Description -->
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                        Description du poste
-                    </h3>
-                    <div class="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
-                        {!! nl2br(e($job->description)) !!}
-                    </div>
-                </div>
-
-                <!-- Requirements -->
-                @if($job->requirements && count($job->requirements) > 0)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                        Profil recherché
-                    </h3>
-                    <div class="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
-                        <ul class="list-disc list-inside space-y-2">
-                            @foreach($job->requirements as $requirement)
-                                <li>{{ $requirement }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @endif
-
-                <!-- Skills -->
-                @if($job->tags && count($job->tags) > 0)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                        Compétences requises
-                    </h3>
-                    <div class="flex flex-wrap gap-3">
-                        @foreach($job->tags as $tag)
-                            <span class="px-4 py-2 bg-[#00b6b4]/10 text-[#00b6b4] rounded-full font-medium">
-                                {{ $tag }}
-                            </span>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-
-                <!-- Benefits -->
-                @if($job->benefits && count($job->benefits) > 0)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-8 shadow-lg">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                        Avantages
-                    </h3>
-                    <div class="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
-                        <ul class="list-disc list-inside space-y-2">
-                            @foreach($job->benefits as $benefit)
-                                <li>{{ $benefit }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @endif
-            </div>
-
-            <!-- Sidebar -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Apply Card -->
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg top-8">
-                    <div class="text-center mb-6">
-                        <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                            @if($job->salary_min && $job->salary_max)
-                                {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA
-                            @elseif($job->salary_min)
-                                À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA
-                            @else
-                                Salaire non spécifié
-                            @endif
-                        </div>
-                        @if($job->application_deadline)
-                            <p class="text-gray-600 dark:text-gray-400">
-                                Date limite : {{ $job->application_deadline->format('d/m/Y') }}
-                            </p>
                         @endif
                     </div>
-                    
-                    @auth
-                        @if(auth()->user()->user_type === 'candidate')
-                            @php
-                                $existingApplication = \App\Models\Application::where('job_id', $job->id)
-                                    ->where('candidate_id', auth()->id())
-                                    ->first();
-                            @endphp
-                            
-                            @if($existingApplication)
-                                <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-                                    <div class="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 mb-2">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        <span class="font-semibold">Candidature envoyée</span>
-                                    </div>
-                                    <p class="text-sm text-green-600 dark:text-green-400">
-                                        Statut: 
-                                        <span class="font-medium">
-                                            @if($existingApplication->status === 'pending')
-                                                En attente
-                                            @elseif($existingApplication->status === 'accepted')
-                                                Acceptée
-                                            @elseif($existingApplication->status === 'rejected')
-                                                Rejetée
-                                            @else
-                                                {{ ucfirst($existingApplication->status) }}
-                                            @endif
-                                        </span>
-                                    </p>
-                                    <p class="text-xs text-green-500 dark:text-green-500 mt-1">
-                                        Postulé le {{ $existingApplication->applied_at->format('d/m/Y à H:i') }}
-                                    </p>
-                                </div>
+                    <span class="text-2xl font-bold text-white">{{ $job->company->name }}</span>
+                </div>
+
+                <!-- Metadata Row -->
+                <div class="flex flex-wrap items-center gap-4 text-[#9ca3af] text-lg hero-subtitle-animate" style="animation-delay: 0.6s;">
+                    <span>{{ $job->tags[0] ?? 'General' }}</span>
+                    <span class="text-[#333333]">|</span>
+                    <span>{{ $job->type }}</span>
+                    <span class="text-[#333333]">|</span>
+                    <span>{{ ucfirst($job->work_type) }}</span>
+                    @if($job->salary_min)
+                        <span class="text-[#333333]">|</span>
+                        <span>
+                            @if($job->salary_max)
+                                {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA
                             @else
-                                <a
-                                    href="{{ route('applications.create', $job) }}"
-                                    class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-                                >
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                                        <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                                    </svg>
-                                    Postuler maintenant
-                                </a>
+                                From {{ number_format($job->salary_min, 0, ',', ' ') }} DA
+                            @endif
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="pt-20 pb-20 relative z-10">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1200px;">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                
+                <!-- Role Details (2/3) -->
+                <div class="lg:col-span-2 space-y-12 animate-on-scroll">
+                    <!-- Intro -->
+                    <div class="prose prose-invert prose-lg max-w-none text-[#9ca3af]">
+                        <p class="text-xl">
+                            We are looking to find a skilled <strong class="text-white">{{ $job->title }}</strong> to join our growing team@if($job->tags) in the <strong class="text-white">{{ $job->tags[0] }}</strong> department@endif.
+                        </p>
+                        <p>
+                            {!! nl2br(e($job->description)) !!}
+                        </p>
+                    </div>
+
+                    <!-- Responsibilities -->
+                    @if($job->responsibilities && count($job->responsibilities) > 0)
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6">Responsibilities:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-lg">
+                            @foreach($job->responsibilities as $resp)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $resp }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <!-- Requirements -->
+                    @if($job->requirements && count($job->requirements) > 0)
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6">Requirements:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-lg">
+                            @foreach($job->requirements as $req)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $req }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <!-- Perks -->
+                    @if($job->benefits && count($job->benefits) > 0)
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6">Perks:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-lg">
+                            @foreach($job->benefits as $benefit)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $benefit }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <!-- Actions -->
+                    <div class="flex flex-row items-center gap-6 pt-8">
+                        @auth
+                            @if(auth()->user()->user_type === 'candidate')
+                                @if($existingApplication)
+                                    <button disabled class="px-8 py-4 bg-gray-600 text-white rounded-full font-bold opacity-50 cursor-not-allowed w-fit">
+                                        Candidature envoyée
+                                    </button>
+                                @else
+                                    <a href="{{ route('applications.create', $job) }}" class="btn-premium-green">
+                                        <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="brightness-0 invert" alt="">
+                                        Apply now
+                                    </a>
+                                @endif
+                            @else
+                                <div class="px-8 py-4 bg-[#2b2b2b] text-[#9ca3af] rounded-full font-bold text-center border border-[#333333] w-fit">
+                                    Log in as candidate to apply
+                                </div>
                             @endif
                         @else
-                            <div class="text-center p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                <p class="text-gray-600 dark:text-gray-400">
-                                    Connectez-vous en tant que candidat pour postuler
-                                </p>
-                            </div>
-                        @endif
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="w-full bg-[#00b6b4] hover:bg-[#009e9c] text-white py-4 text-lg font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-                        >
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                            <a href="{{ route('login') }}" class="btn-premium-green">
+                                <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="brightness-0 invert" alt="">
+                                Apply now
+                            </a>
+                        @endauth
+
+                        <a href="{{ route('jobs.index') }}" class="btn-premium-dark">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l9-9m-9 9l9 9"></path>
                             </svg>
-                            Se connecter pour postuler
+                            Back to all jobs
                         </a>
-                    @endauth
-                    
-                    <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                        En postulant, vous acceptez nos conditions d'utilisation
-                    </p>
+                    </div>
+
+                    <!-- Recent Jobs Section -->
+                    @if(isset($recentJobs) && $recentJobs->count() > 0)
+                    <div class="pt-20">
+                        <div class="mb-8">
+                            <h3 class="text-3xl font-bold text-white">Recent Jobs</h3>
+                        </div>
+                        <div class="space-y-4">
+                            @foreach($recentJobs as $rJob)
+                            <a href="{{ route('jobs.show', $rJob->slug) }}" class="block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-[#333333] rounded-lg overflow-hidden flex-shrink-0">
+                                            @if($rJob->company->logo)
+                                                <img src="{{ asset('storage/' . $rJob->company->logo) }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-xs">
+                                                    {{ strtoupper(substr($rJob->company->name, 0, 2)) }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold text-white">{{ $rJob->title }}</h4>
+                                            <p class="text-[#9ca3af]">{{ $rJob->company->name }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-white font-semibold">{{ $rJob->salary_min ? number_format($rJob->salary_min, 0, ',', ' ') . ' DA' : 'Confidential' }}</p>
+                                        <p class="text-[#9ca3af] text-sm">{{ $rJob->type }} • {{ $rJob->location }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            @endforeach
+                        </div>
+                        <div class="mt-8 flex justify-start">
+                            <a href="{{ route('jobs.index') }}" class="btn-premium-green">
+                                Show all jobs
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
-                <!-- Company Info -->
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg">
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-4">
-                        À propos de {{ $job->company->name }}
-                    </h3>
-                    <div class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                        <p>
-                            {{ $job->company->description ?? 'Découvrez les opportunités chez ' . $job->company->name . '.' }}
-                        </p>
-                        <div class="pt-3 border-t border-gray-200 dark:border-[#333333]">
-                            <a href="{{ route('companies.show', $job->company->slug) }}" class="text-[#00b6b4] hover:text-[#009e9c] font-medium">
-                                Voir toutes les offres de {{ $job->company->name }}
-                            </a>
+                <!-- Sidebar (1/3) -->
+                <div class="lg:col-span-1">
+                    <div class="space-y-8">
+                        <!-- Search Box -->
+                        <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-2 flex items-center gap-2 animate-on-scroll">
+                            <div class="flex-1 relative">
+                                <form action="{{ route('jobs.index') }}" method="GET">
+                                    <input 
+                                        type="text" 
+                                        name="search"
+                                        placeholder="Search all Jobs" 
+                                        class="w-full px-6 py-4 bg-transparent text-white placeholder-gray-500 focus:outline-none transition-colors rounded-xl"
+                                    >
+                                </form>
+                            </div>
+                            <button class="p-4 text-gray-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Job Summary Card -->
+                        <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-8 backdrop-blur-sm animate-on-scroll">
+                            <h3 class="text-xl font-bold text-white mb-2">{{ $job->title }}</h3>
+                            <p class="text-[#00b6b4] font-semibold mb-6">{{ $job->company->name }}</p>
+                            
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="w-12 h-12 bg-[#333333] rounded-lg flex items-center justify-center overflow-hidden">
+                                    @if($job->company->logo)
+                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="{{ $job->company->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-xs">
+                                            {{ strtoupper(substr($job->company->name, 0, 2)) }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <span class="text-lg font-semibold text-white">{{ $job->company->name }}</span>
+                            </div>
+
+                            <div class="text-[#9ca3af] mb-8">
+                                Job posted on: <span class="text-white">{{ $job->created_at->format('M d, Y') }}</span>
+                            </div>
+
+                            @auth
+                                @if(auth()->user()->user_type === 'candidate')
+                                    @if(!$existingApplication)
+                                        <a href="{{ route('applications.create', $job) }}" class="w-full block text-center px-8 py-4 bg-[#00b6b4] text-white rounded-full font-bold hover:bg-[#009999] transition-all flex items-center justify-center gap-3">
+                                            <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="w-5 h-5 brightness-0 invert" alt="">
+                                            Apply now
+                                        </a>
+                                    @else
+                                        <button disabled class="w-full px-8 py-4 bg-gray-600 text-white rounded-full font-bold opacity-50 cursor-not-allowed">
+                                            Postulé
+                                        </button>
+                                    @endif
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}" class="btn-premium-green !w-full">
+                                    <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="brightness-0 invert" alt="">
+                                    Apply now
+                                </a>
+                            @endauth
+                        </div>
+
+                        <!-- Newsletter Signup -->
+                        <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-8 backdrop-blur-sm animate-on-scroll">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                Sign-up to stay updated
+                            </h3>
+                            <p class="text-[#9ca3af] mb-8 text-base">
+                                Get the latest jobs in your inbox every Monday.
+                            </p>
+                            <form action="#" method="POST" class="space-y-5">
+                                <input 
+                                    type="email" 
+                                    placeholder="Email Address" 
+                                    class="w-full px-6 py-4 bg-[#1f1f1f] text-white placeholder-gray-500 focus:outline-none transition-colors rounded-xl border border-[#333333] focus:border-[#00b6b4]"
+                                    required
+                                >
+                                <button 
+                                    type="submit" 
+                                    class="w-full px-8 py-4 bg-transparent border border-[#333333] text-white rounded-xl font-bold hover:bg-[#333333] transition-all"
+                                >
+                                    Subscribe
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Related Jobs -->
-                @if($relatedJobs->count() > 0)
-                <div class="bg-white dark:bg-[#2b2b2b] rounded-2xl p-6 shadow-lg">
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-4">
-                        Offres similaires
-                    </h3>
-                    <div class="space-y-4">
-                        @foreach($relatedJobs as $relatedJob)
-                            <a
-                                href="{{ route('jobs.show', $relatedJob->slug) }}"
-                                class="block p-4 border border-gray-100 dark:border-[#333333] rounded-lg hover:bg-gray-50 dark:hover:bg-[#333333] transition-colors group"
-                            >
-                                <div class="flex items-start justify-between mb-2">
-                                    <h4 class="font-medium text-gray-900 dark:text-gray-100 group-hover:text-[#00b6b4] transition-colors">
-                                        {{ $relatedJob->title }}
-                                    </h4>
-                                    @if($relatedJob->is_featured)
-                                        <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                            </svg>
-                                            Vedette
-                                        </span>
-                                    @endif
-                                </div>
-                                
-                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                    <svg class="w-6 h-6 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                                        <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                                        <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"></path>
-                                        <path d="M10 6h4"></path>
-                                        <path d="M10 10h4"></path>
-                                        <path d="M10 14h4"></path>
-                                        <path d="M10 18h4"></path>
-                                    </svg>
-                                    <span class="font-medium">{{ $relatedJob->company->name }}</span>
-                                </div>
-                                
-                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                    <div class="flex items-center gap-1">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <span>{{ $relatedJob->location }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12,6 12,12 16,14"></polyline>
-                                        </svg>
-                                        <span>{{ $relatedJob->type }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12,6 12,12 16,14"></polyline>
-                                        </svg>
-                                        <span>{{ $relatedJob->created_at->diffForHumans() }}</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between">
-                                    <p class="text-sm font-medium text-[#00b6b4]">
-                                        @if($relatedJob->salary_min && $relatedJob->salary_max)
-                                            {{ number_format($relatedJob->salary_min, 0, ',', ' ') }} - {{ number_format($relatedJob->salary_max, 0, ',', ' ') }} DA
-                                        @elseif($relatedJob->salary_min)
-                                            À partir de {{ number_format($relatedJob->salary_min, 0, ',', ' ') }} DA
-                                        @else
-                                            Salaire non spécifié
-                                        @endif
-                                    </p>
-                                    <svg class="w-6 h-6 text-gray-400 group-hover:text-[#00b6b4] transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M5 12h14"></path>
-                                        <path d="m12 5 7 7-7 7"></path>
-                                    </svg>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-[#333333]">
-                        <a 
-                            href="{{ route('jobs.index') }}" 
-                            class="text-[#00b6b4] hover:text-[#009e9c] font-medium text-sm flex items-center gap-1"
-                        >
-                            Voir toutes les offres
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                @endif
             </div>
         </div>
-    </div>
+    </section>
 </div>
 
+@include('components.footer')
+
 <script>
-function applyForJob(jobId) {
-    alert('Fonctionnalité de candidature en cours de développement');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate hero characters with stagger
+    const heroChars = document.querySelectorAll('.job-details-hero .hero-char');
+    heroChars.forEach((char, index) => {
+        char.style.animationDelay = (index * 0.035) + 's';
+    });
+
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+});
 </script>
 
 @endsection

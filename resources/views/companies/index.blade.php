@@ -35,30 +35,75 @@ use Illuminate\Support\Facades\Storage;
             .hero-char {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
                 display: inline-block;
+                will-change: transform, opacity, filter;
             }
             @keyframes heroCharFadeIn {
                 to {
                     opacity: 1;
                     transform: translateY(0);
+                    filter: blur(0);
                 }
             }
             .hero-subtitle-animate {
                 opacity: 0;
                 transform: translateY(20px);
+                filter: blur(8px);
                 animation: heroCharFadeIn 0.6s ease forwards;
+                will-change: transform, opacity, filter;
             }
         </style>
         <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
-            <h1 class="font-bold mb-6 leading-tight companies-hero-title">
-                <span class="block" style="color: #ffffff;">
-                    <span class="hero-char">D</span><span class="hero-char">é</span><span class="hero-char">c</span><span class="hero-char">o</span><span class="hero-char">u</span><span class="hero-char">v</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">z</span><span class="hero-char">&nbsp;</span><span class="hero-char">l</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">p</span><span class="hero-char">r</span><span class="hero-char">i</span><span class="hero-char">s</span><span class="hero-char">e</span><span class="hero-char">s</span>
-                </span>
-                <span class="block" style="color: #d9d9d9;">
-                    <span class="hero-char">q</span><span class="hero-char">u</span><span class="hero-char">i</span><span class="hero-char">&nbsp;</span><span class="hero-char">r</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">r</span><span class="hero-char">u</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">n</span><span class="hero-char">t</span>
-                </span>
+            <h1 class="font-bold mb-6 leading-tight tracking-tighter companies-hero-title" style="font-size: 0;">
+                @php
+                    $heroTitle = "Découvrez les entreprises qui recrutent";
+                    
+                    if (!function_exists('renderAnimateTextCompanies')) {
+                        function renderAnimateTextCompanies($text) {
+                            $words = explode(' ', $text);
+                            $output = '';
+                            foreach ($words as $wIndex => $word) {
+                                $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                $chars = mb_str_split($word);
+                                foreach ($chars as $char) {
+                                    $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                }
+                                $output .= '</span>';
+                                if ($wIndex < count($words) - 1) {
+                                    $output .= '<span class="hero-space">&nbsp;</span>';
+                                }
+                            }
+                            return $output;
+                        }
+                    }
+                @endphp
+                {!! renderAnimateTextCompanies($heroTitle) !!}
             </h1>
+            
+            <style>
+                .companies-hero-title .hero-char {
+                    font-size: 70px;
+                    color: #ffffff;
+                }
+                .companies-hero-title .hero-space {
+                    font-size: 70px;
+                }
+                @media (max-width: 1023px) {
+                    .companies-hero-title .hero-char,
+                    .companies-hero-title .hero-space {
+                        font-size: 48px !important;
+                    }
+                }
+                @media (max-width: 767px) {
+                    .companies-hero-title .hero-char,
+                    .companies-hero-title .hero-space {
+                        font-size: 32px !important;
+                    }
+                }
+            </style>
+            
             <p class="text-xl hero-subtitle-animate" style="color: #ffffff;">
                 Explorez les entreprises actuellement à la recherche de talents qualifiés
             </p>
@@ -68,7 +113,7 @@ use Illuminate\Support\Facades\Storage;
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Animate hero characters with stagger
-        const heroChars = document.querySelectorAll('.companies-hero .hero-char');
+        const heroChars = document.querySelectorAll('.companies-hero .hero-char, .companies-hero .hero-space');
         heroChars.forEach((char, index) => {
             char.style.animationDelay = (index * 0.03) + 's';
         });
@@ -222,11 +267,11 @@ use Illuminate\Support\Facades\Storage;
                     
                     <!-- Action Buttons - Same Line -->
                     <div class="grid grid-cols-2 gap-3">
-                        <button type="submit" class="text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
+                        <button type="submit" class="ompleo-btn text-white w-full" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('companies.index') }}" class="ompleo-btn text-white w-full" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -347,11 +392,11 @@ use Illuminate\Support\Facades\Storage;
                                 }
                             }
                         </style>
-                        <button type="submit" class="text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 min-w-[140px]" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
+                        <button type="submit" class="ompleo-btn text-white min-w-[140px]" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="text-white px-3 py-3 rounded-full font-medium transition-colors duration-200 flex items-center justify-center" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('companies.index') }}" class="ompleo-btn text-white w-[50px] !p-0" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -449,7 +494,7 @@ use Illuminate\Support\Facades\Storage;
                         </div>
 
                         {{-- Button at Bottom --}}
-                        <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                        <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="ompleo-btn w-full bg-[#646464] text-white">
                             Voir les offres
                         </a>
                     </div>
@@ -631,8 +676,8 @@ use Illuminate\Support\Facades\Storage;
                     </p>
                     
                     <!-- Button -->
-                    <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-white text-sm sm:text-base font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border-radius: 9999px;">
-                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7 sm:w-5 sm:h-5">
+                    <a href="{{ route('signup.recruiter') }}" class="btn-premium-dark mx-auto">
+                        <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
                         <span class="whitespace-nowrap">Découvrir nos solutions</span>
                     </a>
                 </div>

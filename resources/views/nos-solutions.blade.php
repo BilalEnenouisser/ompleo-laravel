@@ -80,31 +80,81 @@
                 .hero-char {
                     opacity: 0;
                     transform: translateY(20px);
+                    filter: blur(8px);
                     animation: heroCharFadeIn 0.6s ease forwards;
                     display: inline-block;
+                    will-change: transform, opacity, filter;
                 }
                 @keyframes heroCharFadeIn {
                     to {
                         opacity: 1;
                         transform: translateY(0);
+                        filter: blur(0);
                     }
                 }
                 .hero-subtitle-animate {
                     opacity: 0;
                     transform: translateY(20px);
+                    filter: blur(8px);
                     animation: heroCharFadeIn 0.6s ease forwards;
+                    will-change: transform, opacity, filter;
                 }
                 .hero-btn-animate {
                     opacity: 0;
                     transform: translateY(20px);
+                    filter: blur(8px);
                     animation: heroCharFadeIn 0.6s ease forwards;
+                    will-change: transform, opacity, filter;
                 }
             </style>
             <div class="nos-solutions-hero">
                 <!-- Title -->
-                <h1 class="font-bold mb-8 leading-tight text-white nos-solutions-hero-title">
-                    <span class="hero-char">R</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">r</span><span class="hero-char">u</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">z</span><span class="hero-char">&nbsp;</span><span class="hero-char">p</span><span class="hero-char">l</span><span class="hero-char">u</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">v</span><span class="hero-char">i</span><span class="hero-char">t</span><span class="hero-char">e</span><span class="hero-char">,</span><span class="hero-char">&nbsp;</span><span class="hero-char">a</span><span class="hero-char">v</span><span class="hero-char">e</span><span class="hero-char">c</span><span class="hero-char">&nbsp;</span><span class="hero-char">l</span><span class="hero-char">e</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">b</span><span class="hero-char">o</span><span class="hero-char">n</span><span class="hero-char">s</span><span class="hero-char">&nbsp;</span><span class="hero-char">p</span><span class="hero-char">r</span><span class="hero-char">o</span><span class="hero-char">f</span><span class="hero-char">i</span><span class="hero-char">l</span><span class="hero-char">s</span>
+                <h1 class="font-bold mb-8 leading-tight text-white tracking-tighter nos-solutions-hero-title" style="font-size: 0;">
+                    @php
+                        $heroTitle = "Recrutez plus vite, avec les bons profils";
+                        
+                        if (!function_exists('renderAnimateTextNos')) {
+                            function renderAnimateTextNos($text) {
+                                $words = explode(' ', $text);
+                                $output = '';
+                                foreach ($words as $wIndex => $word) {
+                                    $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                    $chars = mb_str_split($word);
+                                    foreach ($chars as $char) {
+                                        $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                    }
+                                    $output .= '</span>';
+                                    if ($wIndex < count($words) - 1) {
+                                        $output .= '<span class="hero-space">&nbsp;</span>';
+                                    }
+                                }
+                                return $output;
+                            }
+                        }
+                    @endphp
+                    {!! renderAnimateTextNos($heroTitle) !!}
                 </h1>
+                
+                <style>
+                    .nos-solutions-hero-title .hero-char {
+                        font-size: 56px;
+                    }
+                    .nos-solutions-hero-title .hero-space {
+                        font-size: 56px;
+                    }
+                    @media (max-width: 1023px) {
+                        .nos-solutions-hero-title .hero-char,
+                        .nos-solutions-hero-title .hero-space {
+                            font-size: 42px !important;
+                        }
+                    }
+                    @media (max-width: 767px) {
+                        .nos-solutions-hero-title .hero-char,
+                        .nos-solutions-hero-title .hero-space {
+                            font-size: 28px !important;
+                        }
+                    }
+                </style>
                 
                 <!-- Subtitle with left border -->
                 <div class="mb-10 pl-6 hero-subtitle hero-subtitle-animate" style="border-left: 3px solid #16b6b4;">
@@ -114,7 +164,7 @@
                 </div>
                 
                 <!-- Button -->
-                <a href="{{ route('signup.recruiter') }}" class="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full text-white text-sm md:text-base font-bold transition-all duration-300 hover:scale-105 hero-btn-animate" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
+                <a href="{{ route('signup.recruiter') }}" class="btn-premium-green hero-btn-animate">
                     <span>Essayez gratuitement</span>
                 </a>
             </div>
@@ -123,7 +173,7 @@
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Animate hero characters with stagger
-            const heroChars = document.querySelectorAll('.nos-solutions-hero-title .hero-char');
+            const heroChars = document.querySelectorAll('.nos-solutions-hero-title .hero-char, .nos-solutions-hero-title .hero-space');
             heroChars.forEach((char, index) => {
                 char.style.animationDelay = (index * 0.03) + 's';
             });
@@ -137,14 +187,14 @@
             // Animate button after subtitle
             const btn = document.querySelector('.nos-solutions-hero .hero-btn-animate');
             if (btn) {
-                btn.style.animationDelay = (heroChars.length * 0.03 + 0.4) + 's';
+                btn.style.animationDelay = (heroChars.length * 0.03 + 0.45) + 's';
             }
         });
         </script>
     </section>
 
     <!-- Pricing Section -->
-    <section class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll">
+    <section class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
         <style>
             .pricing-card {
                 position: relative;
@@ -236,12 +286,10 @@
             }
             /* Button styling */
             .pricing-btn {
-                background: #16b6b4 !important;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-                border: none;
-            }
-            .pricing-btn:hover {
-                background: #1aa2a0 !important;
+                @apply btn-premium text-white;
+                background: linear-gradient(135deg, #1aa2a0, #39fffc) !important;
+                border: 1px solid #47fffd !important;
+                text-shadow: 0 1px 2px rgb(0 0 0 / 66%) !important;
             }
             /* Discover link - hidden by default, shown on hover */
             .discover-link {
@@ -318,7 +366,7 @@
             <div class="flex flex-col md:flex-row flex-wrap justify-center gap-6 md:gap-8 items-center md:items-end mb-6 md:mb-8">
                 
                 <!-- Card 1: Essentiel -->
-                <div class="pricing-card">
+                <div class="pricing-card animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -334,7 +382,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('signup.recruiter') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105">
+                            <a href="{{ route('signup.choice') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
                                 48H d'essais gratuit
                             </a>
                         </div>
@@ -386,7 +434,7 @@
                 </div>
                 
                 <!-- Card 2: URGENCE (Featured - Bigger) -->
-                <div class="pricing-card pricing-card-featured">
+                <div class="pricing-card pricing-card-featured animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -402,7 +450,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
                                 Demandez un devis
                             </a>
                         </div>
@@ -448,7 +496,7 @@
                 </div>
                 
                 <!-- Card 3: Croissance -->
-                <div class="pricing-card">
+                <div class="pricing-card animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -464,7 +512,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
                                 Demandez un devis
                             </a>
                         </div>
@@ -520,7 +568,7 @@
             <!-- Bottom Row: 1 Card Centered -->
             <div class="flex justify-center">
                 <!-- Card 4: Performance -->
-                <div class="pricing-card paddingtp">
+                <div class="pricing-card paddingtp animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -536,7 +584,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:scale-105">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
                                 Demandez un devis
                             </a>
                         </div>

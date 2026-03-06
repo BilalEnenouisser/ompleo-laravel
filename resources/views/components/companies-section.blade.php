@@ -132,7 +132,7 @@ $companies = $companies ?? collect();
                     </div>
 
                     {{-- Button at Bottom --}}
-                    <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="w-full bg-[#646464] hover:bg-[#757575] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+                    <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="ompleo-btn w-full bg-[#646464] text-white">
                         Voir les offres
                     </a>
                 </div>
@@ -159,8 +159,8 @@ $companies = $companies ?? collect();
 
         <!-- Bottom Button -->
         <div class="text-center">
-            <a href="{{ route('companies.index') }}" class="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="w-7 h-7">
+            <a href="{{ route('companies.index') }}" class="btn-premium-green mx-auto">
+                <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
                 <span>Toutes les entreprises</span>
             </a>
         </div>

@@ -21,31 +21,31 @@ use Illuminate\Support\Facades\Storage;
                     @endphp
                 <!-- Parcourir les offres with dropdown -->
                 <div class="relative group z-[10001]">
-                    <button class="px-4 py-2 text-base font-normal transition-all duration-300 flex items-center gap-1 {{ request()->routeIs('jobs.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }}">
+                    <button class="ompleo-btn !font-normal flex items-center {{ request()->routeIs('jobs.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }} transition-all duration-300">
                         <span>Parcourir les offres</span>
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="m6 9 6 6 6-6"></path>
                         </svg>
                     </button>
                     <!-- Dropdown Menu -->
                     <div class="absolute top-full left-0 mt-2 w-64 bg-[#2b2b2b]/95 backdrop-blur-sm rounded-lg shadow-lg border border-[#333333] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[10001]">
                         <div class="py-2">
-                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            <a href="{{ route('jobs.index', ['tab' => 'all']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Dernières offres
                             </a>
-                            <a href="{{ route('jobs.index', ['work_type' => 'remote']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            <a href="{{ route('jobs.index', ['tab' => 'all', 'work_type' => 'remote']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Offres à distance
                             </a>
-                            <a href="{{ route('jobs.index', ['type' => 'Stage']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            <a href="{{ route('jobs.index', ['tab' => 'type', 'type' => 'Stage']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Stages
-                    </a>
-                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            </a>
+                            <a href="{{ route('jobs.index', ['tab' => 'category']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Offres par catégorie
                             </a>
-                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            <a href="{{ route('jobs.index', ['tab' => 'location']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Offres par localisation
                             </a>
-                            <a href="{{ route('jobs.index') }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
+                            <a href="{{ route('jobs.index', ['tab' => 'type']) }}" class="block px-4 py-2 text-sm text-white hover:bg-[#333333] hover:text-[#39fffc] transition-colors">
                                 Offres par type
                             </a>
                         </div>
@@ -66,9 +66,9 @@ use Illuminate\Support\Facades\Storage;
             <div class="hidden xl:flex items-center space-x-4 desktop-right">
                 <!-- Language Selector -->
                 <div class="relative">
-                    <button onclick="toggleLanguageMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
+                    <button onclick="toggleLanguageMenu()" class="ompleo-btn text-[#00b6b4] hover:bg-[#2b2b2b] transition-all duration-300">
                         <!-- Globe icon from Lucide React -->
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
                             <path d="M2 12h20"></path>
@@ -143,7 +143,7 @@ use Illuminate\Support\Facades\Storage;
 
 
                     <div class="relative">
-            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
+            <button onclick="toggleUserMenu()" class="ompleo-btn text-[#00b6b4] hover:bg-[#2b2b2b] transition-all duration-300">
                 @if(auth()->user()->user_type === 'recruiter' && auth()->user()->recruiterProfile && auth()->user()->recruiterProfile->company && auth()->user()->recruiterProfile->company->logo)
                     <img src="{{ Storage::url(auth()->user()->recruiterProfile->company->logo) }}" alt="Company Logo" class="w-8 h-8 rounded-full object-cover border-2 border-[#00b6b4] shadow-md">
                 @elseif(auth()->user()->user_type === 'admin' && auth()->user()->avatar)
@@ -163,7 +163,7 @@ use Illuminate\Support\Facades\Storage;
                     @endif
                 </span>
                 <!-- ChevronDown icon from Lucide React -->
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="m6 9 6 6 6-6"></path>
                 </svg>
             </button>
@@ -273,16 +273,14 @@ use Illuminate\Support\Facades\Storage;
                     </div>
                 @else
                     <!-- Publier une offre d'emploi button -->
-                    <a href="{{ route('nos-solutions') }}" class="px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
+                    <a href="{{ route('nos-solutions') }}" class="btn-premium-green">
                         Publier une offre d'emploi
                     </a>
                     
-                    <!-- Se connecter button with gradient border -->
-                    <div class="rounded-full p-[1px]" style="background: linear-gradient(135deg, #39fffc, #1aa2a0);">
-                        <a href="{{ route('login') }}" class="block px-4 py-2 text-sm font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #136b6a, #004948); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); font-family: 'Inter', sans-serif;">
-                            Se connecter
-                        </a>
-                    </div>
+                    <!-- Se connecter button -->
+                    <a href="{{ route('signup.choice') }}" class="btn-premium-dark">
+                        Se connecter
+                    </a>
                 @endauth
             </div>
 
@@ -307,16 +305,19 @@ use Illuminate\Support\Facades\Storage;
         <!-- Mobile Navigation -->
         <div id="mobileMenu" class="hidden xl:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
-                <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
                     Offres d'emploi
                 </a>
-                <a href="{{ route('companies.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
-                    Découvrir les recruteurs
+                <a href="{{ route('companies.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
+                    Entreprises
                 </a>
-                <a href="{{ route('blog.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('blog.*') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('about') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('about') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
+                    À propos
+                </a>
+                <a href="{{ route('blog.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('blog.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
                     Blog
                 </a>
-                <a href="{{ route('contact') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('contact') ? 'bg-[#333333] text-[#00b6b4] font-semibold' : 'text-[#00b6b4] hover:bg-[#333333]' }}">
+                <a href="{{ route('contact') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('contact') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
                     Contact
                 </a>
                 
@@ -341,6 +342,33 @@ use Illuminate\Support\Facades\Storage;
                             <a href="{{ route('dashboard') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
                                 Mon espace
                             </a>
+
+                            @if(auth()->user()->user_type === 'recruiter')
+                                <a href="{{ route('recruiter.company-profile') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                    Profil entreprise
+                                </a>
+                            @elseif(auth()->user()->user_type === 'candidate' || auth()->user()->user_type === 'admin')
+                                <a href="{{ auth()->user()->user_type === 'candidate' ? route('candidate.profile') : route('admin.profile') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                    Mon profil
+                                </a>
+                            @endif
+
+                            @if(auth()->user()->user_type === 'candidate')
+                                <a href="{{ route('candidate.settings') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                    Paramètres
+                                </a>
+                            @elseif(auth()->user()->user_type === 'recruiter')
+                                <a href="{{ route('recruiter.settings') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                    Paramètres
+                                </a>
+                            @endif
+
+                            <a href="{{ route('notifications') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                Notifications
+                            </a>
+
+                            <div class="border-t border-[#444444] my-2"></div>
+
                             <form method="POST" action="{{ route('logout') }}" class="block">
                                 @csrf
                                 <button type="submit" onclick="closeMobileMenu()" class="block w-full text-left text-red-400 px-3 py-3 text-base font-medium rounded-lg hover:bg-red-900/20 transition-all duration-300">
@@ -348,10 +376,10 @@ use Illuminate\Support\Facades\Storage;
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('signup.recruiter') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
-                                Espace recruteurs
+                            <a href="{{ route('nos-solutions') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
+                                Publier une offre d'emploi
                             </a>
-                            <a href="{{ route('login') }}" onclick="closeMobileMenu()" class="block w-full bg-[#00b6b4] text-white px-4 py-3 rounded-lg text-base font-medium text-center hover:bg-[#009e9c] transition-all duration-300 shadow-sm">
+                            <a href="{{ route('signup.choice') }}" onclick="closeMobileMenu()" class="ompleo-btn mx-auto bg-[#00b6b4] text-white">
                                 Connexion
                             </a>
                         @endauth
