@@ -29,12 +29,12 @@
     
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-[#1f1f1f] text-gray-100">
+<body class="font-sans antialiased bg-[#212221] text-gray-100">
     <!-- Dark mode toggle script -->
     <script>
         // Force dark mode to match React project
         document.documentElement.classList.add('dark');
-        document.body.style.backgroundColor = '#1f1f1f';
+        document.body.style.backgroundColor = '#212221';
     </script>
 
     <!-- Main Content -->

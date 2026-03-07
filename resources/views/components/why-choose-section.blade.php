@@ -38,7 +38,7 @@ $features = [
     <!-- Feature Cards -->
     <div class="relative z-10 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-10">
         @foreach($features as $index => $feature)
-        <div class="relative md:bg-white/80 md:dark:bg-[#2b2b2b]/80 md:border md:border-white/30 md:dark:border-[#333333]/50 md:shadow-xl md:backdrop-blur-md md:rounded-[2rem_0.5rem_2rem_0.5rem] p-4 md:p-8 md:transition-all md:duration-500 hover:brightness-110 md:hover:shadow-2xl scroll-animate" data-animate="card" data-delay="{{ $index * 0.1 }}">
+        <div class="relative md:bg-white/80 md:dark:bg-[#2b2b2b]/80 md:border md:border-white/30 md:dark:border-[#333333]/50 md:shadow-xl md:backdrop-blur-md md:rounded-[2rem_0.5rem_2rem_0.5rem] p-4 md:p-8 md:transition-all md:duration-500 hover:brightness-90 md:hover:shadow-2xl scroll-animate" data-animate="card" data-delay="{{ $index * 0.1 }}">
             <div class="flex items-center justify-center md:justify-center w-14 h-14 md:w-14 md:h-14 mb-4 md:mb-6 rounded-xl bg-[#00b6b4]/10 dark:bg-[#00b6b4]/20 text-[#00b6b4] mx-auto md:mx-0">
                 @if($feature['icon'] === 'target')
                     <!-- Target icon from Lucide React -->

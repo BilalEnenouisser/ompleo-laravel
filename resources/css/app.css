@@ -57,11 +57,11 @@
 
   /* Button styles */
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg;
   }
 
   .btn-secondary {
-    @apply bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 text-gray-700 dark:text-gray-300 font-medium py-2 px-4 rounded-lg transition-all duration-300 border border-gray-200 dark:border-dark-600;
+    @apply bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 text-gray-700 dark:text-gray-300 font-medium py-2 px-4 rounded-lg border border-gray-200 dark:border-dark-600;
   }
 
   /* Standardized Ompleo Button */
@@ -74,7 +74,7 @@
     font-size: 18px !important;
     font-weight: 700 !important;
     font-family: 'Inter', system-ui, sans-serif !important;
-    transition: opacity 0.3s ease !important;
+    transition: none !important;
     border-radius: 9999px !important;
     line-height: 1.2 !important;
     cursor: pointer !important;
@@ -89,9 +89,10 @@
   }
 
   .ompleo-btn:hover {
-    opacity: 0.85 !important;
+    filter: brightness(0.9) !important;
     box-shadow: none !important;
     transform: none !important;
+    opacity: 1 !important;
   }
 
   .ompleo-btn img,
@@ -104,6 +105,7 @@
   /* Premium Button System */
   .btn-premium {
     @apply px-8 py-[13px] rounded-full font-semibold flex items-center justify-center gap-2 w-fit;
+    transition: none;
   }
 
   .btn-premium svg,
@@ -115,18 +117,22 @@
     @apply btn-premium text-white;
     background: linear-gradient(135deg, #1aa2a0, #39fffc);
     border: 1px solid #47fffd;
-    text-shadow: 0 1px 2px rgb(0 0 0 / 66%);
+    box-shadow: none !important;
   }
 
   .btn-premium-green:hover {
-    box-shadow: none !important;
+    filter: brightness(0.9);
   }
 
   .btn-premium-dark {
     @apply btn-premium text-white;
     background: linear-gradient(135deg, #136b6a, #004948);
-    text-shadow: 0 1px 2px rgb(0 0 0 / 67%);
     border: none;
+    box-shadow: none !important;
+  }
+
+  .btn-premium-dark:hover {
+    filter: brightness(0.9);
   }
 }
 

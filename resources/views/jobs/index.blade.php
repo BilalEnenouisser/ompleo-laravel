@@ -38,7 +38,7 @@
     }
 @endphp
 
-<div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
+<div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
     <section class="bg-[#1a1a1a] pt-32 pb-12 relative overflow-hidden z-10 jobs-hero">
         <style>

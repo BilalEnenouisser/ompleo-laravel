@@ -43,7 +43,7 @@ $categories = [
 ];
 @endphp
 
-<section class="relative py-20 bg-[#1f1f1f] overflow-hidden">
+<section class="relative py-20 bg-[#212221] overflow-hidden">
     <!-- Background Image -->
     <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none">
         <img src="{{ asset('storage/home_page/job/right.png') }}" alt="Background" class="h-full w-auto object-cover" style="object-position: right;">

@@ -4,12 +4,12 @@
 @section('description', 'OMPLEO - La plateforme de recrutement qui connecte les talents aux opportunités. Trouvez votre emploi idéal ou recrutez les meilleurs candidats.')
 
 @section('content')
-<div class="bg-gradient-to-b from-[#e0e3df] via-[#dadad2] to-[#dee0db] dark:bg-[#1f1f1f] dark:from-[#1f1f1f] dark:via-[#1f1f1f] dark:to-[#1f1f1f]">
+<div class="bg-gradient-to-b from-[#e0e3df] via-[#dadad2] to-[#dee0db] dark:bg-[#212221] dark:from-[#212221] dark:via-[#212221] dark:to-[#212221]">
     <!-- Header -->
     @include('components.header')
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#1f1f1f] mb-16 hero-section">
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#212221] mb-16 hero-section">
         <!-- Background Image with Parallax & Blur Effect -->
         <div class="absolute top-0 right-0 bottom-0 hidden lg:block hero-image-container" style="overflow: hidden;">
             <img src="{{ asset('storage/home_page/hero.png') }}" 
@@ -20,7 +20,7 @@
         </div>
         
         <!-- Blur Overlay for Smooth Transition -->
-        <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none" style="background: linear-gradient(to left, rgba(31, 31, 31, 0.3), transparent);"></div>
+        <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none" style="background: linear-gradient(to left, rgba(33, 34, 33, 0.3), transparent);"></div>
         
         <!-- Content Overlay -->
         <div class="w-[90%] mx-auto relative z-10 hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
@@ -359,9 +359,9 @@
                     <!-- Marquee/Slider for Brand Logos -->
                     <div class="overflow-hidden relative hero-marquee-container">
                         <!-- Left fade gradient -->
-                        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to right, #1f1f1f, transparent);"></div>
+                        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to right, #212221, transparent);"></div>
                         <!-- Right fade gradient -->
-                        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to left, #1f1f1f, transparent);"></div>
+                        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to left, #212221, transparent);"></div>
                         <div class="flex animate-marquee gap-4 hero-marquee">
                             @for($i = 1; $i <= 8; $i++)
                                 <div class="flex-shrink-0">
@@ -523,27 +523,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ======================================
     // Button Glow Animation Handler
     // ======================================
-    function initButtonGlowAnimation() {
-        const buttons = document.querySelectorAll('.hero-button-glow');
-        
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', function(e) {
-                this.classList.add('button-glow-active');
-                this.style.boxShadow = '0 0 30px rgba(57, 255, 252, 0.5), 0 0 60px rgba(26, 162, 160, 0.3)';
-                this.style.borderColor = '#39fffc';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.classList.remove('button-glow-active');
-                this.style.boxShadow = '';
-                this.style.borderColor = '#47fffd';
-            });
-        });
-    }
-    
-    // ======================================
-    // Badge Float Animation Trigger
-    // ======================================
     function initBadgeAnimation() {
         const badge = document.querySelector('.hero-badge-container');
         if (badge) {
@@ -565,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all animations
     animateHeroSequence();
     initParallaxWithBlur();
-    initButtonGlowAnimation();
+    // initButtonGlowAnimation(); // Removed
     initBadgeAnimation();
     initMarqueeAnimation();
     

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Storage;
 $jobs = $jobs ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#1f1f1f] overflow-hidden jobs-section">
+<section class="relative py-20 bg-[#212221] overflow-hidden jobs-section">
     <style>
         /* Desktop is default - py-20 */
         @media (max-width: 1023px) {

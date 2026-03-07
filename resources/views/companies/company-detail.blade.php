@@ -342,7 +342,7 @@ use Illuminate\Support\Facades\Storage;
                             >
                             <button 
                                 type="submit" 
-                                class="w-full px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 hover:brightness-110"
+                                class="w-full px-6 py-3 text-white rounded-lg font-semibold hover:brightness-90"
                                 style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);"
                             >
                                 Subscribe

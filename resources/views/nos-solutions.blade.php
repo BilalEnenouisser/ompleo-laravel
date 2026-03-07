@@ -4,12 +4,12 @@
 @section('description', 'Découvrez nos solutions de recrutement pour publier vos offres et atteindre les meilleurs candidats.')
 
 @section('content')
-<div class="bg-[#1f1f1f] min-h-screen">
+<div class="bg-[#212221] min-h-screen">
     <!-- Header -->
     @include('components.header')
 
     <!-- Hero Section -->
-    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-[#1f1f1f]">
+    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-[#212221]">
         <style>
             .hero-bg-image {
                 width: 40%;
@@ -382,7 +382,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('signup.choice') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
+                            <a href="{{ route('signup.choice') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
                                 48H d'essais gratuit
                             </a>
                         </div>
@@ -450,7 +450,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
                                 Demandez un devis
                             </a>
                         </div>
@@ -512,7 +512,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
                                 Demandez un devis
                             </a>
                         </div>
@@ -584,7 +584,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold transition-all duration-300 hover:brightness-110">
+                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
                                 Demandez un devis
                             </a>
                         </div>

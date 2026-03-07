@@ -1,4 +1,4 @@
-<section class="relative bg-[#1f1f1f] overflow-hidden cta-section">
+<section class="relative bg-[#212221] overflow-hidden cta-section">
     <style>
         /* Desktop (1024px and above) */
         @media (min-width: 1024px) {

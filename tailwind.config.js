@@ -60,7 +60,7 @@ module.exports = {
           600: '#475569',
           700: '#333333',
           800: '#2b2b2b',
-          900: '#1f1f1f',
+          900: '#212221',
           950: '#111111',
         }
       },
@@ -132,11 +132,11 @@ module.exports = {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGlow: {
-          '0%, 100%': { 
+          '0%, 100%': {
             boxShadow: '0 0 10px rgba(0, 182, 180, 0.3), 0 0 20px rgba(0, 182, 180, 0.1)',
             transform: 'scale(1)'
           },
-          '50%': { 
+          '50%': {
             boxShadow: '0 0 20px rgba(0, 182, 180, 0.6), 0 0 40px rgba(0, 182, 180, 0.3)',
             transform: 'scale(1.05)'
           },
@@ -177,7 +177,7 @@ module.exports = {
           '100%': { transform: 'rotate(360deg)' },
         },
         ping: {
-          '75%, 100%': { 
+          '75%, 100%': {
             transform: 'scale(2)',
             opacity: '0'
           },
@@ -233,11 +233,11 @@ module.exports = {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGlow: {
-          '0%, 100%': { 
+          '0%, 100%': {
             boxShadow: '0 0 10px rgba(0, 182, 180, 0.3), 0 0 20px rgba(0, 182, 180, 0.1)',
             transform: 'scale(1)'
           },
-          '50%': { 
+          '50%': {
             boxShadow: '0 0 20px rgba(0, 182, 180, 0.6), 0 0 40px rgba(0, 182, 180, 0.3)',
             transform: 'scale(1.05)'
           },
@@ -289,7 +289,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       addUtilities({
         '.glass-badge-highlight': {
           'border-radius': '9999px',

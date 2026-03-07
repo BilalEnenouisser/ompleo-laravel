@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Storage;
 $latestJobs = $latestJobs ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#1f1f1f] overflow-hidden">
+<section class="relative py-20 bg-[#212221] overflow-hidden">
     <!-- Background Images -->
     <div class="absolute top-0 left-0 hidden lg:block pointer-events-none z-0">
         <img src="{{ asset('storage/home_page/search_job/left.png') }}" alt="Background" class="h-auto w-auto object-cover" style="object-position: left top;">
