@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Storage;
                 will-change: transform, opacity, filter;
             }
         </style>
-        <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
+        <div class="w-full md:w-[90%] mx-auto px-4 md:px-5">
             <h1 class="font-bold mb-6 leading-tight tracking-tighter companies-hero-title" style="font-size: 0;">
                 @php
                     $heroTitle = "Découvrez les entreprises qui recrutent";
@@ -128,7 +128,7 @@ use Illuminate\Support\Facades\Storage;
 
     <!-- Search and Filters -->
     <section class="py-8 relative z-10 animate-on-scroll">
-        <div class="w-[90%] mx-auto" style="padding-left: 20px; padding-right: 20px;">
+        <div class="w-full md:w-[90%] mx-auto px-4 md:px-5">
             <form method="GET" action="{{ route('companies.index') }}" class="rounded-2xl p-6" style="background: rgba(43, 43, 43, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
                 <!-- Company Count - Top -->
                 <div class="mb-6">
@@ -416,7 +416,7 @@ use Illuminate\Support\Facades\Storage;
             <img src="{{ asset('storage/company_page/right.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: right top;">
         </div>
         
-        <div class="w-[90%] mx-auto relative z-10 animate-on-scroll" style="padding-left: 20px; padding-right: 20px;">
+        <div class="w-full md:w-[90%] mx-auto relative z-10 animate-on-scroll px-4 md:px-5">
             <div id="companiesGrid" class="space-y-8">
                 @forelse($companies->chunk(3) as $chunk)
                     <div class="bg-[#1e1e1f] rounded-[24px] p-4 md:p-8">

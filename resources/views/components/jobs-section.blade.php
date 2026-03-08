@@ -201,36 +201,23 @@ $jobs = $jobs ?? collect();
                             }
                         </style>
                         <!-- Row 1: Logo, Job Title + Company, Featured Badge -->
-                        <div class="flex items-start gap-6 mb-4 job-card-row-1">
-                            <!-- Left Section: Logo, then Title and Company below (mobile) -->
-                            <div class="job-card-left-section">
-                                <!-- Logo -->
-                                <div class="flex-shrink-0 job-card-logo-container">
-                                    @if($job->company && $job->company->logo)
-                                        <img src="{{ Storage::url($job->company->logo) }}" alt="{{ $job->company->name }}" class="w-16 h-16 rounded-lg object-cover job-card-logo">
-                                    @else
-                                        <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-[#165c5b] to-[#00fadc] flex items-center justify-center job-card-logo">
-                                            <span class="text-white font-bold text-xl">
-                                                {{ $job->company ? strtoupper(substr($job->company->name, 0, 1)) : 'J' }}
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                                
-                                <!-- Mobile: Title and Company below logo, stacked vertically -->
-                                <div class="md:hidden job-card-title-company">
-                                    <h3 class="text-xl font-bold text-white">
-                                        {{ $job->title }}
-                                    </h3>
-                                    <p class="text-gray-400 text-sm">
-                                        {{ $job->company ? $job->company->name : 'Entreprise non spécifiée' }}
-                                    </p>
-                                </div>
+                        <div class="flex items-start gap-4 md:gap-6 mb-6 md:mb-4">
+                            <!-- Logo -->
+                            <div class="flex-shrink-0">
+                                @if($job->company && $job->company->logo)
+                                    <img src="{{ Storage::url($job->company->logo) }}" alt="{{ $job->company->name }}" class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover">
+                                @else
+                                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br from-[#165c5b] to-[#00fadc] flex items-center justify-center">
+                                        <span class="text-white font-bold text-lg md:text-xl">
+                                            {{ $job->company ? strtoupper(substr($job->company->name, 0, 1)) : 'J' }}
+                                        </span>
+                                    </div>
+                                @endif
                             </div>
 
-                            <!-- Desktop: Middle: Job Title and Company Name -->
-                            <div class="flex-1 min-w-0 hidden md:block">
-                                <h3 class="text-xl font-bold text-white mb-1">
+                            <!-- Title and Company -->
+                            <div class="flex-1 min-w-0">
+                                <h3 class="text-lg md:text-xl font-bold text-white mb-1 truncate">
                                     {{ $job->title }}
                                 </h3>
                                 <p class="text-gray-400 text-sm">
@@ -240,7 +227,7 @@ $jobs = $jobs ?? collect();
 
                             <!-- Right: Featured Badge -->
                             @if($job->is_featured)
-                            <div class="flex-shrink-0 job-card-featured">
+                            <div class="flex-shrink-0">
                                 <span class="text-xs font-medium" style="color: #5997E3;">
                                     Featured
                                 </span>
@@ -249,32 +236,30 @@ $jobs = $jobs ?? collect();
                         </div>
 
                         <!-- Row 2: Details and Posted Date -->
-                        <div class="flex items-center justify-between job-card-row-2">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3 md:gap-4 pt-2 md:pt-0 border-t border-white/5 md:border-none">
                             <!-- Left: Keywords | Type | City | Salary -->
-                            <div class="flex flex-wrap items-center gap-3 text-sm text-gray-400 job-card-details">
-                                <div class="job-card-details-line">
-                                    @if($job->tags && is_array($job->tags) && count($job->tags) > 0)
-                                        <span>{{ implode(', ', array_slice($job->tags, 0, 2)) }}</span>
-                                        <span class="text-gray-600">|</span>
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-gray-400">
+                                @if($job->tags && is_array($job->tags) && count($job->tags) > 0)
+                                    <span class="whitespace-nowrap">{{ implode(', ', array_slice($job->tags, 0, 2)) }}</span>
+                                    <span class="text-gray-600">|</span>
+                                @endif
+                                <span class="whitespace-nowrap">{{ $job->work_type ?? $job->type ?? 'Full Time' }}</span>
+                                <span class="text-gray-600">|</span>
+                                <span class="whitespace-nowrap">{{ $job->location }}</span>
+                                <span class="text-gray-600">|</span>
+                                <span class="whitespace-nowrap">
+                                    @if($job->salary_min && $job->salary_max)
+                                        {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA/year
+                                    @elseif($job->salary_min)
+                                        À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA/year
+                                    @else
+                                        Salaire non spécifié
                                     @endif
-                                    <span>{{ $job->work_type ?? $job->type ?? 'Full Time' }}</span>
-                                    <span class="text-gray-600">|</span>
-                                    <span>{{ $job->location }}</span>
-                                    <span class="text-gray-600">|</span>
-                                    <span>
-                                        @if($job->salary_min && $job->salary_max)
-                                            {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA/year
-                                        @elseif($job->salary_min)
-                                            À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA/year
-                                        @else
-                                            Salaire non spécifié
-                                        @endif
-                                    </span>
-                                </div>
+                                </span>
                             </div>
 
                             <!-- Right: Posted Date / View Job -->
-                            <div class="flex-shrink-0 job-card-date-container" style="min-width: 210px;">
+                            <div class="flex-shrink-0 relative md:min-w-[210px] min-h-[1.5rem]">
                                 <!-- Posted Date (default) -->
                                 <p class="text-sm text-gray-400 job-card-date">
                                     Posted on: {{ $job->created_at->format('M d, Y') }}
@@ -282,7 +267,7 @@ $jobs = $jobs ?? collect();
                                 <!-- View Job (on hover) -->
                                 <p class="text-sm text-[#00fadc] font-medium job-card-view">
                                     <span>View Job</span>
-                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </p>

@@ -79,7 +79,7 @@ $categories = [
 
         <!-- Bottom Button -->
         <div class="text-center">
-            <a href="{{ route('jobs.index') }}" class="btn-premium-green mx-auto">
+            <a href="{{ route('jobs.index', ['tab' => 'category']) }}" class="btn-premium-green mx-auto">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.35-4.35"></path>

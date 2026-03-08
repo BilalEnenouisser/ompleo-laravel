@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 <div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
     <section class="bg-[#1a1a1a] pt-32 pb-12 relative overflow-hidden z-10">
-        <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
+        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
             <!-- Company Header - Left Aligned -->
             <div class="mb-6">
                 <!-- Logo -->
@@ -68,7 +68,7 @@ use Illuminate\Support\Facades\Storage;
 
     <!-- Jobs Section with Sidebar -->
     <section class="py-12 relative z-10">
-        <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
+        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left: Jobs List (2/3) -->
                 <div class="lg:col-span-2">

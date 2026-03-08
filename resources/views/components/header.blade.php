@@ -305,9 +305,23 @@ use Illuminate\Support\Facades\Storage;
         <!-- Mobile Navigation -->
         <div id="mobileMenu" class="hidden xl:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
-                <a href="{{ route('jobs.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
-                    Offres d'emploi
-                </a>
+                <!-- Mobile "Parcourir les offres" with dropdown -->
+                <div class="space-y-1">
+                    <button onclick="toggleMobileDropdown('jobsMobileDropdown')" class="w-full flex items-center justify-between px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('jobs.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
+                        <span>Parcourir les offres</span>
+                        <svg id="jobsMobileArrow" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div id="jobsMobileDropdown" class="hidden pl-6 space-y-1">
+                        <a href="{{ route('jobs.index', ['tab' => 'all']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Dernières offres</a>
+                        <a href="{{ route('jobs.index', ['tab' => 'all', 'work_type' => 'remote']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Offres à distance</a>
+                        <a href="{{ route('jobs.index', ['tab' => 'type', 'type' => 'Stage']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Stages</a>
+                        <a href="{{ route('jobs.index', ['tab' => 'category']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Offres par catégorie</a>
+                        <a href="{{ route('jobs.index', ['tab' => 'location']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Offres par localisation</a>
+                        <a href="{{ route('jobs.index', ['tab' => 'type']) }}" onclick="closeMobileMenu()" class="block px-3 py-2 text-sm text-[#cccccc] hover:text-[#00b6b4]">Offres par type</a>
+                    </div>
+                </div>
                 <a href="{{ route('companies.index') }}" onclick="closeMobileMenu()" class="block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 {{ request()->routeIs('companies.*') ? 'bg-[#333333] text-[#00b6b4]' : 'text-white hover:bg-[#333333]' }}">
                     Entreprises
                 </a>
@@ -376,12 +390,14 @@ use Illuminate\Support\Facades\Storage;
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('nos-solutions') }}" onclick="closeMobileMenu()" class="block w-full text-left text-[#00b6b4] px-3 py-3 text-base font-medium rounded-lg hover:bg-[#333333] transition-all duration-300">
-                                Publier une offre d'emploi
-                            </a>
-                            <a href="{{ route('signup.choice') }}" onclick="closeMobileMenu()" class="ompleo-btn mx-auto bg-[#00b6b4] text-white">
-                                Connexion
-                            </a>
+                            <div class="px-3 space-y-3 pt-2">
+                                <a href="{{ route('nos-solutions') }}" onclick="closeMobileMenu()" class="btn-premium-green !w-full">
+                                    Publier une offre d'emploi
+                                </a>
+                                <a href="{{ route('signup.choice') }}" onclick="closeMobileMenu()" class="btn-premium-dark !w-full text-center">
+                                    Connexion
+                                </a>
+                            </div>
                         @endauth
                     </div>
                 </div>
@@ -447,6 +463,19 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.add('hidden');
+}
+
+function toggleMobileDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    const arrow = document.getElementById('jobsMobileArrow');
+    
+    if (dropdown.classList.contains('hidden')) {
+        dropdown.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+    } else {
+        dropdown.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+    }
 }
 
 

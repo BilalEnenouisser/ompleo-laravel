@@ -48,7 +48,7 @@
             <img src="{{ asset('storage/company_page/right.png') }}" alt="Background" class="w-full h-full object-cover object-left">
         </div>
         
-        <div class="w-[90%] mx-auto relative z-10 animate-on-scroll" style="padding-left: 20px; padding-right: 20px;">
+        <div class="w-full md:w-[90%] mx-auto relative z-10 animate-on-scroll px-4 md:px-5">
             <div class="max-w-3xl">
                 <!-- Title -->
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 about-hero-title">

@@ -93,13 +93,15 @@ $latestJobs = $latestJobs ?? collect();
                     </a>
 
                     <div class="rounded-full overflow-hidden">
-                        <a href="#" class="btn-premium-dark mx-auto lg:mx-0">
+                        <button onclick="openNewsletterPopup()" class="btn-premium-dark mx-auto lg:mx-0">
                             <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon">
                             <span>Recevoir les offres par email</span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
     </div>
 </section>

@@ -66,7 +66,7 @@
                 will-change: transform, opacity, filter;
             }
         </style>
-        <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
+        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
             <div class="mb-6">
                 <h1 class="font-bold text-white mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
                     @php
@@ -117,7 +117,7 @@
 
     <!-- Navigation Tabs -->
     <section class="mb-12 relative z-10">
-        <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
+        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
             <div class="flex items-center gap-6 overflow-x-auto no-scrollbar pt-6">
                 @foreach($tabTitles as $tabKey => $title)
                     <a href="{{ route('jobs.index', ['tab' => $tabKey]) }}" 
@@ -131,7 +131,7 @@
 
     <!-- Main Content -->
     <section class="pb-20 relative z-10">
-        <div class="mx-auto" style="padding-left: 20px; padding-right: 20px; max-width: 1200px;">
+        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 
                 <!-- Sidebar (1/3) -->

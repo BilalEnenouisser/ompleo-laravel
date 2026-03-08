@@ -107,7 +107,8 @@
                         overflow-wrap: break-word !important;
                     }
                     .hero-buttons {
-                        flex-direction: column !important;
+                        flex-direction: row !important;
+                        justify-content: center !important;
                         flex-wrap: wrap !important;
                         gap: 0.75rem !important;
                         width: 100% !important;
@@ -116,10 +117,7 @@
                     }
                     .hero-buttons a,
                     .hero-buttons > div {
-                        flex: 1 1 auto !important;
-                        min-width: 100% !important;
-                        max-width: 100% !important;
-                        width: 100% !important;
+                        box-sizing: border-box !important;
                     }
                     .hero-buttons a {
                         padding-left: 1.25rem !important;
@@ -130,16 +128,12 @@
                         align-items: center !important;
                         justify-content: center !important;
                         text-align: center !important;
-                        width: 100% !important;
-                        max-width: 100% !important;
-                        box-sizing: border-box !important;
                         border-radius: 9999px !important;
                     }
                     .hero-buttons a span {
                         font-size: 0.875rem !important;
                         line-height: 1.4 !important;
-                        white-space: normal !important;
-                        word-break: break-word !important;
+                        white-space: nowrap !important;
                         display: block !important;
                         text-align: center !important;
                     }
@@ -150,13 +144,9 @@
                         margin-right: 0.5rem !important;
                     }
                     .hero-buttons > div {
-                        width: 100% !important;
-                        max-width: 100% !important;
                         box-sizing: border-box !important;
                     }
                     .hero-buttons > div a {
-                        width: 100% !important;
-                        max-width: 100% !important;
                         padding-left: 1.25rem !important;
                         padding-right: 1.25rem !important;
                         padding-top: 0.875rem !important;

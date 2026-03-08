@@ -23,7 +23,7 @@
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         
-        <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white">
+        <div class="absolute bottom-0 left-0 right-0 p-4 md:p-16 text-white">
             <div class="max-w-5xl mx-auto">
                 <div class="flex items-center gap-2 mb-4">
                     <span class="bg-[#0058f0] px-3 py-1 rounded-full text-sm font-medium">

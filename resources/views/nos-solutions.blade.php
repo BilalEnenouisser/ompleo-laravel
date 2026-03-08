@@ -35,7 +35,7 @@
         </div>
         
         <!-- Content -->
-        <div class="w-[95%] md:w-[90%] mx-auto relative z-10 px-4 md:px-5">
+        <div class="w-full md:w-[90%] mx-auto relative z-10 px-4 md:px-5">
             <style>
                 .nos-solutions-hero h1 {
                     font-size: 56px;
@@ -69,7 +69,6 @@
                     }
                     .nos-solutions-hero .hero-subtitle {
                         max-width: 100% !important;
-                        padding-left: 1rem !important;
                         margin-bottom: 2rem !important;
                     }
                     .nos-solutions-hero .hero-subtitle p {
@@ -164,7 +163,7 @@
                 </div>
                 
                 <!-- Button -->
-                <a href="{{ route('signup.recruiter') }}" class="btn-premium-green hero-btn-animate">
+                <a href="#nos-solutions-section" class="btn-premium-green hero-btn-animate hover:scale-105 transition-all duration-300">
                     <span>Essayez gratuitement</span>
                 </a>
             </div>
@@ -194,7 +193,7 @@
     </section>
 
     <!-- Pricing Section -->
-    <section class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
+    <section id="nos-solutions-section" class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
         <style>
             .pricing-card {
                 position: relative;
@@ -290,6 +289,11 @@
                 background: linear-gradient(135deg, #1aa2a0, #39fffc) !important;
                 border: 1px solid #47fffd !important;
                 text-shadow: 0 1px 2px rgb(0 0 0 / 66%) !important;
+                transition: all 0.3s ease !important;
+            }
+            .pricing-btn:hover {
+                filter: brightness(1.1) !important;
+                transform: scale(1.05) !important;
             }
             /* Discover link - hidden by default, shown on hover */
             .discover-link {
@@ -354,7 +358,7 @@
             <img src="{{ asset('storage/nos_solutions/mid.png') }}" alt="Background" class="w-full h-full object-cover">
         </div>
         
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-20 lg:mb-36">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6">Nos solutions</h2>
@@ -450,7 +454,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
+                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -512,7 +516,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
+                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -584,7 +588,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('contact') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
+                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -640,7 +644,7 @@
     </section>
 
     <!-- Contact Form Section -->
-    <section class="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1f1f1f] animate-on-scroll">
+    <section id="devis-section" class="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1f1f1f] animate-on-scroll">
         <!-- Background Image at Bottom -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('storage/nos_solutions/bottom.png') }}" alt="Background" class="w-full h-full object-cover">
