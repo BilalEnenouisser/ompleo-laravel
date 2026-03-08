@@ -9,9 +9,8 @@
 
 <div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#1a1a1a] pt-32 pb-12 relative overflow-hidden z-10 job-details-hero">
+    <section class="bg-[#1a1a1a] pt-24 md:pt-32 pb-8 md:pb-12 relative overflow-hidden z-10 job-details-hero">
         <style>
-            /* Hero Character Animation */
             .hero-char {
                 opacity: 0;
                 transform: translateY(20px);
@@ -37,16 +36,16 @@
         </style>
         <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1200px;">
             <!-- Breadcrumbs -->
-            <div class="flex items-center gap-2 text-[#9ca3af] text-sm mb-8 hero-subtitle-animate" style="animation-delay: 0.1s;">
-                <a href="{{ route('jobs.index') }}" class="hover:text-[#00b6b4] transition-colors">All Jobs</a>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <div class="flex items-center gap-2 text-[#9ca3af] text-xs md:text-sm mb-6 md:mb-8 hero-subtitle-animate" style="animation-delay: 0.1s;">
+                <a href="{{ route('jobs.index') }}" class="hover:text-[#00b6b4] transition-colors whitespace-nowrap">All Jobs</a>
+                <svg class="w-3 h-3 md:w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-white">{{ $job->title }}</span>
+                <span class="text-white truncate">{{ $job->title }}</span>
             </div>
 
-            <div class="mb-8">
-                <h1 class="font-bold text-white mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
+            <div class="mb-4 md:mb-8">
+                <h1 class="font-bold text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
                     @php
                         if (!function_exists('renderAnimateTextJob')) {
                             function renderAnimateTextJob($text) {
@@ -71,29 +70,31 @@
                 </h1>
                 
                 <!-- Company Row -->
-                <div class="flex items-center gap-4 mb-6 hero-subtitle-animate" style="animation-delay: 0.4s;">
-                    <div class="w-10 h-10 bg-[#2b2b2b] rounded-lg border border-[#333333] flex items-center justify-center overflow-hidden">
+                <div class="flex items-center gap-3 md:gap-4 mb-4 md:mb-6 hero-subtitle-animate" style="animation-delay: 0.4s;">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[#2b2b2b] rounded-lg border border-[#333333] flex items-center justify-center overflow-hidden flex-shrink-0">
                         @if($job->company->logo)
                             <img src="{{ asset('storage/' . $job->company->logo) }}" alt="{{ $job->company->name }}" class="w-full h-full object-cover">
                         @else
-                            <div class="w-full h-full bg-gradient-to-br from-[#00b6b4] to-[#009e9c] flex items-center justify-center text-white font-bold text-sm">
+                            <div class="w-full h-full bg-gradient-to-br from-[#00b6b4] to-[#009e9c] flex items-center justify-center text-white font-bold text-xs md:text-sm">
                                 {{ strtoupper(substr($job->company->name, 0, 2)) }}
                             </div>
                         @endif
                     </div>
-                    <span class="text-2xl font-bold text-white">{{ $job->company->name }}</span>
+                    <span class="text-xl md:text-2xl font-bold text-white">{{ $job->company->name }}</span>
                 </div>
 
                 <!-- Metadata Row -->
-                <div class="flex flex-wrap items-center gap-4 text-[#9ca3af] text-lg hero-subtitle-animate" style="animation-delay: 0.6s;">
-                    <span>{{ $job->tags[0] ?? 'General' }}</span>
+                <div class="flex flex-wrap items-center gap-2 md:gap-4 text-[#9ca3af] text-sm md:text-base hero-subtitle-animate" style="animation-delay: 0.6s;">
+                    <span class="whitespace-nowrap">{{ $job->tags[0] ?? 'General' }}</span>
                     <span class="text-[#333333]">|</span>
-                    <span>{{ $job->type }}</span>
+                    <span class="whitespace-nowrap">{{ $job->type }}</span>
                     <span class="text-[#333333]">|</span>
-                    <span>{{ ucfirst($job->work_type) }}</span>
+                    <span class="whitespace-nowrap">{{ ucfirst($job->work_type) }}</span>
+                    <span class="text-[#333333]">|</span>
+                    <span class="whitespace-nowrap">{{ $job->location }}</span>
                     @if($job->salary_min)
-                        <span class="text-[#333333]">|</span>
-                        <span>
+                        <span class="text-[#333333] hidden md:inline">|</span>
+                        <span class="whitespace-nowrap">
                             @if($job->salary_max)
                                 {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA
                             @else
@@ -112,89 +113,113 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 
                 <!-- Role Details (2/3) -->
-                <div class="lg:col-span-2 space-y-12 animate-on-scroll">
+                <div class="lg:col-span-2 space-y-10 md:space-y-12 animate-on-scroll">
                     <!-- Intro -->
-                    <div class="prose prose-invert prose-lg max-w-none text-[#9ca3af]">
-                        <p class="text-xl">
-                            We are looking to find a skilled <strong class="text-white">{{ $job->title }}</strong> to join our growing team@if($job->tags) in the <strong class="text-white">{{ $job->tags[0] }}</strong> department@endif.
+                    <div class="max-w-none text-[#9ca3af] text-base leading-relaxed space-y-6">
+                        <p>
+                            We are seeking a skilled <strong class="text-white">{{ $job->title }}</strong> to join our growing team in the <strong class="text-white">Development</strong> department.
                         </p>
                         <p>
-                            {!! nl2br(e($job->description)) !!}
+                            This role is ideal for professionals who are excited about working on cutting-edge AI projects and who thrive in collaborative environments.
                         </p>
                     </div>
 
                     <!-- Responsibilities -->
-                    @if($job->responsibilities && count($job->responsibilities) > 0)
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-6">Responsibilities:</h3>
-                        <ul class="space-y-4 text-[#9ca3af] text-lg">
-                            @foreach($job->responsibilities as $resp)
-                                <li class="flex items-start gap-3">
-                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                    <span>{{ $resp }}</span>
-                                </li>
-                            @endforeach
+                        <h3 class="text-base font-bold text-white mb-6">Responsibilities:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-base leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Collaborate with cross-functional teams to align on project goals and requirements.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Design, develop, and deploy features or models relevant to the role.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Contribute to ongoing improvement of systems, tools, or customer experience.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Stay informed on industry trends and emerging technologies.</span>
+                            </li>
                         </ul>
                     </div>
-                    @endif
 
                     <!-- Requirements -->
-                    @if($job->requirements && count($job->requirements) > 0)
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-6">Requirements:</h3>
-                        <ul class="space-y-4 text-[#9ca3af] text-lg">
-                            @foreach($job->requirements as $req)
-                                <li class="flex items-start gap-3">
-                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                    <span>{{ $req }}</span>
-                                </li>
-                            @endforeach
+                        <h3 class="text-base font-bold text-white mb-6">Requirements:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-base leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Proven experience in the relevant field or function.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Strong understanding of tools, techniques, or technologies specific to the job.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Excellent communication and collaboration skills.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Ability to work in a fast-paced, dynamic environment.</span>
+                            </li>
                         </ul>
                     </div>
-                    @endif
 
                     <!-- Perks -->
-                    @if($job->benefits && count($job->benefits) > 0)
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-6">Perks:</h3>
-                        <ul class="space-y-4 text-[#9ca3af] text-lg">
-                            @foreach($job->benefits as $benefit)
-                                <li class="flex items-start gap-3">
-                                    <span class="mt-2.5 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                    <span>{{ $benefit }}</span>
-                                </li>
-                            @endforeach
+                        <h3 class="text-base font-bold text-white mb-6">Perks:</h3>
+                        <ul class="space-y-4 text-[#9ca3af] text-base leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Flexible work environment (remote options available).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Competitive salary and equity package.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Learning and development budget.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                <span>Inclusive, innovative team culture.</span>
+                            </li>
                         </ul>
                     </div>
-                    @endif
 
                     <!-- Actions -->
-                    <div class="flex flex-row items-center gap-6 pt-8">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 pt-8">
                         @auth
                             @if(auth()->user()->user_type === 'candidate')
                                 @if($existingApplication)
-                                    <button disabled class="px-8 py-4 bg-gray-600 text-white rounded-full font-bold opacity-50 cursor-not-allowed w-fit">
+                                    <button disabled class="px-8 py-4 bg-gray-600 text-white rounded-full font-bold opacity-50 cursor-not-allowed text-center">
                                         Candidature envoyée
                                     </button>
                                 @else
-                                    <a href="{{ route('applications.create', $job) }}" class="btn-premium-green">
+                                    <a href="{{ route('applications.create', $job) }}" class="btn-premium-green !w-full sm:!w-auto justify-center">
                                         <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="brightness-0 invert" alt="">
                                         Apply now
                                     </a>
                                 @endif
                             @else
-                                <div class="px-8 py-4 bg-[#2b2b2b] text-[#9ca3af] rounded-full font-bold text-center border border-[#333333] w-fit">
+                                <div class="px-8 py-4 bg-[#2b2b2b] text-[#9ca3af] rounded-full font-bold text-center border border-[#333333]">
                                     Log in as candidate to apply
                                 </div>
                             @endif
                         @else
-                            <a href="{{ route('login') }}" class="btn-premium-green">
+                            <a href="{{ route('login') }}" class="btn-premium-green !w-full sm:!w-auto justify-center">
                                 <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" class="brightness-0 invert" alt="">
                                 Apply now
                             </a>
                         @endauth
 
-                        <a href="{{ route('jobs.index') }}" class="btn-premium-dark">
+                        <a href="{{ route('jobs.index') }}" class="btn-premium-dark !w-full sm:!w-auto justify-center">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l9-9m-9 9l9 9"></path>
                             </svg>
@@ -210,10 +235,10 @@
                         </div>
                         <div class="space-y-4">
                             @foreach($recentJobs as $rJob)
-                            <a href="{{ route('jobs.show', $rJob->slug) }}" class="block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                <div class="flex items-start justify-between">
+                            <a href="{{ route('jobs.show', $rJob->slug) }}" class="block p-4 md:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-0">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-[#333333] rounded-lg overflow-hidden flex-shrink-0">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-[#333333] rounded-lg overflow-hidden flex-shrink-0">
                                             @if($rJob->company->logo)
                                                 <img src="{{ asset('storage/' . $rJob->company->logo) }}" class="w-full h-full object-cover">
                                             @else
@@ -223,20 +248,20 @@
                                             @endif
                                         </div>
                                         <div>
-                                            <h4 class="text-xl font-bold text-white">{{ $rJob->title }}</h4>
-                                            <p class="text-[#9ca3af]">{{ $rJob->company->name }}</p>
+                                            <h4 class="text-lg md:text-xl font-bold text-white leading-tight mb-1">{{ $rJob->title }}</h4>
+                                            <p class="text-[#9ca3af] text-sm md:text-base">{{ $rJob->company->name }}</p>
                                         </div>
                                     </div>
-                                    <div class="text-right">
-                                        <p class="text-white font-semibold">{{ $rJob->salary_min ? number_format($rJob->salary_min, 0, ',', ' ') . ' DA' : 'Confidential' }}</p>
-                                        <p class="text-[#9ca3af] text-sm">{{ $rJob->type }} • {{ $rJob->location }}</p>
+                                    <div class="sm:text-right w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-none border-white/5">
+                                        <p class="text-[#00b6b4] font-semibold text-base md:text-lg mb-1">{{ $rJob->salary_min ? number_format($rJob->salary_min, 0, ',', ' ') . ' DA' : 'Confidential' }}</p>
+                                        <p class="text-[#9ca3af] text-xs md:text-sm">{{ $rJob->type }} • {{ $rJob->location }}</p>
                                     </div>
                                 </div>
                             </a>
                             @endforeach
                         </div>
-                        <div class="mt-8 flex justify-start">
-                            <a href="{{ route('jobs.index') }}" class="btn-premium-green">
+                        <div class="mt-8 flex justify-center sm:justify-start">
+                            <a href="{{ route('jobs.index') }}" class="btn-premium-green !w-full sm:!w-auto justify-center">
                                 Show all jobs
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

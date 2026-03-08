@@ -105,7 +105,13 @@
   /* Premium Button System */
   .btn-premium {
     @apply px-8 py-[13px] rounded-full font-semibold flex items-center justify-center gap-2 w-fit;
-    transition: none;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 640px) {
+    .btn-premium {
+      @apply px-6 py-3 text-sm gap-2;
+    }
   }
 
   .btn-premium svg,

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         
    
-<link rel="stylesheet" href="{{ asset('build/assets/app-b7de3c0d.css') }}">
+<link rel="stylesheet" href="{{ asset('build/assets/app-27c719c9.css') }}">
     <script type="module" src="{{ asset('build/assets/app-09eaf0bc.js') }}"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
