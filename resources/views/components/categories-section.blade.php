@@ -43,13 +43,18 @@ $categories = [
 ];
 @endphp
 
-<section class="relative py-20 bg-[#212221] overflow-hidden">
+<section class="platform-section relative bg-[#212221] overflow-hidden categories-section">
+    <style>
+        @media (max-width: 767px) {
+            .categories-section h2 { font-size: 32px !important; }
+        }
+    </style>
     <!-- Background Image -->
     <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none">
         <img src="{{ asset('storage/home_page/job/right.png') }}" alt="Background" class="h-full w-auto object-cover" style="object-position: right;">
     </div>
     
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <!-- Header -->
         <div class="text-center mb-12 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
@@ -68,8 +73,8 @@ $categories = [
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 justify-center max-w-3xl mx-auto">
             @foreach($categories as $category)
             <a href="{{ route('jobs.index', ['search' => $category['search']]) }}" class="block">
-                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300 cursor-pointer" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 10px;">
-                    <div class="rounded-xl text-center transition-all duration-300" style="background-color: #2B2B2B; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4); height: 90px;">
+                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300 cursor-pointer" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
+                    <div class="rounded-xl text-center transition-all duration-300" style="background-color: #2B2B2B; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4); height: 90px;">
                         <span class="text-white font-medium text-sm leading-tight block" style="word-break: break-word; line-height: 1.4;">{!! str_replace(' & ', ' &<br>', $category['name']) !!}</span>
                     </div>
                 </div>

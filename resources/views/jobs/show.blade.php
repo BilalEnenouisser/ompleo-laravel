@@ -7,9 +7,10 @@
 <!-- Header -->
 @include('components.header')
 
-<div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
+<div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#1a1a1a] pt-24 md:pt-32 pb-8 md:pb-12 relative overflow-hidden z-10 job-details-hero">
+    <section class="platform-section relative overflow-hidden z-10 job-details-hero bg-[#151515]">
+
         <style>
             .hero-char {
                 opacity: 0;
@@ -33,8 +34,14 @@
                 animation: heroCharFadeIn 0.6s ease forwards;
                 will-change: transform, opacity, filter;
             }
+            .job-card-date-container { position: relative; min-height: 1.5rem; }
+            .job-card-date { display: flex; align-items: center; justify-content: flex-end; transition: opacity 0.3s ease, transform 0.3s ease; position: absolute; top: 0; right: 0; }
+            .job-card-view { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; position: absolute; top: 0; right: 0; }
+            .job-card-link:hover .job-card-date { opacity: 0; transform: translateX(-10px); }
+            .job-card-link:hover .job-card-view { opacity: 1; transform: translateX(0); }
+
         </style>
-        <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1200px;">
+        <div class="platform-container">
             <!-- Breadcrumbs -->
             <div class="flex items-center gap-2 text-[#9ca3af] text-xs md:text-sm mb-6 md:mb-8 hero-subtitle-animate" style="animation-delay: 0.1s;">
                 <a href="{{ route('jobs.index') }}" class="hover:text-[#00b6b4] transition-colors whitespace-nowrap">All Jobs</a>
@@ -55,11 +62,11 @@
                                     $output .= '<span style="white-space:nowrap; font-size: 0;">';
                                     $chars = mb_str_split($word);
                                     foreach ($chars as $char) {
-                                        $output .= '<span class="hero-char text-5xl md:text-7xl" style="display: inline-block;">' . $char . '</span>';
+                                        $output .= '<span class="hero-char text-3xl md:text-7xl" style="display: inline-block;">' . $char . '</span>';
                                     }
                                     $output .= '</span>';
                                     if ($wIndex < count($words) - 1) {
-                                        $output .= '<span class="text-5xl md:text-7xl">&nbsp;</span>';
+                                        $output .= '<span class="text-3xl md:text-7xl">&nbsp;</span>';
                                     }
                                 }
                                 return $output;
@@ -108,8 +115,8 @@
     </section>
 
     <!-- Main Content -->
-    <section class="pt-20 pb-20 relative z-10">
-        <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1200px;">
+    <section class="platform-section relative z-10">
+        <div class="platform-container">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 
                 <!-- Role Details (2/3) -->
@@ -230,31 +237,70 @@
                     <!-- Recent Jobs Section -->
                     @if(isset($recentJobs) && $recentJobs->count() > 0)
                     <div class="pt-20">
-                        <div class="mb-8">
-                            <h3 class="text-3xl font-bold text-white">Recent Jobs</h3>
+                        <div class="mb-8 pb-4">
+                            <div class="flex items-center gap-2 mb-3">
+                                <img src="{{ asset('storage/home_page/job/icon.svg') }}" alt="Icon" class="w-6 h-6">
+                                <span class="text-base font-medium" style="color: #d9d9d9;">Offres récentes</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white">Emplois récents</h3>
                         </div>
                         <div class="space-y-4">
                             @foreach($recentJobs as $rJob)
-                            <a href="{{ route('jobs.show', $rJob->slug) }}" class="block p-4 md:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-0">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-[#333333] rounded-lg overflow-hidden flex-shrink-0">
-                                            @if($rJob->company->logo)
-                                                <img src="{{ asset('storage/' . $rJob->company->logo) }}" class="w-full h-full object-cover">
-                                            @else
-                                                <div class="w-full h-full bg-[#00b6b4] flex items-center justify-center text-white font-bold text-xs">
-                                                    {{ strtoupper(substr($rJob->company->name, 0, 2)) }}
-                                                </div>
-                                            @endif
+                            <a href="{{ route('jobs.show', $rJob->slug) }}" class="block job-card-link">
+                                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
+                                    <div class="p-6 transition-all duration-300 job-card-inner" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                                        <!-- Row 1: Logo, Job Title + Company -->
+                                        <div class="flex items-start gap-4 md:gap-6 mb-4">
+                                            <!-- Logo -->
+                                            <div class="flex-shrink-0">
+                                                @if($rJob->company && $rJob->company->logo)
+                                                    <img src="{{ Storage::url($rJob->company->logo) }}" alt="{{ $rJob->company->name }}" class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover">
+                                                @else
+                                                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br from-[#165c5b] to-[#00fadc] flex items-center justify-center">
+                                                        <span class="text-white font-bold text-lg md:text-xl">
+                                                            {{ $rJob->company ? strtoupper(substr($rJob->company->name, 0, 1)) : 'J' }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <!-- Title and Company -->
+                                            <div class="flex-1 min-w-0">
+                                                <h3 class="text-lg md:text-xl font-bold text-white mb-1 truncate">
+                                                    {{ $rJob->title }}
+                                                </h3>
+                                                <p class="text-gray-400 text-sm">
+                                                    {{ $rJob->company ? $rJob->company->name : 'Entreprise non spécifiée' }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4 class="text-lg md:text-xl font-bold text-white leading-tight mb-1">{{ $rJob->title }}</h4>
-                                            <p class="text-[#9ca3af] text-sm md:text-base">{{ $rJob->company->name }}</p>
+
+                                        <!-- Row 2: Details and Posted Date -->
+                                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3 md:gap-4 pt-2 md:pt-0 border-t border-white/5 md:border-none">
+                                            <!-- Left: Keywords | Type | City -->
+                                            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-gray-400">
+                                                <span class="whitespace-nowrap">{{ is_array($rJob->tags) ? ($rJob->tags[0] ?? 'General') : ($rJob->tags ?: 'General') }}</span>
+                                                <span class="text-gray-600">|</span>
+                                                <span class="whitespace-nowrap">{{ $rJob->type }}</span>
+                                                <span class="text-gray-600">|</span>
+                                                <span class="whitespace-nowrap">{{ $rJob->location }}</span>
+                                            </div>
+
+                                            <!-- Right: Posted Date / View Job -->
+                                            <div class="flex-shrink-0 relative md:min-w-[210px] min-h-[1.5rem] job-card-date-container">
+                                                <!-- Posted Date (default) -->
+                                                <p class="text-sm text-gray-400 job-card-date">
+                                                    Posted on: {{ $rJob->created_at->format('M d, Y') }}
+                                                </p>
+                                                <!-- View Job (on hover) -->
+                                                <p class="text-sm text-[#00fadc] font-medium job-card-view">
+                                                    <span>Voir l'offre</span>
+                                                    <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                                                    </svg>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="sm:text-right w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-none border-white/5">
-                                        <p class="text-[#00b6b4] font-semibold text-base md:text-lg mb-1">{{ $rJob->salary_min ? number_format($rJob->salary_min, 0, ',', ' ') . ' DA' : 'Confidential' }}</p>
-                                        <p class="text-[#9ca3af] text-xs md:text-sm">{{ $rJob->type }} • {{ $rJob->location }}</p>
                                     </div>
                                 </div>
                             </a>

@@ -40,7 +40,7 @@
 
 <div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#1a1a1a] pt-32 pb-12 relative overflow-hidden z-10 jobs-hero">
+    <section class="relative pt-32 pb-12 overflow-hidden z-10 jobs-hero">
         <style>
             /* Hero Character Animation */
             .hero-char {
@@ -65,8 +65,11 @@
                 animation: heroCharFadeIn 0.6s ease forwards;
                 will-change: transform, opacity, filter;
             }
+            @media (max-width: 767px) {
+                .jobs-hero h1 span.hero-char { font-size: 32px !important; }
+            }
         </style>
-        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
+        <div class="platform-container">
             <div class="mb-6">
                 <h1 class="font-bold text-white mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
                     @php
@@ -116,8 +119,8 @@
     </section>
 
     <!-- Navigation Tabs -->
-    <section class="mb-12 relative z-10">
-        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
+    <section class="platform-section !py-0 mb-12 relative z-10">
+        <div class="platform-container">
             <div class="flex items-center gap-6 overflow-x-auto no-scrollbar pt-6">
                 @foreach($tabTitles as $tabKey => $title)
                     <a href="{{ route('jobs.index', ['tab' => $tabKey]) }}" 
@@ -130,8 +133,8 @@
     </section>
 
     <!-- Main Content -->
-    <section class="pb-20 relative z-10">
-        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
+    <section class="platform-section relative z-10">
+        <div class="platform-container">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 
                 <!-- Sidebar (1/3) -->

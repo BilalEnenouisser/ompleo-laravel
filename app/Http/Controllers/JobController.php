@@ -237,4 +237,35 @@ class JobController extends Controller
         
         return view('jobs.show', compact('job', 'relatedJobs', 'existingApplication', 'recentJobs'));
     }
+
+    public function searchApi(Request $request)
+    {
+        $search = $request->get('q');
+        
+        if (empty($search)) {
+            return response()->json(['jobs' => []]);
+        }
+        
+        $jobs = Job::where('status', 'published')
+            ->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhereHas('company', function($companyQuery) use ($search) {
+                      $companyQuery->where('name', 'like', "%{$search}%");
+                  });
+            })
+            ->with('company')
+            ->limit(6)
+            ->get()
+            ->map(function($job) {
+                return [
+                    'id' => $job->id,
+                    'title' => $job->title,
+                    'company_name' => $job->company ? $job->company->name : 'N/A',
+                    'slug' => $job->slug,
+                    'url' => route('jobs.show', $job->slug),
+                ];
+            });
+            
+        return response()->json(['jobs' => $jobs]);
+    }
 }

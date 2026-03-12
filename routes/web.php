@@ -137,6 +137,7 @@ Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordControlle
 
 // Jobs Routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/api/jobs/search', [JobController::class, 'searchApi'])->name('jobs.api.search');
 Route::get('/jobs/{job:slug}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 

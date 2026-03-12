@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Storage;
 $jobs = $jobs ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#212221] overflow-hidden jobs-section">
+<section class="platform-section relative bg-[#212221] overflow-hidden jobs-section">
     <style>
         /* Desktop is default - py-20 */
         @media (max-width: 1023px) {
@@ -31,7 +31,7 @@ $jobs = $jobs ?? collect();
         <img src="{{ asset('storage/home_page/job/right.png') }}" alt="Background" class="h-full w-auto object-cover" style="object-position: right;">
     </div>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <!-- Header -->
         <div class="text-center mb-6 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
@@ -45,16 +45,12 @@ $jobs = $jobs ?? collect();
 
         <!-- Search Input -->
         <div class="max-w-2xl mx-auto mb-12">
-            <form action="{{ route('jobs.index') }}" method="GET" class="relative">
-                <div class="p-[1px]" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 10px;">
-                    <div class="relative" style="border-radius: 10px;">
-                        <input 
-                            type="text" 
-                            name="search"
-                            placeholder="Rechercher des offres d'emploi" 
-                            class="w-full px-6 py-4 pr-14 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00fadc]/50 transition-all font-medium"
-                            style="background-color: #212221; border-radius: 10px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);"
-                        >
+            <div class="relative cursor-pointer" onclick="openSearchPopup()">
+                <div class="p-[1px]" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
+                    <div class="relative overflow-hidden" style="border-radius: 12px;">
+                        <div class="w-full px-6 py-4 pr-14 text-gray-400 font-medium" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                            Rechercher des offres d'emploi
+                        </div>
                         <!-- Right Icon -->
                         <div class="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -64,15 +60,15 @@ $jobs = $jobs ?? collect();
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
 
         <!-- Job Cards -->
         <div class="max-w-4xl mx-auto space-y-4">
             @forelse($jobs->take(3) as $job)
             <a href="{{ route('jobs.show', $job->slug) }}" class="block job-card-link">
-                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 10px; cursor: pointer;">
-                    <div class="p-6 transition-all duration-300 job-card-inner" style="background-color: #212221; border-radius: 10px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
+                    <div class="p-6 transition-all duration-300 job-card-inner" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
                         <style>
                             .job-card-date-container {
                                 position: relative;

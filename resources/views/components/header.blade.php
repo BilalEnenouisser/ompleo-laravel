@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
             </div>
 
             <!-- Center: Desktop Navigation -->
-            <nav class="hidden xl:flex space-x-1 desktop-nav absolute left-1/2 transform -translate-x-1/2 z-[10001]">
+            <nav class="desktop-nav absolute left-1/2 transform -translate-x-1/2 z-[10001]">
                     @php
                         $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
                     @endphp
@@ -63,7 +63,7 @@ use Illuminate\Support\Facades\Storage;
                 </nav>
 
             <!-- Right Side -->
-            <div class="hidden xl:flex items-center space-x-4 desktop-right">
+            <div class="items-center space-x-4 desktop-right">
                 <!-- Language Selector -->
                 <div class="relative">
                     <button onclick="toggleLanguageMenu()" class="ompleo-btn text-[#00b6b4] hover:bg-[#2b2b2b] transition-all duration-300">
@@ -285,7 +285,7 @@ use Illuminate\Support\Facades\Storage;
             </div>
 
             <!-- Mobile menu button -->
-            <div class="xl:hidden flex items-center space-x-2 mobile-menu-btn">
+            <div class="flex items-center space-x-2 mobile-menu-btn">
                 <button onclick="toggleMobileMenu()" class="p-2 rounded-lg transition-all duration-300 text-[#00b6b4] hover:bg-[#2b2b2b]">
                     <!-- Menu icon from Lucide React -->
                     <svg id="menuIcon" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -303,7 +303,7 @@ use Illuminate\Support\Facades\Storage;
         </div>
 
         <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="hidden xl:hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
+        <div id="mobileMenu" class="hidden py-4 border-t border-[#333333] bg-[#2b2b2b]">
             <div class="space-y-2">
                 <!-- Mobile "Parcourir les offres" with dropdown -->
                 <div class="space-y-1">
@@ -407,8 +407,8 @@ use Illuminate\Support\Facades\Storage;
 </header>
 
 <style>
-    /* Custom breakpoint at 1150px */
-    @media (max-width: 1150px) {
+    /* Mobile state: hide desktop nav, show mobile button */
+    @media (max-width: 1200px) {
         .desktop-nav {
             display: none !important;
         }
@@ -417,10 +417,39 @@ use Illuminate\Support\Facades\Storage;
         }
         .mobile-menu-btn {
             display: flex !important;
+        }
+        /* Mobile menu padding adjustment */
+        #mobileMenu {
+            padding-left: 5%;
+            padding-right: 5%;
         }
     }
     
-    @media (min-width: 1151px) {
+    /* Small desktop state: compact navigation to prevent overlap */
+    @media (min-width: 1201px) and (max-width: 1700px) {
+        .desktop-nav {
+            position: relative !important;
+            left: 0 !important;
+            transform: none !important;
+            margin: 0 auto !important;
+        }
+        .desktop-nav a, .desktop-nav button {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            font-size: 0.925rem !important;
+        }
+        .desktop-right {
+            gap: 0.5rem !important;
+        }
+        .btn-premium-green, .btn-premium-dark {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            font-size: 0.875rem !important;
+        }
+    }
+
+    /* Desktop state: show desktop nav, hide mobile elements */
+    @media (min-width: 1201px) {
         .desktop-nav {
             display: flex !important;
         }
@@ -428,6 +457,9 @@ use Illuminate\Support\Facades\Storage;
             display: flex !important;
         }
         .mobile-menu-btn {
+            display: none !important;
+        }
+        #mobileMenu {
             display: none !important;
         }
     }

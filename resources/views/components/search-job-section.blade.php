@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Storage;
 $latestJobs = $latestJobs ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#212221] overflow-hidden">
+<section class="platform-section relative bg-[#212221] overflow-hidden">
     <!-- Background Images -->
     <div class="absolute top-0 left-0 hidden lg:block pointer-events-none z-0">
         <img src="{{ asset('storage/home_page/search_job/left.png') }}" alt="Background" class="h-auto w-auto object-cover" style="object-position: left top;">
@@ -13,7 +13,7 @@ $latestJobs = $latestJobs ?? collect();
         <img src="{{ asset('storage/home_page/search_job/right.png') }}" alt="Background" class="h-auto w-auto object-cover" style="object-position: right bottom;">
     </div>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <!-- Left Section: Image with Border -->
             <div class="relative">
@@ -47,28 +47,21 @@ $latestJobs = $latestJobs ?? collect();
                 </p>
                 <!-- Search Input -->
                 <div class="mb-8">
-                    <form action="{{ route('jobs.index') }}" method="GET" class="relative">
-                        <div class="p-[1px]" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 10px;">
-                            <div class="relative" style="border-radius: 10px;">
-                                <input 
-                                    type="text" 
-                                    name="search"
-                                    placeholder="Rechercher toutes les offres" 
-                                    class="w-full px-6 py-4 pr-14 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00fadc]/50 transition-all"
-                                    style="background-color: #212221; border-radius: 10px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);"
-                                >
-                                <button 
-                                    type="submit"
-                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-[#00fadc] transition-colors"
-                                >
+                    <div class="relative cursor-pointer" onclick="openSearchPopup()">
+                        <div class="p-[1px]" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
+                            <div class="relative" style="border-radius: 12px;">
+                                <div class="w-full px-6 py-4 pr-14 text-gray-400 focus:outline-none transition-all" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                                    Rechercher toutes les offres
+                                </div>
+                                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-[#00fadc] transition-colors">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <path d="m21 21-4.35-4.35"></path>
                                     </svg>
-                                </button>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <!-- Latest Offers -->
@@ -92,12 +85,10 @@ $latestJobs = $latestJobs ?? collect();
                         <span>Parcourir toutes les offres</span>
                     </a>
 
-                    <div class="rounded-full overflow-hidden">
-                        <button onclick="openNewsletterPopup()" class="btn-premium-dark mx-auto lg:mx-0">
-                            <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon">
-                            <span>Recevoir les offres par email</span>
-                        </button>
-                    </div>
+                    <button onclick="openNewsletterPopup()" class="btn-premium-dark mx-auto lg:mx-0">
+                        <img src="{{ asset('storage/home_page/search_job/icon.svg') }}" alt="Icon">
+                        <span>Recevoir les offres par email</span>
+                    </button>
                 </div>
             </div>
         </div>

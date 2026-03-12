@@ -9,7 +9,7 @@
     @include('components.header')
 
     <!-- Hero Section -->
-    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-[#212221]">
+    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-[#212221] platform-section">
         <style>
             .hero-bg-image {
                 width: 40%;
@@ -35,7 +35,7 @@
         </div>
         
         <!-- Content -->
-        <div class="w-full md:w-[90%] mx-auto relative z-10 px-4 md:px-5">
+        <div class="platform-container relative z-10">
             <style>
                 .nos-solutions-hero h1 {
                     font-size: 56px;
@@ -63,7 +63,7 @@
                         padding-bottom: 2rem !important;
                     }
                     .nos-solutions-hero h1 {
-                        font-size: 28px !important;
+                        font-size: 32px !important;
                         max-width: 100% !important;
                         margin-bottom: 1.5rem !important;
                     }
@@ -72,7 +72,7 @@
                         margin-bottom: 2rem !important;
                     }
                     .nos-solutions-hero .hero-subtitle p {
-                        font-size: 14px !important;
+                        font-size: 16px !important;
                     }
                 }
                 /* Hero Character Animation */
@@ -150,7 +150,7 @@
                     @media (max-width: 767px) {
                         .nos-solutions-hero-title .hero-char,
                         .nos-solutions-hero-title .hero-space {
-                            font-size: 28px !important;
+                            font-size: 32px !important;
                         }
                     }
                 </style>
@@ -163,7 +163,7 @@
                 </div>
                 
                 <!-- Button -->
-                <a href="#nos-solutions-section" class="btn-premium-green hero-btn-animate hover:scale-105 transition-all duration-300">
+                <a href="#nos-solutions-section" class="btn-premium-green hero-btn-animate">
                     <span>Essayez gratuitement</span>
                 </a>
             </div>
@@ -193,7 +193,7 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="nos-solutions-section" class="relative py-20 md:py-32 lg:py-72 overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
+    <section id="nos-solutions-section" class="platform-section relative overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
         <style>
             .pricing-card {
                 position: relative;
@@ -202,9 +202,18 @@
                 -webkit-backdrop-filter: blur(10px);
                 border-radius: 40px;
                 overflow: visible;
+                margin: 0 auto;
+            }
+            /* Standard Cards Size & Typography */
+            .card-standard {
+                width: 300px;
+                height: 530px;
+            }
+            /* URGENCE Card Size */
+            .pricing-card-featured {
                 width: 340px;
                 height: 600px;
-                margin: 0 auto;
+                z-index: 20;
             }
             .paddingtp {
                 margin-top: 60px;
@@ -256,6 +265,25 @@
                 align-items: center;
                 justify-content: center;
             }
+            
+            /* Standard Cards Typography Overrides */
+            .card-standard .card-title {
+                font-size: 20px !important;
+            }
+            .card-standard .card-desc {
+                font-size: 15px !important;
+            }
+            .card-standard .pricing-btn {
+                font-size: 14px !important;
+                padding: 10px 24px !important;
+            }
+            .card-standard .card-features li {
+                font-size: 12px !important;
+            }
+            .card-standard .card-features li svg {
+                width: 1.25rem !important; /* w-5 */
+                height: 1.25rem !important; /* h-5 */
+            }
             /* Corner border images */
             .pricing-card .corner {
                 position: absolute;
@@ -305,7 +333,7 @@
             }
             /* Featured card (URGENCE) */
             .pricing-card-featured {
-                transform: scale(1.12);
+                z-index: 20;
             }
             @media (max-width: 1200px) {
                 .pricing-card {
@@ -358,19 +386,19 @@
             <img src="{{ asset('storage/nos_solutions/mid.png') }}" alt="Background" class="w-full h-full object-cover">
         </div>
         
-        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="platform-container relative z-10">
             <!-- Section Header -->
-            <div class="text-center mb-12 md:mb-20 lg:mb-36">
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6">Nos solutions</h2>
-                <p class="text-white text-base md:text-lg lg:text-xl mb-2 px-4">Des outils simples pour recruter plus efficacement</p>
-                <p class="text-white text-base md:text-lg lg:text-xl px-4">Diffusez vos offres et touchez les bons profils, sans complexité.</p>
+            <div class="text-center mb-12 md:mb-20 lg:mb-32 px-4 md:px-0">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6" style="font-size: clamp(24px, 5vw, 48px);">Nos solutions</h2>
+                <p class="text-white text-base md:text-lg lg:text-xl mb-2">Des outils simples pour recruter plus efficacement</p>
+                <p class="text-white text-base md:text-lg lg:text-xl">Diffusez vos offres et touchez les bons profils, sans complexité.</p>
             </div>
             
             <!-- Top Row: 3 Cards -->
-            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-6 md:gap-8 items-center md:items-end mb-6 md:mb-8">
+            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-10 items-center mb-16 md:mb-20">
                 
                 <!-- Card 1: Essentiel -->
-                <div class="pricing-card animate-stagger-item">
+                <div class="pricing-card card-standard animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -386,7 +414,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="{{ route('signup.choice') }}" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold hover:brightness-90">
+                            <a href="{{ route('signup.choice') }}" class="btn-premium-green inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 48H d'essais gratuit
                             </a>
                         </div>
@@ -454,7 +482,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
+                            <a href="#devis-section" class="btn-premium-green inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -500,7 +528,7 @@
                 </div>
                 
                 <!-- Card 3: Croissance -->
-                <div class="pricing-card animate-stagger-item">
+                <div class="pricing-card card-standard animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -516,7 +544,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
+                            <a href="#devis-section" class="btn-premium-green inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -572,7 +600,7 @@
             <!-- Bottom Row: 1 Card Centered -->
             <div class="flex justify-center">
                 <!-- Card 4: Performance -->
-                <div class="pricing-card paddingtp animate-stagger-item">
+                <div class="pricing-card card-standard paddingtp animate-stagger-item">
                     <!-- Corner borders -->
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tl">
                     <img src="{{ asset('storage/nos_solutions/border.png') }}" alt="" class="corner corner-tr">
@@ -588,7 +616,7 @@
                         
                         <!-- Button Section -->
                         <div class="card-btn-wrapper">
-                            <a href="#devis-section" class="pricing-btn inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
+                            <a href="#devis-section" class="btn-premium-green inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-bold">
                                 Demandez un devis
                             </a>
                         </div>
@@ -644,7 +672,7 @@
     </section>
 
     <!-- Contact Form Section -->
-    <section id="devis-section" class="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1f1f1f] animate-on-scroll">
+    <section id="devis-section" class="platform-section relative overflow-hidden bg-[#1f1f1f] animate-on-scroll">
         <!-- Background Image at Bottom -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('storage/nos_solutions/bottom.png') }}" alt="Background" class="w-full h-full object-cover">
@@ -781,31 +809,14 @@
             .contact-form-checkbox-label a:hover {
                 color: #39fffc;
             }
-            .contact-submit-btn {
-                background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b);
-                background-size: 200% 200%;
-                background-position: 0% 50%;
-                color: white;
-                font-weight: bold;
-                padding: 22px 80px;
-                border-radius: 12px;
-                border: none;
-                font-size: 20px;
-                cursor: pointer;
-                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
-            }
-            .contact-submit-btn:hover {
-                background-position: 100% 50%;
-                transform: scale(1.03) translateY(-2px);
-            }
+
             
             /* Mobile responsive styles */
             @media (max-width: 767px) {
                 .contact-form-input {
                     padding: 16px 20px;
                     font-size: 16px;
-                    border-radius: 10px;
+                    border-radius: 12px;
                 }
                 .contact-form-input::placeholder {
                     font-size: 16px;
@@ -814,7 +825,7 @@
                     padding: 16px 20px;
                     padding-right: 45px;
                     font-size: 16px;
-                    border-radius: 10px;
+                    border-radius: 12px;
                 }
                 .select-wrapper::after {
                     right: 16px;
@@ -824,28 +835,22 @@
                 .contact-form-checkbox-label {
                     font-size: 12px;
                 }
-                .contact-submit-btn {
-                    padding: 16px 40px;
-                    font-size: 16px;
-                    border-radius: 10px;
-                    width: 100%;
-                    max-width: 280px;
-                }
+
             }
         </style>
         
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="platform-container relative z-10">
             <!-- Section Header -->
-            <div class="text-center mb-8 md:mb-12">
-                <h2 class="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-8 text-white">Demandez un devis</h2>
-                <p class="text-sm md:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed px-2" style="color: #d8d4d4;">
+            <div class="text-center mb-8 md:mb-12 px-4 md:px-0">
+                <h2 class="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-8 text-white" style="font-size: clamp(24px, 5vw, 64px);">Demandez un devis</h2>
+                <p class="text-base md:text-lg max-w-3xl mx-auto leading-relaxed" style="color: #d8d4d4;">
                     Des offres adaptées à vos besoins de recrutement et à votre budget.<br class="hidden md:block">
                     Contactez-nous pour recevoir un devis gratuit, notre équipe vous répondra rapidement.
                 </p>
             </div>
             
             <!-- Contact Form -->
-            <form action="{{ route('contact.submit') }}" method="POST" class="max-w-6xl mx-auto px-2 md:px-0">
+            <form action="{{ route('contact.submit') }}" method="POST" class="max-w-6xl mx-auto px-4 md:px-0">
                 @csrf
                 
                 <!-- Row 1: Name & Email -->
@@ -891,7 +896,7 @@
                 
                 <!-- Submit Button -->
                 <div class="text-center">
-                    <button type="submit" class="contact-submit-btn">
+                    <button type="submit" class="btn-premium-green !px-20 !py-5 !text-xl mx-auto">
                         Envoyer
                     </button>
                 </div>

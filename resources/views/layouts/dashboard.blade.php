@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Storage;
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         
-   
-<link rel="stylesheet" href="{{ asset('build/assets/app-27c719c9.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a1b3e029.css') }}">
     <script type="module" src="{{ asset('build/assets/app-09eaf0bc.js') }}"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

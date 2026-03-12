@@ -24,7 +24,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         
         <div class="absolute bottom-0 left-0 right-0 p-4 md:p-16 text-white">
-            <div class="max-w-5xl mx-auto">
+        <div class="platform-container">
                 <div class="flex items-center gap-2 mb-4">
                     <span class="bg-[#0058f0] px-3 py-1 rounded-full text-sm font-medium">
                         {{ $blog->category ?? 'Article' }}
@@ -86,9 +86,15 @@
             </div>
         </div>
     </div>
+    <style>
+        @media (max-width: 767px) {
+            .blog-show-section h1 { font-size: 32px !important; }
+            .blog-show-section h2 { font-size: 28px !important; }
+        }
+    </style>
 
     <!-- Main Content -->
-    <section class="py-16 relative z-10 blog-show-section">
+    <section class="platform-section relative z-10 blog-show-section">
         <style>
             /* Desktop is default - py-16, grid-cols-3 */
             @media (max-width: 1023px) {
@@ -101,7 +107,7 @@
                 }
             }
         </style>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="platform-container">
             <div class="grid grid-cols-3 gap-8 blog-show-grid">
                 <!-- Main Article -->
                 <article class="col-span-2">

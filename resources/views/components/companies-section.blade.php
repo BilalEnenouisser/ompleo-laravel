@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Storage;
 $companies = $companies ?? collect();
 @endphp
 
-<section class="relative py-20 bg-[#212221] overflow-hidden companies-section">
+<section class="platform-section relative bg-[#212221] overflow-hidden companies-section">
     <style>
         /* Desktop is default - py-20, grid-cols-3 */
         @media (max-width: 1023px) {
@@ -17,12 +17,8 @@ $companies = $companies ?? collect();
             }
         }
         @media (max-width: 767px) {
-            .companies-section {
-                padding-top: 3rem !important;
-                padding-bottom: 3rem !important;
-            }
             .companies-section h2 {
-                font-size: 2.5rem !important;
+                font-size: 32px !important;
             }
             .companies-grid {
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
@@ -38,7 +34,7 @@ $companies = $companies ?? collect();
             background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) !important;
         }
     </style>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <!-- Header -->
         <div class="text-center mb-12 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">

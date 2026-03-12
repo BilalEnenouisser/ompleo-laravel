@@ -9,7 +9,7 @@
 
 <div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-[#1f1f1f] pt-32 pb-12 relative overflow-hidden z-10 blog-hero" style="background: #1a1a1a;">
+    <section class="relative pt-32 pb-12 overflow-hidden z-10 blog-hero" style="background: #1a1a1a;">
         <style>
             .blog-hero h1 {
                 font-size: 70px;
@@ -62,7 +62,7 @@
                 will-change: transform, opacity, filter;
             }
         </style>
-        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
+        <div class="platform-container">
             <h1 class="font-bold mb-6 leading-tight tracking-tighter blog-hero-title" style="font-size: 0;">
                 @php
                     $heroTitle = "Blog - Guides et Ressources";
@@ -134,7 +134,7 @@
     </script>
 
     <!-- Blog Grid -->
-    <section class="py-12 relative z-10">
+    <section class="platform-section relative z-10">
         <style>
             /* Blog Card Scroll Animations */
             .blog-card {
@@ -187,7 +187,7 @@
                 transform: scale(1.08);
             }
         </style>
-        <div class="mx-auto px-4 md:px-5" style="max-width: 1200px;">
+        <div class="platform-container">
             <div id="blogContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($blogs as $blog)
                 <article class="blog-card group rounded-2xl transition-all duration-300 hover:-translate-y-2 p-4" style="background: #333333; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">

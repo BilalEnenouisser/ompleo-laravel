@@ -39,7 +39,7 @@
             border: 1px solid #16b6b4;
             color: #ffffff;
             padding: 10px 16px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 500;
             cursor: pointer;
@@ -58,7 +58,7 @@
         .signup-input {
             background: repeating-linear-gradient(45deg, #28282879, #11111186);
             border: 1px solid #16b6b4;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 14px 16px;
             padding-left: 44px;
             color: #ffffff;
@@ -129,7 +129,7 @@
             color: white;
             font-weight: 600;
             padding: 14px 40px;
-            border-radius: 10px;
+            border-radius: 12px;
             border: none;
             font-size: 15px;
             cursor: pointer;
@@ -139,7 +139,7 @@
         }
         .signup-submit-btn:hover {
             background-position: 100% 50%;
-            transform: translateY(-2px);
+             
         }
         .signup-link {
             color: #16b6b4;

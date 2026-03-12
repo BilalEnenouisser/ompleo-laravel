@@ -71,15 +71,18 @@
                         max-width: 100% !important;
                     }
                     h1.hero-headline {
-                        font-size: 28px !important;
+                        font-size: 24px !important;
                         margin-bottom: 1.5rem !important;
                         line-height: 1.3 !important;
                         letter-spacing: -0.5px !important;
-                        word-wrap: break-word !important;
-                        overflow-wrap: break-word !important;
+                        word-wrap: normal !important;
+                        overflow-wrap: normal !important;
                     }
-                    h1.hero-headline span {
-                        display: block !important;
+                    /* Ensure words stay together */
+                    h1.hero-headline span[style*="white-space:nowrap"],
+                    h1.hero-headline .hero-char {
+                        display: inline-block !important;
+                        white-space: nowrap !important;
                     }
                     h1.hero-headline .hero-headline-line-1,
                     h1.hero-headline .hero-headline-line-2 {
@@ -95,16 +98,16 @@
                     }
                     .hero-headline span[style*="white-space:nowrap"],
                     .hero-subheadline span[style*="white-space:nowrap"] {
-                        white-space: normal !important;
-                        display: inline !important;
+                        white-space: nowrap !important;
+                        display: inline-block !important;
                     }
                     p.hero-subheadline {
-                        font-size: 16px !important;
+                        font-size: 14px !important;
                         margin-top: 1rem !important;
                         margin-bottom: 2rem !important;
                         line-height: 1.5 !important;
-                        word-wrap: break-word !important;
-                        overflow-wrap: break-word !important;
+                        word-wrap: normal !important;
+                        overflow-wrap: normal !important;
                     }
                     .hero-buttons {
                         flex-direction: row !important;
@@ -241,65 +244,26 @@
                     filter: blur(0) !important;
                 }
                 
-                /* Ensure hero text displays horizontally */
-                .hero-headline,
-                .hero-subheadline {
-                    display: block !important;
-                    white-space: normal !important;
+                /* Ensure hero text displays horizontally and words stay whole */
+                .hero-char {
+                    display: inline-block !important;
+                    white-space: nowrap !important;
                 }
                 
-                .hero-headline .hero-headline-line-1,
-                .hero-headline .hero-headline-line-2 {
-                    display: block !important;
-                    white-space: normal !important;
-                }
-                
-                /* Force all hero characters to display inline */
-                .hero-headline span,
-                .hero-subheadline span {
-                    display: inline !important;
-                    white-space: normal !important;
-                }
-                
+                /* Ensure characters and words don't break internally */
+                .hero-char,
                 .hero-headline span[style*="white-space:nowrap"],
                 .hero-subheadline span[style*="white-space:nowrap"] {
-                    white-space: normal !important;
-                    display: inline !important;
+                    display: inline-block !important;
+                    white-space: nowrap !important;
                 }
                 
                 /* Mobile fixes for hero text */
                 @media (max-width: 767px) {
-                    .hero-char {
-                        display: inline-block !important;
-                        vertical-align: baseline !important;
-                        line-height: 1.3 !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
-                    }
-                    
-                    .hero-headline,
-                    .hero-subheadline {
-                        display: block !important;
-                        white-space: normal !important;
-                    }
-                    
                     .hero-headline .hero-headline-line-1,
                     .hero-headline .hero-headline-line-2 {
                         display: block !important;
                         white-space: normal !important;
-                        line-height: 1.3 !important;
-                    }
-                    
-                    .hero-headline span,
-                    .hero-subheadline span {
-                        display: inline !important;
-                        white-space: normal !important;
-                    }
-                    
-                    .hero-headline span[style*="white-space:nowrap"],
-                    .hero-subheadline span[style*="white-space:nowrap"] {
-                        white-space: normal !important;
-                        display: inline !important;
                     }
                 }
             </style>
@@ -333,13 +297,10 @@
                         <span class="text-sm sm:text-lg">Publier une annonce</span>
                     </a>
 
-                    <!-- Button 2: Rechercher toutes les offres with Glow Effect -->
-                    <div class="rounded-full overflow-hidden">
-                        <a href="{{ route('jobs.index') }}" class="btn-premium-dark mx-auto lg:mx-0">
-                            <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="hero-button-icon">
-                            <span class="text-sm sm:text-lg">Rechercher toutes les offres</span>
-                        </a>
-                    </div>
+                    <a href="{{ route('jobs.index') }}" class="btn-premium-dark mx-auto lg:mx-0">
+                        <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="hero-button-icon">
+                        <span class="text-sm sm:text-lg">Rechercher toutes les offres</span>
+                    </a>
                 </div>
 
                 <!-- Trust Section -->

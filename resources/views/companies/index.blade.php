@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 <div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="bg-transparent text-white pt-32 pb-12 relative overflow-hidden z-10 companies-hero">
+    <section class="relative pt-32 pb-12 overflow-hidden z-10 companies-hero">
         <style>
             .companies-hero h1 {
                 font-size: 70px;
@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Storage;
                 will-change: transform, opacity, filter;
             }
         </style>
-        <div class="w-full md:w-[90%] mx-auto px-4 md:px-5">
+        <div class="platform-container">
             <h1 class="font-bold mb-6 leading-tight tracking-tighter companies-hero-title" style="font-size: 0;">
                 @php
                     $heroTitle = "Découvrez les entreprises qui recrutent";
@@ -127,8 +127,8 @@ use Illuminate\Support\Facades\Storage;
     </script>
 
     <!-- Search and Filters -->
-    <section class="py-8 relative z-10 animate-on-scroll">
-        <div class="w-full md:w-[90%] mx-auto px-4 md:px-5">
+    <section class="platform-section relative z-10 animate-on-scroll">
+        <div class="platform-container">
             <form method="GET" action="{{ route('companies.index') }}" class="rounded-2xl p-6" style="background: rgba(43, 43, 43, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
                 <!-- Company Count - Top -->
                 <div class="mb-6">
@@ -267,11 +267,11 @@ use Illuminate\Support\Facades\Storage;
                     
                     <!-- Action Buttons - Same Line -->
                     <div class="grid grid-cols-2 gap-3">
-                        <button type="submit" class="ompleo-btn text-white w-full" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
+                        <button type="submit" class="btn-premium-green !w-full justify-center">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="ompleo-btn text-white w-full" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('companies.index') }}" class="btn-premium-dark !w-full justify-center !p-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -383,20 +383,12 @@ use Illuminate\Support\Facades\Storage;
                     </div>
                     
                     <!-- Right side - Action buttons -->
-                    <div class="flex flex-row gap-2 flex-shrink-0 companies-action-buttons">
-                        <style>
-                            /* Desktop is default - buttons on same line */
-                            @media (max-width: 767px) {
-                                .companies-action-buttons {
-                                    flex-wrap: wrap !important;
-                                }
-                            }
-                        </style>
-                        <button type="submit" class="ompleo-btn text-white min-w-[140px]" style="background: linear-gradient(135deg, #1aa2a0, #39fffc); border: 1px solid #47fffd;">
+                    <div class="flex flex-row gap-2 flex-shrink-0">
+                        <button type="submit" class="btn-premium-green min-w-[140px] justify-center">
                             Rechercher
                         </button>
-                        <a href="{{ route('companies.index') }}" class="ompleo-btn text-white w-[50px] !p-0" style="background: rgba(100, 100, 100, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('companies.index') }}" class="btn-premium-dark w-[50px] !p-0 justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
@@ -407,7 +399,7 @@ use Illuminate\Support\Facades\Storage;
     </section>
 
     <!-- Companies Grid -->
-    <section class="py-16 relative z-10 animate-on-scroll">
+    <section class="platform-section relative z-10 animate-on-scroll">
         <!-- Background Images -->
         <div class="absolute top-0 left-0 hidden lg:block pointer-events-none z-0" style="width: 25%; max-width: 450px;">
             <img src="{{ asset('storage/company_page/left.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: left top;">
@@ -416,7 +408,7 @@ use Illuminate\Support\Facades\Storage;
             <img src="{{ asset('storage/company_page/right.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: right top;">
         </div>
         
-        <div class="w-full md:w-[90%] mx-auto relative z-10 animate-on-scroll px-4 md:px-5">
+        <div class="platform-container relative z-10 animate-on-scroll">
             <div id="companiesGrid" class="space-y-8">
                 @forelse($companies->chunk(3) as $chunk)
                     <div class="bg-[#1e1e1f] rounded-[24px] p-4 md:p-8">
@@ -635,29 +627,11 @@ use Illuminate\Support\Facades\Storage;
     </section>
 
     <!-- CTA Section -->
-    <section class="relative bg-[#1f1f1f] overflow-hidden cta-section">
+    <section class="platform-section relative bg-[#1f1f1f] overflow-hidden">
         <style>
-            /* Desktop (1024px and above) */
-            @media (min-width: 1024px) {
-                section.cta-section {
-                    padding-top: 10rem;
-                    padding-bottom: 10rem;
-                }
-            }
-            
-            /* Tablet (768px - 1023px) */
-            @media (min-width: 768px) and (max-width: 1023px) {
-                section.cta-section {
-                    padding-top: 6rem;
-                    padding-bottom: 6rem;
-                }
-            }
-            
-            /* Mobile (max-width: 767px) */
             @media (max-width: 767px) {
-                section.cta-section {
-                    padding-top: 5rem;
-                    padding-bottom: 5rem;
+                .cta-title {
+                    line-height: 1.4 !important;
                 }
             }
         </style>
@@ -667,12 +641,14 @@ use Illuminate\Support\Facades\Storage;
             <img src="{{ asset('storage/company_page/midbotom.png') }}" alt="Background" class="w-full h-auto object-cover">
         </div>
         
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="platform-container relative z-10">
             <div class="max-w-3xl mx-auto">
                 <!-- Card -->
-                <div class="p-6 sm:p-8 md:p-12 rounded-lg text-center" style="background-color: rgba(43, 43, 43, 0.73); border-radius: 10px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid transparent; border-image: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) 1; border-image-slice: 1;">
+                <div class="p-6 sm:p-8 md:p-12 text-center relative overflow-hidden" style="background-color: rgba(50, 51, 50, 0.25); border-radius: 12px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                    <!-- Gradient Border Donut -->
+                    <div style="position: absolute; inset: 0; border: 1px solid transparent; border-radius: 12px; background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; pointer-events: none;"></div>
                     <!-- Title -->
-                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6 cta-title" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
                         Prêt(e) à booster la visibilité de vos offres d'emploi ?
                     </h2>
                     
@@ -682,7 +658,7 @@ use Illuminate\Support\Facades\Storage;
                     </p>
                     
                     <!-- Button -->
-                    <a href="{{ route('signup.recruiter') }}" class="btn-premium-dark mx-auto">
+                    <a href="{{ route('signup.recruiter') }}" class="btn-premium-green mx-auto">
                         <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
                         <span class="whitespace-nowrap">Découvrir nos solutions</span>
                     </a>

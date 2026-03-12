@@ -38,9 +38,9 @@ $contactInfo = [
 
 <div class="min-h-screen bg-gray-50 dark:bg-dark-900 pt-20">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-600 to-accent-600 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll">
-            <h1 class="text-4xl lg:text-5xl font-bold mb-6" data-animate="hero-title">
+    <section class="platform-section relative overflow-hidden z-10" style="background: #1a1a1a;">
+        <div class="platform-container text-center animate-on-scroll">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6" data-animate="hero-title">
                 Contactez-nous
             </h1>
             <p class="text-xl opacity-90 max-w-2xl mx-auto" data-animate="hero-subtitle">
@@ -52,8 +52,8 @@ $contactInfo = [
     </section>
 
     <!-- Contact Info Cards -->
-    <section class="py-16 -mt-8 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="platform-section !py-12 relative z-10">
+        <div class="platform-container">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($contactInfo as $index => $info)
                 <div class="bg-white dark:bg-dark-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group hover:transform hover:scale-105" data-animate="contact-card" data-delay="{{ $index * 0.1 }}">
@@ -96,8 +96,8 @@ $contactInfo = [
     </section>
 
     <!-- Contact Form & Map -->
-    <section class="py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="platform-section">
+        <div class="platform-container">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-start">
                 <!-- Contact Form -->
                 <div class="bg-white dark:bg-dark-800 rounded-2xl p-8 shadow-lg mb-8 lg:mb-0" data-animate="contact-form">

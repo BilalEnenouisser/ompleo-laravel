@@ -1,10 +1,15 @@
-<section class="relative py-20 bg-[#212221] overflow-hidden">
+<section class="platform-section relative bg-[#212221] overflow-hidden faq-section">
+    <style>
+        @media (max-width: 767px) {
+            .faq-section h2 { font-size: 32px !important; }
+        }
+    </style>
     <!-- Background Image -->
     <div class="absolute bottom-0 left-0 hidden lg:block pointer-events-none z-0">
         <img src="{{ asset('storage/home_page/search_job/bottom.png') }}" alt="Background" class="h-auto w-auto object-cover" style="object-position: left bottom;">
     </div>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <!-- Left Section -->
             <div class="text-left lg:text-left text-center flex flex-col items-center lg:items-start justify-center mx-auto">
@@ -54,8 +59,8 @@
 
                 @foreach($faqs as $index => $faq)
                 <div class="faq-item" data-index="{{ $index }}">
-                    <div class="p-[1px] rounded-lg" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 10px;">
-                        <div class="p-6 rounded-lg" style="background-color: #161616; border-radius: 10px;">
+                    <div class="p-[1px] rounded-lg" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
+                        <div class="p-6 rounded-lg" style="background-color: #161616; border-radius: 12px;">
                             <!-- Question Header -->
                             <button 
                                 type="button"

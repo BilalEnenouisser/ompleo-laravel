@@ -1,53 +1,22 @@
-<section class="relative bg-[#212221] overflow-hidden cta-section">
-    <style>
-        /* Desktop (1024px and above) */
-        @media (min-width: 1024px) {
-            section.cta-section {
-                padding-top: 10rem;
-                padding-bottom: 10rem;
-            }
-        }
-        
-        /* Tablet (768px - 1023px) */
-        @media (min-width: 768px) and (max-width: 1023px) {
-            section.cta-section {
-                padding-top: 6rem;
-                padding-bottom: 6rem;
-            }
-        }
-        
-        /* Mobile (max-width: 767px) */
-        @media (max-width: 767px) {
-            section.cta-section {
-                padding-top: 5rem;
-                padding-bottom: 5rem;
-            }
-        }
-    </style>
+<section class="platform-section relative bg-[#212221] overflow-hidden cta-section">
     <!-- Background Image -->
     <div class="absolute bottom-0 right-0 hidden lg:block pointer-events-none z-0 cta-bg-image" style="right: 0; width: 25%;">
         <img src="{{ asset('storage/home_page/search_job/cta.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: right bottom;">
     </div>
     <style>
-        /* Desktop image size */
-        @media (min-width: 1024px) {
-            .cta-bg-image {
-                width: 25% !important;
-            }
-        }
-        
-        /* Tablet - smaller image */
-        @media (min-width: 768px) and (max-width: 1023px) {
-            .cta-bg-image {
-                width: 20% !important;
-            }
+        .cta-bg-image { width: 25%; }
+        @media (max-width: 1023px) { .cta-bg-image { width: 20% !important; } }
+        @media (max-width: 767px) {
+            .cta-section h2 { font-size: 24px !important; }
         }
     </style>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="platform-container relative z-10">
         <div class="max-w-3xl mx-auto">
             <!-- Card -->
-            <div class="p-6 sm:p-8 md:p-12 rounded-lg text-center" style="background-color: rgba(43, 43, 43, 0.73); border-radius: 10px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid transparent; border-image: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) 1; border-image-slice: 1;">
+            <div class="p-6 sm:p-8 md:p-12 text-center relative" style="background-color: rgba(50, 51, 50, 0.25); border-radius: 12px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                <!-- Gradient Border Donut -->
+                <div style="position: absolute; inset: 0; border: 1px solid transparent; border-radius: 12px; background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; pointer-events: none;"></div>
                     <!-- Title -->
                     <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
                         Prêt(e) à trouver votre prochain emploi ?
@@ -63,7 +32,6 @@
                         <img src="{{ asset('storage/home_page/search_job/icon2.svg') }}" alt="Icon">
                         <span class="whitespace-nowrap">Parcourir toutes les offres</span>
                     </a>
-                </div>
             </div>
         </div>
     </div>
