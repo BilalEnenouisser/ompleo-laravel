@@ -1,44 +1,54 @@
 @php
+// Optional per-card icon path; defaults to heroico.svg until custom assets are added
+$defaultCategoryIcon = 'storage/home_page/heroico.svg';
 $categories = [
     [
         'name' => 'Design & Création',
         'slug' => 'design-creation',
-        'search' => 'design'
+        'search' => 'design',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Développement & Informatique',
         'slug' => 'developpement-informatique',
-        'search' => 'développement'
+        'search' => 'développement',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Finance & Comptabilité',
         'slug' => 'finance-comptabilite',
-        'search' => 'finance'
+        'search' => 'finance',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Marketing & Croissance',
         'slug' => 'marketing-croissance',
-        'search' => 'marketing'
+        'search' => 'marketing',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Ressources Humaines',
         'slug' => 'ressources-humaines',
-        'search' => 'rh'
+        'search' => 'rh',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Management & Direction',
         'slug' => 'management-direction',
-        'search' => 'management'
+        'search' => 'management',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Opérations & Logistique',
         'slug' => 'operations-logistique',
-        'search' => 'opérations'
+        'search' => 'opérations',
+        'icon' => $defaultCategoryIcon,
     ],
     [
         'name' => 'Support & Service Client',
         'slug' => 'support-service-client',
-        'search' => 'support'
+        'search' => 'support',
+        'icon' => $defaultCategoryIcon,
     ],
 ];
 @endphp
@@ -70,12 +80,13 @@ $categories = [
         </div>
 
         <!-- Categories Grid (4x2) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 justify-center max-w-3xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 justify-center w-full max-w-[50rem] mx-auto">
             @foreach($categories as $category)
-            <a href="{{ route('jobs.index', ['search' => $category['search']]) }}" class="block">
-                <div class="p-[1px] hover:opacity-90 transition-opacity duration-300 cursor-pointer" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
-                    <div class="rounded-xl text-center transition-all duration-300" style="background-color: #2B2B2B; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4); height: 90px;">
-                        <span class="text-white font-medium text-sm leading-tight block" style="word-break: break-word; line-height: 1.4;">{!! str_replace(' & ', ' &<br>', $category['name']) !!}</span>
+            <a href="{{ route('jobs.index', ['search' => $category['search']]) }}" class="block group">
+                <div class="p-[1px] cursor-pointer transition-colors duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
+                    <div class="rounded-xl flex flex-col items-center justify-center gap-1.5 min-h-[100px] py-3 px-5 sm:px-6 bg-[#2b2b2b] group-hover:bg-[#383838] transition-colors duration-300 shadow-[0_20px_22px_rgba(0,0,0,0.4)]" style="border-radius: 12px;">
+                        <img src="{{ asset($category['icon'] ?? $defaultCategoryIcon) }}" alt="" class="w-6 h-6 shrink-0 object-contain pointer-events-none" width="24" height="24" aria-hidden="true">
+                        <span class="text-white font-medium text-sm leading-tight text-center block w-full" style="word-break: break-word; line-height: 1.35;">{{ $category['name'] }}</span>
                     </div>
                 </div>
             </a>

@@ -190,7 +190,7 @@
         <div class="platform-container">
             <div id="blogContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($blogs as $blog)
-                <article class="blog-card group rounded-2xl transition-all duration-300 hover:-translate-y-2 p-4" style="background: #333333; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                <article class="blog-card group rounded-2xl transition-all duration-300 hover:-translate-y-2 p-4 bg-[#2b2b2b] group-hover:bg-[#383838]" style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
                     <!-- Image Section -->
                     <div class="blog-card-image relative h-48 overflow-hidden rounded-lg">
                         <img

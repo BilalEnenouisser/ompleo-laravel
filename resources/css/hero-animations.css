@@ -306,14 +306,9 @@ html {
     scroll-behavior: smooth;
 }
 
-/* ========================================
-   10. PARALLAX BACKGROUND EFFECT
-   ======================================== */
-
-[data-parallax="hero-image"],
-section#home img[src*="hero"] {
-    will-change: transform;
-    backface-visibility: hidden;
+/* Hero PNG: static — no scroll-driven transform */
+.hero-illustration-static {
+    transform: none !important;
 }
 
 /* ========================================
@@ -399,9 +394,7 @@ section#home img[src*="hero"] {
         animation: badgePulse 2s ease-in-out infinite;
     }
 
-    /* Disable parallax on mobile for performance */
-    section#home img[src*="hero"] {
-        transform: none !important;
+    .hero-illustration-static {
         animation: none;
     }
 

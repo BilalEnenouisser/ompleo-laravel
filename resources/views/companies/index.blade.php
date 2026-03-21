@@ -151,9 +151,8 @@ use Illuminate\Support\Facades\Storage;
                         color: #f5f5f5 !important;
                     }
                     
-                    /* Company card hover border effect */
                     .company-card-wrapper {
-                        background: transparent;
+                        background: transparent !important;
                         transition: background 0.3s ease;
                     }
                     .company-card-wrapper:hover {
@@ -399,7 +398,7 @@ use Illuminate\Support\Facades\Storage;
     </section>
 
     <!-- Companies Grid -->
-    <section class="platform-section relative z-10 animate-on-scroll">
+    <section class="platform-section relative z-10 animate-on-scroll companies-index-listing">
         <!-- Background Images -->
         <div class="absolute top-0 left-0 hidden lg:block pointer-events-none z-0" style="width: 25%; max-width: 450px;">
             <img src="{{ asset('storage/company_page/left.png') }}" alt="Background" class="w-full h-auto object-cover" style="object-position: left top;">
@@ -409,11 +408,20 @@ use Illuminate\Support\Facades\Storage;
         </div>
         
         <div class="platform-container relative z-10 animate-on-scroll">
-            <div id="companiesGrid" class="space-y-8">
-                @forelse($companies->chunk(3) as $chunk)
-                    <div class="bg-[#1e1e1f] rounded-[24px] p-4 md:p-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($chunk as $company)
+            <style>
+                @media (max-width: 1023px) {
+                    .companies-index-listing .companies-grid {
+                        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                    }
+                }
+                @media (max-width: 767px) {
+                    .companies-index-listing .companies-grid {
+                        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+                    }
+                }
+            </style>
+            <div id="companiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 companies-grid">
+                @forelse($companies as $company)
                                 @php
                                     $initials = '';
                                     if ($company->name) {
@@ -425,8 +433,8 @@ use Illuminate\Support\Facades\Storage;
                                     }
                                 @endphp
                                 
-                                <div class="company-card-wrapper rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
-                                    <div class="rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full" style="background-color: #2b2b2b; border-radius: 11px;">
+                                <div class="company-card-wrapper group rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
+                                    <div class="rounded-xl p-5 flex flex-col h-full bg-[#2b2b2b] group-hover:bg-[#383838] transition-colors duration-300" style="border-radius: 11px;">
                                         {{-- Top Section: Logo on Left, Industry on Right --}}
                                         <div class="flex gap-4 mb-4 items-center">
                                             {{-- Company Logo on Left --}}
@@ -494,11 +502,8 @@ use Illuminate\Support\Facades\Storage;
                                         </a>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-                    </div>
                 @empty
-                    <div class="text-center py-12">
+                    <div class="col-span-full text-center py-12">
                         <div class="w-24 h-24 mx-auto mb-6 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">
                             <svg class="w-12 h-12 text-[#00b6b4]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>

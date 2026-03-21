@@ -23,8 +23,8 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a1b3e029.css') }}">
-    <script type="module" src="{{ asset('build/assets/app-09eaf0bc.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-235c0fa9.css') }}">
+    <script type="module" src="{{ asset('build/assets/app-503bd57b.js') }}"></script>
     
     <!-- Vite Assets - Automatically handles both dev and production builds -->
     @vite(['resources/css/app.css', 'resources/css/hero-animations.css', 'resources/js/app.js'])

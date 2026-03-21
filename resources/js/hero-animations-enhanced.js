@@ -36,31 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ========================================
-    // 2. HERO IMAGE PARALLAX EFFECT
-    // ========================================
-    function initHeroParallax() {
-        const heroImage = document.querySelector('[data-parallax="hero-image"]') || 
-                         document.querySelector('section#home img[src*="hero"]');
-        
-        if (heroImage) {
-            // Use requestAnimationFrame for smooth parallax
-            let ticking = false;
-            
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const scrolled = window.pageYOffset;
-                        const parallaxSpeed = 0.5; // Slower than scroll
-                        
-                        heroImage.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-        }
-    }
+    // Hero illustration: static (no scroll parallax — full image, right-aligned in Blade)
 
     // ========================================
     // 3. HERO BADGE FLOAT ANIMATION
@@ -262,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Run all animation initializers
     initHeroCharacterAnimation();
-    initHeroParallax();
     initBadgeFloat();
     initButtonGlowEffect();
     initMarqueeAnimation();

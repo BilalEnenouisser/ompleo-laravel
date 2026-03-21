@@ -4,38 +4,36 @@
 @section('description', 'Découvrez nos solutions de recrutement pour publier vos offres et atteindre les meilleurs candidats.')
 
 @section('content')
-<div class="bg-[#212221] min-h-screen">
+<div class="nos-solutions-page bg-[#212221] min-h-screen overflow-x-hidden">
+    <style>
+        /* Mobile: hide decorative background images (hero art is already lg+ only) */
+        @media (max-width: 767px) {
+            .nos-solutions-page .nos-solutions-fullbleed {
+                display: none !important;
+            }
+            .nos-solutions-page #devis-section > .absolute.inset-0.z-0 {
+                display: none !important;
+            }
+            .nos-solutions-page .pricing-card img.corner {
+                display: none !important;
+            }
+        }
+    </style>
     <!-- Header -->
     @include('components.header')
 
-    <!-- Hero Section -->
-    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-[#212221] platform-section">
-        <style>
-            .hero-bg-image {
-                width: 40%;
-            }
-            .hero-bg-image img {
-                object-fit: cover;
-                object-position: left center;
-            }
-            @media (max-width: 1023px) {
-                .hero-bg-image {
-                    width: 25% !important;
-                }
-            }
-            @media (max-width: 767px) {
-                .hero-bg-image {
-                    display: none !important;
-                }
-            }
-        </style>
-        <!-- Background Image on Right -->
-        <div class="hero-bg-image absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none z-0">
-            <img src="{{ asset('storage/nos_solutions/header.png') }}" alt="Background" class="w-full h-full">
+    <!-- Hero Section (same pattern as home: full image on right, no crop, static — no scroll parallax) -->
+    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-screen flex items-center overflow-hidden bg-[#212221] platform-section">
+        <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:flex items-end justify-end z-[1] pointer-events-none">
+            <img src="{{ asset('storage/nos_solutions/header.png') }}" 
+                 alt="Illustration" 
+                 class="hero-illustration-static h-full w-full max-h-full object-contain object-right object-bottom select-none" 
+                 style="object-position: 100% 100%;">
         </div>
-        
+        <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:block pointer-events-none z-[2]" style="background: linear-gradient(to left, rgba(33, 34, 33, 0.25), transparent);"></div>
+
         <!-- Content -->
-        <div class="platform-container relative z-10">
+        <div class="platform-container relative z-[10] lg:pr-[34%]">
             <style>
                 .nos-solutions-hero h1 {
                     font-size: 56px;
@@ -57,7 +55,7 @@
                         max-width: 600px !important;
                     }
                 }
-                @media (max-width: 767px) {
+                @media (max-width: 767px) { 
                     .nos-solutions-hero {
                         padding-top: 2rem !important;
                         padding-bottom: 2rem !important;
@@ -193,7 +191,7 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="nos-solutions-section" class="platform-section relative overflow-hidden animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
+    <section id="nos-solutions-section" class="isolate grid grid-cols-1 grid-rows-1 platform-section relative overflow-x-clip bg-[#212221] animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
         <style>
             .pricing-card {
                 position: relative;
@@ -379,14 +377,32 @@
                     opacity: 1;
                 }
             }
+            /* Full viewport width strip; image height sets min contribution to section row */
+            .nos-solutions-fullbleed {
+                width: 100vw;
+                max-width: 100vw;
+                margin-left: calc(50% - 50vw);
+                line-height: 0;
+            }
+            .nos-solutions-fullbleed img {
+                display: block;
+                width: 100%;
+                height: auto;
+                vertical-align: bottom;
+            }
+            #nos-solutions-section.platform-section {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
         </style>
         
-        <!-- Background Image - Full Width -->
-        <div class="absolute inset-0 z-0">
-            <img src="{{ asset('storage/nos_solutions/mid.png') }}" alt="Background" class="w-full h-full object-cover">
+        <!-- Background: edge-to-edge viewport width, natural height (no crop) -->
+        <div class="nos-solutions-fullbleed col-start-1 row-start-1 self-center pointer-events-none z-0" aria-hidden="true">
+            <img src="{{ asset('storage/nos_solutions/mid.png') }}" alt="">
         </div>
         
-        <div class="platform-container relative z-10">
+        <div class="col-start-1 row-start-1 relative z-10 self-start w-full min-h-0">
+        <div class="platform-container">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-20 lg:mb-32 px-4 md:px-0">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6" style="font-size: clamp(24px, 5vw, 48px);">Nos solutions</h2>
@@ -668,6 +684,7 @@
                 </div>
             </div>
             
+        </div>
         </div>
     </section>
 

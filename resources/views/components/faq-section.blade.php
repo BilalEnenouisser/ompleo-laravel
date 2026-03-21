@@ -58,9 +58,9 @@
                 @endphp
 
                 @foreach($faqs as $index => $faq)
-                <div class="faq-item" data-index="{{ $index }}">
+                <div class="faq-item group" data-index="{{ $index }}">
                     <div class="p-[1px] rounded-lg" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
-                        <div class="p-6 rounded-lg" style="background-color: #161616; border-radius: 12px;">
+                        <div class="p-6 rounded-lg bg-[#2b2b2b] group-hover:bg-[#383838] transition-colors duration-300" style="border-radius: 12px;">
                             <!-- Question Header -->
                             <button 
                                 type="button"

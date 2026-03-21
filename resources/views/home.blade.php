@@ -10,20 +10,19 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#212221] mb-16 hero-section">
-        <!-- Background Image with Parallax & Blur Effect -->
-        <div class="absolute top-0 right-0 bottom-0 hidden lg:block hero-image-container" style="overflow: hidden;">
+        <!-- Hero image: right column, full artwork visible (object-contain, not cropped) -->
+        <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:flex items-end justify-end z-[1] pointer-events-none hero-image-container">
             <img src="{{ asset('storage/home_page/hero.png') }}" 
-                 alt="Hero" 
-                 class="w-full h-full object-cover hero-parallax-image" 
-                 data-parallax="hero-image"
-                 style="object-position: right; will-change: transform; backface-visibility: hidden; transition: filter 0.3s ease, transform 0.02s linear;">
+                 alt="Illustration OMPLEO" 
+                 class="hero-illustration-static h-full w-full max-h-full object-contain object-right object-bottom select-none" 
+                 style="object-position: 100% 100%;">
         </div>
         
-        <!-- Blur Overlay for Smooth Transition -->
-        <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none" style="background: linear-gradient(to left, rgba(33, 34, 33, 0.3), transparent);"></div>
+        <!-- Gradient over image (below text) -->
+        <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:block pointer-events-none z-[2]" style="background: linear-gradient(to left, rgba(33, 34, 33, 0.25), transparent);"></div>
         
-        <!-- Content Overlay -->
-        <div class="w-[90%] mx-auto relative z-10 hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
+        <!-- Content -->
+        <div class="w-[90%] mx-auto relative z-[10] hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
             <style>
                 /* Desktop is default - no media query needed */
                 
@@ -435,41 +434,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, finalRevealDelay * 1000);
     }
-    function initParallaxWithBlur() {
-        const heroImage = document.querySelector('[data-parallax="hero-image"]');
-        const heroSection = document.querySelector('section#home');
-        
-        if (!heroImage || !heroSection) return;
-        
-        let ticking = false;
-        
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const heroRect = heroSection.getBoundingClientRect();
-            const heroBottom = heroRect.top + heroRect.height;
-            
-            // Parallax effect (slower scroll)
-            const parallaxOffset = scrolled * 0.5;
-            heroImage.style.transform = `translateY(${parallaxOffset}px)`;
-            
-            // Blur effect based on scroll (more blur as user scrolls down past hero)
-            if (scrolled < heroRect.height) {
-                const blurAmount = (scrolled / heroRect.height) * 5;
-                heroImage.style.filter = `blur(${blurAmount}px)`;
-            } else {
-                heroImage.style.filter = 'blur(5px)';
-            }
-            
-            ticking = false;
-        }
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }, { passive: true });
-    }
     
     // ======================================
     // Button Glow Animation Handler
@@ -494,7 +458,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all animations
     animateHeroSequence();
-    initParallaxWithBlur();
     // initButtonGlowAnimation(); // Removed
     initBadgeAnimation();
     initMarqueeAnimation();

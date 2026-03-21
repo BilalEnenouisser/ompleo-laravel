@@ -24,8 +24,7 @@ $companies = $companies ?? collect();
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
         }
-        
-        /* Company card hover border effect */
+
         .company-card-wrapper {
             background: transparent !important;
             transition: background 0.3s ease;
@@ -49,13 +48,10 @@ $companies = $companies ?? collect();
             </p>
         </div>
 
-        <!-- Companies Grid Rows (Grouped by 3) -->
+        <!-- Companies grid -->
         @if($companies->count() > 0)
-        <div class="space-y-8 companies-grid-grouped">
-            @foreach($companies->take(6)->chunk(3) as $chunk)
-                <div class="bg-[#1e1e1f] rounded-[24px] p-4 md:p-8 animate-on-scroll">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 companies-grid">
-                        @foreach($chunk as $company)
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 companies-grid animate-on-scroll">
+            @foreach($companies->take(6) as $company)
                             @php
                                 $initials = '';
                                 if ($company->name) {
@@ -67,8 +63,8 @@ $companies = $companies ?? collect();
                                 }
                             @endphp
                             
-                            <div class="company-card-wrapper rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
-                                <div class="rounded-xl p-5 transition-all duration-300 flex flex-col h-full" style="background-color: #2b2b2b; border-radius: 11px;">
+                            <div class="company-card-wrapper group rounded-xl p-[1px] transition-all duration-300" style="border-radius: 12px;">
+                                <div class="rounded-xl p-5 flex flex-col h-full bg-[#2b2b2b] group-hover:bg-[#383838] transition-colors duration-300" style="border-radius: 11px;">
                                     {{-- Top Section: Logo on Left, Industry on Right --}}
                                     <div class="flex gap-4 mb-4 items-center">
                                         {{-- Company Logo on Left --}}
@@ -136,9 +132,6 @@ $companies = $companies ?? collect();
                                     </a>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
             @endforeach
         </div>
         @else
