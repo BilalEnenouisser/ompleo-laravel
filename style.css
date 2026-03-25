@@ -1,0 +1,117 @@
+:root {
+    --page-bg: #232321;
+    --text-primary: #f5f5f2;
+    --text-secondary: rgba(245, 245, 242, 0.92);
+    --glow-mint: #13f0ba;
+    --glow-cyan: #29cfd5;
+    --glow-shadow: rgba(6, 11, 12, 0.92);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--page-bg);
+    color: var(--text-primary);
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+}
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 42vw);
+    align-items: center;
+    padding: 9.5rem 3.25rem 7rem;
+    isolation: isolate;
+}
+
+.hero-copy {
+    max-width: 52rem;
+    z-index: 2;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+    font-size: clamp(3.5rem, 4.95vw, 4.45rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+}
+
+.hero-subtitle {
+    margin-top: 1.15rem;
+    max-width: 40.5rem;
+    font-size: clamp(1.25rem, 1.95vw, 1.78rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--text-secondary);
+}
+
+.hero-art {
+    position: absolute;
+    right: -14.5rem;
+    top: 50%;
+    width: min(54rem, 61vw);
+    aspect-ratio: 549 / 686;
+    transform: translateY(-47%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-art-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: saturate(108%) blur(0.2px);
+}
+
+@media (max-width: 960px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        align-content: start;
+        padding: 4.5rem 1.5rem 3rem;
+        min-height: 100dvh;
+    }
+
+    .hero-copy {
+        max-width: none;
+    }
+
+    .hero-title {
+        font-size: clamp(2.9rem, 11vw, 4.2rem);
+        line-height: 0.98;
+    }
+
+    .hero-subtitle {
+        margin-top: 1rem;
+        font-size: clamp(1.05rem, 4vw, 1.45rem);
+        max-width: 30rem;
+    }
+
+    .hero-art {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: min(36rem, 128vw);
+        margin: 1.25rem -7rem 0 auto;
+        transform: none;
+    }
+}

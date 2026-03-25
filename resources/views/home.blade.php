@@ -8,18 +8,76 @@
     <!-- Header -->
     @include('components.header')
 
-    <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-[#212221] mb-16 hero-section">
-        <!-- Hero image: right column, full artwork visible (object-contain, not cropped) -->
-        <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:flex items-end justify-end z-[1] pointer-events-none hero-image-container">
-            <img src="{{ asset('storage/home_page/hero.png') }}" 
-                 alt="Illustration OMPLEO" 
-                 class="hero-illustration-static h-full w-full max-h-full object-contain object-right object-bottom select-none" 
-                 style="object-position: 100% 100%;">
-        </div>
-        
-        <!-- Gradient over image (below text) -->
+    <!-- Hero Section (right art: Group 51.svg — layout from test index.html / style.css) -->
+    <section id="home" class="relative min-h-screen flex flex-col lg:flex-row lg:items-center overflow-hidden bg-[#212221] mb-16 hero-section isolate">
+        <style>
+            /* Match style.css .hero-art / .hero-art-image (scoped to #home) */
+            #home.hero-section .hero-art {
+                position: absolute;
+                right: -14.5rem;
+                top: 50%;
+                width: min(54rem, 61vw);
+                aspect-ratio: 549 / 686;
+                transform: translateY(-47%);
+                pointer-events: none;
+                z-index: 1;
+            }
+            #home.hero-section .hero-art-image {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                filter: saturate(108%) blur(0.2px);
+            }
+            @media (max-width: 960px) {
+                #home.hero-section .hero-art {
+                    position: relative;
+                    right: auto;
+                    top: auto;
+                    width: min(36rem, 128vw);
+                    margin: 1.25rem -7rem 0 auto;
+                    transform: none;
+                }
+            }
+            /* Mobile: same SVG faintly behind left copy (desktop/tablet: off) */
+            #home.hero-section .hero-art-mobile-bg {
+                display: none;
+            }
+            @media (max-width: 767px) {
+                /* One SVG on phone: faint watermark only — hide the in-flow copy at the bottom */
+                #home.hero-section .hero-art {
+                    display: none !important;
+                }
+                #home.hero-section .hero-art-mobile-bg {
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 50%;
+                    width: 100%;
+                    transform: translateY(-50%);
+                    pointer-events: none;
+                    z-index: 3;
+                    opacity: 0.3;
+                }
+                #home.hero-section .hero-art-mobile-bg img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    max-width: 100%;
+                    object-fit: contain;
+                    object-position: center center;
+                }
+            }
+        </style>
+
+        <!-- Gradient over art area (below text) -->
         <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:block pointer-events-none z-[2]" style="background: linear-gradient(to left, rgba(33, 34, 33, 0.25), transparent);"></div>
+
+        <!-- Mobile: low-opacity SVG watermark behind headline / buttons -->
+        <div class="hero-art-mobile-bg" aria-hidden="true">
+            <img src="{{ asset('storage/home_page/' . rawurlencode('Group 51.svg')) }}" alt="">
+        </div>
         
         <!-- Content -->
         <div class="w-[90%] mx-auto relative z-[10] hero-content-wrapper" style="padding-left: 20px; padding-right: 33%;">
@@ -110,7 +168,7 @@
                     }
                     .hero-buttons {
                         flex-direction: row !important;
-                        justify-content: center !important;
+                        justify-content: flex-start !important;
                         flex-wrap: wrap !important;
                         gap: 0.75rem !important;
                         width: 100% !important;
@@ -289,14 +347,14 @@
                 </p>
 
                 <!-- Buttons with Glow Animation -->
-                <div class="flex flex-wrap flex-row gap-2 mb-12 hero-buttons justify-center lg:justify-start">
+                <div class="flex flex-wrap flex-row gap-2 mb-12 hero-buttons justify-start">
                     <!-- Button 1: Publier une annonce with Glow Effect -->
-                    <a href="{{ route('nos-solutions') }}" class="btn-premium-green mx-auto lg:mx-0">
+                    <a href="{{ route('nos-solutions') }}" class="btn-premium-green mx-0">
                         <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon" class="hero-button-icon">
                         <span class="text-sm sm:text-lg">Publier une annonce</span>
                     </a>
 
-                    <a href="{{ route('jobs.index') }}" class="btn-premium-dark mx-auto lg:mx-0">
+                    <a href="{{ route('jobs.index') }}" class="btn-premium-dark mx-0">
                         <img src="{{ asset('storage/home_page/btton2.svg') }}" alt="Icon" class="hero-button-icon">
                         <span class="text-sm sm:text-lg">Rechercher toutes les offres</span>
                     </a>
@@ -328,6 +386,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+            <img class="hero-art-image" src="{{ asset('storage/home_page/' . rawurlencode('Group 51.svg')) }}" alt="">
         </div>
     </section>
 

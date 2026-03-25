@@ -306,7 +306,7 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Hero PNG: static — no scroll-driven transform */
+/* Hero illustration (e.g. nos-solutions PNG): static — no scroll-driven transform */
 .hero-illustration-static {
     transform: none !important;
 }

@@ -632,8 +632,19 @@ use Illuminate\Support\Facades\Storage;
     </section>
 
     <!-- CTA Section -->
-    <section class="platform-section relative bg-[#1f1f1f] overflow-hidden">
+    <section class="companies-cta-outer platform-section relative bg-[#1f1f1f] overflow-hidden">
         <style>
+            /* Extra space above/below this band (section shell), not inside the card */
+            section.companies-cta-outer.platform-section {
+                padding-top: clamp(3.5rem, 9vw, 7rem) !important;
+                padding-bottom: clamp(3.5rem, 9vw, 7rem) !important;
+            }
+            @media (min-width: 1024px) {
+                section.companies-cta-outer.platform-section {
+                    padding-top: 160px !important;
+                    padding-bottom: 160px !important;
+                }
+            }
             @media (max-width: 767px) {
                 .cta-title {
                     line-height: 1.4 !important;
@@ -663,7 +674,7 @@ use Illuminate\Support\Facades\Storage;
                     </p>
                     
                     <!-- Button -->
-                    <a href="{{ route('signup.recruiter') }}" class="btn-premium-green mx-auto">
+                    <a href="{{ route('nos-solutions') }}" class="btn-premium-green mx-auto">
                         <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
                         <span class="whitespace-nowrap">Découvrir nos solutions</span>
                     </a>
