@@ -6,15 +6,9 @@
 @section('content')
 <div class="nos-solutions-page bg-[#212221] min-h-screen overflow-x-hidden">
     <style>
-        /* Mobile: hide decorative background images (hero art is already lg+ only) */
+        /* Mobile: optional load — keep devis section bg image off small screens */
         @media (max-width: 767px) {
-            .nos-solutions-page .nos-solutions-fullbleed {
-                display: none !important;
-            }
             .nos-solutions-page #devis-section > .absolute.inset-0.z-0 {
-                display: none !important;
-            }
-            .nos-solutions-page .pricing-card img.corner {
                 display: none !important;
             }
         }
@@ -61,16 +55,12 @@
                         padding-bottom: 2rem !important;
                     }
                     .nos-solutions-hero h1 {
-                        font-size: 32px !important;
                         max-width: 100% !important;
-                        margin-bottom: 1.5rem !important;
+                        margin-bottom: 1.25rem !important;
                     }
                     .nos-solutions-hero .hero-subtitle {
                         max-width: 100% !important;
-                        margin-bottom: 2rem !important;
-                    }
-                    .nos-solutions-hero .hero-subtitle p {
-                        font-size: 16px !important;
+                        margin-bottom: 1.5rem !important;
                     }
                 }
                 /* Hero Character Animation */
@@ -139,16 +129,10 @@
                     .nos-solutions-hero-title .hero-space {
                         font-size: 56px;
                     }
-                    @media (max-width: 1023px) {
+                    @media (max-width: 1023px) and (min-width: 768px) {
                         .nos-solutions-hero-title .hero-char,
                         .nos-solutions-hero-title .hero-space {
                             font-size: 42px !important;
-                        }
-                    }
-                    @media (max-width: 767px) {
-                        .nos-solutions-hero-title .hero-char,
-                        .nos-solutions-hero-title .hero-space {
-                            font-size: 32px !important;
                         }
                     }
                 </style>
@@ -191,7 +175,7 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="nos-solutions-section" class="isolate grid grid-cols-1 grid-rows-1 platform-section relative overflow-x-clip bg-[#212221] animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
+    <section id="nos-solutions-section" class="isolate relative overflow-x-clip bg-[#212221] platform-section animate-on-scroll" data-stagger-selector=".pricing-card" data-stagger-delay="0.1">
         <style>
             .pricing-card {
                 position: relative;
@@ -377,18 +361,23 @@
                     opacity: 1;
                 }
             }
-            /* Full viewport width strip; image height sets min contribution to section row */
-            .nos-solutions-fullbleed {
-                width: 100vw;
-                max-width: 100vw;
-                margin-left: calc(50% - 50vw);
+            /* Background fills entire section (edge to edge + full height of content) */
+            #nos-solutions-section .nos-solutions-fullbleed {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                width: 100%;
+                min-height: 100%;
+                overflow: hidden;
                 line-height: 0;
             }
-            .nos-solutions-fullbleed img {
+            #nos-solutions-section .nos-solutions-fullbleed img {
                 display: block;
                 width: 100%;
-                height: auto;
-                vertical-align: bottom;
+                height: 100%;
+                min-height: 100%;
+                object-fit: cover;
+                object-position: center;
             }
             #nos-solutions-section.platform-section {
                 padding-top: 0 !important;
@@ -396,12 +385,12 @@
             }
         </style>
         
-        <!-- Background: edge-to-edge viewport width, natural height (no crop) -->
-        <div class="nos-solutions-fullbleed col-start-1 row-start-1 self-center pointer-events-none z-0" aria-hidden="true">
+        <!-- Background: full section cover -->
+        <div class="nos-solutions-fullbleed pointer-events-none" aria-hidden="true">
             <img src="{{ asset('storage/nos_solutions/mid.png') }}" alt="">
         </div>
         
-        <div class="col-start-1 row-start-1 relative z-10 self-start w-full min-h-0">
+        <div class="relative z-10 w-full min-h-0">
         <div class="platform-container">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-20 lg:mb-32 px-4 md:px-0">
@@ -410,8 +399,10 @@
                 <p class="text-white text-base md:text-lg lg:text-xl">Diffusez vos offres et touchez les bons profils, sans complexité.</p>
             </div>
             
+            <!-- Card groups: same gap-10 between every card (stacked mobile + between rows) -->
+            <div class="flex flex-col items-center gap-10 mb-16 md:mb-20 w-full">
             <!-- Top Row: 3 Cards -->
-            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-10 items-center mb-16 md:mb-20">
+            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-10 items-center w-full">
                 
                 <!-- Card 1: Essentiel -->
                 <div class="pricing-card card-standard animate-stagger-item">
@@ -614,7 +605,7 @@
             </div>
             
             <!-- Bottom Row: 1 Card Centered -->
-            <div class="flex justify-center">
+            <div class="flex justify-center w-full">
                 <!-- Card 4: Performance -->
                 <div class="pricing-card card-standard paddingtp animate-stagger-item">
                     <!-- Corner borders -->
@@ -682,6 +673,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             
         </div>
@@ -913,7 +905,7 @@
                 
                 <!-- Submit Button -->
                 <div class="text-center">
-                    <button type="submit" class="btn-premium-green !px-20 !py-5 !text-xl mx-auto">
+                    <button type="submit" class="btn-premium-green !px-6 !py-3 !text-base md:!px-20 md:!py-5 md:!text-xl w-full md:w-auto mx-auto">
                         Envoyer
                     </button>
                 </div>

@@ -54,11 +54,6 @@ $categories = [
 @endphp
 
 <section class="platform-section relative bg-[#212221] overflow-hidden categories-section">
-    <style>
-        @media (max-width: 767px) {
-            .categories-section h2 { font-size: 32px !important; }
-        }
-    </style>
     <!-- Background Image -->
     <div class="absolute top-0 right-0 bottom-0 hidden lg:block pointer-events-none">
         <img src="{{ asset('storage/home_page/job/right.png') }}" alt="Background" class="h-full w-auto object-cover" style="object-position: right;">
@@ -69,12 +64,12 @@ $categories = [
         <div class="text-center mb-12 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
                 <img src="{{ asset('storage/home_page/job/icon2.svg') }}" alt="Icon" class="w-7 h-7">
-                <span class="text-base" style="color: #d9d9d9;">Explorer les offres d'emploi</span>
+                <span class="text-[0.9375rem]" style="color: #d9d9d9;">Explorer les offres d'emploi</span>
             </div>
-            <h2 class="text-5xl md:text-6xl font-bold text-white pb-4">
+            <h2 class="font-bold text-white pb-4 md:text-6xl">
                 Toutes les catégories
             </h2>
-            <p class="text-lg text-white">
+            <p class="text-[0.9375rem] md:text-lg text-white">
                 Découvrez les meilleures catégories d'emplois
             </p>
         </div>

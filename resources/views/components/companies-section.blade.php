@@ -17,9 +17,6 @@ $companies = $companies ?? collect();
             }
         }
         @media (max-width: 767px) {
-            .companies-section h2 {
-                font-size: 32px !important;
-            }
             .companies-grid {
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
@@ -38,9 +35,9 @@ $companies = $companies ?? collect();
         <div class="text-center mb-12 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
                 <img src="{{ asset('storage/home_page/job/icon2.svg') }}" alt="Icon" class="w-7 h-7">
-                <span class="text-base" style="color: #d9d9d9;">Entreprises à la une</span>
+                <span class="text-[0.9375rem]" style="color: #d9d9d9;">Entreprises à la une</span>
             </div>
-            <h2 class="text-5xl md:text-6xl font-bold text-white pb-4">
+            <h2 class="font-bold text-white pb-4 md:text-6xl">
                 Les meilleures entreprises
             </h2>
             <p class="text-lg text-white">

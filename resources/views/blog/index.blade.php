@@ -27,15 +27,11 @@
             }
             @media (max-width: 767px) {
                 .blog-hero {
-                    padding-top: 6rem !important;
-                    padding-bottom: 2rem !important;
+                    padding-top: 5.5rem !important;
+                    padding-bottom: 1.5rem !important;
                 }
                 .blog-hero h1 {
-                    font-size: 32px !important;
                     white-space: normal !important;
-                }
-                .blog-hero p {
-                    font-size: 16px !important;
                 }
             }
             /* Hero Character Animation */
@@ -97,16 +93,10 @@
                 .blog-hero-title .hero-space {
                     font-size: 70px;
                 }
-                @media (max-width: 1023px) {
+                @media (max-width: 1023px) and (min-width: 768px) {
                     .blog-hero-title .hero-char,
                     .blog-hero-title .hero-space {
                         font-size: 48px !important;
-                    }
-                }
-                @media (max-width: 767px) {
-                    .blog-hero-title .hero-char,
-                    .blog-hero-title .hero-space {
-                        font-size: 32px !important;
                     }
                 }
             </style>
@@ -171,6 +161,10 @@
             
             @media (max-width: 767px) {
                 .blog-card { animation-delay: 0s !important; }
+                .blog-card-title {
+                    font-size: 16px !important;
+                    line-height: 1.35 !important;
+                }
             }
             
             /* Image parallax on hover */
@@ -203,7 +197,7 @@
                     <!-- Content Section -->
                     <div class="pt-4">
                         <!-- Meta Information -->
-                        <div class="text-sm mb-4" style="color: #9a9a9a;">
+                        <div class="mb-4 text-[0.9375rem]" style="color: #9a9a9a;">
                             <span>{{ $blog->created_at->format('M d, Y') }}</span>
                             <span>&nbsp;&nbsp;&nbsp;</span>
                             <span>{{ $blog->reading_time ?? '3' }} min read</span>
@@ -211,13 +205,13 @@
                         
                         <!-- Title -->
                         <a href="{{ route('blog.show', $blog->slug) }}">
-                            <h2 class="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-[#16b6b4] transition-colors duration-200">
+                            <h2 class="blog-card-title font-bold text-white mb-3 line-clamp-2 group-hover:text-[#16b6b4] transition-colors duration-200">
                                 {{ $blog->title }}
                             </h2>
                         </a>
                         
                         <!-- Excerpt (3 lines max) -->
-                        <p class="text-sm line-clamp-3" style="color: #a0a0a0;">
+                        <p class="line-clamp-3 text-[0.9375rem] leading-relaxed" style="color: #a0a0a0;">
                             {{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150) }}
                         </p>
                     </div>

@@ -21,14 +21,8 @@ use Illuminate\Support\Facades\Storage;
             }
             @media (max-width: 767px) {
                 .companies-hero {
-                    padding-top: 6rem !important;
-                    padding-bottom: 2rem !important;
-                }
-                .companies-hero h1 {
-                    font-size: 32px !important;
-                }
-                .companies-hero p {
-                    font-size: 16px !important;
+                    padding-top: 5.5rem !important;
+                    padding-bottom: 1.5rem !important;
                 }
             }
             /* Hero Character Animation */
@@ -90,16 +84,11 @@ use Illuminate\Support\Facades\Storage;
                 .companies-hero-title .hero-space {
                     font-size: 70px;
                 }
-                @media (max-width: 1023px) {
+                /* Tablet only — mobile uses global typography in app.css (≤767px) */
+                @media (max-width: 1023px) and (min-width: 768px) {
                     .companies-hero-title .hero-char,
                     .companies-hero-title .hero-space {
                         font-size: 48px !important;
-                    }
-                }
-                @media (max-width: 767px) {
-                    .companies-hero-title .hero-char,
-                    .companies-hero-title .hero-space {
-                        font-size: 32px !important;
                     }
                 }
             </style>

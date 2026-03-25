@@ -9,6 +9,10 @@
     --section-padding-y: 96px;
     --section-padding-y-small: 48px;
     --section-padding-x: 16px;
+    /* Mobile (≤767px) — unified rhythm; applied in @media block only */
+    --mobile-section-padding-y: 40px;
+    --mobile-section-gap: 24px;
+    --mobile-container-px: 16px;
   }
 
   html {
@@ -30,17 +34,168 @@
   }
 }
 
+/* Mobile-only (≤767px): typography, spacing, buttons — desktop unchanged */
 @media (max-width: 767px) {
-  body {
-    font-size: 14px;
+  html {
+    overflow-x: clip;
+    max-width: 100%;
   }
 
+  body {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* Semantic heading scale — same on every public page */
   h1 {
-    font-size: 36px !important;
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Home hero main headline — exact size on small screens only */
+  h1.hero-headline {
+    font-size: 29px !important;
+    line-height: 1.2 !important;
+  }
+
+  h1.hero-headline .hero-char {
+    font-size: 29px !important;
+    line-height: 1.2 !important;
+  }
+
+  h1[style*="font-size: 0"],
+  h1[style*="font-size:0"] {
+    font-size: 0 !important;
+    line-height: 0 !important;
   }
 
   h2 {
-    font-size: 32px !important;
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+
+  h3 {
+    font-size: 1.125rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* FAQ accordion (Foire Aux Questions) — mobile only */
+  .faq-section .faq-item h3 {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  .faq-section .faq-item .faq-content p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  h4 {
+    font-size: 1rem !important;
+    line-height: 1.35 !important;
+  }
+
+  h5,
+  h6 {
+    font-size: 0.9375rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Animated hero titles keep h1 at 0 — size per character */
+  h1[style*="font-size: 0"] .hero-char,
+  h1[style*="font-size:0"] .hero-char,
+  h1[style*="font-size: 0"] .hero-space,
+  h1[style*="font-size:0"] .hero-space,
+  span[style*="font-size: 0"] .hero-char,
+  span[style*="font-size:0"] .hero-char {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Blog / CMS prose */
+  .prose {
+    font-size: 0.9375rem !important;
+  }
+
+  .prose :where(h1):not(:where(.not-prose *)) {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+    margin-top: 1.25em;
+  }
+
+  .prose :where(h2):not(:where(.not-prose *)) {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+    margin-top: 1.25em;
+  }
+
+  .prose :where(h3):not(:where(.not-prose *)) {
+    font-size: 1.125rem !important;
+    line-height: 1.3 !important;
+    margin-top: 1em;
+  }
+
+  .prose :where(h4):not(:where(.not-prose *)) {
+    font-size: 1rem !important;
+  }
+
+  .prose :where(p, li):not(:where(.not-prose *)) {
+    font-size: 0.9375rem !important;
+  }
+
+  .prose.prose-xl {
+    font-size: 0.9375rem !important;
+  }
+
+  /* Hero lead / meta paragraphs */
+  .hero-subtitle-animate.text-xl,
+  .jobs-hero p.text-xl {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Home: stack primary actions */
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  p.hero-subheadline {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .hero-badge-text {
+    font-size: 0.9375rem !important;
+  }
+
+  .hero-trust-text {
+    font-size: 0.9375rem !important;
+  }
+
+  /* Blog share / social blocks */
+  .blog-share-stack button {
+    border-radius: 9999px !important;
+    min-height: 48px !important;
+    font-size: 0.9375rem !important;
+  }
+
+  /* Footer copy matches body */
+  footer p.text-lg {
+    font-size: 0.9375rem !important;
+  }
+
+  /* Job cards: drop wide date column min-width on small screens */
+  a.job-card-link [style*="min-width: 210px"] {
+    min-width: 0 !important;
+  }
+
+  .nos-solutions-hero .hero-subtitle p {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
   }
 }
 
@@ -112,12 +267,6 @@
     text-decoration: none !important;
   }
 
-  @media (max-width: 640px) {
-    .ompleo-btn {
-      font-size: 16px !important;
-      padding: 10px 18px !important;
-    }
-  }
 
   .ompleo-btn:hover {
     filter: brightness(0.9) !important;
@@ -139,11 +288,6 @@
     transition: all 0.3s ease;
   }
 
-  @media (max-width: 640px) {
-    .btn-premium {
-      @apply px-6 py-3 text-sm gap-2;
-    }
-  }
 
   .btn-premium svg,
   .btn-premium img {
@@ -176,6 +320,38 @@
     box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
   }
 
+  /* Sidebar newsletter “Subscribe” (jobs index / job detail) */
+  .newsletter-subscribe-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.2;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #1aa2a0, #39fffc);
+    border: 1px solid #47fffd;
+    border-radius: 9999px;
+    transition: filter 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .newsletter-subscribe-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 10px 24px -12px rgba(0, 250, 220, 0.5);
+  }
+
+  .newsletter-subscribe-btn:active {
+    filter: brightness(0.96);
+  }
+
+  @media (max-width: 767px) {
+    .newsletter-subscribe-btn {
+      font-size: 0.9375rem;
+      min-height: 48px;
+    }
+  }
+
   /* Layout Utilities */
   .platform-container {
     max-width: var(--container-max-width);
@@ -198,8 +374,76 @@
 
   @media (max-width: 767px) {
     .platform-section {
-      padding-top: 48px;
-      padding-bottom: 48px;
+      padding-top: var(--mobile-section-padding-y);
+      padding-bottom: var(--mobile-section-padding-y);
+    }
+
+    .platform-container {
+      padding-left: var(--mobile-container-px);
+      padding-right: var(--mobile-container-px);
+    }
+
+    /* Primary / secondary CTA system: full width, 48px touch, pill shape */
+    .btn-primary,
+    .btn-secondary {
+      @apply flex w-full items-center justify-center;
+      min-height: 48px;
+      border-radius: 9999px !important;
+      padding: 12px 20px !important;
+      font-size: 0.9375rem !important;
+    }
+
+    .ompleo-btn {
+      min-height: 48px !important;
+      padding: 12px 20px !important;
+      font-size: 0.9375rem !important;
+      border-radius: 9999px !important;
+    }
+
+    .btn-premium,
+    .btn-premium-green,
+    .btn-premium-dark {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 48px !important;
+      border-radius: 9999px !important;
+      padding: 12px 20px !important;
+      font-size: 0.9375rem !important;
+      font-weight: 600 !important;
+      justify-content: center !important;
+      box-sizing: border-box;
+    }
+
+    /* Optional: keep pill CTA content-sized (e.g. job detail “Voir toutes les offres” left-aligned) */
+    .btn-premium.btn-premium--fit,
+    .btn-premium-green.btn-premium--fit,
+    .btn-premium-dark.btn-premium--fit {
+      width: fit-content !important;
+      max-width: 100% !important;
+    }
+
+    /* Header: auth CTAs stack to full width on small screens (already in mobile drawer for guests) */
+    .glass-button-highlight {
+      border-radius: 9999px !important;
+      min-height: 48px;
+    }
+
+    /* Form submit / newsletter-style blocks */
+    .platform-container button[type="submit"]:not([class*="absolute"]):not(.p-1):not(.p-1\.5):not(.p-2) {
+      border-radius: 9999px !important;
+      min-height: 48px;
+      font-size: 0.9375rem !important;
+    }
+
+    #show-more-btn {
+      width: 100%;
+      max-width: 100%;
+      min-height: 48px;
+      border-radius: 9999px !important;
+      font-size: 0.9375rem !important;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
     }
   }
 }

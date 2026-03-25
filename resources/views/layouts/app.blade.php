@@ -23,7 +23,7 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-3f5de6ce.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-b323d53f.css') }}">
     <script type="module" src="{{ asset('build/assets/app-503bd57b.js') }}"></script>
     
     <!-- Vite Assets - Automatically handles both dev and production builds -->
@@ -83,7 +83,7 @@
                     </div>
                     <button 
                         type="submit" 
-                        class="px-8 py-4 bg-[#333333] text-white rounded-xl font-bold hover:bg-[#444444] transition-all whitespace-nowrap"
+                        class="px-8 py-4 bg-[#333333] text-white rounded-xl md:rounded-xl max-md:rounded-full font-bold hover:bg-[#444444] transition-all whitespace-nowrap max-md:min-h-[48px] max-md:w-full"
                     >
                         Subscribe
                     </button>

@@ -37,7 +37,7 @@ $latestJobs = $latestJobs ?? collect();
             <!-- Right Section: Content -->
             <div class="text-center lg:text-left">
                 <!-- Title -->
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                <h2 class="font-bold text-white mb-4 md:text-5xl">
                     Trouvez votre prochain poste
                 </h2>
                 

@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Storage;
 @endphp
 <header class="w-full z-[10000] bg-transparent relative" style="background: transparent !important;">
-    <div class="w-full px-[2%]" style="background: transparent;">
+    <div class="w-full px-4 min-[1201px]:px-[2%]" style="background: transparent;">
         <div class="relative flex justify-between items-center h-24" style="background: transparent;">
             <!-- Left Side: Logo -->
             <div class="flex items-center">
@@ -420,8 +420,8 @@ use Illuminate\Support\Facades\Storage;
         }
         /* Mobile menu padding adjustment */
         #mobileMenu {
-            padding-left: 5%;
-            padding-right: 5%;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
     }
     

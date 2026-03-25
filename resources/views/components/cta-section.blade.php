@@ -6,9 +6,6 @@
     <style>
         .cta-bg-image { width: 25%; }
         @media (max-width: 1023px) { .cta-bg-image { width: 20% !important; } }
-        @media (max-width: 767px) {
-            .cta-section h2 { font-size: 24px !important; }
-        }
     </style>
 
     <div class="platform-container relative z-10">
@@ -18,12 +15,12 @@
                 <!-- Gradient Border Donut -->
                 <div style="position: absolute; inset: 0; border: 1px solid transparent; border-radius: 12px; background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; pointer-events: none;"></div>
                     <!-- Title -->
-                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                    <h2 class="font-bold mb-4 sm:mb-6 md:text-3xl" style="color: #d9d9d9; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
                         Prêt(e) à trouver votre prochain emploi ?
                     </h2>
                     
                     <!-- Description -->
-                    <p class="text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-2 sm:px-4 md:px-8" style="color: #d9d9d9;">
+                    <p class="text-[0.9375rem] md:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-2 sm:px-4 md:px-8" style="color: #d9d9d9;">
                         Rejoignez des milliers de professionnels qui ont trouvé leur emploi idéal grâce à OMPLEO. Commencez dès aujourd'hui.
                     </p>
 

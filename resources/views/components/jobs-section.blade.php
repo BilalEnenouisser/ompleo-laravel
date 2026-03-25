@@ -15,11 +15,8 @@ $jobs = $jobs ?? collect();
         }
         @media (max-width: 767px) {
             .jobs-section {
-                padding-top: 3rem !important;
-                padding-bottom: 3rem !important;
-            }
-            .jobs-section h2 {
-                font-size: 2rem !important;
+                padding-top: var(--mobile-section-padding-y) !important;
+                padding-bottom: var(--mobile-section-padding-y) !important;
             }
         }
     </style>
@@ -36,9 +33,9 @@ $jobs = $jobs ?? collect();
         <div class="text-center mb-6 pb-8">
             <div class="flex items-center justify-center gap-2 mb-4 pb-2">
                 <img src="{{ asset('storage/home_page/job/icon.svg') }}" alt="Icon" class="w-7 h-7">
-                <span class="text-base" style="color: #d9d9d9;">Les meilleurs emplois</span>
+                <span class="text-[0.9375rem]" style="color: #d9d9d9;">Les meilleurs emplois</span>
             </div>
-            <h2 class="text-4xl md:text-5xl font-bold text-white pb-4">
+            <h2 class="font-bold text-white pb-4 md:text-5xl">
                 Offres à la une
             </h2>
         </div>
@@ -48,7 +45,7 @@ $jobs = $jobs ?? collect();
             <div class="relative cursor-pointer" onclick="openSearchPopup()">
                 <div class="p-[1px]" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px;">
                     <div class="relative overflow-hidden" style="border-radius: 12px;">
-                        <div class="w-full px-6 py-4 pr-14 text-gray-400 font-medium" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                        <div class="w-full px-6 py-4 pr-14 text-gray-400 font-medium text-[0.9375rem] md:text-base min-h-[48px] flex items-center" style="background-color: #212221; border-radius: 12px; box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
                             Rechercher des offres d'emploi
                         </div>
                         <!-- Right Icon -->

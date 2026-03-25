@@ -127,15 +127,6 @@
                         width: 100% !important;
                         max-width: 100% !important;
                     }
-                    h1.hero-headline {
-                        font-size: 24px !important;
-                        margin-bottom: 1.5rem !important;
-                        line-height: 1.3 !important;
-                        letter-spacing: -0.5px !important;
-                        word-wrap: normal !important;
-                        overflow-wrap: normal !important;
-                    }
-                    /* Ensure words stay together */
                     h1.hero-headline span[style*="white-space:nowrap"],
                     h1.hero-headline .hero-char {
                         display: inline-block !important;
@@ -146,7 +137,6 @@
                         display: block !important;
                         width: 100% !important;
                     }
-                    /* Fix for hero characters to display horizontally */
                     .hero-headline .hero-char,
                     .hero-subheadline .hero-char {
                         display: inline-block !important;
@@ -159,107 +149,30 @@
                         display: inline-block !important;
                     }
                     p.hero-subheadline {
-                        font-size: 14px !important;
                         margin-top: 1rem !important;
-                        margin-bottom: 2rem !important;
-                        line-height: 1.5 !important;
-                        word-wrap: normal !important;
-                        overflow-wrap: normal !important;
+                        margin-bottom: 1.5rem !important;
                     }
                     .hero-buttons {
-                        flex-direction: row !important;
-                        justify-content: flex-start !important;
-                        flex-wrap: wrap !important;
-                        gap: 0.75rem !important;
-                        width: 100% !important;
-                        max-width: 100% !important;
-                        margin-bottom: 2rem !important;
-                    }
-                    .hero-buttons a,
-                    .hero-buttons > div {
-                        box-sizing: border-box !important;
-                    }
-                    .hero-buttons a {
-                        padding-left: 1.25rem !important;
-                        padding-right: 1.25rem !important;
-                        padding-top: 0.875rem !important;
-                        padding-bottom: 0.875rem !important;
-                        display: flex !important;
-                        align-items: center !important;
-                        justify-content: center !important;
-                        text-align: center !important;
-                        border-radius: 9999px !important;
-                    }
-                    .hero-buttons a span {
-                        font-size: 0.875rem !important;
-                        line-height: 1.4 !important;
-                        white-space: nowrap !important;
-                        display: block !important;
-                        text-align: center !important;
-                    }
-                    .hero-buttons img {
-                        flex-shrink: 0 !important;
-                        width: 1rem !important;
-                        height: 1rem !important;
-                        margin-right: 0.5rem !important;
-                    }
-                    .hero-buttons > div {
-                        box-sizing: border-box !important;
-                    }
-                    .hero-buttons > div a {
-                        padding-left: 1.25rem !important;
-                        padding-right: 1.25rem !important;
-                        padding-top: 0.875rem !important;
-                        padding-bottom: 0.875rem !important;
-                    }
-                    .hero-buttons > div a span {
-                        font-size: 0.875rem !important;
-                        line-height: 1.4 !important;
-                        white-space: normal !important;
-                        word-break: break-word !important;
-                    }
-                    span.hero-badge-text {
-                        font-size: 14px !important;
-                        line-height: 1.4 !important;
-                    }
-                    img.hero-brand-logo {
-                        height: 1.25rem !important;
-                    }
-                    img.hero-badge-icon {
-                        width: 1.125rem !important;
-                        height: 1.125rem !important;
-                    }
-                    img.hero-button-icon {
-                        width: 1rem !important;
-                        height: 1rem !important;
+                        margin-bottom: 1.5rem !important;
                     }
                     .hero-badge-container {
-                        margin-bottom: 1.5rem !important;
+                        margin-bottom: 1.25rem !important;
                         flex-wrap: wrap !important;
                     }
                     .hero-badge-container img {
                         flex-shrink: 0 !important;
                     }
-                    /* Trust section mobile */
                     .hero-trust-section {
-                        margin-top: 2rem !important;
+                        margin-top: 1.5rem !important;
                     }
                     .hero-trust-text {
-                        font-size: 14px !important;
-                        margin-bottom: 1rem !important;
+                        margin-bottom: 0.75rem !important;
                     }
                     .hero-marquee {
                         gap: 1.5rem !important;
                     }
                     .hero-marquee-container {
                         margin-top: 0.5rem !important;
-                    }
-                    /* Better spacing overall */
-                    .hero-content-overlay > * {
-                        margin-bottom: 1rem !important;
-                    }
-                    .hero-content-overlay > *:last-child {
-                        margin-bottom: 0 !important;
                     }
                 }
             </style>

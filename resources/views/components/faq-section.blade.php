@@ -1,25 +1,20 @@
 <section class="platform-section relative bg-[#212221] overflow-hidden faq-section">
-    <style>
-        @media (max-width: 767px) {
-            .faq-section h2 { font-size: 32px !important; }
-        }
-    </style>
     <!-- Background Image -->
     <div class="absolute bottom-0 left-0 hidden lg:block pointer-events-none z-0">
         <img src="{{ asset('storage/home_page/search_job/bottom.png') }}" alt="Background" class="h-auto w-auto object-cover" style="object-position: left bottom;">
     </div>
 
     <div class="platform-container relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start">
             <!-- Left Section -->
             <div class="text-left lg:text-left text-center flex flex-col items-center lg:items-start justify-center mx-auto">
                 <!-- Title -->
-                <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+                <h2 class="font-bold text-white mb-4 md:text-6xl lg:text-7xl">
                     Foire Aux<br>Questions
                 </h2>
                 
                 <!-- Subtitle -->
-                <p class="text-lg text-white mb-8">
+                <p class="text-[0.9375rem] md:text-lg text-white mb-8">
                     Besoin de plus d'informations ?
                 </p>
 

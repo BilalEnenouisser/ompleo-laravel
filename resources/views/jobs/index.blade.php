@@ -65,9 +65,6 @@
                 animation: heroCharFadeIn 0.6s ease forwards;
                 will-change: transform, opacity, filter;
             }
-            @media (max-width: 767px) {
-                .jobs-hero h1 span.hero-char { font-size: 32px !important; }
-            }
         </style>
         <div class="platform-container">
             <div class="mb-6">
@@ -92,11 +89,11 @@
                                     $output .= '<span style="white-space:nowrap; font-size: 0;">';
                                     $chars = mb_str_split($word);
                                     foreach ($chars as $char) {
-                                        $output .= '<span class="hero-char text-6xl md:text-8xl" style="display: inline-block;">' . $char . '</span>';
+                                        $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">' . $char . '</span>';
                                     }
                                     $output .= '</span>';
                                     if ($wIndex < count($words) - 1) {
-                                        $output .= '<span class="text-6xl md:text-8xl">&nbsp;</span>';
+                                        $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">&nbsp;</span>';
                                     }
                                 }
                                 return $output;
@@ -111,7 +108,7 @@
                         </span>
                     @endif
                 </h1>
-                <p class="text-xl text-[#9ca3af] mb-8 leading-relaxed max-w-2xl hero-subtitle-animate">
+                <p class="text-xl text-[#9ca3af] mb-6 md:mb-8 leading-relaxed max-w-2xl hero-subtitle-animate">
                     Explorez les meilleures offres pour vous aider à grandir et à réussir.
                 </p>
             </div>
@@ -135,14 +132,14 @@
     <!-- Main Content -->
     <section class="platform-section relative z-10">
         <div class="platform-container">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
                 
                 <!-- Sidebar (1/3) -->
-                <div class="lg:col-span-1 space-y-10">
+                <div class="lg:col-span-1 space-y-6 lg:space-y-10">
                     
                     <!-- Filters List -->
                     @if($tab !== 'all')
-                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-8 backdrop-blur-sm animate-on-scroll">
+                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-6 lg:p-8 backdrop-blur-sm animate-on-scroll">
                         <div class="space-y-5">
                             <a href="{{ route('jobs.index', ['tab' => $tab]) }}" 
                                class="block text-base transition-colors {{ !$currentFilter ? 'text-[#00b6b4] font-bold' : 'text-[#9ca3af] hover:text-white' }}">
@@ -199,11 +196,11 @@
                     </div>
 
                     <!-- Newsletter Signup -->
-                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-8 backdrop-blur-sm animate-on-scroll">
-                        <h3 class="text-xl font-bold text-white mb-3">
+                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-6 lg:p-8 backdrop-blur-sm animate-on-scroll">
+                        <h3 class="font-bold text-white mb-3">
                             Sign-up to stay updated
                         </h3>
-                        <p class="text-[#9ca3af] mb-8 text-base">
+                        <p class="text-[#9ca3af] mb-8 text-[0.9375rem]">
                             Get the latest AI jobs in your inbox every Monday.
                         </p>
                         <form action="#" method="POST" class="space-y-5">
@@ -215,7 +212,7 @@
                             >
                             <button 
                                 type="submit" 
-                                class="w-full px-8 py-4 bg-[#333333] text-white rounded-xl font-bold hover:bg-[#444444] transition-all"
+                                class="newsletter-subscribe-btn"
                             >
                                 Subscribe
                             </button>
@@ -231,7 +228,7 @@
                             @include('jobs.partials.job-card', ['jobs' => $jobs])
                         @else
                             <div class="text-center py-24 bg-[#2b2b2b]/30 rounded-2xl border border-[#333333]">
-                                <p class="text-gray-500 text-xl font-medium">Aucune offre trouvée.</p>
+                                <p class="text-gray-500 font-medium text-[0.9375rem]">Aucune offre trouvée.</p>
                                 <a href="{{ route('jobs.index') }}" class="text-[#00b6b4] hover:underline mt-6 inline-block font-bold">Voir toutes les offres</a>
                             </div>
                         @endif
