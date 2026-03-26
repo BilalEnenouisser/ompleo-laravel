@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 <div class="min-h-screen bg-[#1f1f1f] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="platform-section relative overflow-hidden z-10 pt-24 md:pt-0">
+    <section class="platform-section relative overflow-hidden z-10 hero-section-balanced">
         <div class="platform-container">
             <!-- Company Header - Left Aligned -->
             <div class="mb-6">
@@ -67,7 +67,7 @@ use Illuminate\Support\Facades\Storage;
     @endif
 
     <!-- Jobs Section with Sidebar -->
-    <section class="platform-section relative z-10">
+    <section class="platform-section relative z-10 !pt-0 !pb-12">
         <div class="platform-container">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                 <!-- Left: Jobs List (2/3) -->
@@ -81,133 +81,138 @@ use Illuminate\Support\Facades\Storage;
                         <span class="text-white">{{ $company->name }}</span>
                     </div>
 
-                    <!-- Jobs Cards (mobile layout matches “Offres à la une” on home) -->
+                    <!-- Jobs Cards -->
                     @if($jobs->count() > 0)
                     <style>
-                        .company-detail-job-list .company-detail-job-card {
+                        /* Same sophisticated hover logic as home page */
+                        .company-detail-job-card .job-card-date-container {
                             position: relative;
+                            min-height: 1.5rem;
                         }
-                        .company-detail-job-list .company-detail-job-card:hover {
-                            border-color: rgba(0, 250, 220, 0.3);
-                        }
-                        .company-detail-job-list .company-detail-job-card .job-card-date,
-                        .company-detail-job-list .company-detail-job-card .job-card-view {
+                        .company-detail-job-card .job-card-date {
                             display: flex;
                             align-items: center;
-                            gap: 0.5rem;
+                            justify-content: flex-end;
                             transition: opacity 0.3s ease, transform 0.3s ease;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
                         }
-                        @media (min-width: 768px) {
-                            .company-detail-job-list .company-detail-job-card .job-card-date {
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                right: auto;
-                                opacity: 1;
-                                transform: translateX(0);
-                                justify-content: flex-start;
-                            }
-                            .company-detail-job-list .company-detail-job-card .job-card-view {
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                right: auto;
-                                opacity: 0;
-                                transform: translateX(10px);
-                                justify-content: flex-start;
-                            }
-                            .company-detail-job-list .company-detail-job-card:hover .job-card-date {
-                                opacity: 0;
-                                transform: translateX(-10px);
-                            }
-                            .company-detail-job-list .company-detail-job-card:hover .job-card-view {
-                                opacity: 1;
-                                transform: translateX(0);
-                            }
+                        .company-detail-job-card .job-card-view {
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: 0.5rem;
+                            opacity: 0;
+                            transform: translateX(10px);
+                            transition: opacity 0.3s ease, transform 0.3s ease;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
                         }
+                        .company-detail-job-card:hover .job-card-date {
+                            opacity: 0;
+                            transform: translateX(-10px);
+                        }
+                        .company-detail-job-card:hover .job-card-view {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                        
+                        /* Mobile override to keep it simple and readable */
                         @media (max-width: 767px) {
-                            .company-detail-job-list .company-detail-job-card .job-card-date {
+                            .company-detail-job-card .job-card-date {
                                 position: relative !important;
-                                top: auto !important;
-                                left: auto !important;
-                                right: auto !important;
                                 opacity: 1 !important;
                                 transform: none !important;
                                 justify-content: flex-start !important;
-                                text-align: left !important;
                             }
-                            .company-detail-job-list .company-detail-job-card .job-card-view {
+                            .company-detail-job-card .job-card-view {
                                 display: none !important;
+                            }
+                            .company-detail-job-card .job-card-date-container {
+                                min-height: auto !important;
                             }
                         }
                     </style>
-                    <div class="company-detail-job-list space-y-4 animate-on-scroll">
+                    <div class="space-y-4 animate-on-scroll">
                         @foreach($jobs as $job)
-                        <a href="{{ route('jobs.show', $job->slug) }}" class="company-detail-job-card block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 job-card-link" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
-                            <!-- Row 1: Logo, Title + Company, Featured Badge -->
-                            <div class="flex items-start gap-4 md:gap-6 mb-4 md:mb-4">
-                                <div class="flex-shrink-0">
-                                    @if($job->company && $job->company->logo)
-                                        <img src="{{ Storage::url($job->company->logo) }}" alt="{{ $job->company->name }}" class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover">
-                                    @else
-                                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br from-[#165c5b] to-[#00fadc] flex items-center justify-center">
-                                            <span class="text-white font-bold text-lg md:text-xl">
-                                                {{ $job->company ? strtoupper(substr($job->company->name, 0, 1)) : 'J' }}
+                        <a href="{{ route('jobs.show', $job->slug) }}" class="company-detail-job-card block m-px group relative">
+                            <!-- Gradient Border Wrapper -->
+                            <div class="p-[1px] transition-all duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
+                                <div class="p-4 md:p-6 transition-all duration-300 bg-[#2b2b2b] group-hover:bg-[#323432] rounded-xl border border-[#00b6b4]/20 group-hover:border-[#00b6b4]/50">
+                                    
+                                    <!-- Row 1: Logo, Job Title + Company, Featured Badge -->
+                                    <div class="flex items-start gap-4 md:gap-6 mb-6 md:mb-4">
+                                        <!-- Logo -->
+                                        <div class="flex-shrink-0">
+                                            @if($job->company && $job->company->logo)
+                                                <img src="{{ Storage::url($job->company->logo) }}" alt="{{ $job->company->name }}" class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover">
+                                            @else
+                                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br from-[#165c5b] to-[#00fadc] flex items-center justify-center">
+                                                    <span class="text-white font-bold text-lg md:text-xl">
+                                                        {{ $job->company ? strtoupper(substr($job->company->name, 0, 1)) : 'J' }}
+                                                    </span>
+                                                </div>
+                                            @endif
+                                        </div>
+            
+                                        <!-- Title and Company -->
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="text-lg md:text-xl font-bold text-white mb-1 truncate">
+                                                {{ $job->title }}
+                                            </h3>
+                                            <p class="text-gray-400 text-sm">
+                                                {{ $job->company ? $job->company->name : 'Entreprise non spécifiée' }}
+                                            </p>
+                                        </div>
+            
+                                        <!-- Featured Badge -->
+                                        @if($job->is_featured)
+                                        <div class="flex-shrink-0">
+                                            <span class="text-xs font-medium" style="color: #5997E3;">
+                                                Featured
                                             </span>
                                         </div>
-                                    @endif
-                                </div>
-
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg md:text-xl font-bold text-white mb-1 line-clamp-2 md:truncate">
-                                        {{ $job->title }}
-                                    </h3>
-                                    <p class="text-gray-400 text-sm">
-                                        {{ $job->company ? $job->company->name : 'Entreprise non spécifiée' }}
-                                    </p>
-                                </div>
-
-                                @if($job->is_featured)
-                                <div class="flex-shrink-0">
-                                    <span class="text-xs font-medium" style="color: #5997E3;">
-                                        Featured
-                                    </span>
-                                </div>
-                                @endif
-                            </div>
-
-                            <!-- Row 2: mobile = meta then date (left); desktop = date left, meta right -->
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3 md:gap-4 pt-2 md:pt-0 border-t border-white/5 md:border-none">
-                                <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-gray-400 order-1 md:order-2 md:justify-end">
-                                    @if($job->tags && is_array($job->tags) && count($job->tags) > 0)
-                                        <span class="whitespace-nowrap">{{ implode(', ', array_slice($job->tags, 0, 2)) }}</span>
-                                        <span class="text-gray-600">|</span>
-                                    @endif
-                                    <span class="whitespace-nowrap">{{ $job->work_type ?? $job->type ?? 'Full Time' }}</span>
-                                    <span class="text-gray-600">|</span>
-                                    <span class="whitespace-nowrap">{{ $job->location }}</span>
-                                    <span class="text-gray-600">|</span>
-                                    <span class="whitespace-nowrap">
-                                        @if($job->salary_min && $job->salary_max)
-                                            {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA/year
-                                        @elseif($job->salary_min)
-                                            À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA/year
-                                        @else
-                                            Salaire non spécifié
                                         @endif
-                                    </span>
-                                </div>
-
-                                <div class="relative w-full md:w-auto flex-shrink-0 md:min-w-[210px] min-h-[1.5rem] order-2 md:order-1 text-left">
-                                    <p class="text-sm text-gray-400 job-card-date">
-                                        Posted on: {{ $job->created_at->format('M d, Y') }}
-                                    </p>
-                                    <p class="text-sm text-[#00fadc] font-medium job-card-view">
-                                        <span>View Job</span>
-                                        <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </p>
+                                    </div>
+            
+                                    <!-- Row 2: Details and Date/View Toggle -->
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3 md:gap-4 pt-2 md:pt-0 border-t border-white/5 md:border-none">
+                                        <!-- Left: Keywords | Type | City | Salary -->
+                                        <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-gray-400">
+                                            @if($job->tags && is_array($job->tags) && count($job->tags) > 0)
+                                                <span class="whitespace-nowrap">{{ implode(', ', array_slice($job->tags, 0, 2)) }}</span>
+                                                <span class="text-gray-600">|</span>
+                                            @endif
+                                            <span class="whitespace-nowrap">{{ $job->work_type ?? $job->type ?? 'Full Time' }}</span>
+                                            <span class="text-gray-600">|</span>
+                                            <span class="whitespace-nowrap">{{ $job->location }}</span>
+                                            <span class="text-gray-600">|</span>
+                                            <span class="whitespace-nowrap">
+                                                @if($job->salary_min && $job->salary_max)
+                                                    {{ number_format($job->salary_min, 0, ',', ' ') }} - {{ number_format($job->salary_max, 0, ',', ' ') }} DA/year
+                                                @elseif($job->salary_min)
+                                                    À partir de {{ number_format($job->salary_min, 0, ',', ' ') }} DA/year
+                                                @else
+                                                    Salaire non spécifié
+                                                @endif
+                                            </span>
+                                        </div>
+            
+                                        <!-- Right: Posted Date / View Job Toggle -->
+                                        <div class="flex-shrink-0 relative md:min-w-[210px] job-card-date-container">
+                                            <p class="text-sm text-gray-400 job-card-date">
+                                                Posted on: {{ $job->created_at->format('M d, Y') }}
+                                            </p>
+                                            <p class="text-sm text-[#00fadc] font-medium job-card-view">
+                                                <span>View Job</span>
+                                                <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -228,7 +233,7 @@ use Illuminate\Support\Facades\Storage;
                 </div>
 
                 <!-- Right: Sidebar (1/3) -->
-                <div class="lg:col-span-1 space-y-6">
+                <div class="lg:col-span-1 space-y-6 sidebar-desktop-aligned">
                     <!-- Search All Jobs -->
                     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 animate-on-scroll">
                         <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
@@ -296,7 +301,7 @@ use Illuminate\Support\Facades\Storage;
 
 <style>
     /* Job Card Animations */
-    .job-card-link {
+    .company-detail-job-card {
         opacity: 0;
         transform: translateY(20px);
         animation: jobCardFadeIn 0.5s ease-out forwards;
@@ -309,11 +314,23 @@ use Illuminate\Support\Facades\Storage;
         }
     }
     
-    .job-card-link:nth-child(1) { animation-delay: 0s; }
-    .job-card-link:nth-child(2) { animation-delay: 0.1s; }
-    .job-card-link:nth-child(3) { animation-delay: 0.2s; }
-    .job-card-link:nth-child(4) { animation-delay: 0.3s; }
-    .job-card-link:nth-child(5) { animation-delay: 0.4s; }
-    .job-card-link:nth-child(n+6) { animation-delay: 0.5s; }
+    .company-detail-job-card:nth-child(1) { animation-delay: 0s; }
+    .company-detail-job-card:nth-child(2) { animation-delay: 0.1s; }
+    .company-detail-job-card:nth-child(3) { animation-delay: 0.2s; }
+    .company-detail-job-card:nth-child(4) { animation-delay: 0.3s; }
+    .company-detail-job-card:nth-child(5) { animation-delay: 0.4s; }
+    .company-detail-job-card:nth-child(n+6) { animation-delay: 0.5s; }
+
+    /* Scoped overrides to ensure requested spacing applies */
+    .hero-section-balanced {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+    }
+    
+    @media (min-width: 1024px) {
+        .sidebar-desktop-aligned {
+            padding-top: 47px !important;
+        }
+    }
 </style>
 @endsection

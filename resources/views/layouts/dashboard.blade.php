@@ -18,15 +18,10 @@ use Illuminate\Support\Facades\Storage;
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         
-    <link rel="stylesheet" href="{{ asset('build/assets/app-b323d53f.css') }}">
-    <script type="module" src="{{ asset('build/assets/app-503bd57b.js') }}"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
-    <!-- Build Assets -->
-    @if(vite_asset('resources/css/app.css'))
-    <link rel="stylesheet" href="{{ vite_asset('resources/css/app.css') }}">
-    @endif
+    @stack('styles')
 </head>
 <body class="font-sans antialiased">
     @include('components.header')
@@ -495,11 +490,6 @@ use Illuminate\Support\Facades\Storage;
             loadMobileNotifications();
         });
     </script>
-    
-    <!-- Build Assets JS -->
-    @if(vite_asset('resources/js/app.js'))
-    <script type="module" src="{{ vite_asset('resources/js/app.js') }}"></script>
-    @endif
     
     @yield('scripts')
 </body>

@@ -1,3 +1,22 @@
+@import "./hero-animations.css";
+
+/* Consolidated Marquee Animation */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee, .hero-marquee {
+  animation: marqueeScroll 30s linear infinite !important;
+  display: flex !important;
+  will-change: transform;
+}
+
+.hero-marquee-container:hover .animate-marquee,
+.hero-marquee-container:hover .hero-marquee {
+  animation-play-state: paused !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -496,20 +515,7 @@
     }
   }
 
-  /* Marquee animation for brand logos */
-  @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
-  }
+  /* Marquee animation moved to top level */
 
   /* Smooth scroll animations */
   .animate-on-scroll {
