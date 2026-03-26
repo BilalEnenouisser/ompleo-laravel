@@ -51,7 +51,7 @@
                 <span class="text-white truncate">{{ $job->title }}</span>
             </div>
 
-            <div class="mb-4 md:mb-8">
+            <div >
                 <h1 class="font-bold text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
                     @php
                         if (!function_exists('renderAnimateTextJob')) {
@@ -279,15 +279,20 @@
                                     position: relative !important;
                                     min-height: 1.5rem !important;
                                     width: 100% !important;
-                                    display: flex !important;
-                                    justify-content: flex-start !important;
+                                    display: block !important;
                                 }
                                 .recent-jobs-offres-une .job-card-date {
-                                    position: relative !important;
+                                    position: absolute !important;
+                                    top: 0 !important;
+                                    left: 0 !important;
+                                    right: auto !important;
                                     justify-content: flex-start !important;
                                 }
                                 .recent-jobs-offres-une .job-card-view {
-                                    position: relative !important;
+                                    position: absolute !important;
+                                    top: 0 !important;
+                                    left: 0 !important;
+                                    right: auto !important;
                                     justify-content: flex-start !important;
                                 }
                             }
@@ -296,7 +301,7 @@
                             @foreach($recentJobs as $rJob)
                             <a href="{{ route('jobs.show', $rJob->slug) }}" class="block job-card-link group">
                                 <div class="p-[1px] transition-colors duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
-                                    <div class="p-6 transition-colors duration-300 job-card-inner bg-[#2b2b2b] group-hover:bg-[#383838] rounded-xl" style="box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+                                    <div class="p-4 md:p-6 transition-all duration-300 job-card-inner bg-[#2b2b2b] group-hover:bg-[#323432] rounded-xl border border-transparent group-hover:border-[#00b6b4]/30">
                                         <div class="flex items-start gap-4 md:gap-6 mb-6 md:mb-4">
                                             <div class="flex-shrink-0">
                                                 @if($rJob->company && $rJob->company->logo)
@@ -361,7 +366,7 @@
                             @endforeach
                         </div>
                         <div class="mt-12 text-left">
-                            <a href="{{ route('jobs.index') }}" class="btn-premium-green btn-premium--fit">
+                            <a href="{{ route('jobs.index') }}" class="btn-premium-green justify-center sm:justify-start">
                                 <img src="{{ asset('storage/home_page/botton1.svg') }}" alt="Icon">
                                 <span>Voir toutes les offres</span>
                             </a>

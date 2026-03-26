@@ -63,9 +63,9 @@ $jobs = $jobs ?? collect();
         <!-- Job Cards -->
         <div class="max-w-4xl mx-auto space-y-4">
             @forelse($jobs->take(3) as $job)
-            <a href="{{ route('jobs.show', $job->slug) }}" class="block job-card-link group">
-                <div class="p-[1px] transition-colors duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
-                    <div class="p-6 transition-colors duration-300 job-card-inner bg-[#2b2b2b] group-hover:bg-[#383838] rounded-xl" style="box-shadow: 0 20px 22px rgba(0, 0, 0, 0.4);">
+            <a href="{{ route('jobs.show', $job->slug) }}" class="block m-px job-card-link group relative">
+                <div class="p-[1px] transition-all duration-300" style="background: linear-gradient(135deg, #165c5b, #00fadc, #165c5b); border-radius: 12px; cursor: pointer;">
+                    <div class="p-4 md:p-6 transition-all duration-300 job-card-inner bg-[#2b2b2b] group-hover:bg-[#323432] rounded-xl border border-[#00b6b4]/20 group-hover:border-[#00b6b4]/50">
                         <style>
                             .job-card-date-container {
                                 position: relative;

@@ -16,8 +16,8 @@
     <!-- Header -->
     @include('components.header')
 
-    <!-- Hero Section (same pattern as home: full image on right, no crop, static — no scroll parallax) -->
-    <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-screen flex items-center overflow-hidden bg-[#212221] platform-section">
+    <!-- Hero Section -->
+    <section class="relative min-h-0 md:min-h-[70vh] lg:min-h-screen flex items-center overflow-hidden bg-[#212221] platform-section nos-solutions-hero !pt-8 !pb-16 md:py-0">
         <div class="absolute inset-y-0 right-0 left-[44%] hidden lg:flex items-end justify-end z-[1] pointer-events-none">
             <img src="{{ asset('storage/nos_solutions/header.png') }}" 
                  alt="Illustration" 
@@ -35,7 +35,6 @@
                 }
                 .nos-solutions-hero .hero-subtitle {
                     max-width: 600px;
-                    
                 }
                 .nos-solutions-hero .hero-subtitle p {
                     font-size: 24px;
@@ -51,16 +50,16 @@
                 }
                 @media (max-width: 767px) { 
                     .nos-solutions-hero {
-                        padding-top: 2rem !important;
-                        padding-bottom: 2rem !important;
+                        padding-top: 1.5rem !important;
+                        padding-bottom: 2.5rem !important;
                     }
                     .nos-solutions-hero h1 {
                         max-width: 100% !important;
-                        margin-bottom: 1.25rem !important;
+                        margin-bottom: 1rem !important;
                     }
                     .nos-solutions-hero .hero-subtitle {
                         max-width: 100% !important;
-                        margin-bottom: 1.5rem !important;
+                        margin-bottom: 1.25rem !important;
                     }
                 }
                 /* Hero Character Animation */

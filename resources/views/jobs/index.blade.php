@@ -40,7 +40,7 @@
 
 <div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-12 overflow-hidden z-10 jobs-hero">
+    <section class="relative pt-16 pb-4 md:pt-20 md:pb-12 overflow-hidden z-10 jobs-hero">
         <style>
             /* Hero Character Animation */
             .hero-char {
@@ -67,8 +67,8 @@
             }
         </style>
         <div class="platform-container">
-            <div class="mb-6">
-                <h1 class="font-bold text-white mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
+            <div class="mb-4 md:mb-6">
+                <h1 class="font-bold text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
                     @php
                         $title = "Parcourir les offres";
                         if (request('work_type') === 'remote') {
@@ -116,9 +116,9 @@
     </section>
 
     <!-- Navigation Tabs -->
-    <section class="platform-section !py-0 mb-12 relative z-10">
+    <section class="platform-section !py-0 mb-8 md:mb-12 relative z-10">
         <div class="platform-container">
-            <div class="flex items-center gap-6 overflow-x-auto no-scrollbar pt-6">
+            <div class="flex items-center gap-6 overflow-x-auto no-scrollbar pt-2 md:pt-6">
                 @foreach($tabTitles as $tabKey => $title)
                     <a href="{{ route('jobs.index', ['tab' => $tabKey]) }}" 
                        class="text-base font-semibold transition-colors whitespace-nowrap {{ $tab === $tabKey ? 'text-[#00b6b4]' : 'text-[#9ca3af] hover:text-white' }}">
@@ -130,12 +130,12 @@
     </section>
 
     <!-- Main Content -->
-    <section class="platform-section relative z-10">
+    <section class="platform-section !pt-0 relative z-10">
         <div class="platform-container">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
                 
                 <!-- Sidebar (1/3) -->
-                <div class="lg:col-span-1 space-y-6 lg:space-y-10">
+                <div class="lg:col-span-1 space-y-6 lg:space-y-10 order-2 lg:order-1">
                     
                     <!-- Filters List -->
                     @if($tab !== 'all')
@@ -173,30 +173,20 @@
                     </div>
                     @endif
 
-                    <!-- Search Box -->
-                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-2 flex items-center gap-2 animate-on-scroll">
-                        <div class="flex-1 relative">
-                            <input 
-                                type="text" 
-                                name="search"
-                                form="filter-form"
-                                value="{{ request('search') }}"
-                                placeholder="Search all Jobs" 
-                                class="w-full px-6 py-4 bg-transparent text-white placeholder-gray-500 focus:outline-none transition-colors rounded-xl"
-                            >
+                    <!-- Search Box (Visible only on Desktop in Sidebar) -->
+                    <div class="hidden lg:flex bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-1.5 items-center gap-2 animate-on-scroll cursor-pointer group hover:border-[#00b6b4]/50 transition-colors" onclick="openSearchPopup()">
+                        <div class="flex-1 px-6 py-4 text-[#9ca3af] select-none text-[0.9375rem]">
+                            Search all Jobs
                         </div>
-                        <button type="submit" form="filter-form" class="p-4 text-gray-500">
+                        <div class="p-4 text-gray-500 group-hover:text-[#00b6b4] transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
-                        </button>
-                        <form id="filter-form" action="{{ route('jobs.index') }}" method="GET" class="hidden">
-                            <input type="hidden" name="tab" value="{{ $tab }}">
-                        </form>
+                        </div>
                     </div>
 
-                    <!-- Newsletter Signup -->
-                    <div class="bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-6 lg:p-8 backdrop-blur-sm animate-on-scroll">
+                    <!-- Newsletter Signup (Visible only on Desktop in Sidebar) -->
+                    <div class="hidden lg:block bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-6 lg:p-8 backdrop-blur-sm animate-on-scroll">
                         <h3 class="font-bold text-white mb-3">
                             Sign-up to stay updated
                         </h3>
@@ -222,8 +212,21 @@
                 </div>
 
                 <!-- Job List (2/3) -->
-                <div class="lg:col-span-2 space-y-6">
-                    <div id="jobs-container" class="space-y-4 animate-on-scroll">
+                <div class="lg:col-span-2 space-y-6 order-1 lg:order-2">
+                    
+                    <!-- Search Box (Visible only on Mobile at Top) -->
+                    <div class="lg:hidden bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-1.5 flex items-center gap-2 animate-on-scroll cursor-pointer group hover:border-[#00b6b4]/50 transition-colors" onclick="openSearchPopup()">
+                        <div class="flex-1 px-6 py-4 text-[#9ca3af] select-none text-[0.9375rem]">
+                            Search all Jobs
+                        </div>
+                        <div class="p-4 text-gray-500 group-hover:text-[#00b6b4] transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div id="jobs-container" class="lg:!mt-0 space-y-4 animate-on-scroll">
                         @if($jobs->count() > 0)
                             @include('jobs.partials.job-card', ['jobs' => $jobs])
                         @else
@@ -246,6 +249,30 @@
                         </button>
                     </div>
                     @endif
+
+                    <!-- Newsletter Signup (Visible only on Mobile at Bottom) -->
+                    <div class="lg:hidden bg-[#2b2b2b]/50 border border-[#333333] rounded-2xl p-6 lg:p-8 backdrop-blur-sm animate-on-scroll mt-12">
+                        <h3 class="font-bold text-white mb-3">
+                            Sign-up to stay updated
+                        </h3>
+                        <p class="text-[#9ca3af] mb-8 text-[0.9375rem]">
+                            Get the latest AI jobs in your inbox every Monday.
+                        </p>
+                        <form action="#" method="POST" class="space-y-5">
+                            <input 
+                                type="email" 
+                                placeholder="Email Address" 
+                                class="w-full px-6 py-4 bg-[#1f1f1f] text-white placeholder-gray-500 focus:outline-none transition-colors rounded-xl border border-[#333333] focus:border-[#00b6b4]"
+                                required
+                            >
+                            <button 
+                                type="submit" 
+                                class="newsletter-subscribe-btn"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
             </div>

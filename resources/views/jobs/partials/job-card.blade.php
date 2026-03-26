@@ -1,11 +1,12 @@
 @foreach($jobs as $job)
-<a href="{{ route('jobs.show', $job->slug) }}" class="block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 job-card-link" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08);">
+<a href="{{ route('jobs.show', $job->slug) }}" class="block m-px p-4 md:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-1.5 job-card-link group" style="background: rgba(43, 43, 43, 0.73); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 182, 180, 0.2);">
     <style>
         .job-card-link {
             position: relative;
         }
         .job-card-link:hover {
-            border-color: rgba(0, 182, 180, 0.3);
+            border-color: #00b6b4 !important;
+            background: #323432 !important;
         }
         .job-card-date {
             display: flex;
@@ -39,9 +40,11 @@
         }
         @media (max-width: 767px) {
             .job-card-date, .job-card-view {
-                position: relative !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
                 right: auto !important;
-                top: auto !important;
+                bottom: auto !important;
                 justify-content: flex-start !important;
             }
         }
