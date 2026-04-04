@@ -99,79 +99,61 @@
                 <!-- Main Article -->
                 <article class="col-span-2 min-w-0">
                     <div class="bg-white/10 dark:bg-[#2b2b2b]/50 backdrop-blur-lg border border-white/20 dark:border-[#333333] rounded-2xl p-6 lg:p-16">
-                        {{-- Demo body only (same pattern as job detail); replace with {!! $blog->content !!} when ready --}}
                         <div class="max-w-none text-gray-600 dark:text-[#9ca3af] text-[0.9375rem] md:text-base leading-relaxed space-y-10 md:space-y-12">
-                            <div class="space-y-6">
-                                <p>
-                                    This is <strong class="text-gray-900 dark:text-white">placeholder article copy</strong> for UI review—structured like the default job offer page. Final editorial content will load from your admin once you enable it.
-                                </p>
-                                <p>
-                                    It demonstrates typography, spacing, and list treatments so stakeholders can approve the layout before real posts are published.
-                                </p>
-                            </div>
+                            @php
+                                $decodedContent = null;
+                                if (is_string($blog->content)) {
+                                    $decodedContent = json_decode($blog->content, true);
+                                }
+                            @endphp
 
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white mb-6 text-lg md:text-xl">Key takeaways</h3>
-                                <ul class="space-y-4 text-[0.9375rem] md:text-base leading-relaxed">
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Clear headings and short paragraphs improve readability on every screen size.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Lists break down complex ideas the same way responsibilities do on a job description.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>The teal accents align with the rest of the OMPLEO marketing surfaces.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Swap this block for real HTML from your CMS when the client signs off.</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white mb-6 text-lg md:text-xl">What you can expect next</h3>
-                                <ul class="space-y-4 text-[0.9375rem] md:text-base leading-relaxed">
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Author bylines, related articles, and sharing tools stay wired to live data.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>SEO metadata and Open Graph tags can continue to use the post slug and title from the backend.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Only this middle column is static for the current demo milestone.</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white mb-6 text-lg md:text-xl">Closing note</h3>
-                                <ul class="space-y-4 text-[0.9375rem] md:text-base leading-relaxed">
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Use this page to validate dark mode, contrast, and mobile stacking.</span>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                        <span>Questions? Treat this copy as disposable—it is not stored in the database.</span>
-                                    </li>
-                                </ul>
-                            </div>
+                            @if(is_array($decodedContent) && count($decodedContent) > 0)
+                                @foreach($decodedContent as $block)
+                                    @if(($block['type'] ?? '') === 'heading')
+                                        <div>
+                                            <h3 class="font-bold text-gray-900 dark:text-white mb-6 text-lg md:text-xl">{{ $block['content'] ?? '' }}</h3>
+                                        </div>
+                                    @elseif(($block['type'] ?? '') === 'list' && is_array($block['items'] ?? null))
+                                        <div>
+                                            <ul class="space-y-4 text-[0.9375rem] md:text-base leading-relaxed">
+                                                @foreach($block['items'] as $item)
+                                                    <li class="flex items-start gap-3">
+                                                        <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                                        <span>{{ $item }}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @elseif(($block['type'] ?? '') === 'paragraph')
+                                        <div class="space-y-6">
+                                            <p>{{ $block['content'] ?? '' }}</p>
+                                        </div>
+                                    @elseif(($block['type'] ?? '') === 'quote')
+                                        <div class="space-y-6">
+                                            <p><strong class="text-gray-900 dark:text-white">{{ $block['content'] ?? '' }}</strong></p>
+                                        </div>
+                                    @elseif(($block['type'] ?? '') === 'image' && !empty($block['url']))
+                                        <div>
+                                            <img src="{{ $block['url'] }}" alt="{{ $block['alt'] ?? $blog->title }}" class="w-full rounded-xl object-cover">
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @else
+                                <div class="space-y-6">
+                                    <p>{!! nl2br(e((string) $blog->content)) !!}</p>
+                                </div>
+                            @endif
                         </div>
 
-                        <!-- Tags (demo chips; restore looping over $blog->tags when showing real tags) -->
+                        <!-- Tags -->
                         <div class="mt-8 pt-8 border-t border-white/20 dark:border-[#333333]">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Tags</h3>
                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-[#00b6b4]/10 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium border border-[#00b6b4]/20">Carrière</span>
-                                <span class="bg-[#00b6b4]/10 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium border border-[#00b6b4]/20">Conseils</span>
-                                <span class="bg-[#00b6b4]/10 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium border border-[#00b6b4]/20">OMPLEO</span>
+                                @forelse(($blog->tags ?? []) as $tag)
+                                    <span class="bg-[#00b6b4]/10 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium border border-[#00b6b4]/20">{{ $tag }}</span>
+                                @empty
+                                    <span class="bg-[#00b6b4]/10 text-[#00b6b4] px-3 py-1 rounded-full text-sm font-medium border border-[#00b6b4]/20">OMPLEO</span>
+                                @endforelse
                             </div>
                         </div>
                         

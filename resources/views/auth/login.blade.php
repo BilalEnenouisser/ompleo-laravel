@@ -125,6 +125,7 @@
                     </svg>
                     Se connecter
                 </button>
+            </form>
 
             <div class="mt-6">
                 <div class="relative">

@@ -121,7 +121,7 @@
             </div>
 
             {{-- Button at Bottom --}}
-            <a href="{{ route('companies.show', $candidate->id) }}" class="w-full bg-[#00b6b4] hover:bg-[#009999] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
+            <a href="{{ route('companies.candidates.show', $candidate->id) }}" class="w-full bg-[#00b6b4] hover:bg-[#009999] text-white py-2.5 rounded-lg transition-colors text-center font-semibold text-sm mt-auto">
                 Voir le profils
             </a>
         </div>

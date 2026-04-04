@@ -10,6 +10,11 @@ use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
     /**
      * Display a listing of blogs
      */

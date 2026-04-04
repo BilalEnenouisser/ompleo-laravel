@@ -13,6 +13,11 @@ use Carbon\Carbon;
 
 class ReportsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'recruiter']);
+    }
+
     public function index(Request $request)
     {
         $recruiter = Auth::user();

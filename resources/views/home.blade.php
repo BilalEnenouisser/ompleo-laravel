@@ -284,17 +284,20 @@
                         <!-- Right fade gradient -->
                         <div class="absolute right-0 top-0 bottom-0 w-12 md:w-20 z-10 pointer-events-none" style="background: linear-gradient(to left, #212221, transparent);"></div>
                         <div class="flex animate-marquee gap-4 hero-marquee">
-                            @for($i = 1; $i <= 8; $i++)
+                            @php
+                                $marqueePartners = isset($heroPartners) ? $heroPartners : collect();
+                            @endphp
+                            @foreach($marqueePartners as $partner)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
+                                    <img src="{{ $partner['logo'] }}" alt="{{ $partner['name'] }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
                                 </div>
-                            @endfor
+                            @endforeach
                             <!-- Duplicate for seamless loop -->
-                            @for($i = 1; $i <= 8; $i++)
+                            @foreach($marqueePartners as $partner)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/home_page/brand' . $i . '.png') }}" alt="Brand {{ $i }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
+                                    <img src="{{ $partner['logo'] }}" alt="{{ $partner['name'] }}" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity hero-brand-logo">
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>

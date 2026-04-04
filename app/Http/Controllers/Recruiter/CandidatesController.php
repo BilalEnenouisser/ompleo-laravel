@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class CandidatesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'recruiter']);
+    }
+
     public function index(Request $request)
     {
         $user = auth()->user();

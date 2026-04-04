@@ -123,34 +123,29 @@
                 <div class="lg:col-span-2 space-y-10 md:space-y-12 animate-on-scroll">
                     <!-- Intro -->
                     <div class="max-w-none text-[#9ca3af] text-[0.9375rem] leading-relaxed space-y-6">
-                        <p>
-                            We are seeking a skilled <strong class="text-white">{{ $job->title }}</strong> to join our growing team in the <strong class="text-white">Development</strong> department.
-                        </p>
-                        <p>
-                            This role is ideal for professionals who are excited about working on cutting-edge AI projects and who thrive in collaborative environments.
-                        </p>
+                        <p>{!! nl2br(e($job->description)) !!}</p>
                     </div>
 
                     <!-- Responsibilities -->
                     <div>
                         <h3 class="font-bold text-white mb-6">Responsibilities:</h3>
                         <ul class="space-y-4 text-[#9ca3af] text-[0.9375rem] leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Collaborate with cross-functional teams to align on project goals and requirements.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Design, develop, and deploy features or models relevant to the role.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Contribute to ongoing improvement of systems, tools, or customer experience.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Stay informed on industry trends and emerging technologies.</span>
-                            </li>
+                            @php
+                                $responsibilities = is_array($job->responsibilities)
+                                    ? $job->responsibilities
+                                    : preg_split('/\r\n|\r|\n/', (string) $job->responsibilities, -1, PREG_SPLIT_NO_EMPTY);
+                            @endphp
+                            @forelse($responsibilities as $responsibility)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $responsibility }}</span>
+                                </li>
+                            @empty
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>Responsibilities will be provided by the recruiter.</span>
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
 
@@ -158,22 +153,22 @@
                     <div>
                         <h3 class="font-bold text-white mb-6">Requirements:</h3>
                         <ul class="space-y-4 text-[#9ca3af] text-[0.9375rem] leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Proven experience in the relevant field or function.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Strong understanding of tools, techniques, or technologies specific to the job.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Excellent communication and collaboration skills.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Ability to work in a fast-paced, dynamic environment.</span>
-                            </li>
+                            @php
+                                $requirements = is_array($job->requirements)
+                                    ? $job->requirements
+                                    : preg_split('/\r\n|\r|\n/', (string) $job->requirements, -1, PREG_SPLIT_NO_EMPTY);
+                            @endphp
+                            @forelse($requirements as $requirement)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $requirement }}</span>
+                                </li>
+                            @empty
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>Requirements will be provided by the recruiter.</span>
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
 
@@ -181,22 +176,22 @@
                     <div>
                         <h3 class="font-bold text-white mb-6">Perks:</h3>
                         <ul class="space-y-4 text-[#9ca3af] text-[0.9375rem] leading-relaxed">
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Flexible work environment (remote options available).</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Competitive salary and equity package.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Learning and development budget.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
-                                <span>Inclusive, innovative team culture.</span>
-                            </li>
+                            @php
+                                $benefits = is_array($job->benefits)
+                                    ? $job->benefits
+                                    : preg_split('/\r\n|\r|\n/', (string) $job->benefits, -1, PREG_SPLIT_NO_EMPTY);
+                            @endphp
+                            @forelse($benefits as $benefit)
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>{{ $benefit }}</span>
+                                </li>
+                            @empty
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-2 w-1.5 h-1.5 bg-[#00b6b4] rounded-full flex-shrink-0"></span>
+                                    <span>Benefits will be provided by the recruiter.</span>
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
 

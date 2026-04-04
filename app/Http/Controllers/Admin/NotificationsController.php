@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Mail;
 
 class NotificationsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
     /**
      * Display notifications management page
      */

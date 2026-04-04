@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Partner;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -42,6 +44,19 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->get();
+
+        // Partners logos for hero marquee
+        $heroPartners = Partner::whereNotNull('logo')
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($partner) {
+                return [
+                    'name' => $partner->name,
+                    'logo' => Storage::url($partner->logo),
+                ];
+            });
 
         // Get latest jobs for search job section (8 jobs for the grid)
         $latestJobs = Job::published()
@@ -82,7 +97,7 @@ class HomeController extends Controller
             ]
         ];
 
-        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs', 'jobs', 'latestJobs'));
+        return view('home', compact('stats', 'features', 'companies', 'featuredBlogs', 'jobs', 'latestJobs', 'heroPartners'));
     }
 }
 

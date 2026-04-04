@@ -74,9 +74,9 @@
                     <div class="flex-1">
                         <input 
                             type="email" 
+                            name="email"
                             placeholder="Email Address" 
                             class="w-full px-6 py-4 bg-[#0a0a0a] text-white placeholder-gray-500 focus:outline-none transition-colors rounded-xl border border-[#333333] focus:border-[#00b6b4]"
-                            required
                         >
                     </div>
                     <button 
