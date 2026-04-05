@@ -1,6 +1,7 @@
 @php
 use Illuminate\Support\Facades\Storage;
 $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
+$currentUserType = auth()->check() ? auth()->user()->user_type : null;
 @endphp
 <header class="w-full z-[10000] relative {{ $isDashboard ? 'bg-[#1f1f1f] border-b border-[#333333]' : 'bg-transparent' }}" style="{{ $isDashboard ? '' : 'background: transparent !important;' }}">
     <div class="w-full px-4 min-[1201px]:px-[2%]" style="{{ $isDashboard ? '' : 'background: transparent;' }}">
@@ -767,7 +768,10 @@ function updateNotificationBadge(notifications) {
 }
 
 function markAsRead(notificationId) {
-    const url = {{ auth()->user()->user_type === 'admin' ? '`/admin/notifications/view/${notificationId}/read`' : '`/notifications/${notificationId}/read`' }};
+    const currentUserType = @json($currentUserType);
+    const url = currentUserType === 'admin'
+        ? `/admin/notifications/view/${notificationId}/read`
+        : `/notifications/${notificationId}/read`;
 
     fetch(url, {
         method: 'POST',
@@ -790,7 +794,10 @@ function markAsRead(notificationId) {
 }
 
 function markAllAsRead() {
-    const url = '{{ auth()->user()->user_type === 'admin' ? '/admin/notifications/view/read-all' : '/notifications/read-all' }}';
+    const currentUserType = @json($currentUserType);
+    const url = currentUserType === 'admin'
+        ? '/admin/notifications/view/read-all'
+        : '/notifications/read-all';
 
     fetch(url, {
         method: 'POST',
@@ -814,7 +821,10 @@ function markAllAsRead() {
 
 function deleteNotification(notificationId) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
-        const url = {{ auth()->user()->user_type === 'admin' ? '`/admin/notifications/view/${notificationId}`' : '`/notifications/${notificationId}`' }};
+        const currentUserType = @json($currentUserType);
+        const url = currentUserType === 'admin'
+            ? `/admin/notifications/view/${notificationId}`
+            : `/notifications/${notificationId}`;
 
         fetch(url, {
             method: 'DELETE',
