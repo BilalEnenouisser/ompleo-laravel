@@ -33,23 +33,30 @@ class UserNotificationController extends Controller
     public function getNotifications()
     {
         $user = Auth::user();
-        
-        // Get recent unread notifications
-        $notifications = UserNotification::with('notification')
-            ->where('user_id', $user->id)
+
+        // Admin sees system-wide unread notifications in header; others see only their own unread notifications.
+        $notificationsQuery = UserNotification::with(['notification', 'user'])
             ->where('is_read', false)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc');
+
+        if (!$user->isAdmin()) {
+            $notificationsQuery->where('user_id', $user->id);
+        }
+
+        $notifications = $notificationsQuery
             ->limit(5)
             ->get();
 
-        // Get total unread count
-        $unreadCount = UserNotification::where('user_id', $user->id)
-            ->where('is_read', false)
-            ->count();
+        $unreadCountQuery = UserNotification::where('is_read', false);
+        if (!$user->isAdmin()) {
+            $unreadCountQuery->where('user_id', $user->id);
+        }
+        $unreadCount = $unreadCountQuery->count();
 
         return response()->json([
             'notifications' => $notifications->map(function ($userNotification) use ($user) {
                 $interviewData = null;
+                $targetCandidateId = $user->isAdmin() ? $userNotification->user_id : $user->id;
                 
                 // Check if notification is about interview
                 if ($userNotification->notification && 
@@ -75,7 +82,7 @@ class UserNotificationController extends Controller
                     if ($notificationType === 'interview_update') {
                         // Update notifications: match by candidate + job title (most recent for that job)
                         if ($jobTitle) {
-                            $interview = Interview::where('candidate_id', $user->id)
+                            $interview = Interview::where('candidate_id', $targetCandidateId)
                                 ->whereHas('job', function($q) use ($jobTitle) {
                                     $q->where('title', $jobTitle);
                                 })
@@ -85,7 +92,7 @@ class UserNotificationController extends Controller
                             
                             // If exact match not found, try LIKE match
                             if (!$interview) {
-                                $interview = Interview::where('candidate_id', $user->id)
+                                $interview = Interview::where('candidate_id', $targetCandidateId)
                                     ->whereHas('job', function($q) use ($jobTitle) {
                                         $q->where('title', 'like', "%{$jobTitle}%");
                                     })
@@ -97,7 +104,7 @@ class UserNotificationController extends Controller
                         
                         // Fallback: Get most recent interview for this candidate (if no job title)
                         if (!$interview) {
-                            $interview = Interview::where('candidate_id', $user->id)
+                            $interview = Interview::where('candidate_id', $targetCandidateId)
                                 ->with(['job.company', 'candidate'])
                                 ->orderBy('updated_at', 'desc')
                                 ->first();
@@ -105,7 +112,7 @@ class UserNotificationController extends Controller
                     } else {
                         // New interview notifications: match by exact job title + candidate + time window
                         if ($jobTitle) {
-                            $interview = Interview::where('candidate_id', $user->id)
+                            $interview = Interview::where('candidate_id', $targetCandidateId)
                                 ->whereHas('job', function($q) use ($jobTitle) {
                                     // Use exact match first, fallback to LIKE if exact doesn't work
                                     $q->where('title', $jobTitle);
@@ -120,7 +127,7 @@ class UserNotificationController extends Controller
                             
                             // If exact match not found, try LIKE match
                             if (!$interview) {
-                                $interview = Interview::where('candidate_id', $user->id)
+                                $interview = Interview::where('candidate_id', $targetCandidateId)
                                     ->whereHas('job', function($q) use ($jobTitle) {
                                         $q->where('title', 'like', "%{$jobTitle}%");
                                     })
@@ -136,7 +143,7 @@ class UserNotificationController extends Controller
                         
                         // Fallback: If no job title found or no match, try time-based matching (less reliable)
                         if (!$interview) {
-                            $interview = Interview::where('candidate_id', $user->id)
+                            $interview = Interview::where('candidate_id', $targetCandidateId)
                                 ->with(['job.company', 'candidate'])
                                 ->whereBetween('created_at', [
                                     $notificationTime->copy()->subMinutes(2),

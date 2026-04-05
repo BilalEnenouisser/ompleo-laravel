@@ -6,13 +6,6 @@
 @section('content')
 @include('components.header')
 <div class="min-h-screen bg-white dark:bg-[#1f1f1f] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-    <!-- Background Shapes -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="liquid-shape w-96 h-96 bg-[#00b6b4]/10 top-20 -left-20"></div>
-        <div class="liquid-shape w-80 h-80 bg-[#00b6b4]/10 bottom-20 -right-20" style="animation-delay: 2s;"></div>
-        <div class="liquid-shape w-64 h-64 bg-[#00b6b4]/10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation-delay: 4s;"></div>
-    </div>
-    
     <div class="max-w-md w-full space-y-8 relative z-10">
         <div class="text-center animate-fade-in-up">
             <div class="flex items-center justify-center mb-6">

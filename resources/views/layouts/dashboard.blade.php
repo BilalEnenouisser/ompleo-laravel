@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Storage;
     
     @stack('styles')
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-[#1f1f1f] text-gray-100">
     @include('components.header')
     
     <div class="min-h-screen bg-dark-900 flex w-full">

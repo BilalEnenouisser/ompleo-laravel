@@ -102,6 +102,8 @@
                         <div class="max-w-none text-gray-600 dark:text-[#9ca3af] text-[0.9375rem] md:text-base leading-relaxed space-y-10 md:space-y-12">
                             @php
                                 $decodedContent = null;
+                                $rawContent = is_string($blog->content) ? trim($blog->content) : '';
+                                $hasHtmlContent = $rawContent !== '' && \Illuminate\Support\Str::contains($rawContent, ['<p', '<h1', '<h2', '<h3', '<h4', '<h5', '<h6', '<img', '<ul', '<ol', '<li', '<blockquote', '<pre', '<code', '<div', '<br', '<hr']);
                                 if (is_string($blog->content)) {
                                     $decodedContent = json_decode($blog->content, true);
                                 }
@@ -139,9 +141,15 @@
                                     @endif
                                 @endforeach
                             @else
-                                <div class="space-y-6">
-                                    <p>{!! nl2br(e((string) $blog->content)) !!}</p>
-                                </div>
+                                @if($hasHtmlContent)
+                                    <div class="space-y-6 blog-content-html text-gray-600 dark:text-[#9ca3af]">
+                                        {!! $rawContent !!}
+                                    </div>
+                                @else
+                                    <div class="space-y-6">
+                                        <p>{!! nl2br(e((string) $blog->content)) !!}</p>
+                                    </div>
+                                @endif
                             @endif
                         </div>
 

@@ -339,7 +339,7 @@
                         }
                     }
                 </style>
-                <button class="bg-[#00b6b4] hover:bg-[#009999] text-white py-2 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <button class="bg-[#00b6b4] hover:bg-[#009999] text-white py-2 px-5 sm:px-6 min-w-[120px] rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 sm:w-4 sm:h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     Contacter
                 </button>

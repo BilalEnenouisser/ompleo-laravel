@@ -4,24 +4,24 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 <style>
-/* Custom FullCalendar Dark Theme - Define CSS Variables */
+/* Simple FullCalendar Dark Theme - Define CSS Variables */
 .fc {
     --fc-button-bg-color: #2b2b2b;
     --fc-button-border-color: #444444;
     --fc-button-text-color: #f5f5f5;
-    --fc-button-hover-bg-color: #00b6b4;
-    --fc-button-hover-border-color: #00b6b4;
+    --fc-button-hover-bg-color: #3b3b3b;
+    --fc-button-hover-border-color: #555555;
     --fc-button-hover-text-color: #ffffff;
-    --fc-button-active-bg-color: #00b6b4;
-    --fc-button-active-border-color: #00b6b4;
+    --fc-button-active-bg-color: #3b3b3b;
+    --fc-button-active-border-color: #555555;
     --fc-button-active-text-color: #ffffff;
     --fc-button-disabled-bg-color: #1a1a1a;
     --fc-button-disabled-border-color: #333333;
     --fc-button-disabled-text-color: #666666;
-    --fc-event-bg-color: #00b6b4;
-    --fc-event-border-color: #00b6b4;
+    --fc-event-bg-color: #374151;
+    --fc-event-border-color: #374151;
     --fc-event-text-color: #ffffff;
-    --fc-today-bg-color: rgba(0, 182, 180, 0.1);
+    --fc-today-bg-color: rgba(255, 255, 255, 0.04);
 }
 
 .fc,
@@ -31,81 +31,75 @@
 
 /* Main calendar container */
 .fc {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%) !important;
+    background: #1f1f1f !important;
     color: #f5f5f5 !important;
     border-radius: 16px !important;
     overflow: hidden !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: none !important;
     border: 1px solid #333333 !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 .fc-theme-standard .fc-scrollgrid {
-    border: 1px solid #00b6b4 !important;
+    border: 1px solid #333333 !important;
     border-radius: 16px !important;
 }
 
 .fc-theme-standard th {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
-    border-color: #00b6b4 !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
+    background: #2b2b2b !important;
+    border-color: #333333 !important;
+    color: #e5e7eb !important;
+    font-weight: 600 !important;
     padding: 16px 12px !important;
-    text-transform: uppercase !important;
-    font-size: 0.8rem !important;
-    letter-spacing: 1px !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    text-transform: none !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0 !important;
 }
 
 .fc-theme-standard td {
     border-color: #333333 !important;
-    background: linear-gradient(135deg, #2b2b2b 0%, #1a1a1a 100%) !important;
+    background: #1f1f1f !important;
     transition: all 0.2s ease !important;
     color: #ffffff !important;
 }
 
 .fc-theme-standard .fc-daygrid-day {
-    background: linear-gradient(135deg, #2b2b2b 0%, #1a1a1a 100%) !important;
+    background: #1f1f1f !important;
     border: 1px solid #333333 !important;
     color: #ffffff !important;
     min-height: 120px !important;
 }
 
 .fc-theme-standard .fc-daygrid-day:hover {
-    background: linear-gradient(135deg, #333333 0%, #2b2b2b 100%) !important;
-    border-color: #00b6b4 !important;
-    transform: scale(1.02) !important;
-    box-shadow: 0 4px 8px rgba(0, 182, 180, 0.2) !important;
+    background: #262626 !important;
+    border-color: #555555 !important;
 }
 
 /* Specific day styling */
 .fc-theme-standard .fc-day-other {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%) !important;
+    background: #171717 !important;
     border-color: #2b2b2b !important;
 }
 
 .fc-theme-standard .fc-day-past {
-    background: linear-gradient(135deg, #2b2b2b 0%, #1a1a1a 100%) !important;
     opacity: 0.8 !important;
 }
 
 .fc-theme-standard .fc-day-future {
-    background: linear-gradient(135deg, #2b2b2b 0%, #1a1a1a 100%) !important;
     opacity: 1 !important;
 }
 
 .fc-theme-standard .fc-day-today {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+    background: #2f2f2f !important;
     color: #ffffff !important;
-    border: 2px solid #00b6b4 !important;
-    box-shadow: 0 4px 12px rgba(0, 182, 180, 0.3) !important;
+    border: 2px solid #555555 !important;
 }
 
 .fc-theme-standard .fc-day-today .fc-daygrid-day-number {
     color: #ffffff !important;
-    font-weight: 800 !important;
-    font-size: 1.1rem !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    text-shadow: none !important;
 }
 
 .fc-theme-standard .fc-daygrid-day-number {
@@ -114,16 +108,16 @@
     font-weight: 700 !important;
     font-size: 1rem !important;
     transition: all 0.2s ease !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: none !important;
     background: transparent !important;
     border: none !important;
     text-decoration: none !important;
 }
 
 .fc-theme-standard .fc-daygrid-day-number:hover {
-    color: #00b6b4 !important;
-    transform: scale(1.1) !important;
-    text-shadow: 0 2px 4px rgba(0, 182, 180, 0.5) !important;
+    color: #e5e7eb !important;
+    transform: none !important;
+    text-shadow: none !important;
     background: transparent !important;
 }
 
@@ -153,13 +147,12 @@
 }
 
 .fc-theme-standard .fc-col-header-cell {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    font-size: 0.8rem !important;
-    letter-spacing: 1px !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    background: #2b2b2b !important;
+    color: #e5e7eb !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0 !important;
 }
 
 /* Button styling - Override FullCalendar variables */
@@ -173,7 +166,6 @@
     padding: 8px 12px !important;
     transition: all 0.3s ease !important;
     font-size: 0.875rem !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
     text-transform: none !important;
 }
 
@@ -183,12 +175,10 @@
     border-color: var(--fc-button-hover-border-color) !important;
     color: var(--fc-button-hover-text-color) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(0, 182, 180, 0.4) !important;
 }
 
 .fc-button:focus,
 .fc-button-primary:focus {
-    box-shadow: 0 0 0 3px rgba(0, 182, 180, 0.3) !important;
     outline: none !important;
 }
 
@@ -199,7 +189,6 @@
     background-color: var(--fc-button-active-bg-color) !important;
     border-color: var(--fc-button-active-border-color) !important;
     color: var(--fc-button-active-text-color) !important;
-    box-shadow: 0 4px 8px rgba(0, 182, 180, 0.3) !important;
 }
 
 .fc-button:disabled,
@@ -221,9 +210,9 @@
 .fc-theme-standard .fc-toolbar-title {
     color: #f5f5f5 !important;
     font-size: 1.75rem !important;
-    font-weight: 800 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
-    letter-spacing: -0.5px !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+    letter-spacing: 0 !important;
 }
 
 .fc-theme-standard .fc-event {
@@ -233,16 +222,16 @@
     font-weight: 600 !important;
     padding: 4px 8px !important;
     margin: 2px 0 !important;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3) !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
     cursor: pointer !important;
 }
 
 .fc-theme-standard .fc-event:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4) !important;
-    opacity: 0.95 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
 }
 
 .fc-theme-standard .fc-daygrid-event {
@@ -250,18 +239,18 @@
 }
 
 .fc-theme-standard .fc-more-link {
-    color: #00b6b4 !important;
+    color: #9ca3af !important;
     font-weight: 600 !important;
     text-decoration: none !important;
     padding: 4px 8px !important;
     border-radius: 4px !important;
-    transition: all 0.2s ease !important;
-    background: rgba(0, 182, 180, 0.1) !important;
+    transition: background-color 0.2s ease !important;
+    background: #2b2b2b !important;
 }
 
 .fc-theme-standard .fc-more-link:hover {
-    color: #009999 !important;
-    background: rgba(0, 182, 180, 0.2) !important;
+    color: #f5f5f5 !important;
+    background: #333333 !important;
     text-decoration: none !important;
 }
 
@@ -270,45 +259,45 @@
 .fc-event[data-status="programme"],
 .fc-daygrid-event[data-status="programme"],
 .fc-daygrid-block-event[data-status="programme"] {
-    background-color: #00b6b4 !important;
-    border-color: #00b6b4 !important;
+    background-color: #374151 !important;
+    border-color: #374151 !important;
     color: #ffffff !important;
 }
 
 .fc-theme-standard .fc-event[data-status="programme"]:hover,
 .fc-event[data-status="programme"]:hover {
-    background-color: #009999 !important;
-    border-color: #009999 !important;
+    background-color: #4b5563 !important;
+    border-color: #4b5563 !important;
 }
 
 .fc-theme-standard .fc-event[data-status="confirme"],
 .fc-event[data-status="confirme"],
 .fc-daygrid-event[data-status="confirme"],
 .fc-daygrid-block-event[data-status="confirme"] {
-    background-color: #10b981 !important;
-    border-color: #10b981 !important;
+    background-color: #16a34a !important;
+    border-color: #16a34a !important;
     color: #ffffff !important;
 }
 
 .fc-theme-standard .fc-event[data-status="confirme"]:hover,
 .fc-event[data-status="confirme"]:hover {
-    background-color: #059669 !important;
-    border-color: #059669 !important;
+    background-color: #15803d !important;
+    border-color: #15803d !important;
 }
 
 .fc-theme-standard .fc-event[data-status="en_attente"],
 .fc-event[data-status="en_attente"],
 .fc-daygrid-event[data-status="en_attente"],
 .fc-daygrid-block-event[data-status="en_attente"] {
-    background-color: #f59e0b !important;
-    border-color: #f59e0b !important;
+    background-color: #d97706 !important;
+    border-color: #d97706 !important;
     color: #1a1a1a !important;
 }
 
 .fc-theme-standard .fc-event[data-status="en_attente"]:hover,
 .fc-event[data-status="en_attente"]:hover {
-    background-color: #d97706 !important;
-    border-color: #d97706 !important;
+    background-color: #b45309 !important;
+    border-color: #b45309 !important;
 }
 
 .fc-theme-standard .fc-event[data-status="annule"],
@@ -395,21 +384,19 @@
 
 /* Popover styling */
 .fc-theme-standard .fc-popover {
-    background: linear-gradient(135deg, #2b2b2b 0%, #333333 100%) !important;
-    border: 2px solid #00b6b4 !important;
+    background: #2b2b2b !important;
+    border: 1px solid #444444 !important;
     border-radius: 12px !important;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
-    backdrop-filter: blur(10px) !important;
+    box-shadow: none !important;
 }
 
 .fc-theme-standard .fc-popover-header {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+    background: #333333 !important;
     color: #ffffff !important;
     border-bottom: none !important;
     padding: 16px 20px !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     border-radius: 12px 12px 0 0 !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 .fc-theme-standard .fc-popover-body {
@@ -430,17 +417,17 @@
 }
 
 .fc-theme-standard .fc-scroller::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+    background: #555555 !important;
     border-radius: 5px !important;
 }
 
 .fc-theme-standard .fc-scroller::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #009999 0%, #007a7a 100%) !important;
+    background: #666666 !important;
 }
 
 /* Additional text visibility improvements */
 .fc-theme-standard .fc-day-other {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%) !important;
+    background: #171717 !important;
     color: #6b7280 !important;
 }
 
@@ -491,13 +478,12 @@
 
 /* Weekday names */
 .fc-theme-standard .fc-col-header-cell {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    font-size: 0.8rem !important;
-    letter-spacing: 1px !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    background: #2b2b2b !important;
+    color: #e5e7eb !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0 !important;
 }
 
 /* Force day number styling - override any conflicting styles */
@@ -671,31 +657,31 @@
 
 /* Improved Event Colors for Better Visibility */
 .fc-event[data-status="programme"] {
-    background: linear-gradient(135deg, #00b6b4 0%, #009999 100%) !important;
+    background: #374151 !important;
     color: #ffffff !important;
-    border: 1px solid #00b6b4 !important;
+    border: 1px solid #374151 !important;
 }
 
 .fc-event[data-status="confirme"] {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    background: #16a34a !important;
     color: #ffffff !important;
-    border: 1px solid #10b981 !important;
+    border: 1px solid #16a34a !important;
 }
 
 .fc-event[data-status="en_attente"] {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    background: #d97706 !important;
     color: #1a1a1a !important;
-    border: 1px solid #f59e0b !important;
+    border: 1px solid #d97706 !important;
 }
 
 .fc-event[data-status="annule"] {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    background: #ef4444 !important;
     color: #ffffff !important;
     border: 1px solid #ef4444 !important;
 }
 
 .fc-event[data-status="termine"] {
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+    background: #6b7280 !important;
     color: #ffffff !important;
     border: 1px solid #6b7280 !important;
 }
@@ -1015,8 +1001,8 @@
 
 
     {{-- Calendar View --}}
-    <div id="calendarView" class="bg-[#00b6b4] border border-[#333333] rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8 shadow-lg hidden overflow-x-auto">
-        <div id="calendar" class="min-w-[300px] sm:min-w-full">    </div>
+    <div id="calendarView" class=" rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8  hidden overflow-x-auto">
+        <div id="calendar" class="min-w-[300px] sm:min-w-full p-8">    </div>
         </div>
 
 {{-- Delete Confirmation Modal --}}

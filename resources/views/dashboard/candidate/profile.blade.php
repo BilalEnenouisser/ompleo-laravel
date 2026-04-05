@@ -318,8 +318,8 @@
         <div class="space-y-6" id="experienceContainer">
              @if($profile->experience && is_array($profile->experience) && count($profile->experience) > 0)
                  @foreach($profile->experience as $index => $exp)
-            <div class="border-l-4 border-[#00b6b4] pl-6 relative">
-                         <button class="hidden absolute -left-2 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
+            <div class="border-l-4 border-[#00b6b4] pl-6 pr-10 relative">
+                         <button class="hidden absolute right-0 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                 </button>
                 <div class="flex items-center gap-2 mb-2">
@@ -357,8 +357,8 @@
         <div class="space-y-6" id="educationContainer">
              @if($profile->education && is_array($profile->education) && count($profile->education) > 0)
                  @foreach($profile->education as $index => $edu)
-            <div class="border-l-4 border-[#009999] pl-6 relative">
-                         <button class="hidden absolute -left-2 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
+            <div class="border-l-4 border-[#009999] pl-6 pr-10 relative">
+                         <button class="hidden absolute right-0 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                 </button>
                 <div class="flex items-center gap-2 mb-2">
@@ -787,9 +787,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const newExp = document.createElement('div');
-        newExp.className = 'border-l-4 border-[#00b6b4] pl-6 relative';
+        newExp.className = 'border-l-4 border-[#00b6b4] pl-6 pr-10 relative';
         newExp.innerHTML = `
-                <button class="absolute -left-2 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
+            <button class="absolute right-0 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeExperience(this)">
                 <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </button>
             <div class="flex items-center gap-2 mb-2">
@@ -813,9 +813,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const newEdu = document.createElement('div');
-        newEdu.className = 'border-l-4 border-[#009999] pl-6 relative';
+        newEdu.className = 'border-l-4 border-[#009999] pl-6 pr-10 relative';
         newEdu.innerHTML = `
-            <button class="absolute -left-2 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
+            <button class="absolute right-0 top-0 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white hover:bg-red-600" onclick="removeEducation(this)">
                 <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </button>
             <div class="flex items-center gap-2 mb-2">

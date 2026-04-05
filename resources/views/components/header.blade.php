@@ -1,9 +1,10 @@
 @php
 use Illuminate\Support\Facades\Storage;
+$isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
 @endphp
-<header class="w-full z-[10000] bg-transparent relative" style="background: transparent !important;">
-    <div class="w-full px-4 min-[1201px]:px-[2%]" style="background: transparent;">
-        <div class="relative flex justify-between items-center h-24" style="background: transparent;">
+<header class="w-full z-[10000] relative {{ $isDashboard ? 'bg-[#1f1f1f] border-b border-[#333333]' : 'bg-transparent' }}" style="{{ $isDashboard ? '' : 'background: transparent !important;' }}">
+    <div class="w-full px-4 min-[1201px]:px-[2%]" style="{{ $isDashboard ? '' : 'background: transparent;' }}">
+        <div class="relative flex justify-between items-center h-24" style="{{ $isDashboard ? '' : 'background: transparent;' }}">
             <!-- Left Side: Logo -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex-shrink-0 group">
@@ -16,9 +17,6 @@ use Illuminate\Support\Facades\Storage;
 
             <!-- Center: Desktop Navigation -->
             <nav class="desktop-nav absolute left-1/2 transform -translate-x-1/2 z-[10001]">
-                    @php
-                        $isDashboard = request()->routeIs('admin.*') || request()->routeIs('recruiter.*') || request()->routeIs('candidate.*');
-                    @endphp
                 <!-- Parcourir les offres with dropdown -->
                 <div class="relative group z-[10001]">
                     <button class="ompleo-btn !font-normal flex items-center {{ request()->routeIs('jobs.*') ? 'text-[#39fffc]' : 'text-white hover:text-[#39fffc]' }} transition-all duration-300">
@@ -110,7 +108,7 @@ use Illuminate\Support\Facades\Storage;
                         </button>
 
                         <!-- Notification Dropdown -->
-                        <div id="notificationMenu" class="hidden absolute right-0 mt-2 w-80 max-h-[70vh] overflow-y-auto bg-[#2b2b2b] rounded-xl shadow-lg border border-[#333333] z-50">
+                        <div id="notificationMenu" class="hidden absolute right-0 mt-2 w-[32rem] max-w-[calc(100vw-1rem)] max-h-[70vh] overflow-y-auto bg-[#2b2b2b] rounded-xl shadow-lg border border-[#333333] z-50">
                             <div class="p-4 border-b border-[#333333] flex items-center justify-between">
                                 <h3 class="font-semibold text-[#f5f5f5]">Notifications</h3>
                                 <div class="flex items-center gap-2">
@@ -589,13 +587,18 @@ function renderRichNotification(notification) {
                     <line x1="16" x2="16" y1="2" y2="6"/>
                     <line x1="8" x2="8" y1="2" y2="6"/>
                 </svg>
-                <span class="text-[#00b6b4] font-medium">Interview</span>
+                <span class="text-[#00b6b4] font-medium">Entretien</span>
             </div>
-            <div class="space-y-0.5 text-[#9ca3af]">
-                ${notification.interview.date ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Date:</span> ${notification.interview.date}</div>` : ''}
-                ${notification.interview.time ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Time:</span> ${notification.interview.time}</div>` : ''}
-                ${notification.interview.company ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Company:</span> ${notification.interview.company}</div>` : ''}
-                ${notification.interview.job_title ? `<div class="flex items-center gap-1 truncate"><span class="text-[#00b6b4]">Job:</span> <span class="truncate">${notification.interview.job_title}</span></div>` : ''}
+            <div class="space-y-1 text-[#9ca3af]">
+                ${notification.interview.job_title ? `<div class="truncate text-[#f5f5f5] font-medium">${notification.interview.job_title}</div>` : ''}
+                ${notification.interview.company ? `<div class="truncate">${notification.interview.company}</div>` : ''}
+                <div class="flex items-center gap-2 flex-wrap">
+                    ${notification.interview.date ? `<span>${notification.interview.date}</span>` : ''}
+                    ${notification.interview.time ? `<span>${notification.interview.time}</span>` : ''}
+                    ${notification.interview.type_in_french ? `<span>${notification.interview.type_in_french}</span>` : ''}
+                </div>
+                ${notification.interview.location ? `<div class="truncate">${notification.interview.location}</div>` : ''}
+                ${notification.interview.notes ? `<div class="line-clamp-2">${notification.interview.notes}</div>` : ''}
             </div>
         </div>
     ` : '';
@@ -615,6 +618,7 @@ function renderRichNotification(notification) {
                         <h4 class="font-medium text-[#f5f5f5]">${notification.title}</h4>
                         ${notification.rich_content && notification.rich_content.length > 0 ? `<span class="px-2 py-0.5 text-xs bg-[#00b6b4]/20 text-[#00b6b4] rounded-full whitespace-nowrap">De l'administration</span>` : ''}
                     </div>
+                    <p class="text-sm text-[#9ca3af] line-clamp-2">${notification.message}</p>
                     ${interviewSection}
                     <div class="flex items-center justify-between mt-2">
                         <span class="text-xs text-[#9ca3af]">${formatTime(new Date(notification.timestamp))}</span>
@@ -650,13 +654,18 @@ function renderBasicNotification(notification) {
                     <line x1="16" x2="16" y1="2" y2="6"/>
                     <line x1="8" x2="8" y1="2" y2="6"/>
                 </svg>
-                <span class="text-[#00b6b4] font-medium">Interview</span>
+                <span class="text-[#00b6b4] font-medium">Entretien</span>
             </div>
-            <div class="space-y-0.5 text-[#9ca3af]">
-                ${notification.interview.date ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Date:</span> ${notification.interview.date}</div>` : ''}
-                ${notification.interview.time ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Time:</span> ${notification.interview.time}</div>` : ''}
-                ${notification.interview.company ? `<div class="flex items-center gap-1"><span class="text-[#00b6b4]">Company:</span> ${notification.interview.company}</div>` : ''}
-                ${notification.interview.job_title ? `<div class="flex items-center gap-1 truncate"><span class="text-[#00b6b4]">Job:</span> <span class="truncate">${notification.interview.job_title}</span></div>` : ''}
+            <div class="space-y-1 text-[#9ca3af]">
+                ${notification.interview.job_title ? `<div class="truncate text-[#f5f5f5] font-medium">${notification.interview.job_title}</div>` : ''}
+                ${notification.interview.company ? `<div class="truncate">${notification.interview.company}</div>` : ''}
+                <div class="flex items-center gap-2 flex-wrap">
+                    ${notification.interview.date ? `<span>${notification.interview.date}</span>` : ''}
+                    ${notification.interview.time ? `<span>${notification.interview.time}</span>` : ''}
+                    ${notification.interview.type_in_french ? `<span>${notification.interview.type_in_french}</span>` : ''}
+                </div>
+                ${notification.interview.location ? `<div class="truncate">${notification.interview.location}</div>` : ''}
+                ${notification.interview.notes ? `<div class="line-clamp-2">${notification.interview.notes}</div>` : ''}
             </div>
         </div>
     ` : '';
@@ -673,6 +682,7 @@ function renderBasicNotification(notification) {
                 
                 <div class="flex-1 min-w-0" onclick="handleNotificationClick(${notification.id})">
                     <h4 class="font-medium text-[#f5f5f5] mb-1">${notification.title}</h4>
+                    <p class="text-sm text-[#9ca3af] line-clamp-2">${notification.message}</p>
                     ${interviewSection}
                     <div class="flex items-center justify-between mt-2">
                         <span class="text-xs text-[#9ca3af]">${formatTime(new Date(notification.timestamp))}</span>
@@ -757,7 +767,9 @@ function updateNotificationBadge(notifications) {
 }
 
 function markAsRead(notificationId) {
-    fetch(`/notifications/${notificationId}/read`, {
+    const url = {{ auth()->user()->user_type === 'admin' ? '`/admin/notifications/view/${notificationId}/read`' : '`/notifications/${notificationId}/read`' }};
+
+    fetch(url, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -778,7 +790,9 @@ function markAsRead(notificationId) {
 }
 
 function markAllAsRead() {
-    fetch('/notifications/read-all', {
+    const url = '{{ auth()->user()->user_type === 'admin' ? '/admin/notifications/view/read-all' : '/notifications/read-all' }}';
+
+    fetch(url, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -800,7 +814,9 @@ function markAllAsRead() {
 
 function deleteNotification(notificationId) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')) {
-        fetch(`/notifications/${notificationId}`, {
+        const url = {{ auth()->user()->user_type === 'admin' ? '`/admin/notifications/view/${notificationId}`' : '`/notifications/${notificationId}`' }};
+
+        fetch(url, {
             method: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -831,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Load only notification count (lighter request)
 function loadNotificationCount() {
-    fetch('/api/notifications', {
+    fetch('/api/notifications?header=true', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
