@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +34,7 @@ Route::prefix('v1')->group(function () {
 Route::middleware('auth:web')->prefix('v1')->group(function () {
     // User Profile API
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return new UserResource($request->user());
     });
     
     Route::get('/profile', [App\Http\Controllers\Api\ProfileController::class, 'show']);

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Technique — Ompleo</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 40px auto;
+      background: var(--card);
+      padding: 56px 64px;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .cover {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.2;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .meta {
+      margin-top: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    h2 {
+      margin: 34px 0 14px;
+      font-size: 18px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    h3 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    p {
+      margin: 0 0 14px
+    }
+
+    .severity {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 999px;
+      margin-top: 6px;
+    }
+
+    ul {
+      margin: 10px 0 18px 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0
+    }
+
+    .finding {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      background: #fcfcfd;
+    }
+
+    .label {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .conclusion {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: #f8fafc;
+    }
+
+    @media print {
+      body {
+        background: #fff
+      }
+
+      .page {
+        margin: 0;
+        max-width: none;
+        box-shadow: none;
+        border: none;
+        padding: 24px 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="cover">
+      <h1>Audit Technique — Plateforme Ompleo</h1>
+      <div class="subtitle">Rapport synthétique des problématiques identifiées</div>
+      <div class="meta">Document interne</div>
+    </section>
+
+    <section>
+      <h2>Section A — Synthèse Exécutive</h2>
+      <p>
+        L’analyse de la plateforme met en évidence un ensemble de dysfonctionnements structurels affectant
+        l’architecture, la base de données, la sécurité ainsi que la maintenabilité globale du système.
+        Les problèmes observés ne relèvent pas uniquement d’un manque de finition ou de qualité de code,
+        mais d’une conception d’ensemble fragile et incohérente.
+      </p>
+      <p>
+        Plusieurs couches critiques de l’application présentent des signes de mauvaise structuration :
+        migrations instables, logique métier dispersée, contrôles d’accès insuffisants, vues trop chargées
+        et absence quasi totale de garanties techniques autour des workflows.
+      </p>
+      <div class="severity">Niveau de gravité : Critique</div>
+    </section>
+
+    <section>
+      <h2>Section B — Problématiques Identifiées</h2>
+
+      <div class="finding">
+        <h3>1. Historique de migrations incohérent</h3>
+        <p><span class="label">Constat :</span> plusieurs migrations semblent dupliquées ou contradictoires, avec des
+          créations répétées de tables ou d’attributs déjà introduits.</p>
+        <p><span class="label">Impact :</span> ce type de situation fragilise fortement les déploiements, les
+          environnements vierges et la reproductibilité du schéma de base de données.</p>
+      </div>
+
+      <div class="finding">
+        <h3>2. Ambiguïté dans la modélisation métier</h3>
+        <p><span class="label">Constat :</span> certains concepts métiers paraissent représentés par plusieurs
+          structures concurrentes, ce qui brouille la responsabilité réelle des données.</p>
+        <p><span class="label">Impact :</span> cette ambiguïté favorise les incohérences, complique les évolutions et
+          rend le comportement du système difficile à fiabiliser.</p>
+      </div>
+
+      <div class="finding">
+        <h3>3. Gestion des autorisations insuffisante</h3>
+        <p><span class="label">Constat :</span> la couverture d’autorisation apparaît incomplète et, dans certains cas,
+          potentiellement contournable.</p>
+        <p><span class="label">Impact :</span> cela expose la plateforme à des accès ou actions non légitimes sur des
+          ressources sensibles.</p>
+      </div>
+
+      <div class="finding">
+        <h3>4. Exposition de données via l’API</h3>
+        <p><span class="label">Constat :</span> certaines réponses API semblent retourner des structures trop riches ou
+          insuffisamment filtrées.</p>
+        <p><span class="label">Impact :</span> ce comportement augmente le risque d’exposition d’informations qui ne
+          devraient pas être diffusées publiquement.</p>
+      </div>
+
+      <div class="finding">
+        <h3>5. Rendu de contenu non sécurisé</h3>
+        <p><span class="label">Constat :</span> du contenu HTML paraît être injecté ou affiché sans protection
+          suffisante.</p>
+        <p><span class="label">Impact :</span> cette pratique ouvre la voie à des vulnérabilités de type XSS et
+          compromet la sécurité côté client.</p>
+      </div>
+
+      <div class="finding">
+        <h3>6. Controllers surchargés</h3>
+        <p><span class="label">Constat :</span> plusieurs controllers semblent concentrer à la fois logique métier,
+          orchestration applicative et traitement de données.</p>
+        <p><span class="label">Impact :</span> cette densité rend le code difficile à maintenir, à tester et à faire
+          évoluer sans régression.</p>
+      </div>
+
+      <div class="finding">
+        <h3>7. États métier dispersés et dupliqués</h3>
+        <p><span class="label">Constat :</span> les statuts et transitions métiers paraissent répétés à plusieurs
+          endroits dans l’application.</p>
+        <p><span class="label">Impact :</span> cette dispersion crée un risque élevé d’incohérence entre les différents
+          workflows.</p>
+      </div>
+
+      <div class="finding">
+        <h3>8. Vues Blade trop chargées</h3>
+        <p><span class="label">Constat :</span> les vues contiennent une quantité importante de logique, de scripts et
+          de traitements qui dépassent leur rôle d’affichage.</p>
+        <p><span class="label">Impact :</span> cela rend le frontend fragile, difficilement testable et plus coûteux à
+          maintenir.</p>
+      </div>
+
+      <div class="finding">
+        <h3>9. Présence de données fictives dans des modules sensibles</h3>
+        <p><span class="label">Constat :</span> certains espaces analytiques ou de reporting semblent s’appuyer sur des
+          données artificielles ou non fiables.</p>
+        <p><span class="label">Impact :</span> cela compromet la crédibilité des indicateurs et fausse la lecture
+          opérationnelle de la plateforme.</p>
+      </div>
+
+      <div class="finding">
+        <h3>10. Organisation des routes peu maîtrisée</h3>
+        <p><span class="label">Constat :</span> les routes paraissent centralisées de manière excessive, avec des
+          duplications et un découpage peu clair des responsabilités.</p>
+        <p><span class="label">Impact :</span> cette organisation augmente le risque de conflit, de régression et de
+          complexité lors des évolutions futures.</p>
+      </div>
+
+      <div class="finding">
+        <h3>11. Contraintes relationnelles insuffisantes</h3>
+        <p><span class="label">Constat :</span> plusieurs relations critiques semblent dépourvues de contraintes
+          garantissant l’unicité ou l’intégrité des données.</p>
+        <p><span class="label">Impact :</span> ce manque favorise l’apparition de doublons et d’enregistrements
+          incohérents.</p>
+      </div>
+
+      <div class="finding">
+        <h3>12. Hygiène opérationnelle faible</h3>
+        <p><span class="label">Constat :</span> l’environnement applicatif laisse apparaître des pratiques peu
+          rigoureuses, notamment autour des comptes de démonstration et de l’exposition d’informations internes.</p>
+        <p><span class="label">Impact :</span> cela augmente le risque sécurité et dégrade le niveau de confiance global
+          envers la plateforme.</p>
+      </div>
+
+      <div class="finding">
+        <h3>13. Dette technique élevée</h3>
+        <p><span class="label">Constat :</span> l’ensemble du projet présente des signes nets d’accumulation de dette
+          technique à plusieurs niveaux.</p>
+        <p><span class="label">Impact :</span> cette situation freine les évolutions, augmente les coûts de maintenance
+          et réduit la robustesse générale du produit.</p>
+      </div>
+
+      <div class="finding">
+        <h3>14. Absence de couverture de tests exploitable</h3>
+        <p><span class="label">Constat :</span> la base actuelle ne semble pas disposer d’une couverture de tests
+          suffisante pour sécuriser les changements.</p>
+        <p><span class="label">Impact :</span> toute évolution devient risquée, faute de mécanismes fiables de
+          validation automatique.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section C — Analyse de la Base de Données</h2>
+      <p>
+        La couche base de données apparaît comme l’un des points les plus fragiles du projet. Plusieurs indices
+        laissent apparaître une modélisation instable, peu normalisée et insuffisamment contrainte.
+      </p>
+      <ul>
+        <li>Présence de redondances structurelles dans le schéma.</li>
+        <li>Utilisation étendue de champs JSON pour des données qui semblent relever d’une modélisation relationnelle.
+        </li>
+        <li>Contraintes d’unicité et d’intégrité insuffisantes sur des relations métier importantes.</li>
+        <li>Indexation partielle ou inadaptée pour certains cas d’usage de recherche et de filtrage.</li>
+        <li>Dépendances techniques laissant penser à une compatibilité base de données mal maîtrisée.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Section D — Observations Générales</h2>
+      <p>
+        Les défauts observés ne sont pas isolés. Ils s’inscrivent dans un ensemble cohérent de fragilités qui
+        touchent à la fois la conception du produit, son implémentation technique et sa capacité à évoluer.
+      </p>
+      <p>
+        L’application présente aujourd’hui des signes de désalignement entre la structure du code, le modèle
+        de données et les besoins métier qu’elle cherche à couvrir.
+      </p>
+    </section>
+
+    <section>
+      <h2>Section E — Conclusion</h2>
+      <div class="conclusion">
+        L’audit met en évidence des problématiques critiques sur plusieurs couches du système. En l’état,
+        la plateforme présente des risques importants en matière de stabilité, de cohérence fonctionnelle,
+        de sécurité et de maintenabilité.
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

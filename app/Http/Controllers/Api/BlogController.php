@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
@@ -61,11 +62,11 @@ class BlogController extends Controller
 
         $blogs = $query->paginate($request->get('per_page', 10));
 
-        return response()->json([
-            'success' => true,
-            'data' => $blogs,
-            'message' => 'Blog posts retrieved successfully'
-        ]);
+        return BlogResource::collection($blogs)
+            ->additional([
+                'success' => true,
+                'message' => 'Blog posts retrieved successfully',
+            ]);
     }
 
     /**
@@ -83,10 +84,10 @@ class BlogController extends Controller
         // Increment view count
         $blog->increment('views');
 
-        return response()->json([
-            'success' => true,
-            'data' => $blog,
-            'message' => 'Blog post retrieved successfully'
-        ]);
+        return (new BlogResource($blog))
+            ->additional([
+                'success' => true,
+                'message' => 'Blog post retrieved successfully',
+            ]);
     }
 }

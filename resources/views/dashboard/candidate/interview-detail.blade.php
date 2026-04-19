@@ -1,6 +1,10 @@
 @extends('layouts.dashboard')
 @section('page-title', 'Détails de l\'Entretien')
 
+@php
+    $todayDate = now()->toDateString();
+@endphp
+
 @section('content')
 <div class="space-y-6 sm:space-y-8">
     {{-- Header --}}
@@ -29,15 +33,7 @@
     <div class="bg-[#2b2b2b] border border-[#333333] rounded-2xl p-6 sm:p-8 shadow-lg">
         {{-- Status Badge --}}
         <div class="mb-6">
-            <span class="px-3 py-1 rounded-full text-sm font-medium
-                @if($interview->status == 'programme') text-blue-400 bg-blue-400/20
-                @elseif($interview->status == 'confirme') text-green-400 bg-green-400/20
-                @elseif($interview->status == 'en_attente') text-yellow-400 bg-yellow-400/20
-                @elseif($interview->status == 'termine') text-gray-400 bg-gray-400/20
-                @elseif($interview->status == 'annule') text-red-400 bg-red-400/20
-                @endif">
-                {{ $interview->status_in_french }}
-            </span>
+            <x-status-badge :status="$interview->status" :label="$interview->status_in_french" />
         </div>
 
         {{-- Interview Information Grid --}}
@@ -75,20 +71,7 @@
             {{-- Type --}}
             <div class="flex items-start gap-3">
                 <div class="w-10 h-10 bg-[#00b6b4]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    @if($interview->type == 'visioconference')
-                        <svg class="w-7 h-7 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                        </svg>
-                    @elseif($interview->type == 'presentiel')
-                        <svg class="w-7 h-7 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    @else
-                        <svg class="w-7 h-7 text-[#00b6b4]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
-                    @endif
+                    <x-interview-type-icon :type="$interview->type" class="w-7 h-7 text-[#00b6b4]" />
                 </div>
                 <div>
                     <p class="text-sm text-[#9ca3af] mb-1">Type</p>
@@ -242,7 +225,7 @@
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label for="suggested_date" class="block text-sm font-medium text-[#f5f5f5] mb-2">Date suggérée (optionnel)</label>
-                    <input type="date" id="suggested_date" name="suggested_date" min="{{ date('Y-m-d') }}" class="w-full bg-[#333333] border border-[#444444] rounded-lg px-4 py-2 text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
+                    <input type="date" id="suggested_date" name="suggested_date" min="{{ $todayDate }}" class="w-full bg-[#333333] border border-[#444444] rounded-lg px-4 py-2 text-[#f5f5f5] focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none">
                 </div>
                 <div>
                     <label for="suggested_time" class="block text-sm font-medium text-[#f5f5f5] mb-2">Heure suggérée (optionnel)</label>
@@ -275,43 +258,8 @@
     </div>
 </div>
 
-<script>
-function openCancelModal() {
-    document.getElementById('cancelModal').classList.remove('hidden');
-}
-
-function closeCancelModal() {
-    document.getElementById('cancelModal').classList.add('hidden');
-}
-
-function openChangeModal() {
-    document.getElementById('changeModal').classList.remove('hidden');
-}
-
-function closeChangeModal() {
-    document.getElementById('changeModal').classList.add('hidden');
-}
-
-function openProblemModal() {
-    document.getElementById('problemModal').classList.remove('hidden');
-}
-
-function closeProblemModal() {
-    document.getElementById('problemModal').classList.add('hidden');
-}
-
-// Close modals when clicking outside
-document.getElementById('cancelModal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeCancelModal();
-});
-
-document.getElementById('changeModal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeChangeModal();
-});
-
-document.getElementById('problemModal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeProblemModal();
-});
-</script>
+@section('scripts')
+<script src="{{ asset('js/recruiter-interviews.js') }}"></script>
+@endsection
 @endsection
 

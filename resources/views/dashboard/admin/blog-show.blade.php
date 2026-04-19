@@ -130,7 +130,10 @@
         <div class="mb-6">
             <h3 class="text-lg font-semibold text-[#f5f5f5] mb-4">Contenu</h3>
             <div class="prose prose-invert max-w-none">
-                {!! $blog->content !!}
+                @php
+                    $safeContent = strip_tags((string) $blog->content, '<p><br><strong><em><ul><ol><li><blockquote><h2><h3><h4><h5><h6>');
+                @endphp
+                {!! $safeContent !!}
             </div>
         </div>
 

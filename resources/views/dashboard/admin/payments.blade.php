@@ -306,18 +306,6 @@
                 <tbody>
                     @forelse($subscriptions as $subscription)
                     @php
-                        $statusColors = [
-                            'active' => 'bg-green-900/30 text-green-400',
-                            'expired' => 'bg-red-900/30 text-red-400',
-                            'pending' => 'bg-yellow-900/30 text-yellow-400',
-                            'cancelled' => 'bg-gray-900/30 text-gray-400',
-                        ];
-                        $statusLabels = [
-                            'active' => 'Complété',
-                            'expired' => 'Expiré',
-                            'pending' => 'En attente',
-                            'cancelled' => 'Annulé',
-                        ];
                         $company = $subscription->company;
                         $recruiter = $subscription->recruiter;
                     @endphp
@@ -366,22 +354,18 @@
                             </div>
                         </td>
                         <td class="py-4 px-6 min-w-[130px]">
-                            <span class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2 w-fit {{ $statusColors[$subscription->status] ?? 'bg-gray-900/30 text-gray-400' }} whitespace-nowrap">
-                                <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    @if($subscription->status === 'active')
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                        <path d="M22 4 12 14.01l-3-3"/>
-                                    @elseif($subscription->status === 'pending')
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12,6 12,12 16,14"/>
-                                    @else
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="15" x2="9" y1="9" y2="15"/>
-                                        <line x1="9" x2="15" y1="9" y2="15"/>
-                                    @endif
-                                </svg>
-                                {{ $statusLabels[$subscription->status] ?? ucfirst($subscription->status) }}
-                            </span>
+                            <x-status-badge
+                                :status="$subscription->status"
+                                :label="match($subscription->status) {
+                                    'active' => __('Complete'),
+                                    'expired' => __('Expire'),
+                                    'pending' => __('En attente'),
+                                    'cancelled' => __('Annule'),
+                                    default => ucfirst((string) $subscription->status),
+                                }"
+                                size="sm"
+                                class="w-fit"
+                            />
                         </td>
                         <td class="py-4 px-6 min-w-[120px]">
                             <div class="flex items-center gap-1 text-[#9ca3af]">

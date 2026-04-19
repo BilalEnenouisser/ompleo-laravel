@@ -18,10 +18,7 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
-        // Ensure the blog is published
-        if ($blog->status !== 'published') {
-            abort(404);
-        }
+        $this->authorize('view', $blog);
 
         // Get related blogs (same category or recent blogs)
         $relatedBlogs = Blog::where('status', 'published')

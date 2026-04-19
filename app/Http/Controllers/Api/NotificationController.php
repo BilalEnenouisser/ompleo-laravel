@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NotificationResource;
 use App\Models\Interview;
 use App\Models\UserNotification;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class NotificationController extends Controller
             $unreadCount = $unreadCountQuery->count();
 
             return response()->json([
-                'notifications' => $notifications->map(function ($userNotification) {
+                'notifications' => NotificationResource::collection($notifications->map(function ($userNotification) {
                     $interviewData = null;
 
                     if ($userNotification->notification && in_array($userNotification->notification->type, ['interview', 'interview_update'])) {
@@ -111,20 +112,10 @@ class NotificationController extends Controller
                         }
                     }
 
-                    return [
-                        'id' => $userNotification->id,
-                        'title' => $userNotification->notification->title,
-                        'message' => $userNotification->notification->message,
-                        'type' => $userNotification->notification->type,
-                        'rich_content' => $userNotification->notification->rich_content,
-                        'background_color' => $userNotification->notification->background_color,
-                        'created_at' => $userNotification->created_at,
-                        'timestamp' => $userNotification->created_at,
-                        'is_read' => $userNotification->is_read,
-                        'isRead' => $userNotification->is_read,
-                        'interview' => $interviewData,
-                    ];
-                }),
+                    $userNotification->interview = $interviewData;
+
+                    return $userNotification;
+                }))->resolve($request),
                 'unread_count' => $unreadCount
             ]);
         }
@@ -148,11 +139,11 @@ class NotificationController extends Controller
         $notifications = $query->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 10));
 
-        return response()->json([
-            'success' => true,
-            'data' => $notifications,
-            'message' => 'Notifications retrieved successfully'
-        ]);
+        return NotificationResource::collection($notifications)
+            ->additional([
+                'success' => true,
+                'message' => 'Notifications retrieved successfully',
+            ]);
     }
 
     /**
@@ -194,11 +185,11 @@ class NotificationController extends Controller
             'read_at' => now()
         ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $userNotification,
-            'message' => 'Notification marked as read'
-        ]);
+        return (new NotificationResource($userNotification->load('notification')))
+            ->additional([
+                'success' => true,
+                'message' => 'Notification marked as read',
+            ]);
     }
 
     /**

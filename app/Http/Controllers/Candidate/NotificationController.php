@@ -13,6 +13,8 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         $user = Auth::user();
         
         // Build query
@@ -183,9 +185,8 @@ class NotificationController extends Controller
     public function markAsRead($id)
     {
         $user = Auth::user();
-        $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', $user->id)
-            ->first();
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('update', $userNotification);
             
         if ($userNotification) {
             $userNotification->update([
@@ -207,6 +208,8 @@ class NotificationController extends Controller
     
     public function markAllAsRead()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         $user = Auth::user();
         UserNotification::where('user_id', $user->id)
             ->where('is_read', false)
@@ -224,9 +227,8 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         $user = Auth::user();
-        $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', $user->id)
-            ->first();
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('delete', $userNotification);
             
         if ($userNotification) {
             $userNotification->delete();
@@ -245,6 +247,8 @@ class NotificationController extends Controller
     
     public function destroyAll()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         $user = Auth::user();
         UserNotification::where('user_id', $user->id)->delete();
         

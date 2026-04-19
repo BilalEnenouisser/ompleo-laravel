@@ -16,6 +16,8 @@ class UserNotificationController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         $user = Auth::user();
         
         // Get user notifications with the notification details
@@ -32,6 +34,8 @@ class UserNotificationController extends Controller
      */
     public function getNotifications()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         $user = Auth::user();
 
         // Admin sees system-wide unread notifications in header; others see only their own unread notifications.
@@ -192,9 +196,8 @@ class UserNotificationController extends Controller
      */
     public function markAsRead($id)
     {
-        $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->first();
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('update', $userNotification);
 
         if ($userNotification) {
             $userNotification->update([
@@ -221,6 +224,8 @@ class UserNotificationController extends Controller
      */
     public function markAllAsRead()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         UserNotification::where('user_id', Auth::id())
             ->where('is_read', false)
             ->update([
@@ -240,9 +245,8 @@ class UserNotificationController extends Controller
      */
     public function destroy($id)
     {
-        $userNotification = UserNotification::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->first();
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('delete', $userNotification);
 
         if ($userNotification) {
             $userNotification->delete();
@@ -266,6 +270,8 @@ class UserNotificationController extends Controller
      */
     public function destroyAll()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         UserNotification::where('user_id', Auth::id())->delete();
         
         if (request()->expectsJson()) {

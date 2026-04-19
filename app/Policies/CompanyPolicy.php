@@ -73,4 +73,12 @@ class CompanyPolicy
     {
         return $user->isAdmin();
     }
+
+    /**
+     * Determine whether the user can send a message to a candidate from companies pages.
+     */
+    public function sendMessage(User $user): bool
+    {
+        return $user->isRecruiter();
+    }
 }

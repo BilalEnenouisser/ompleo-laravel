@@ -237,23 +237,17 @@
                             {{ $subscription->payment_method ?? 'N/A' }}
                         </td>
                         <td class="py-3 px-4">
-                            @php
-                                $statusColors = [
-                                    'active' => 'bg-green-900/30 text-green-400',
-                                    'expired' => 'bg-red-900/30 text-red-400',
-                                    'pending' => 'bg-yellow-900/30 text-yellow-400',
-                                    'cancelled' => 'bg-gray-900/30 text-gray-400',
-                                ];
-                                $statusLabels = [
-                                    'active' => 'Actif',
-                                    'expired' => 'Expiré',
-                                    'pending' => 'En Attente',
-                                    'cancelled' => 'Annulé',
-                                ];
-                            @endphp
-                            <span class="px-2 py-1 rounded-full text-xs font-medium {{ $statusColors[$subscription->status] ?? 'bg-gray-900/30 text-gray-400' }}">
-                                {{ $statusLabels[$subscription->status] ?? ucfirst($subscription->status) }}
-                            </span>
+                            <x-status-badge
+                                :status="$subscription->status"
+                                :label="match($subscription->status) {
+                                    'active' => __('Actif'),
+                                    'expired' => __('Expire'),
+                                    'pending' => __('En attente'),
+                                    'cancelled' => __('Annule'),
+                                    default => ucfirst((string) $subscription->status),
+                                }"
+                                size="sm"
+                            />
                         </td>
                         <td class="py-3 px-4 text-xs sm:text-sm text-[#9ca3af]">
                             {{ $subscription->created_at->format('d/m/Y') }}

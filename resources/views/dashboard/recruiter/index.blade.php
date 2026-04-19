@@ -307,23 +307,17 @@
                         </div>
                     </div>
                     <div class="flex flex-col items-end justify-start gap-1">
-                        @php
-                            $statusColors = [
-                                'pending' => 'color: rgb(37 99 235 / var(--tw-text-opacity, 1)); background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));',
-                                'reviewed' => 'background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1)); color: rgb(202 138 4 / var(--tw-text-opacity, 1));',
-                                'accepted' => 'color: rgb(22 163 74 / var(--tw-text-opacity, 1)); background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));',
-                                'rejected' => 'color: rgb(239 68 68 / var(--tw-text-opacity, 1)); background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));'
-                            ];
-                            $statusLabels = [
-                                'pending' => 'Nouveau',
-                                'reviewed' => 'En cours',
-                                'accepted' => 'Accepté',
-                                'rejected' => 'Rejeté'
-                            ];
-                        @endphp
-                        <span class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap" style="{{ $statusColors[$application->status] ?? $statusColors['pending'] }}">
-                            {{ $statusLabels[$application->status] ?? 'Nouveau' }}
-                        </span>
+                        <x-status-badge
+                            :status="$application->status"
+                            :label="match($application->status) {
+                                'pending' => __('Nouveau'),
+                                'reviewed' => __('En cours'),
+                                'accepted' => __('Accepte'),
+                                'rejected' => __('Rejete'),
+                                default => __('Nouveau'),
+                            }"
+                            size="sm"
+                        />
                         <p class="text-xs text-[#9ca3af] whitespace-nowrap">
                             {{ $application->created_at->format('Y-m-d') }}
                         </p>
@@ -425,78 +419,7 @@
         </div>
         <div class="space-y-4">
             @forelse($upcomingInterviews->take(5) as $interview)
-            <div class="flex flex-row items-center justify-between p-4 border border-[#444444] rounded-xl hover:bg-[#333333] transition-colors duration-200 gap-3 interview-item">
-                <style>
-                    @media (max-width: 767px) {
-                        .interview-item {
-                            flex-direction: column !important;
-                            align-items: flex-start !important;
-                        }
-                    }
-                </style>
-                <div class="flex items-center gap-3 flex-1 min-w-0">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#00b6b4] to-[#009e9c] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                        {{ substr($interview->candidate->name, 0, 2) }}
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <h3 class="font-semibold text-[#f5f5f5] text-base truncate">
-                            {{ $interview->candidate->name }}
-                        </h3>
-                        <p class="text-sm text-[#9ca3af] truncate">
-                            {{ $interview->job->title }}
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 text-xs text-[#9ca3af] mt-1">
-                            <span class="flex items-center gap-1 whitespace-nowrap">
-                                <svg class="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                                    <line x1="16" x2="16" y1="2" y2="6"/>
-                                    <line x1="8" x2="8" y1="2" y2="6"/>
-                                    <line x1="3" x2="21" y1="10" y2="10"/>
-                                </svg>
-                                <span class="truncate">{{ $interview->formatted_date }}</span>
-                            </span>
-                            <span class="flex items-center gap-1 whitespace-nowrap">
-                                <svg class="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <polyline points="12,6 12,12 16,14"/>
-                                </svg>
-                                <span class="truncate">{{ $interview->formatted_start_time }}</span>
-                            </span>
-                            <span class="flex items-center gap-1 whitespace-nowrap">
-                                <svg class="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                                <span class="truncate">{{ $interview->type_in_french }}</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col items-end justify-start gap-1">
-                    @php
-                        $statusColors = [
-                            'programme' => 'color: rgb(0, 182, 180); background-color: rgba(0, 182, 180, 0.1);',
-                            'confirme' => 'color: rgb(16, 185, 129); background-color: rgba(16, 185, 129, 0.1);',
-                            'en_attente' => 'color: rgb(245, 158, 11); background-color: rgba(245, 158, 11, 0.1);',
-                            'annule' => 'color: rgb(239, 68, 68); background-color: rgba(239, 68, 68, 0.1);',
-                            'termine' => 'color: rgb(107, 114, 128); background-color: rgba(107, 114, 128, 0.1);'
-                        ];
-                        $statusLabels = [
-                            'programme' => 'Programmé',
-                            'confirme' => 'Confirmé',
-                            'en_attente' => 'En attente',
-                            'annule' => 'Annulé',
-                            'termine' => 'Terminé'
-                        ];
-                    @endphp
-                    <span class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap" style="{{ $statusColors[$interview->status] ?? $statusColors['programme'] }}">
-                        {{ $statusLabels[$interview->status] ?? 'Programmé' }}
-                    </span>
-                    <p class="text-xs text-[#9ca3af] whitespace-nowrap">
-                        {{ $interview->formatted_duration }}
-                    </p>
-                </div>
-            </div>
+            <x-interview-card :interview="$interview" />
             @empty
             <div class="text-center py-8">
                 <div class="w-16 h-16 mx-auto mb-4 bg-[#00b6b4]/10 rounded-full flex items-center justify-center">

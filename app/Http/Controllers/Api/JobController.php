@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\JobResource;
 use App\Models\Job;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
@@ -73,11 +74,11 @@ class JobController extends Controller
 
         $jobs = $query->paginate($request->get('per_page', 12));
 
-        return response()->json([
-            'success' => true,
-            'data' => $jobs,
-            'message' => 'Jobs retrieved successfully'
-        ]);
+        return JobResource::collection($jobs)
+            ->additional([
+                'success' => true,
+                'message' => 'Jobs retrieved successfully',
+            ]);
     }
 
     /**
@@ -97,11 +98,11 @@ class JobController extends Controller
         // Increment view count
         $job->incrementViews();
 
-        return response()->json([
-            'success' => true,
-            'data' => $job,
-            'message' => 'Job retrieved successfully'
-        ]);
+        return (new JobResource($job))
+            ->additional([
+                'success' => true,
+                'message' => 'Job retrieved successfully',
+            ]);
     }
 
     /**
@@ -110,6 +111,7 @@ class JobController extends Controller
     public function store(StoreJobRequest $request)
     {
         $user = Auth::user();
+        $this->authorize('create', Job::class);
         
         $job = Job::create([
             'company_id' => $request->company_id,
@@ -132,11 +134,13 @@ class JobController extends Controller
 
         $job->load(['company', 'recruiter']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $job,
-            'message' => 'Job created successfully'
-        ], 201);
+        return (new JobResource($job))
+            ->additional([
+                'success' => true,
+                'message' => 'Job created successfully',
+            ])
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -144,24 +148,16 @@ class JobController extends Controller
      */
     public function update(UpdateJobRequest $request, Job $job)
     {
-        $user = Auth::user();
-        
-        // Check if user can update this job
-        if (!$user->isAdmin() && $job->recruiter_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized to update this job'
-            ], 403);
-        }
+        $this->authorize('update', $job);
 
         $job->update($request->validated());
         $job->load(['company', 'recruiter']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $job,
-            'message' => 'Job updated successfully'
-        ]);
+        return (new JobResource($job))
+            ->additional([
+                'success' => true,
+                'message' => 'Job updated successfully',
+            ]);
     }
 
     /**
@@ -169,15 +165,7 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        $user = Auth::user();
-        
-        // Check if user can delete this job
-        if (!$user->isAdmin() && $job->recruiter_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized to delete this job'
-            ], 403);
-        }
+        $this->authorize('delete', $job);
 
         $job->delete();
 
@@ -192,26 +180,20 @@ class JobController extends Controller
      */
     public function updateStatus(Request $request, Job $job)
     {
-        $user = Auth::user();
-        
-        // Check if user can update this job
-        if (!$user->isAdmin() && $job->recruiter_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized to update this job'
-            ], 403);
-        }
+        $this->authorize('update', $job);
 
         $request->validate([
-            'status' => 'required|in:draft,published,closed'
+            'status' => 'required|in:draft,published,pending,expired,closed,suspended'
         ]);
 
         $job->update(['status' => $request->status]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $job,
-            'message' => 'Job status updated successfully'
-        ]);
+        $job->load(['company', 'recruiter']);
+
+        return (new JobResource($job))
+            ->additional([
+                'success' => true,
+                'message' => 'Job status updated successfully',
+            ]);
     }
 }

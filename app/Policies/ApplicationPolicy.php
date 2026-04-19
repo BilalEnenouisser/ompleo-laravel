@@ -75,6 +75,14 @@ class ApplicationPolicy
     }
 
     /**
+     * Determine whether the candidate can withdraw their own application.
+     */
+    public function withdraw(User $user, Application $application): bool
+    {
+        return $user->isCandidate() && $application->candidate_id === $user->id;
+    }
+
+    /**
      * Determine whether the user can restore the model.
      */
     public function restore(User $user, Application $application): bool

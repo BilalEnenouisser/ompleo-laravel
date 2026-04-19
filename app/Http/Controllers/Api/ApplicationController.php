@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Application;
 use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Resources\ApplicationResource;
+use App\Models\Application;
 use App\Services\FileUploadService;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
@@ -26,30 +27,31 @@ class ApplicationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Application::class);
         $user = Auth::user();
-        
+
         if ($user->isCandidate()) {
             $applications = $user->applications()
                 ->with(['job.company'])
                 ->orderBy('applied_at', 'desc')
                 ->paginate($request->get('per_page', 10));
         } elseif ($user->isRecruiter()) {
-            $applications = Application::whereHas('job', function($query) use ($user) {
+            $applications = Application::whereHas('job', function ($query) use ($user) {
                 $query->where('recruiter_id', $user->id);
             })->with(['job.company', 'candidate'])
-            ->orderBy('applied_at', 'desc')
-            ->paginate($request->get('per_page', 10));
+                ->orderBy('applied_at', 'desc')
+                ->paginate($request->get('per_page', 10));
         } else {
             $applications = Application::with(['job.company', 'candidate'])
                 ->orderBy('applied_at', 'desc')
                 ->paginate($request->get('per_page', 10));
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $applications,
-            'message' => 'Applications retrieved successfully'
-        ]);
+        return ApplicationResource::collection($applications)
+            ->additional([
+                'success' => true,
+                'message' => 'Applications retrieved successfully',
+            ]);
     }
 
     /**
@@ -57,14 +59,8 @@ class ApplicationController extends Controller
      */
     public function store(StoreApplicationRequest $request)
     {
+        $this->authorize('create', Application::class);
         $user = Auth::user();
-        
-        if (!$user->isCandidate()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Only candidates can apply for jobs'
-            ], 403);
-        }
 
         try {
             // Check if user already applied
@@ -103,12 +99,13 @@ class ApplicationController extends Controller
             } catch (\Exception $e) {
             }
 
-            return response()->json([
-                'success' => true,
-                'data' => $application,
-                'message' => 'Application submitted successfully'
-            ], 201);
-
+            return (new ApplicationResource($application))
+                ->additional([
+                    'success' => true,
+                    'message' => 'Application submitted successfully',
+                ])
+                ->response()
+                ->setStatusCode(201);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -122,30 +119,15 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        $user = Auth::user();
-        
-        // Check if user can view this application
-        if ($user->isCandidate() && $application->candidate_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
-        }
-        
-        if ($user->isRecruiter() && $application->job->recruiter_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
-        }
+        $this->authorize('view', $application);
 
         $application->load(['job.company', 'candidate']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $application,
-            'message' => 'Application retrieved successfully'
-        ]);
+        return (new ApplicationResource($application))
+            ->additional([
+                'success' => true,
+                'message' => 'Application retrieved successfully',
+            ]);
     }
 
     /**
@@ -153,34 +135,20 @@ class ApplicationController extends Controller
      */
     public function updateStatus(Request $request, Application $application)
     {
-        $user = Auth::user();
-        
-        if (!$user->isRecruiter() && !$user->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
-        }
-
-        // Check if recruiter can update this application
-        if ($user->isRecruiter() && $application->job->recruiter_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
-        }
+        $this->authorize('update', $application);
 
         $request->validate([
             'status' => 'required|in:pending,reviewed,shortlisted,rejected,accepted'
         ]);
 
         $application->updateStatus($request->status);
+        $application->load(['job.company', 'candidate']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $application,
-            'message' => 'Application status updated successfully'
-        ]);
+        return (new ApplicationResource($application))
+            ->additional([
+                'success' => true,
+                'message' => 'Application status updated successfully',
+            ]);
     }
 
     /**
@@ -188,14 +156,7 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        $user = Auth::user();
-        
-        if (!$user->isCandidate() || $application->candidate_id !== $user->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
-        }
+        $this->authorize('withdraw', $application);
 
         $application->delete();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
@@ -60,11 +61,11 @@ class CompanyController extends Controller
 
         $companies = $query->paginate($request->get('per_page', 12));
 
-        return response()->json([
-            'success' => true,
-            'data' => $companies,
-            'message' => 'Companies retrieved successfully'
-        ]);
+        return CompanyResource::collection($companies)
+            ->additional([
+                'success' => true,
+                'message' => 'Companies retrieved successfully',
+            ]);
     }
 
     /**
@@ -84,10 +85,10 @@ class CompanyController extends Controller
             $query->where('status', 'published')->orderBy('created_at', 'desc');
         }]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $company,
-            'message' => 'Company retrieved successfully'
-        ]);
+        return (new CompanyResource($company))
+            ->additional([
+                'success' => true,
+                'message' => 'Company retrieved successfully',
+            ]);
     }
 }

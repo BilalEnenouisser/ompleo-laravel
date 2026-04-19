@@ -140,12 +140,10 @@ class CompanyController extends Controller
             'message' => 'required|string|min:10|max:1000',
         ]);
 
+        $this->authorize('sendMessage', Company::class);
+
         $recruiter = auth()->user();
         $candidate = User::where('user_type', 'candidate')->findOrFail($id);
-
-        if ($recruiter->user_type !== 'recruiter') {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
 
         $recruiter->load('recruiterProfile.company');
         $recruiterName = $recruiter->name ?? 'Un recruteur';

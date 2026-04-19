@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateCandidateProfileRequest;
-use App\Http\Requests\UpdateRecruiterProfileRequest;
+use App\Http\Resources\UserResource;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,11 +45,13 @@ class ProfileController extends Controller
             ], 400);
         }
 
+        $user->load(['candidateProfile', 'recruiterProfile']);
+
         return response()->json([
             'success' => true,
             'data' => [
-                'user' => $user,
-                'profile' => $profile
+                'user' => new UserResource($user),
+                'profile' => $this->transformProfile($profile, $user->user_type),
             ],
             'message' => 'Profile retrieved successfully'
         ]);
@@ -175,9 +176,14 @@ class ProfileController extends Controller
 
             $profile->update($data);
 
+            $user->load(['candidateProfile', 'recruiterProfile']);
+
             return response()->json([
                 'success' => true,
-                'data' => $profile,
+                'data' => [
+                    'user' => new UserResource($user),
+                    'profile' => $this->transformProfile($profile, 'candidate'),
+                ],
                 'message' => 'Profile updated successfully'
             ]);
 
@@ -222,9 +228,14 @@ class ProfileController extends Controller
 
             $profile->update($data);
 
+            $user->load(['candidateProfile', 'recruiterProfile']);
+
             return response()->json([
                 'success' => true,
-                'data' => $profile,
+                'data' => [
+                    'user' => new UserResource($user),
+                    'profile' => $this->transformProfile($profile, 'recruiter'),
+                ],
                 'message' => 'Profile updated successfully'
             ]);
 
@@ -234,5 +245,46 @@ class ProfileController extends Controller
                 'message' => 'Error updating profile: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Return a controlled profile payload based on user type.
+     */
+    private function transformProfile($profile, string $userType): array
+    {
+        if ($userType === 'candidate') {
+            return [
+                'id' => $profile->id,
+                'user_id' => $profile->user_id,
+                'phone' => $profile->phone,
+                'address' => $profile->address,
+                'city' => $profile->city,
+                'date_of_birth' => $profile->date_of_birth,
+                'bio' => $profile->bio,
+                'skills' => $profile->skills,
+                'experience' => $profile->experience,
+                'education' => $profile->education,
+                'languages' => $profile->languages,
+                'linkedin_url' => $profile->linkedin_url,
+                'portfolio_url' => $profile->portfolio_url,
+                'facebook_url' => $profile->facebook_url,
+                'twitter_url' => $profile->twitter_url,
+                'avatar' => $profile->avatar,
+                'resume_path' => $profile->resume_path,
+                'created_at' => $profile->created_at,
+                'updated_at' => $profile->updated_at,
+            ];
+        }
+
+        return [
+            'id' => $profile->id,
+            'user_id' => $profile->user_id,
+            'company_id' => $profile->company_id,
+            'position' => $profile->position,
+            'phone' => $profile->phone,
+            'avatar' => $profile->avatar,
+            'created_at' => $profile->created_at,
+            'updated_at' => $profile->updated_at,
+        ];
     }
 }

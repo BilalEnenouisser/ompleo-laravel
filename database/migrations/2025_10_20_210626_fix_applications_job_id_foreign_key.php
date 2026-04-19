@@ -29,8 +29,8 @@ return new class extends Migration
             // Drop the foreign key constraint
             $table->dropForeign(['job_id']);
             
-            // Restore the original foreign key constraint to jobs table
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            // Keep the canonical foreign key constraint to job_postings table.
+            $table->foreign('job_id')->references('id')->on('job_postings')->onDelete('cascade');
         });
     }
 };

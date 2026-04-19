@@ -129,6 +129,18 @@ class Interview extends Model
     }
 
     /**
+     * Get human readable interview notification read timestamp.
+     */
+    public function getNotificationReadAtHumanAttribute(): ?string
+    {
+        if (empty($this->notification_read_at)) {
+            return null;
+        }
+
+        return Carbon::parse($this->notification_read_at)->diffForHumans();
+    }
+
+    /**
      * Scope a query to only include interviews for a specific recruiter.
      */
     public function scopeForRecruiter($query, $recruiterId)

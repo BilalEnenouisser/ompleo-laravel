@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidate_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unique('user_id');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();

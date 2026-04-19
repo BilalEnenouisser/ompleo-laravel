@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Recruiter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
-use App\Models\User;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ReportsController extends Controller
@@ -26,7 +24,6 @@ class ReportsController extends Controller
         $company = $recruiter->recruiterProfile?->company;
         
         if (!$company) {
-            // If no company, return empty data
             $stats = [
                 'total_jobs' => 0,
                 'total_applications' => 0,
@@ -40,101 +37,111 @@ class ReportsController extends Controller
                     'accepted' => 0,
                     'rejected' => 0
                 ],
-                'response_time' => 0
+                'response_time' => 0,
+                'trends' => [
+                    'weekly_applications' => [],
+                    'monthly_job_trend' => [],
+                    'job_categories' => [],
+                    'status_trend' => [],
+                    'conversion_trend' => [],
+                ],
             ];
             
             return view('dashboard.recruiter.reports', compact('stats'));
         }
         
-        // Get date range (default to last 30 days)
-        $days = $request->get('days', 30);
-        $startDate = Carbon::now()->subDays($days);
-        
-        // Basic stats
-        $totalJobs = Job::where('recruiter_id', $recruiter->id)
-            ->where('status', 'published')
-            ->count();
-            
-        $totalApplications = Application::whereHas('job', function($query) use ($recruiter) {
+        $days = max((int) $request->get('days', 30), 1);
+        $jobBaseQuery = Job::query()->where('recruiter_id', $recruiter->id);
+        $applicationBaseQuery = Application::query()->whereHas('job', function ($query) use ($recruiter) {
             $query->where('recruiter_id', $recruiter->id);
-        })->count();
+        });
         
-        $totalViews = Job::where('recruiter_id', $recruiter->id)
-            ->where('status', 'published')
-            ->sum('views') ?? 0;
+        $totalJobs = (clone $jobBaseQuery)->count();
+        $totalApplications = (clone $applicationBaseQuery)->count();
+        $totalViews = (int) ((clone $jobBaseQuery)->sum('views') ?? 0);
             
         $conversionRate = $totalViews > 0 ? round(($totalApplications / $totalViews) * 100, 1) : 0;
         
-        // Applications trend (last 4 months)
         $applicationsTrend = [];
         for ($i = 3; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
             $monthStart = $month->copy()->startOfMonth();
             $monthEnd = $month->copy()->endOfMonth();
             
-            $applications = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            $applications = (clone $applicationBaseQuery)
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->count();
             
-            $views = Job::where('recruiter_id', $recruiter->id)
-                ->where('status', 'published')
+            $views = (clone $jobBaseQuery)
                 ->whereBetween('created_at', [$monthStart, $monthEnd])
                 ->sum('views') ?? 0;
             
             $applicationsTrend[] = [
                 'month' => $month->format('M'),
                 'applications' => $applications,
-                'views' => $views,
+                'views' => (int) $views,
                 'percentage' => $views > 0 ? round(($applications / $views) * 100) : 0
             ];
         }
         
-        // Candidate sources (simplified - in real app, you'd track this)
+        $sourceRaw = Application::query()
+            ->join('job_postings', 'applications.job_id', '=', 'job_postings.id')
+            ->leftJoin('candidate_profiles as cp', 'applications.candidate_id', '=', 'cp.user_id')
+            ->where('job_postings.recruiter_id', $recruiter->id)
+            ->selectRaw("\n                SUM(CASE WHEN cp.linkedin_url IS NOT NULL AND cp.linkedin_url <> '' THEN 1 ELSE 0 END) as linkedin_count,\n                SUM(CASE WHEN cp.portfolio_url IS NOT NULL AND cp.portfolio_url <> '' THEN 1 ELSE 0 END) as portfolio_count,\n                SUM(CASE WHEN cp.linkedin_url IS NULL OR cp.linkedin_url = '' THEN 1 ELSE 0 END) as direct_count\n            ")
+            ->first();
+
+        $sourceTotal = max((int) $totalApplications, 1);
+
         $candidateSources = [
-            ['name' => 'Recherche directe', 'count' => round($totalApplications * 0.45), 'percentage' => 45],
-            ['name' => 'Profils recommandés', 'count' => round($totalApplications * 0.30), 'percentage' => 30],
-            ['name' => 'Candidatures spontanées', 'count' => round($totalApplications * 0.15), 'percentage' => 15],
-            ['name' => 'Réseaux sociaux', 'count' => round($totalApplications * 0.10), 'percentage' => 10]
+            [
+                'name' => 'LinkedIn',
+                'count' => (int) ($sourceRaw->linkedin_count ?? 0),
+                'percentage' => round(((int) ($sourceRaw->linkedin_count ?? 0) / $sourceTotal) * 100),
+            ],
+            [
+                'name' => 'Portfolio',
+                'count' => (int) ($sourceRaw->portfolio_count ?? 0),
+                'percentage' => round(((int) ($sourceRaw->portfolio_count ?? 0) / $sourceTotal) * 100),
+            ],
+            [
+                'name' => 'Direct',
+                'count' => (int) ($sourceRaw->direct_count ?? 0),
+                'percentage' => round(((int) ($sourceRaw->direct_count ?? 0) / $sourceTotal) * 100),
+            ],
         ];
         
-        // Job performance
-        $jobPerformance = Job::where('recruiter_id', $recruiter->id)
-            ->where('status', 'published')
+        $jobPerformance = (clone $jobBaseQuery)
             ->withCount('applications')
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->limit(10)
             ->get()
-            ->map(function($job) {
-                $conversionRate = $job->views > 0 ? round(($job->applications_count / $job->views) * 100, 1) : 0;
-                $status = $job->application_deadline && $job->application_deadline < now() ? 'Expiré' : 'Actif';
+            ->map(function ($job) {
+                $jobConversionRate = $job->views > 0 ? round(($job->applications_count / $job->views) * 100, 1) : 0;
+                $status = in_array($job->status, ['expired', 'closed', 'suspended'], true) ? 'Expiré' : 'Actif';
                 
                 return [
                     'title' => $job->title,
-                    'views' => $job->views ?? 0,
-                    'applications' => $job->applications_count,
-                    'conversion_rate' => $conversionRate . '%',
+                    'views' => (int) ($job->views ?? 0),
+                    'applications' => (int) $job->applications_count,
+                    'conversion_rate' => $jobConversionRate . '%',
                     'status' => $status,
                     'date' => $job->created_at->format('Y-m-d')
                 ];
             });
         
-        // Application status
         $applicationStatus = [
-            'pending' => Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'pending')->count(),
-            'accepted' => Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'accepted')->count(),
-            'rejected' => Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'rejected')->count()
+            'pending' => (clone $applicationBaseQuery)->whereIn('status', ['pending', 'reviewed', 'shortlisted'])->count(),
+            'accepted' => (clone $applicationBaseQuery)->where('status', 'accepted')->count(),
+            'rejected' => (clone $applicationBaseQuery)->where('status', 'rejected')->count(),
         ];
         
-        // Response time (simplified calculation)
-        $responseTime = 2.3; // Default value, in real app calculate from actual response times
+        $responseTime = (float) ((clone $applicationBaseQuery)
+            ->whereNotNull('reviewed_at')
+            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, applied_at, reviewed_at)) / 24 as avg_days')
+            ->value('avg_days') ?? 0.0);
+        $responseTime = round($responseTime, 1);
         
-        // Trends data for the trends section
         $trendsData = $this->getTrendsData($recruiter, $days);
         
         $stats = [
@@ -155,18 +162,20 @@ class ReportsController extends Controller
     
     private function getTrendsData($recruiter, $days)
     {
-        $startDate = Carbon::now()->subDays($days);
+        $jobBaseQuery = Job::query()->where('recruiter_id', $recruiter->id);
+        $applicationBaseQuery = Application::query()->whereHas('job', function ($query) use ($recruiter) {
+            $query->where('recruiter_id', $recruiter->id);
+        });
         
-        // Weekly applications trend
         $weeklyApplications = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i);
             $dayStart = $date->copy()->startOfDay();
             $dayEnd = $date->copy()->endOfDay();
             
-            $applications = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->whereBetween('created_at', [$dayStart, $dayEnd])->count();
+            $applications = (clone $applicationBaseQuery)
+                ->whereBetween('created_at', [$dayStart, $dayEnd])
+                ->count();
             
             $weeklyApplications[] = [
                 'date' => $date->format('M d'),
@@ -174,68 +183,64 @@ class ReportsController extends Controller
             ];
         }
         
-        // Monthly job performance trend
         $monthlyJobTrend = [];
         for ($i = 5; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
             $monthStart = $month->copy()->startOfMonth();
             $monthEnd = $month->copy()->endOfMonth();
             
-            $jobs = Job::where('recruiter_id', $recruiter->id)
+            $jobs = (clone $jobBaseQuery)
                 ->whereBetween('created_at', [$monthStart, $monthEnd])
                 ->count();
             
-            $views = Job::where('recruiter_id', $recruiter->id)
+            $views = (clone $jobBaseQuery)
                 ->whereBetween('created_at', [$monthStart, $monthEnd])
                 ->sum('views') ?? 0;
             
             $monthlyJobTrend[] = [
                 'month' => $month->format('M Y'),
                 'jobs' => $jobs,
-                'views' => $views
+                'views' => (int) $views
             ];
         }
         
-        // Top performing job categories (using company industry)
-        $jobCategories = Job::where('recruiter_id', $recruiter->id)
-            ->where('status', 'published')
+        $jobCategories = (clone $jobBaseQuery)
             ->with('company')
             ->get()
-            ->groupBy(function($job) {
-                return $job->company ? $job->company->industry : 'Non spécifié';
+            ->groupBy(function ($job) {
+                return $job->company ? ($job->company->industry ?: 'Non spécifié') : 'Non spécifié';
             })
-            ->map(function($jobs, $industry) {
+            ->map(function ($jobs, $industry) {
                 return [
-                    'category' => $industry ?: 'Non spécifié',
+                    'category' => $industry,
                     'jobs' => $jobs->count(),
-                    'views' => $jobs->sum('views')
+                    'views' => (int) $jobs->sum('views')
                 ];
             })
             ->sortByDesc('views')
             ->take(5)
             ->values();
         
-        // Application status trend over time
         $statusTrend = [];
         for ($i = 3; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
             $monthStart = $month->copy()->startOfMonth();
             $monthEnd = $month->copy()->endOfMonth();
             
-            $pending = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'pending')
-              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            $pending = (clone $applicationBaseQuery)
+                ->whereIn('status', ['pending', 'reviewed', 'shortlisted'])
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->count();
             
-            $accepted = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'accepted')
-              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            $accepted = (clone $applicationBaseQuery)
+                ->where('status', 'accepted')
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->count();
             
-            $rejected = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->where('status', 'rejected')
-              ->whereBetween('created_at', [$monthStart, $monthEnd])->count();
+            $rejected = (clone $applicationBaseQuery)
+                ->where('status', 'rejected')
+                ->whereBetween('created_at', [$monthStart, $monthEnd])
+                ->count();
             
             $statusTrend[] = [
                 'month' => $month->format('M'),
@@ -245,26 +250,25 @@ class ReportsController extends Controller
             ];
         }
         
-        // Conversion rate trend
         $conversionTrend = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i);
             $dayStart = $date->copy()->startOfDay();
             $dayEnd = $date->copy()->endOfDay();
             
-            $applications = Application::whereHas('job', function($query) use ($recruiter) {
-                $query->where('recruiter_id', $recruiter->id);
-            })->whereBetween('created_at', [$dayStart, $dayEnd])->count();
+            $applications = (clone $applicationBaseQuery)
+                ->whereBetween('created_at', [$dayStart, $dayEnd])
+                ->count();
             
-            $views = Job::where('recruiter_id', $recruiter->id)
+            $views = (clone $jobBaseQuery)
                 ->whereBetween('created_at', [$dayStart, $dayEnd])
                 ->sum('views') ?? 0;
             
-            $conversionRate = $views > 0 ? round(($applications / $views) * 100, 1) : 0;
+            $rate = $views > 0 ? round(($applications / $views) * 100, 1) : 0;
             
             $conversionTrend[] = [
                 'date' => $date->format('M d'),
-                'rate' => $conversionRate
+                'rate' => $rate
             ];
         }
         

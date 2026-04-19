@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Models\Blog;
+use App\Models\Company;
+use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,163 +28,123 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Get statistics
         $stats = [
-            'total_users' => \App\Models\User::count(),
-            'candidates' => \App\Models\User::where('user_type', 'candidate')->count(),
-            'recruiters' => \App\Models\User::where('user_type', 'recruiter')->count(),
-            'total_companies' => \App\Models\Company::count(),
-            'companies' => \App\Models\Company::count(),
-            'total_jobs' => \App\Models\Job::count(),
-            'published_jobs' => \App\Models\Job::where('status', 'published')->count(),
-            'draft_jobs' => \App\Models\Job::where('status', 'draft')->count(),
-            'total_applications' => \App\Models\Application::count(),
-            'pending_applications' => \App\Models\Application::where('status', 'pending')->count(),
-            
-            // Today's statistics
-            'actions_today' => \App\Models\Job::whereDate('created_at', today())->count() + 
-                              \App\Models\Application::whereDate('created_at', today())->count() + 
-                              \App\Models\User::whereDate('created_at', today())->count(),
-            'jobs_today' => \App\Models\Job::whereDate('created_at', today())->count(),
-            'applications_today' => \App\Models\Application::whereDate('created_at', today())->count(),
-            'users_today' => \App\Models\User::whereDate('created_at', today())->count(),
-            
-            // This week's statistics
-            'jobs_this_week' => \App\Models\Job::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
-            'applications_this_week' => \App\Models\Application::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
-            'users_this_week' => \App\Models\User::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
-            
-            // This month's statistics
-            'jobs_this_month' => \App\Models\Job::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
-            'applications_this_month' => \App\Models\Application::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
-            'users_this_month' => \App\Models\User::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+            'total_users' => User::count(),
+            'candidates' => User::where('user_type', 'candidate')->count(),
+            'recruiters' => User::where('user_type', 'recruiter')->count(),
+            'total_companies' => Company::count(),
+            'companies' => Company::count(),
+            'total_jobs' => Job::count(),
+            'published_jobs' => Job::where('status', 'published')->count(),
+            'draft_jobs' => Job::where('status', 'draft')->count(),
+            'pending_jobs' => Job::where('status', 'pending')->count(),
+            'closed_jobs' => Job::whereIn('status', ['expired', 'closed', 'suspended'])->count(),
+            'total_applications' => Application::count(),
+            'pending_applications' => Application::where('status', 'pending')->count(),
+
+            'actions_today' => Job::whereDate('created_at', today())->count()
+                + Application::whereDate('created_at', today())->count()
+                + User::whereDate('created_at', today())->count(),
+            'jobs_today' => Job::whereDate('created_at', today())->count(),
+            'applications_today' => Application::whereDate('created_at', today())->count(),
+            'users_today' => User::whereDate('created_at', today())->count(),
+
+            'jobs_this_week' => Job::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'applications_this_week' => Application::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'users_this_week' => User::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+
+            'jobs_this_month' => Job::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+            'applications_this_month' => Application::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+            'users_this_month' => User::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
         ];
 
-        // Get ALL recent activities - mix of all user activities
-        $recentJobs = \App\Models\Job::with(['company', 'recruiter'])
-            ->orderBy('created_at', 'desc')
+        $recentJobs = Job::with(['company', 'recruiter'])
+            ->latest()
+            ->limit(20)
             ->get();
 
-        $recentApplications = \App\Models\Application::with(['job.company', 'candidate'])
-            ->orderBy('created_at', 'desc')
+        $recentApplications = Application::with(['job.company', 'candidate'])
+            ->latest()
+            ->limit(20)
             ->get();
 
-        $recentUsers = \App\Models\User::orderBy('created_at', 'desc')
+        $recentUsers = User::latest()
+            ->limit(20)
             ->get();
 
-        // Create activities for tracking - mix of real and sample data
+        $recentBlogs = Blog::latest()
+            ->limit(20)
+            ->get();
+
         $allActivities = collect();
         
-        // Add recent applications as activities
         foreach ($recentApplications as $application) {
-            try {
-                $allActivities->push([
-                    'type' => 'application',
-                    'user_name' => $application->candidate->name ?? 'Utilisateur inconnu',
-                    'user_type' => 'candidate',
-                    'activity' => 'Candidature envoyée',
-                    'description' => 'Candidature pour "' . ($application->job->title ?? 'Poste inconnu') . '" chez ' . ($application->job->company->name ?? 'Entreprise inconnue'),
-                    'url' => '/jobs/' . ($application->job->slug ?? ''),
-                    'time' => $application->created_at,
-                    'status' => 'Succès',
-                    'icon_color' => 'blue'
-                ]);
-            } catch (\Exception $e) {
-                // Skip if there's an error with this application
-                continue;
-            }
-        }
-        
-        // Add recent jobs as activities
-        foreach ($recentJobs as $job) {
-            try {
-                
-                $allActivities->push([
-                    'type' => 'job',
-                    'user_name' => $job->recruiter->name ?? 'Recruteur inconnu',
-                    'user_type' => 'recruiter',
-                    'activity' => 'Publication offre',
-                    'description' => 'Nouvelle offre "' . $job->title . '" publiée',
-                    'url' => '/recruiter/create-offer',
-                    'time' => $job->created_at,
-                    'status' => 'Succès',
-                    'icon_color' => 'green'
-                ]);
-            } catch (\Exception $e) {
-                continue;
-            }
-        }
-        
-        // Add recent admin users as activities
-        foreach ($recentUsers->where('user_type', 'admin') as $admin) {
             $allActivities->push([
-                'type' => 'admin',
-                'user_name' => $admin->name,
-                'user_type' => 'admin',
-                'activity' => 'Création article blog',
-                'description' => 'Nouvel article "Comment rédiger un CV"',
-                'url' => '/admin/blog',
-                'time' => $admin->created_at,
-                'status' => 'Succès',
-                'icon_color' => 'purple'
-            ]);
-        }
-        
-        // Add recent candidate users as activities
-        foreach ($recentUsers->where('user_type', 'candidate') as $candidate) {
-            $allActivities->push([
-                'type' => 'candidate',
-                'user_name' => $candidate->name,
+                'type' => 'application',
+                'user_name' => $application->candidate->name ?? 'Utilisateur inconnu',
                 'user_type' => 'candidate',
-                'activity' => 'Inscription candidat',
-                'description' => 'Nouveau candidat inscrit sur la plateforme',
-                'url' => '/candidate/profile',
-                'time' => $candidate->created_at,
+                'activity' => 'Candidature envoyée',
+                'description' => 'Candidature pour "' . ($application->job->title ?? 'Poste inconnu') . '" chez ' . ($application->job->company->name ?? 'Entreprise inconnue'),
+                'url' => '/applications/' . $application->id,
+                'time' => $application->created_at,
                 'status' => 'Succès',
                 'icon_color' => 'blue'
             ]);
         }
         
-        // Add recent recruiter users as activities
-        foreach ($recentUsers->where('user_type', 'recruiter') as $recruiter) {
+        foreach ($recentJobs as $job) {
             $allActivities->push([
-                'type' => 'recruiter',
-                'user_name' => $recruiter->name,
+                'type' => 'job',
+                'user_name' => $job->recruiter->name ?? 'Recruteur inconnu',
                 'user_type' => 'recruiter',
-                'activity' => 'Inscription recruteur',
-                'description' => 'Nouveau recruteur inscrit sur la plateforme',
-                'url' => '/recruiter/dashboard',
-                'time' => $recruiter->created_at,
+                'activity' => 'Publication offre',
+                'description' => 'Nouvelle offre "' . $job->title . '" publiée',
+                'url' => '/recruiter/jobs/' . $job->id,
+                'time' => $job->created_at,
                 'status' => 'Succès',
                 'icon_color' => 'green'
             ]);
         }
         
-        // If no real activities, add sample activities
-        if ($allActivities->isEmpty()) {
+        foreach ($recentUsers as $account) {
+            $activityLabel = match ($account->user_type) {
+                'candidate' => 'Inscription candidat',
+                'recruiter' => 'Inscription recruteur',
+                'admin' => 'Inscription administrateur',
+                default => 'Inscription utilisateur',
+            };
+
             $allActivities->push([
-                'type' => 'admin',
-                'user_name' => 'Système',
-                'user_type' => 'admin',
-                'activity' => 'Système initialisé',
-                'description' => 'Tableau de bord admin activé',
-                'url' => '/admin/dashboard',
-                'time' => \Carbon\Carbon::now(),
+                'type' => 'user',
+                'user_name' => $account->name,
+                'user_type' => $account->user_type,
+                'activity' => $activityLabel,
+                'description' => 'Nouvel utilisateur inscrit sur la plateforme',
+                'url' => '/admin/users/' . $account->id,
+                'time' => $account->created_at,
                 'status' => 'Succès',
                 'icon_color' => 'purple'
             ]);
         }
-        
-        // Sort all activities by time - show ALL activities
-        $allRecentActivities = collect($allActivities->sortByDesc('time'));
-        
-        // Limit to 6 for display, but keep all for popup
-        $recentActivities = $allRecentActivities->take(6);
-        
-        
 
-        // Get top companies with job and application counts
-        $topCompanies = \App\Models\Company::withCount(['jobs', 'applications'])
+        foreach ($recentBlogs as $blog) {
+            $allActivities->push([
+                'type' => 'blog',
+                'user_name' => $blog->author_name ?: 'Admin',
+                'user_type' => 'admin',
+                'activity' => 'Publication article',
+                'description' => 'Article "' . $blog->title . '" créé',
+                'url' => '/admin/blog/' . $blog->id,
+                'time' => $blog->created_at,
+                'status' => 'Succès',
+                'icon_color' => 'purple'
+            ]);
+        }
+
+        $allRecentActivities = $allActivities->sortByDesc('time')->values();
+        $recentActivities = $allRecentActivities->take(6);
+
+        $topCompanies = Company::withCount(['jobs', 'applications'])
             ->orderBy('applications_count', 'desc')
             ->limit(7)
             ->get();

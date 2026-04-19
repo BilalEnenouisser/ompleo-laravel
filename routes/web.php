@@ -58,83 +58,6 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Admin Dashboard & Management Routes
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users');
-    Route::post('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'store'])->name('admin.users.store');
-    Route::get('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'show'])->name('admin.users.show');
-    Route::put('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('admin.users.update');
-    Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UsersController::class, 'destroy'])->name('admin.users.destroy');
-
-    Route::get('/admin/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('admin.jobs');
-    Route::get('/admin/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'show'])->name('admin.jobs.show');
-    Route::put('/admin/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'update'])->name('admin.jobs.update');
-    Route::patch('/admin/jobs/{job}/status', [App\Http\Controllers\Admin\JobsController::class, 'updateStatus'])->name('admin.jobs.updateStatus');
-    Route::delete('/admin/jobs/{job}', [App\Http\Controllers\Admin\JobsController::class, 'destroy'])->name('admin.jobs.destroy');
-    Route::get('/admin/partners', [App\Http\Controllers\Admin\PartnersController::class, 'index'])->name('admin.partners');
-    Route::post('/admin/partners', [App\Http\Controllers\Admin\PartnersController::class, 'store'])->name('admin.partners.store');
-    Route::get('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'show'])->name('admin.partners.show');
-    Route::put('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'update'])->name('admin.partners.update');
-    Route::delete('/admin/partners/{partner}', [App\Http\Controllers\Admin\PartnersController::class, 'destroy'])->name('admin.partners.destroy');
-    Route::patch('/admin/partners/{partner}/toggle-featured', [App\Http\Controllers\Admin\PartnersController::class, 'toggleFeatured'])->name('admin.partners.toggle-featured');
-    Route::get('/admin/blog', [App\Http\Controllers\Admin\BlogController::class, 'index'])->name('admin.blog');
-    Route::get('/admin/blog/editor', [App\Http\Controllers\Admin\BlogController::class, 'editor'])->name('admin.blog.editor');
-    Route::get('/admin/blog/editor/{id}', [App\Http\Controllers\Admin\BlogController::class, 'editor'])->name('admin.blog.editor.edit');
-    Route::post('/admin/blog', [App\Http\Controllers\Admin\BlogController::class, 'store'])->name('admin.blog.store');
-    Route::get('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'show'])->name('admin.blog.show');
-    Route::put('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
-    Route::delete('/admin/blog/{blog}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
-    Route::patch('/admin/blog/{blog}/toggle-status', [App\Http\Controllers\Admin\BlogController::class, 'toggleStatus'])->name('admin.blog.toggle-status');
-    Route::post('/admin/blog/upload-image', [App\Http\Controllers\Admin\BlogController::class, 'uploadImage'])->name('admin.blog.upload-image');
-// Admin notification management (create/send notifications)
-Route::get('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'index'])->name('admin.notifications');
-Route::post('/admin/notifications', [App\Http\Controllers\Admin\NotificationsController::class, 'store'])->name('admin.notifications.store');
-Route::post('/admin/notifications/{notification}/send', [App\Http\Controllers\Admin\NotificationsController::class, 'send'])->name('admin.notifications.send');
-Route::delete('/admin/notifications/{notification}', [App\Http\Controllers\Admin\NotificationsController::class, 'destroy'])->name('admin.notifications.destroy');
-Route::get('/admin/notifications/stats', [App\Http\Controllers\Admin\NotificationsController::class, 'stats'])->name('admin.notifications.stats');
-
-// Admin notification viewing (view all user notifications)
-Route::get('/admin/notifications/view', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('admin.notifications.view');
-Route::post('/admin/notifications/view/{id}/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
-Route::post('/admin/notifications/view/read-all', [App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
-Route::delete('/admin/notifications/view/{id}', [App\Http\Controllers\Admin\NotificationController::class, 'destroy'])->name('admin.notifications.view.destroy');
-Route::delete('/admin/notifications/view', [App\Http\Controllers\Admin\NotificationController::class, 'destroyAll'])->name('admin.notifications.destroyAll');
-
-
-// Export routes
-Route::get('/admin/export/stats', [App\Http\Controllers\Admin\ExportController::class, 'stats'])->name('admin.export.stats');
-
-// Reports routes
-Route::get('/admin/reports', [App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('admin.reports');
-Route::post('/admin/reports/{report}/action', [App\Http\Controllers\Admin\ReportsController::class, 'updateStatus'])->name('admin.reports.action');
-Route::get('/admin/reports/search-suggestions', [App\Http\Controllers\Admin\ReportsController::class, 'searchSuggestions'])->name('admin.reports.suggestions');
-Route::get('/admin/reports/export', [App\Http\Controllers\Admin\ReportsController::class, 'export'])->name('admin.reports.export');
-
-Route::get('/admin/payments', [App\Http\Controllers\Admin\PaymentsController::class, 'index'])->name('admin.payments');
-    Route::get('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'show'])->name('admin.profile');
-    Route::put('/admin/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('admin.profile.update');
-    Route::get('/admin/companies', [App\Http\Controllers\Admin\CompaniesController::class, 'index'])->name('admin.companies');
-    Route::get('/admin/companies/create', [App\Http\Controllers\Admin\CompaniesController::class, 'create'])->name('admin.companies.create');
-    Route::post('/admin/companies', [App\Http\Controllers\Admin\CompaniesController::class, 'store'])->name('admin.companies.store');
-    Route::get('/admin/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'show'])->name('admin.companies.show');
-    Route::get('/admin/companies/{company}/edit', [App\Http\Controllers\Admin\CompaniesController::class, 'edit'])->name('admin.companies.edit');
-    Route::patch('/admin/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'update'])->name('admin.companies.update');
-    Route::delete('/admin/companies/{company}', [App\Http\Controllers\Admin\CompaniesController::class, 'destroy'])->name('admin.companies.destroy');
-
-});
-
-// Candidate profile and dashboard routes
-Route::middleware('auth')->group(function () {
-    Route::get('/candidate/dashboard', [App\Http\Controllers\Candidate\DashboardController::class, 'index'])->name('candidate.dashboard');
-    Route::get('/candidate/profile/{user?}', [App\Http\Controllers\Candidate\ProfileController::class, 'show'])->name('candidate.profile');
-    Route::put('/candidate/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'update'])->name('candidate.profile.update');
-    
-    // Public candidate profile view (for recruiters)
-    Route::get('/candidate/{user}/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'publicShow'])->name('candidate.profile.public');
-    
-});
-
 // Password Reset Routes
 Route::get('/password/reset', function () {
     return view('auth.passwords.email');
@@ -152,39 +75,26 @@ Route::get('/api/jobs/search', [JobController::class, 'searchApi'])->name('jobs.
 Route::get('/jobs/{job:slug}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 
-// Applications Routes
-Route::middleware('auth')->group(function () {
-    Route::get('/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('applications.index');
-    Route::get('/applications/export-pdf', [App\Http\Controllers\ApplicationController::class, 'exportPdf'])->name('applications.export-pdf');
-    Route::get('/jobs/{job}/apply', [App\Http\Controllers\ApplicationController::class, 'create'])->name('applications.create');
-    Route::post('/applications', [App\Http\Controllers\ApplicationController::class, 'store'])->name('applications.store');
-    Route::get('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'show'])->name('applications.show');
-    Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
-    Route::delete('/applications/{application}', [App\Http\Controllers\ApplicationController::class, 'withdraw'])->name('applications.withdraw');
-    
-    // Notifications Routes
-    Route::get('/notifications', [App\Http\Controllers\UserNotificationController::class, 'index'])->name('notifications.index');
-    Route::post('/notifications/{id}/read', [App\Http\Controllers\UserNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
-    Route::post('/notifications/read-all', [App\Http\Controllers\UserNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-    Route::delete('/notifications/{id}', [App\Http\Controllers\UserNotificationController::class, 'destroy'])->name('notifications.destroy');
-    Route::delete('/notifications', [App\Http\Controllers\UserNotificationController::class, 'destroyAll'])->name('notifications.destroyAll');
+
+// Companies routes
+Route::prefix('companies')->group(function () {
+    Route::get('/', [CompanyController::class, 'index'])->name('companies.index');
+    Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
+    Route::get('/candidates/{id}', [CompanyController::class, 'show'])->name('companies.candidates.show');
+    Route::get('/{company:slug}', [CompanyController::class, 'showCompany'])->name('companies.show');
+    Route::post('/{id}/message', [CompanyController::class, 'sendMessage'])->middleware('auth')->name('companies.sendMessage');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/create', [CompanyController::class, 'create'])->name('companies.create');
+        Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
+        Route::get('/{company}/edit', [CompanyController::class, 'edit'])->name('companies.edit');
+        Route::put('/{company}', [CompanyController::class, 'update'])->name('companies.update');
+        Route::delete('/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+    });
 });
 
-// Companies Routes (now shows candidates)
-Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
-Route::get('/companies/candidates/{id}', [App\Http\Controllers\CompanyController::class, 'show'])->name('companies.candidates.show');
-Route::get('/company/{slug}', [App\Http\Controllers\CompanyController::class, 'showCompany'])->name('company.detail');
-Route::post('/companies/{id}/message', [App\Http\Controllers\CompanyController::class, 'sendMessage'])->name('companies.sendMessage')->middleware('auth');
-
-// Public Jobs Routes (duplicate removed - already defined above)
-
-Route::middleware('auth')->group(function () {
-    Route::get('/companies/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('companies.create');
-    Route::post('/companies', [App\Http\Controllers\CompanyController::class, 'store'])->name('companies.store');
-    Route::get('/companies/{company}/edit', [App\Http\Controllers\CompanyController::class, 'edit'])->name('companies.edit');
-    Route::put('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'update'])->name('companies.update');
-    Route::delete('/companies/{company}', [App\Http\Controllers\CompanyController::class, 'destroy'])->name('companies.destroy');
-});
+// Backward-compatible company detail alias
+Route::get('/company/{slug}', [CompanyController::class, 'showCompany'])->name('company.detail');
 
 // About Page
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -203,11 +113,6 @@ Route::post('/contact', function () {
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blog.show');
 
-// Companies Routes
-Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-Route::get('/companies/search', [CompanyController::class, 'search'])->name('companies.search');
-Route::get('/companies/{company:slug}', [CompanyController::class, 'showCompany'])->name('companies.show');
-
 // Candidates Route
 Route::get('/candidates', function () {
     $totalPublishedJobs = \App\Models\Job::where('status', 'published')->count();
@@ -221,130 +126,6 @@ Route::get('/pricing', function () {
 
 // Locale Routes
 Route::get('/locale/{locale}', [LocaleController::class, 'setLocale'])->name('locale');
-
-// Dashboard Routes (Protected)
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        $user = auth()->user();
-        
-        // Redirect based on user type
-        switch ($user->user_type) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'recruiter':
-                return redirect()->route('recruiter.dashboard');
-            case 'candidate':
-                return redirect()->route('candidate.dashboard');
-            default:
-                return redirect()->route('home');
-        }
-    })->name('dashboard');
-    
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
-    
-    // General notifications route (redirects based on user type)
-    Route::get('/notifications', function () {
-        $user = auth()->user();
-        if ($user->isAdmin()) {
-            return redirect()->route('admin.notifications.view');
-        } elseif ($user->isRecruiter()) {
-            return redirect()->route('recruiter.notifications');
-        } elseif ($user->isCandidate()) {
-            return redirect()->route('candidate.notifications');
-        }
-        return redirect()->route('notifications.index');
-    })->name('notifications');
-    
-    // API notifications
-    Route::get('/api/notifications', [App\Http\Controllers\UserNotificationController::class, 'getNotifications'])->name('notifications.api');
-    Route::post('/notifications/{id}/read', [App\Http\Controllers\UserNotificationController::class, 'markAsRead'])->name('notifications.read');
-    Route::post('/notifications/read-all', [App\Http\Controllers\UserNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
-    Route::delete('/notifications/{id}', [App\Http\Controllers\UserNotificationController::class, 'destroy'])->name('notifications.destroy');
-    Route::delete('/notifications', [App\Http\Controllers\UserNotificationController::class, 'destroyAll'])->name('notifications.destroy-all');
-    
-    // Recruiter Routes
-    Route::middleware('recruiter')->group(function () {
-        Route::get('/recruiter/dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('recruiter.dashboard');
-        Route::get('/recruiter/jobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index'])->name('recruiter.jobs');
-
-        // Recruiter Notifications
-        Route::get('/recruiter/notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'index'])->name('recruiter.notifications');
-        Route::post('/recruiter/notifications/{id}/read', [App\Http\Controllers\Recruiter\NotificationController::class, 'markAsRead'])->name('recruiter.notifications.markAsRead');
-        Route::post('/recruiter/notifications/read-all', [App\Http\Controllers\Recruiter\NotificationController::class, 'markAllAsRead'])->name('recruiter.notifications.markAllAsRead');
-        Route::delete('/recruiter/notifications/{id}', [App\Http\Controllers\Recruiter\NotificationController::class, 'destroy'])->name('recruiter.notifications.destroy');
-        Route::delete('/recruiter/notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'destroyAll'])->name('recruiter.notifications.destroyAll');
-
-        Route::get('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'show'])->name('recruiter.create-offer');
-        Route::post('/recruiter/create-offer', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'store'])->name('recruiter.create-offer.store');
-
-        // Job management routes
-        Route::get('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\JobsController::class, 'show'])->name('recruiter.jobs.show');
-        Route::get('/recruiter/jobs/{job}/edit', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'edit'])->name('recruiter.jobs.edit');
-        Route::put('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\CreateOfferController::class, 'update'])->name('recruiter.jobs.update');
-        Route::delete('/recruiter/jobs/{job}', [App\Http\Controllers\Recruiter\JobsController::class, 'destroy'])->name('recruiter.jobs.destroy');
-
-        // Job applications route
-        Route::get('/recruiter/jobs/{job}/applications', [App\Http\Controllers\Recruiter\JobsController::class, 'applications'])->name('recruiter.jobs.applications');
-
-        // Application status update route
-        Route::put('/applications/{application}/status', [App\Http\Controllers\ApplicationController::class, 'updateStatus'])->name('applications.update-status');
-
-        Route::get('/recruiter/candidates', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index'])->name('recruiter.candidates');
-        Route::get('/recruiter/candidates/{candidate}/profile', [App\Http\Controllers\Candidate\ProfileController::class, 'publicShow'])->name('recruiter.candidate.profile');
-
-        // Interview Management Routes
-        Route::get('/recruiter/interviews', [App\Http\Controllers\Recruiter\InterviewsController::class, 'index'])->name('recruiter.interviews');
-        Route::get('/recruiter/interviews/create', [App\Http\Controllers\Recruiter\InterviewsController::class, 'create'])->name('recruiter.interviews.create');
-        Route::post('/recruiter/interviews', [App\Http\Controllers\Recruiter\InterviewsController::class, 'store'])->name('recruiter.interviews.store');
-        Route::get('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'show'])->name('recruiter.interviews.show');
-        Route::get('/recruiter/interviews/{interview}/edit', [App\Http\Controllers\Recruiter\InterviewsController::class, 'edit'])->name('recruiter.interviews.edit');
-        Route::put('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'update'])->name('recruiter.interviews.update');
-        Route::put('/recruiter/interviews/{interview}/status', [App\Http\Controllers\Recruiter\InterviewsController::class, 'updateStatus'])->name('recruiter.interviews.update-status');
-        Route::delete('/recruiter/interviews/{interview}', [App\Http\Controllers\Recruiter\InterviewsController::class, 'destroy'])->name('recruiter.interviews.destroy');
-        Route::get('/recruiter/interviews/calendar/data', [App\Http\Controllers\Recruiter\InterviewsController::class, 'calendar'])->name('recruiter.interviews.calendar');
-
-        Route::get('/recruiter/reports', [App\Http\Controllers\Recruiter\ReportsController::class, 'index'])->name('recruiter.reports');
-
-        // Recruiter Company Profile
-        Route::get('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'show'])->name('recruiter.company-profile');
-        Route::put('/recruiter/company-profile', [App\Http\Controllers\Recruiter\CompanyProfileController::class, 'update'])->name('recruiter.company-profile.update');
-
-        // Recruiter Subscription
-        Route::get('/recruiter/subscription', [App\Http\Controllers\Recruiter\SubscriptionController::class, 'index'])->name('recruiter.subscription');
-
-        // Recruiter Settings
-        Route::get('/recruiter/settings', [App\Http\Controllers\Recruiter\SettingsController::class, 'index'])->name('recruiter.settings');
-        Route::put('/recruiter/settings', [App\Http\Controllers\Recruiter\SettingsController::class, 'update'])->name('recruiter.settings.update');
-    });
-    
-    
-    Route::get('/candidate/applications', [App\Http\Controllers\ApplicationController::class, 'index'])->name('candidate.applications');
-    
-    // Candidate Settings
-    Route::get('/candidate/settings', [App\Http\Controllers\Candidate\SettingsController::class, 'index'])->name('candidate.settings');
-    Route::put('/candidate/settings', [App\Http\Controllers\Candidate\SettingsController::class, 'update'])->name('candidate.settings.update');
-    
-    Route::get('/candidate/referrals', function () {
-        return view('dashboard.candidate.referrals');
-    })->name('candidate.referrals');
-    
-    // Candidate Notifications
-    Route::get('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'index'])->name('candidate.notifications');
-    Route::post('/candidate/notifications/{id}/read', [App\Http\Controllers\Candidate\NotificationController::class, 'markAsRead'])->name('candidate.notifications.markAsRead');
-    
-    // Candidate Interview Routes
-    Route::get('/candidate/interviews/{interview}', [App\Http\Controllers\Candidate\InterviewController::class, 'show'])->name('candidate.interviews.show');
-    Route::post('/candidate/interviews/{interview}/confirm', [App\Http\Controllers\Candidate\InterviewController::class, 'confirm'])->name('candidate.interviews.confirm');
-    Route::post('/candidate/interviews/{interview}/cancel', [App\Http\Controllers\Candidate\InterviewController::class, 'cancel'])->name('candidate.interviews.cancel');
-    Route::post('/candidate/interviews/{interview}/request-change', [App\Http\Controllers\Candidate\InterviewController::class, 'requestChange'])->name('candidate.interviews.request-change');
-    Route::post('/candidate/interviews/{interview}/report-problem', [App\Http\Controllers\Candidate\InterviewController::class, 'reportProblem'])->name('candidate.interviews.report-problem');
-    Route::post('/candidate/notifications/read-all', [App\Http\Controllers\Candidate\NotificationController::class, 'markAllAsRead'])->name('candidate.notifications.markAllAsRead');
-    Route::delete('/candidate/notifications/{id}', [App\Http\Controllers\Candidate\NotificationController::class, 'destroy'])->name('candidate.notifications.destroy');
-    Route::delete('/candidate/notifications', [App\Http\Controllers\Candidate\NotificationController::class, 'destroyAll'])->name('candidate.notifications.destroyAll');
-});
-
 
 // Catch-all route for 404 errors - must be at the end
 Route::fallback(function () {

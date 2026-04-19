@@ -179,23 +179,17 @@
                                         <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium text-blue-400 bg-blue-900/30 whitespace-nowrap">
                                             {{ ucfirst($report->reportedUser->user_type) }}
                                         </span>
-                                        @php
-                                            $statusColors = [
-                                                'pending' => 'bg-yellow-900/30 text-yellow-400',
-                                                'reviewed' => 'bg-blue-900/30 text-blue-400',
-                                                'resolved' => 'bg-green-900/30 text-green-400',
-                                                'dismissed' => 'bg-gray-900/30 text-gray-400'
-                                            ];
-                                            $statusLabels = [
-                                                'pending' => 'En attente',
-                                                'reviewed' => 'En cours',
-                                                'resolved' => 'Résolu',
-                                                'dismissed' => 'Rejeté'
-                                            ];
-                                        @endphp
-                                        <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium {{ $statusColors[$report->status] }} whitespace-nowrap">
-                                            {{ $statusLabels[$report->status] }}
-                                        </span>
+                                        <x-status-badge
+                                            :status="$report->status"
+                                            :label="match($report->status) {
+                                                'pending' => __('En attente'),
+                                                'reviewed' => __('En cours'),
+                                                'resolved' => __('Resolu'),
+                                                'dismissed' => __('Rejete'),
+                                                default => ucfirst((string) $report->status),
+                                            }"
+                                            size="sm"
+                                        />
                                     </div>
                                 </div>
                             </div>

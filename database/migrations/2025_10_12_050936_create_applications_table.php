@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('job_postings')->onDelete('cascade');
             $table->foreignId('candidate_id')->constrained('users')->onDelete('cascade');
             $table->text('cover_letter')->nullable();
             $table->string('resume_path')->nullable();
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamp('applied_at')->useCurrent();
             $table->timestamp('reviewed_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['job_id', 'candidate_id']);
         });
     }
 

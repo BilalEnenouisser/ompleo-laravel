@@ -20,6 +20,8 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Blog::class);
+
         $blogs = Blog::orderBy('created_at', 'desc')->get();
         
         // Calculate statistics
@@ -36,9 +38,12 @@ class BlogController extends Controller
      */
     public function editor($id = null)
     {
+        $this->authorize('create', Blog::class);
+
         $blog = null;
         if ($id) {
             $blog = Blog::findOrFail($id);
+            $this->authorize('update', $blog);
         }
         return view('dashboard.admin.blog-editor', compact('blog'));
     }
@@ -48,13 +53,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        // Check if user is authenticated
-        if (!auth()->check()) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Non authentifié'
-            ], 401);
-        }
+        $this->authorize('create', Blog::class);
         
         try {
             
@@ -126,6 +125,8 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::findOrFail($id);
+        $this->authorize('view', $blog);
+
         return view('dashboard.admin.blog-show', compact('blog'));
     }
 
@@ -135,6 +136,7 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $blog = Blog::findOrFail($id);
+        $this->authorize('update', $blog);
         
         
         try {
@@ -216,6 +218,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::findOrFail($id);
+        $this->authorize('delete', $blog);
         
         try {
             // Delete featured image
@@ -243,6 +246,8 @@ class BlogController extends Controller
     public function toggleStatus($id)
     {
         $blog = Blog::findOrFail($id);
+        $this->authorize('update', $blog);
+
         $blog->update(['status' => $blog->status === 'published' ? 'draft' : 'published']);
         
         return response()->json([
@@ -257,9 +262,7 @@ class BlogController extends Controller
      */
     public function uploadImage(Request $request)
     {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $this->authorize('create', Blog::class);
 
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max

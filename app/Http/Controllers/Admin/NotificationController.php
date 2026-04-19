@@ -18,6 +18,8 @@ class NotificationController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         // Build query
         $query = UserNotification::with(['notification', 'user'])
             ->orderBy('created_at', 'desc');
@@ -130,28 +132,24 @@ class NotificationController extends Controller
     
     public function markAsRead($id)
     {
-        $userNotification = UserNotification::find($id);
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('update', $userNotification);
             
-        if ($userNotification) {
-            $userNotification->update([
-                'is_read' => true,
-                'read_at' => now()
-            ]);
-            
-            if (request()->expectsJson()) {
-                return response()->json(['success' => true]);
-            }
-            return redirect()->back()->with('success', 'Notification marquée comme lue.');
-        }
-        
+        $userNotification->update([
+            'is_read' => true,
+            'read_at' => now()
+        ]);
+
         if (request()->expectsJson()) {
-            return response()->json(['success' => false], 404);
+            return response()->json(['success' => true]);
         }
-        return redirect()->back()->with('error', 'Notification non trouvée.');
+        return redirect()->back()->with('success', 'Notification marquée comme lue.');
     }
     
     public function markAllAsRead()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         UserNotification::where('is_read', false)
             ->update([
                 'is_read' => true,
@@ -166,25 +164,21 @@ class NotificationController extends Controller
     
     public function destroy($id)
     {
-        $userNotification = UserNotification::find($id);
+        $userNotification = UserNotification::findOrFail($id);
+        $this->authorize('delete', $userNotification);
             
-        if ($userNotification) {
-            $userNotification->delete();
-            
-            if (request()->expectsJson()) {
-                return response()->json(['success' => true]);
-            }
-            return redirect()->back()->with('success', 'Notification supprimée.');
-        }
-        
+        $userNotification->delete();
+
         if (request()->expectsJson()) {
-            return response()->json(['success' => false], 404);
+            return response()->json(['success' => true]);
         }
-        return redirect()->back()->with('error', 'Notification non trouvée.');
+        return redirect()->back()->with('success', 'Notification supprimée.');
     }
     
     public function destroyAll()
     {
+        $this->authorize('viewAny', UserNotification::class);
+
         UserNotification::truncate();
         
         if (request()->expectsJson()) {
