@@ -22,92 +22,14 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
-        
-        // Get candidate profile
         $profile = $user->candidateProfile;
-        
-        // Get applications statistics
         $applications = $user->applications()->with(['job.company'])->get();
-        $applicationsCount = $applications->count();
-        $pendingApplications = $applications->where('status', 'pending')->count();
-        $reviewedApplications = $applications->where('status', 'reviewed')->count();
-        $shortlistedApplications = $applications->where('status', 'shortlisted')->count();
-        
-        // Get recent applications (last 5)
-        $recentApplications = $user->applications()
-            ->with(['job.company'])
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-        
-        // Get recommended jobs (jobs in same location or with similar skills)
-        $recommendedJobs = collect();
-        
-        if ($profile) {
-            // Get jobs in the same city
-            if ($profile->city) {
-                $locationJobs = \App\Models\Job::published()
-                    ->active()
-                    ->where('location', 'like', '%' . $profile->city . '%')
-                    ->whereNotIn('id', $user->applications()->pluck('job_id'))
-                    ->limit(3)
-                    ->get();
-                $recommendedJobs = $recommendedJobs->merge($locationJobs);
-            }
-            
-            // Get jobs with similar skills/industry
-            if ($profile->skills) {
-                $skillsJobs = \App\Models\Job::published()
-                    ->active()
-                    ->where(function($query) use ($profile) {
-                        foreach ($profile->skills as $skill) {
-                            $query->orWhere('title', 'like', '%' . $skill . '%')
-                                  ->orWhere('description', 'like', '%' . $skill . '%');
-                        }
-                    })
-                    ->whereNotIn('id', $user->applications()->pluck('job_id'))
-                    ->limit(3)
-                    ->get();
-                $recommendedJobs = $recommendedJobs->merge($skillsJobs);
-            }
-        }
-        
-        // If no recommendations based on profile, get recent published jobs
-        if ($recommendedJobs->isEmpty()) {
-            $recommendedJobs = \App\Models\Job::published()
-                ->active()
-                ->whereNotIn('id', $user->applications()->pluck('job_id'))
-                ->orderBy('created_at', 'desc')
-                ->limit(6)
-                ->get();
-        }
-        
-        // Remove duplicates and limit to 6
-        $recommendedJobs = $recommendedJobs->unique('id')->take(6);
-        
-        // Get profile completion percentage
-        $profileCompletion = $profile ? $profile->getCompletionPercentage() : 0;
-        
-        // Get upcoming interviews (not cancelled or completed)
-        $upcomingInterviews = Interview::where('candidate_id', $user->id)
-            ->whereNotIn('status', ['annule', 'termine'])
-            ->where('interview_date', '>=', now()->toDateString())
-            ->with(['job.company', 'recruiter'])
-            ->orderBy('interview_date', 'asc')
-            ->orderBy('start_time', 'asc')
-            ->limit(5)
-            ->get();
-
-        // Statistics for dashboard
-        $stats = [
-            'total_applications' => $applicationsCount,
-            'pending_applications' => $pendingApplications,
-            'reviewed_applications' => $reviewedApplications,
-            'shortlisted_applications' => $shortlistedApplications,
-            'success_rate' => $applicationsCount > 0 ? round(($shortlistedApplications / $applicationsCount) * 100, 1) : 0,
-            'profile_completion' => $profileCompletion,
-        ];
+        $recentApplications = $this->getRecentApplications($user);
+        $recommendedJobs = $this->getRecommendedJobs($user, $profile);
+        $upcomingInterviews = $this->getUpcomingInterviews((int) $user->id);
+        $stats = $this->buildDashboardStats($applications, $profile);
         
         return view('dashboard.candidate.index', compact(
             'user', 
@@ -118,5 +40,46 @@ class DashboardController extends Controller
             'stats',
             'upcomingInterviews'
         ));
+    }
+
+    private function getRecentApplications($user)
+    {
+        return $user->applications()
+            ->with(['job.company'])
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    private function getRecommendedJobs($user, $profile)
+    {
+        $excludedJobIds = $user->applications()->pluck('job_id'); $recommendedJobs = collect(); if ($profile && $profile->city) { $recommendedJobs = $recommendedJobs->merge( \App\Models\Job::published() ->active() ->where('location', 'like', '%' . $profile->city . '%') ->whereNotIn('id', $excludedJobIds) ->limit(3) ->get() ); } if ($profile && $profile->skills) { $recommendedJobs = $recommendedJobs->merge( \App\Models\Job::published() ->active() ->where(function ($query) use ($profile) { foreach ($profile->skills as $skill) { $query->orWhere('title', 'like', '%' . $skill . '%') ->orWhere('description', 'like', '%' . $skill . '%'); } }) ->whereNotIn('id', $excludedJobIds) ->limit(3) ->get() ); } if ($recommendedJobs->isEmpty()) { $recommendedJobs = \App\Models\Job::published() ->active() ->whereNotIn('id', $excludedJobIds) ->orderBy('created_at', 'desc') ->limit(6) ->get(); } return $recommendedJobs->unique('id')->take(6);
+    }
+
+    private function getUpcomingInterviews(int $candidateId)
+    {
+        return Interview::where('candidate_id', $candidateId)
+            ->whereNotIn('status', ['annule', 'termine'])
+            ->where('interview_date', '>=', now()->toDateString())
+            ->with(['job.company', 'recruiter'])
+            ->orderBy('interview_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->limit(5)
+            ->get();
+    }
+
+    private function buildDashboardStats($applications, $profile): array
+    {
+        $applicationsCount = $applications->count();
+        $shortlistedApplications = $applications->where('status', 'shortlisted')->count();
+
+        return [
+            'total_applications' => $applicationsCount,
+            'pending_applications' => $applications->where('status', 'pending')->count(),
+            'reviewed_applications' => $applications->where('status', 'reviewed')->count(),
+            'shortlisted_applications' => $shortlistedApplications,
+            'success_rate' => $applicationsCount > 0 ? round(($shortlistedApplications / $applicationsCount) * 100, 1) : 0,
+            'profile_completion' => $profile ? $profile->getCompletionPercentage() : 0,
+        ];
     }
 }

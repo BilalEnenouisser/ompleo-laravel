@@ -147,16 +147,16 @@
                                             $safeHtmlContent = strip_tags((string) $rawContent, '<p><br><strong><em><ul><ol><li><blockquote><h2><h3><h4><h5><h6>');
                                         @endphp
                                         <div class="space-y-6 blog-content-html text-gray-600 dark:text-[#9ca3af]">
-                                            {!! $safeHtmlContent !!}
+                                            {{ clean($safeHtmlContent) }}
                                         </div>
                                     @else
                                         <div class="space-y-6">
-                                            <p>{!! nl2br(e(strip_tags((string) $rawContent))) !!}</p>
+                                            <p>{{ clean(nl2br(e(strip_tags((string) $rawContent)))) }}</p>
                                         </div>
                                     @endif
                                 @else
                                     <div class="space-y-6">
-                                        <p>{!! nl2br(e((string) $blog->content)) !!}</p>
+                                        <p>{{ clean(nl2br(e((string) $blog->content))) }}</p>
                                     </div>
                                 @endif
                             @endif

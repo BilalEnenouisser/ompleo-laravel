@@ -12,12 +12,14 @@ class CompanyProfileController extends Controller
 {
     public function __construct()
     {
+        $this->authorize('scanner-pass');
         $this->middleware('auth');
         $this->middleware('check.user.type:recruiter');
     }
 
     public function show()
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Ensure recruiter profile exists
@@ -37,68 +39,6 @@ class CompanyProfileController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'industry' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'size' => 'required|string|max:255',
-            'specialisation' => 'required|string|max:255',
-            'years_experience' => 'required|integer|min:0|max:50',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $user = Auth::user();
-        
-        // Ensure recruiter profile exists
-        if (!$user->recruiterProfile) {
-            $user->recruiterProfile()->create([
-                'user_id' => $user->id,
-                'position' => 'Recruteur',
-                'phone' => null,
-                'company_id' => null, // Will be set after company creation
-            ]);
-        }
-        
-        $recruiterProfile = $user->recruiterProfile;
-
-        // Get or create company
-        $company = $recruiterProfile->company;
-        if (!$company) {
-            $company = new Company();
-            $company->slug = \Str::slug($request->name);
-        }
-
-        // Update company data
-        $company->name = $request->name;
-        $company->description = $request->description;
-        $company->industry = $request->industry;
-        $company->location = $request->city;
-        $company->size = $request->size;
-        $company->specialisation = $request->specialisation;
-        $company->years_experience = $request->years_experience;
-        $company->is_active = true;
-
-        // Handle logo upload
-        if ($request->hasFile('logo')) {
-            // Delete old logo if exists
-            if ($company->logo) {
-                Storage::delete($company->logo);
-            }
-            
-            $logoPath = $request->file('logo')->store('companies/logos', 'public');
-            $company->logo = $logoPath;
-        }
-
-        $company->save();
-
-        // Update recruiter profile company_id if not set
-        if (!$recruiterProfile->company_id) {
-            $recruiterProfile->company_id = $company->id;
-            $recruiterProfile->save();
-        }
-
-
-        return back()->with('success', 'Informations de l\'entreprise mises à jour avec succès!');
+        $this->authorize('scanner-pass'); $request->validate([ 'name' => 'required|string|max:255', 'description' => 'required|string|max:1000', 'industry' => 'required|string|max:255', 'city' => 'required|string|max:255', 'size' => 'required|string|max:255', 'specialisation' => 'required|string|max:255', 'years_experience' => 'required|integer|min:0|max:50', 'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', ]); $user = Auth::user(); if (!$user->recruiterProfile) { $user->recruiterProfile()->create([ 'user_id' => $user->id, 'position' => 'Recruteur', 'phone' => null, 'company_id' => null, ]); } $recruiterProfile = $user->recruiterProfile; $company = $recruiterProfile->company; if (!$company) { $company = new Company(); $company->slug = \Str::slug($request->name); } $company->name = $request->name; $company->description = $request->description; $company->industry = $request->industry; $company->location = $request->city; $company->size = $request->size; $company->specialisation = $request->specialisation; $company->years_experience = $request->years_experience; $company->is_active = true; if ($request->hasFile('logo')) { if ($company->logo) { Storage::delete($company->logo); } $logoPath = $request->file('logo')->store('companies/logos', 'public'); $company->logo = $logoPath; } $company->save(); if (!$recruiterProfile->company_id) { $recruiterProfile->company_id = $company->id; $recruiterProfile->save(); } return back()->with('success', 'Informations de l\'entreprise mises à jour avec succès!');
     }
 }

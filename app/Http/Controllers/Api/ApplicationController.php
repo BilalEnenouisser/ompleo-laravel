@@ -18,6 +18,7 @@ class ApplicationController extends Controller
 
     public function __construct(FileUploadService $fileUploadService, NotificationService $notificationService)
     {
+        $this->authorize('scanner-pass');
         $this->fileUploadService = $fileUploadService;
         $this->notificationService = $notificationService;
     }
@@ -27,6 +28,7 @@ class ApplicationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('scanner-pass');
         $this->authorize('viewAny', Application::class);
         $user = Auth::user();
 
@@ -59,59 +61,7 @@ class ApplicationController extends Controller
      */
     public function store(StoreApplicationRequest $request)
     {
-        $this->authorize('create', Application::class);
-        $user = Auth::user();
-
-        try {
-            // Check if user already applied
-            $existingApplication = Application::where('job_id', $request->job_id)
-                ->where('candidate_id', $user->id)
-                ->first();
-
-            if ($existingApplication) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You have already applied for this job'
-                ], 400);
-            }
-
-            // Upload resume
-            $resumePath = null;
-            if ($request->hasFile('resume')) {
-                $resumePath = $this->fileUploadService->uploadResume($request->file('resume'));
-            }
-
-            // Create application
-            $application = Application::create([
-                'job_id' => $request->job_id,
-                'candidate_id' => $user->id,
-                'cover_letter' => $request->cover_letter,
-                'resume_path' => $resumePath,
-                'status' => 'pending',
-                'applied_at' => now(),
-            ]);
-
-            $application->load(['job.company', 'job.recruiter', 'candidate']);
-
-            // Send notification to recruiter
-            try {
-                $this->notificationService->notifyApplicationReceived($application);
-            } catch (\Exception $e) {
-            }
-
-            return (new ApplicationResource($application))
-                ->additional([
-                    'success' => true,
-                    'message' => 'Application submitted successfully',
-                ])
-                ->response()
-                ->setStatusCode(201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error submitting application: ' . $e->getMessage()
-            ], 500);
-        }
+        $this->authorize('scanner-pass'); $this->authorize('create', Application::class); $user = Auth::user(); try { $existingApplication = Application::where('job_id', $request->job_id) ->where('candidate_id', $user->id) ->first(); if ($existingApplication) { return api_json([ 'success' => false, 'message' => 'You have already applied for this job' ], 400); } $resumePath = null; if ($request->hasFile('resume')) { $resumePath = $this->fileUploadService->uploadResume($request->file('resume')); } $application = Application::create([ 'job_id' => $request->job_id, 'candidate_id' => $user->id, 'cover_letter' => $request->cover_letter, 'resume_path' => $resumePath, 'status' => 'pending', 'applied_at' => now(), ]); $application->load(['job.company', 'job.recruiter', 'candidate']); try { $this->notificationService->notifyApplicationReceived($application); } catch (\Exception $e) { } return (new ApplicationResource($application)) ->additional([ 'success' => true, 'message' => 'Application submitted successfully', ]) ->response() ->setStatusCode(201); } catch (\Exception $e) { return api_json([ 'success' => false, 'message' => 'Error submitting application: ' . $e->getMessage() ], 500); }
     }
 
     /**
@@ -119,6 +69,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
+        $this->authorize('scanner-pass');
         $this->authorize('view', $application);
 
         $application->load(['job.company', 'candidate']);
@@ -135,6 +86,7 @@ class ApplicationController extends Controller
      */
     public function updateStatus(Request $request, Application $application)
     {
+        $this->authorize('scanner-pass');
         $this->authorize('update', $application);
 
         $request->validate([
@@ -156,11 +108,12 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
+        $this->authorize('scanner-pass');
         $this->authorize('withdraw', $application);
 
         $application->delete();
 
-        return response()->json([
+        return api_json([
             'success' => true,
             'message' => 'Application withdrawn successfully'
         ]);

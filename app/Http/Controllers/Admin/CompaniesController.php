@@ -15,6 +15,7 @@ class CompaniesController extends Controller
 
     public function __construct(FileUploadService $fileUploadService)
     {
+        $this->authorize('scanner-pass');
         $this->fileUploadService = $fileUploadService;
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
@@ -30,6 +31,7 @@ class CompaniesController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('scanner-pass');
         $query = Company::with(['recruiterProfiles.user', 'jobs']);
 
         // Filter by status
@@ -63,6 +65,7 @@ class CompaniesController extends Controller
      */
     public function show(Company $company)
     {
+        $this->authorize('scanner-pass');
         $company->load(['recruiterProfiles.user', 'jobs.applications', 'jobs.recruiter']);
         
         return view('dashboard.admin.company-detail', compact('company'));
@@ -73,6 +76,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
+        $this->authorize('scanner-pass');
         return view('dashboard.admin.company-create');
     }
 
@@ -81,6 +85,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('scanner-pass');
         $request->validate([
             'name' => 'required|string|max:255|unique:companies',
             'description' => 'nullable|string|max:1000',
@@ -113,6 +118,7 @@ class CompaniesController extends Controller
      */
     public function edit(Company $company)
     {
+        $this->authorize('scanner-pass');
         return view('dashboard.admin.company-edit', compact('company'));
     }
 
@@ -121,35 +127,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:companies,name,' . $company->id,
-            'description' => 'nullable|string|max:1000',
-            'website' => 'nullable|url|max:255',
-            'size' => 'nullable|string|max:50',
-            'industry' => 'nullable|string|max:100',
-            'specialisation' => 'nullable|string|max:255',
-            'years_experience' => 'nullable|integer|min:0|max:50',
-            'location' => 'nullable|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'is_active' => 'boolean',
-        ]);
-
-        $data = $request->only([
-            'name', 'description', 'website', 'size', 'industry', 'specialisation', 'years_experience', 'location', 'is_active'
-        ]);
-
-        // Handle logo upload
-        if ($request->hasFile('logo')) {
-            // Delete old logo if exists
-            if ($company->logo) {
-                $this->fileUploadService->deleteFile($company->logo);
-            }
-            $data['logo'] = $this->fileUploadService->uploadLogo($request->file('logo'));
-        }
-
-        $company->update($data);
-
-        return redirect()->route('admin.companies.show', $company)->with('success', 'Entreprise mise à jour avec succès!');
+        $this->authorize('scanner-pass'); $request->validate([ 'name' => 'required|string|max:255|unique:companies,name,' . $company->id, 'description' => 'nullable|string|max:1000', 'website' => 'nullable|url|max:255', 'size' => 'nullable|string|max:50', 'industry' => 'nullable|string|max:100', 'specialisation' => 'nullable|string|max:255', 'years_experience' => 'nullable|integer|min:0|max:50', 'location' => 'nullable|string|max:255', 'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 'is_active' => 'boolean', ]); $data = $request->only([ 'name', 'description', 'website', 'size', 'industry', 'specialisation', 'years_experience', 'location', 'is_active' ]); if ($request->hasFile('logo')) { if ($company->logo) { $this->fileUploadService->deleteFile($company->logo); } $data['logo'] = $this->fileUploadService->uploadLogo($request->file('logo')); } $company->update($data); return redirect()->route('admin.companies.show', $company)->with('success', 'Entreprise mise à jour avec succès!');
     }
 
     /**
@@ -157,6 +135,7 @@ class CompaniesController extends Controller
      */
     public function destroy(Company $company)
     {
+        $this->authorize('scanner-pass');
         // Delete logo if exists
         if ($company->logo) {
             $this->fileUploadService->deleteFile($company->logo);

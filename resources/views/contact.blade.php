@@ -7,34 +7,7 @@
 <!-- Header -->
 @include('components.header')
 
-@php
-$contactInfo = [
-    [
-        'title' => 'Adresse',
-        'content' => 'Chéraga, Alger, Algérie',
-        'color' => 'text-blue-600',
-        'bgColor' => 'bg-blue-100',
-    ],
-    [
-        'title' => 'Email',
-        'content' => 'contact@ompleo.com',
-        'color' => 'text-green-600',
-        'bgColor' => 'bg-green-100',
-    ],
-    [
-        'title' => 'Téléphone',
-        'content' => '+213 XXX XXX XXX',
-        'color' => 'text-purple-600',
-        'bgColor' => 'bg-purple-100',
-    ],
-    [
-        'title' => 'Heures',
-        'content' => 'Dimanche - Jeudi : 9h - 17h',
-        'color' => 'text-orange-600',
-        'bgColor' => 'bg-orange-100',
-    ],
-];
-@endphp
+@php $contactInfo = [ [ 'title' => 'Adresse', 'content' => 'Chéraga, Alger, Algérie', 'color' => 'text-blue-600', 'bgColor' => 'bg-blue-100', ], [ 'title' => 'Email', 'content' => 'contact@ompleo.com', 'color' => 'text-green-600', 'bgColor' => 'bg-green-100', ], [ 'title' => 'Téléphone', 'content' => '+213 XXX XXX XXX', 'color' => 'text-purple-600', 'bgColor' => 'bg-purple-100', ], [ 'title' => 'Heures', 'content' => 'Dimanche - Jeudi : 9h - 17h', 'color' => 'text-orange-600', 'bgColor' => 'bg-orange-100', ], ]; @endphp
 
 <div class="min-h-screen bg-gray-50 dark:bg-dark-900 pt-20">
     <!-- Hero Section -->

@@ -128,8 +128,14 @@
             events: function (info, successCallback, failureCallback) {
                 fetch((config.calendarFeedUrl || '') + '?start=' + info.startStr + '&end=' + info.endStr)
                     .then(function (response) { return response.json(); })
-                    .then(function (data) { successCallback(data); })
-                    .catch(function (error) { failureCallback(error); });
+                    .then(function (data) {
+                        var events = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : []);
+
+                        successCallback(events);
+                    })
+                    .catch(function (error) {
+                        failureCallback(error);
+                    });
             },
             eventClick: function () {
                 window.location.href = config.interviewsUrl || '/recruiter/interviews';
@@ -181,6 +187,9 @@
 
             if (calendar) {
                 calendar.refetchEvents();
+                window.requestAnimationFrame(function () {
+                    calendar.updateSize();
+                });
             }
         });
     }

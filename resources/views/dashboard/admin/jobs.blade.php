@@ -251,17 +251,7 @@
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            @php
-                                $statusConfig = [
-                                    'published' => ['text' => 'Publié', 'class' => 'text-green-600 bg-green-100'],
-                                    'draft' => ['text' => 'Brouillon', 'class' => 'text-gray-600 bg-gray-100'],
-                                    'pending' => ['text' => 'En attente', 'class' => 'text-yellow-600 bg-yellow-100'],
-                                    'expired' => ['text' => 'Expiré', 'class' => 'text-red-600 bg-red-100'],
-                                    'closed' => ['text' => 'Fermé', 'class' => 'text-gray-600 bg-gray-100'],
-                                    'suspended' => ['text' => 'Suspendu', 'class' => 'text-red-600 bg-red-100']
-                                ];
-                                $status = $statusConfig[$job->status] ?? $statusConfig['draft'];
-                            @endphp
+                            @php $statusConfig = [ 'published' => ['text' => 'Publié', 'class' => 'text-green-600 bg-green-100'], 'draft' => ['text' => 'Brouillon', 'class' => 'text-gray-600 bg-gray-100'], 'pending' => ['text' => 'En attente', 'class' => 'text-yellow-600 bg-yellow-100'], 'expired' => ['text' => 'Expiré', 'class' => 'text-red-600 bg-red-100'], 'closed' => ['text' => 'Fermé', 'class' => 'text-gray-600 bg-gray-100'], 'suspended' => ['text' => 'Suspendu', 'class' => 'text-red-600 bg-red-100'] ]; $status = $statusConfig[$job->status] ?? $statusConfig['draft']; @endphp
                             <span class="px-2 py-1 rounded-full text-xs font-medium {{ $status['class'] }} flex-shrink-0">
                                 {{ $status['text'] }}
                             </span>

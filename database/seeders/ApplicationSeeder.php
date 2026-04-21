@@ -36,11 +36,11 @@ class ApplicationSeeder extends Seeder
         
         // Create applications for each job
         foreach ($jobs as $job) {
-            // Random number of applications per job (1-8)
-            $numApplications = rand(1, 8);
-            
-            for ($i = 0; $i < $numApplications; $i++) {
-                $candidate = $candidates->random();
+            // Keep job/candidate pairs unique to respect DB constraint.
+            $numApplications = min($candidates->count(), rand(1, 8));
+            $selectedCandidates = $candidates->shuffle()->take($numApplications);
+
+            foreach ($selectedCandidates as $candidate) {
                 $status = $statuses[array_rand($statuses)];
                 $coverLetter = $coverLetters[array_rand($coverLetters)];
                 

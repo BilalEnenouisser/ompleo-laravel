@@ -53,27 +53,8 @@
 
             <div >
                 <h1 class="font-bold text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
-                    @php
-                        if (!function_exists('renderAnimateTextJob')) {
-                            function renderAnimateTextJob($text) {
-                                $words = explode(' ', $text);
-                                $output = '';
-                                foreach ($words as $wIndex => $word) {
-                                    $output .= '<span style="white-space:nowrap; font-size: 0;">';
-                                    $chars = mb_str_split($word);
-                                    foreach ($chars as $char) {
-                                        $output .= '<span class="hero-char md:text-4xl lg:text-7xl" style="display: inline-block;">' . e($char) . '</span>';
-                                    }
-                                    $output .= '</span>';
-                                    if ($wIndex < count($words) - 1) {
-                                        $output .= '<span class="hero-char md:text-4xl lg:text-7xl" style="display: inline-block;">&nbsp;</span>';
-                                    }
-                                }
-                                return $output;
-                            }
-                        }
-                    @endphp
-                    {!! renderAnimateTextJob($job->title) !!}
+                    @php if (!function_exists('renderAnimateTextJob')) { function renderAnimateTextJob($text) { $words = explode(' ', $text); $output = ''; foreach ($words as $wIndex => $word) { $output .= '<span style="white-space:nowrap; font-size: 0;">'; $chars = mb_str_split($word); foreach ($chars as $char) { $output .= '<span class="hero-char md:text-4xl lg:text-7xl" style="display: inline-block;">' . e($char) . '</span>'; } $output .= '</span>'; if ($wIndex < count($words) - 1) { $output .= '<span class="hero-char md:text-4xl lg:text-7xl" style="display: inline-block;">&nbsp;</span>'; } } return $output; } } @endphp
+                    {{ clean(renderAnimateTextJob($job->title)) }}
                 </h1>
                 
                 <!-- Company Row -->
@@ -123,7 +104,7 @@
                 <div class="lg:col-span-2 space-y-10 md:space-y-12 animate-on-scroll">
                     <!-- Intro -->
                     <div class="max-w-none text-[#9ca3af] text-[0.9375rem] leading-relaxed space-y-6">
-                        <p>{!! nl2br(e($job->description)) !!}</p>
+                        <p>{{ clean(nl2br(e($job->description))) }}</p>
                     </div>
 
                     <!-- Responsibilities -->

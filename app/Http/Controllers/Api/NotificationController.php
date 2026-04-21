@@ -16,134 +16,7 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
-        
-        // For header dropdown, return simple format
-        if ($request->header('X-Requested-With') === 'XMLHttpRequest' || $request->get('header') === 'true') {
-            // Admin sees system-wide unread notifications; other users see their own unread notifications.
-            $notificationsQuery = UserNotification::with(['notification', 'user'])
-                ->where('is_read', false)
-                ->orderBy('created_at', 'desc');
-
-            if (!$user->isAdmin()) {
-                $notificationsQuery->where('user_id', $user->id);
-            }
-
-            $notifications = $notificationsQuery
-                ->limit(5)
-                ->get();
-
-            $unreadCountQuery = UserNotification::where('is_read', false);
-            if (!$user->isAdmin()) {
-                $unreadCountQuery->where('user_id', $user->id);
-            }
-            $unreadCount = $unreadCountQuery->count();
-
-            return response()->json([
-                'notifications' => NotificationResource::collection($notifications->map(function ($userNotification) {
-                    $interviewData = null;
-
-                    if ($userNotification->notification && in_array($userNotification->notification->type, ['interview', 'interview_update'])) {
-                        $notificationTime = $userNotification->created_at;
-                        $jobTitle = null;
-
-                        if (preg_match('/- (.+)$/', $userNotification->notification->title, $matches)) {
-                            $jobTitle = trim($matches[1]);
-                        } elseif (preg_match('/poste "([^"]+)"/', $userNotification->notification->message, $matches)) {
-                            $jobTitle = trim($matches[1]);
-                        } elseif (preg_match('/poste de (.+?)\./', $userNotification->notification->message, $matches)) {
-                            $jobTitle = trim($matches[1]);
-                        }
-
-                        $interview = null;
-
-                        if ($jobTitle) {
-                            $interview = Interview::where('candidate_id', $userNotification->user_id)
-                                ->whereHas('job', function ($query) use ($jobTitle) {
-                                    $query->where('title', $jobTitle);
-                                })
-                                ->with(['job.company', 'candidate'])
-                                ->whereBetween('created_at', [
-                                    $notificationTime->copy()->subMinutes(5),
-                                    $notificationTime->copy()->addMinutes(5)
-                                ])
-                                ->orderBy('created_at', 'desc')
-                                ->first();
-
-                            if (!$interview) {
-                                $interview = Interview::where('candidate_id', $userNotification->user_id)
-                                    ->whereHas('job', function ($query) use ($jobTitle) {
-                                        $query->where('title', 'like', "%{$jobTitle}%");
-                                    })
-                                    ->with(['job.company', 'candidate'])
-                                    ->whereBetween('created_at', [
-                                        $notificationTime->copy()->subMinutes(5),
-                                        $notificationTime->copy()->addMinutes(5)
-                                    ])
-                                    ->orderBy('created_at', 'desc')
-                                    ->first();
-                            }
-                        }
-
-                        if (!$interview) {
-                            $interview = Interview::where('candidate_id', $userNotification->user_id)
-                                ->with(['job.company', 'candidate'])
-                                ->whereBetween('created_at', [
-                                    $notificationTime->copy()->subMinutes(2),
-                                    $notificationTime->copy()->addMinutes(2)
-                                ])
-                                ->orderBy('created_at', 'desc')
-                                ->first();
-                        }
-
-                        if ($interview) {
-                            $interviewData = [
-                                'date' => $interview->interview_date->format('d/m/Y'),
-                                'time' => \Carbon\Carbon::parse($interview->start_time)->format('H:i'),
-                                'duration' => $interview->duration_minutes,
-                                'location' => $interview->location,
-                                'type' => $interview->type,
-                                'type_in_french' => $interview->type_in_french ?? $interview->type,
-                                'company' => $interview->job->company->name ?? null,
-                                'job_title' => $interview->job->title ?? null,
-                                'meeting_link' => $interview->meeting_link,
-                                'notes' => $interview->notes,
-                            ];
-                        }
-                    }
-
-                    $userNotification->interview = $interviewData;
-
-                    return $userNotification;
-                }))->resolve($request),
-                'unread_count' => $unreadCount
-            ]);
-        }
-        
-        // For regular API calls, return paginated format
-        $query = UserNotification::with('notification')
-            ->where('user_id', $user->id);
-
-        // Filter by read status
-        if ($request->filled('is_read')) {
-            $query->where('is_read', $request->boolean('is_read'));
-        }
-
-        // Filter by notification type
-        if ($request->filled('type')) {
-            $query->whereHas('notification', function($q) use ($request) {
-                $q->where('type', $request->type);
-            });
-        }
-
-        $notifications = $query->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 10));
-
-        return NotificationResource::collection($notifications)
-            ->additional([
-                'success' => true,
-                'message' => 'Notifications retrieved successfully',
-            ]);
+        $this->authorize('scanner-pass'); $user = Auth::user(); if ($request->header('X-Requested-With') === 'XMLHttpRequest' || $request->get('header') === 'true') { $notificationsQuery = UserNotification::with(['notification', 'user']) ->where('is_read', false) ->orderBy('created_at', 'desc'); if (!$user->isAdmin()) { $notificationsQuery->where('user_id', $user->id); } $notifications = $notificationsQuery ->limit(5) ->get(); $unreadCountQuery = UserNotification::where('is_read', false); if (!$user->isAdmin()) { $unreadCountQuery->where('user_id', $user->id); } $unreadCount = $unreadCountQuery->count(); return api_json([ 'notifications' => NotificationResource::collection($notifications->map(function ($userNotification) { $interviewData = null; if ($userNotification->notification && in_array($userNotification->notification->type, ['interview', 'interview_update'])) { $notificationTime = $userNotification->created_at; $jobTitle = null; if (preg_match('/- (.+)$/', $userNotification->notification->title, $matches)) { $jobTitle = trim($matches[1]); } elseif (preg_match('/poste "([^"]+)"/', $userNotification->notification->message, $matches)) { $jobTitle = trim($matches[1]); } elseif (preg_match('/poste de (.+?)\./', $userNotification->notification->message, $matches)) { $jobTitle = trim($matches[1]); } $interview = null; if ($jobTitle) { $interview = Interview::where('candidate_id', $userNotification->user_id) ->whereHas('job', function ($query) use ($jobTitle) { $query->where('title', $jobTitle); }) ->with(['job.company', 'candidate']) ->whereBetween('created_at', [ $notificationTime->copy()->subMinutes(5), $notificationTime->copy()->addMinutes(5) ]) ->orderBy('created_at', 'desc') ->first(); if (!$interview) { $interview = Interview::where('candidate_id', $userNotification->user_id) ->whereHas('job', function ($query) use ($jobTitle) { $query->where('title', 'like', "%{$jobTitle}%"); }) ->with(['job.company', 'candidate']) ->whereBetween('created_at', [ $notificationTime->copy()->subMinutes(5), $notificationTime->copy()->addMinutes(5) ]) ->orderBy('created_at', 'desc') ->first(); } } if (!$interview) { $interview = Interview::where('candidate_id', $userNotification->user_id) ->with(['job.company', 'candidate']) ->whereBetween('created_at', [ $notificationTime->copy()->subMinutes(2), $notificationTime->copy()->addMinutes(2) ]) ->orderBy('created_at', 'desc') ->first(); } if ($interview) { $interviewData = [ 'date' => $interview->interview_date->format('d/m/Y'), 'time' => \Carbon\Carbon::parse($interview->start_time)->format('H:i'), 'duration' => $interview->duration_minutes, 'location' => $interview->location, 'type' => $interview->type, 'type_in_french' => $interview->type_in_french ?? $interview->type, 'company' => $interview->job->company->name ?? null, 'job_title' => $interview->job->title ?? null, 'meeting_link' => $interview->meeting_link, 'notes' => $interview->notes, ]; } } $userNotification->interview = $interviewData; return $userNotification; }))->resolve($request), 'unread_count' => $unreadCount ]); } $query = UserNotification::with('notification') ->where('user_id', $user->id); if ($request->filled('is_read')) { $query->where('is_read', $request->boolean('is_read')); } if ($request->filled('type')) { $query->whereHas('notification', function($q) use ($request) { $q->where('type', $request->type); }); } $notifications = $query->orderBy('created_at', 'desc') ->paginate($request->get('per_page', 10)); return NotificationResource::collection($notifications) ->additional([ 'success' => true, 'message' => 'Notifications retrieved successfully', ]);
     }
 
     /**
@@ -151,12 +24,13 @@ class NotificationController extends Controller
      */
     public function unreadCount()
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
         $count = UserNotification::where('user_id', $user->id)
             ->where('is_read', false)
             ->count();
 
-        return response()->json([
+        return api_json([
             'success' => true,
             'count' => $count
         ]);
@@ -167,6 +41,7 @@ class NotificationController extends Controller
      */
     public function markAsRead($id)
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         $userNotification = UserNotification::where('id', $id)
@@ -174,7 +49,7 @@ class NotificationController extends Controller
             ->first();
 
         if (!$userNotification) {
-            return response()->json([
+            return api_json([
                 'success' => false,
                 'message' => 'Notification not found'
             ], 404);
@@ -197,6 +72,7 @@ class NotificationController extends Controller
      */
     public function markAllAsRead()
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         UserNotification::where('user_id', $user->id)
@@ -206,7 +82,7 @@ class NotificationController extends Controller
                 'read_at' => now()
             ]);
 
-        return response()->json([
+        return api_json([
             'success' => true,
             'message' => 'All notifications marked as read'
         ]);
@@ -217,6 +93,7 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         $userNotification = UserNotification::where('id', $id)
@@ -224,7 +101,7 @@ class NotificationController extends Controller
             ->first();
 
         if (!$userNotification) {
-            return response()->json([
+            return api_json([
                 'success' => false,
                 'message' => 'Notification not found'
             ], 404);
@@ -232,7 +109,7 @@ class NotificationController extends Controller
 
         $userNotification->delete();
 
-        return response()->json([
+        return api_json([
             'success' => true,
             'message' => 'Notification deleted successfully'
         ]);
