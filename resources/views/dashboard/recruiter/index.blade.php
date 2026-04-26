@@ -160,10 +160,7 @@
                 {{ $stats['profiles_viewed'] }}
             </h3>
             <p class="text-[#9ca3af] text-sm mb-2">
-                Profils consultés
-            </p>
-            <p class="text-green-400 text-xs font-medium">
-                +{{ $stats['recent_applications'] * 2 }} cette semaine
+                Vues des offres
             </p>
         </div>
 
@@ -385,7 +382,7 @@
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
-                                <span class="truncate">{{ $job->applications()->count() * 7 }} vues</span>
+                                <span class="truncate">{{ $job->views ?? 0 }} vues</span>
                             </span>
                         </div>
                         <span class="text-sm whitespace-nowrap">{{ $job->created_at->format('Y-m-d') }}</span>

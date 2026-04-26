@@ -51,7 +51,7 @@ class DashboardController extends Controller
             'total_applications' => $applications->count(),
             'recent_applications' => $applications->where('created_at', '>=', now()->subDays(7))->count(),
             'scheduled_interviews' => $upcomingInterviews->count(),
-            'profiles_viewed' => $applications->count() * 2, // Estimate: 2 profile views per application
+            'profiles_viewed' => $jobs->sum('views') ?? 0, // Changed from fake multiplier to actual job views
             'pending_applications' => $applications->where('status', 'pending')->count(),
             'accepted_applications' => $applications->where('status', 'accepted')->count(),
             'rejected_applications' => $applications->where('status', 'rejected')->count(),
