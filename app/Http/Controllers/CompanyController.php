@@ -73,31 +73,36 @@ class CompanyController extends Controller
         return view('companies.index', compact('companies', 'companyCount', 'companyNames', 'locations', 'industries'));
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->get('q', '');
-        
-        if (strlen($query) < 2) {
-            return response()->json([]);
-        }
+public function search(Request $request)
+{
+    $user = auth()->user();
 
-        $candidates = User::where('user_type', 'candidate')
-            ->whereHas('candidateProfile')
-            ->where(function($q) use ($query) {
-                $q->where('name', 'like', "%{$query}%")
-                  ->orWhere('email', 'like', "%{$query}%")
-                  ->orWhereHas('candidateProfile', function($profileQuery) use ($query) {
-                      $profileQuery->where('title', 'like', "%{$query}%")
-                                   ->orWhere('bio', 'like', "%{$query}%")
-                                   ->orWhere('skills', 'like', "%{$query}%");
-                  });
-            })
-            ->with('candidateProfile')
-            ->limit(8)
-            ->get(['id', 'name', 'email']);
-
-        return response()->json($candidates);
+    if (!$user || ($user->user_type !== 'recruiter' && $user->user_type !== 'admin')) {
+        abort(403, 'Accès non autorisé');
     }
+
+    $query = $request->get('q', '');
+    
+    if (strlen($query) < 2) {
+        return response()->json([]);
+    }
+
+    $candidates = User::where('user_type', 'candidate')
+        ->whereHas('candidateProfile')
+        ->where(function($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%")
+              ->orWhereHas('candidateProfile', function($profileQuery) use ($query) {
+                  $profileQuery->where('title', 'like', "%{$query}%")
+                               ->orWhere('bio', 'like', "%{$query}%")
+                               ->orWhere('skills', 'like', "%{$query}%");
+              });
+        })
+        ->with('candidateProfile')
+        ->limit(8)
+        ->get(['id', 'name']); 
+    
+    return response()->json($candidates);
+}
 
     public function show($id)
     {

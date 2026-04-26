@@ -142,13 +142,18 @@
                                 @endforeach
                             @else
                                 @if($hasHtmlContent)
-                                    @if(auth()->check() && auth()->user()->isAdmin())
-                                        @php
-                                            $safeHtmlContent = strip_tags((string) $rawContent, '<p><br><strong><em><ul><ol><li><blockquote><h2><h3><h4><h5><h6>');
-                                        @endphp
-                                        <div class="space-y-6 blog-content-html text-gray-600 dark:text-[#9ca3af]">
-                                            {!! $safeHtmlContent !!}
-                                        </div>
+  @if(auth()->check() && auth()->user()->isAdmin())
+    @php
+        $allowedTags = '<p><br><strong><em><ul><ol><li><blockquote><h2><h3><h4><h5><h6>';
+        $stripped = strip_tags((string) $rawContent, $allowedTags);
+        // نمنع أي event attributes مثل onclick, onload, onerror
+        $safeHtmlContent = preg_replace('/\s*on\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]*)/i', '', $stripped);
+        // نمنع javascript: في الـ href و src
+        $safeHtmlContent = preg_replace('/(href|src)\s*=\s*["\']\s*javascript:[^"\']*["\']/i', '', $safeHtmlContent);
+    @endphp
+    <div class="space-y-6 blog-content-html text-gray-600 dark:text-[#9ca3af]">
+        {!! $safeHtmlContent !!}
+    </div>
                                     @else
                                         <div class="space-y-6">
                                             <p>{!! nl2br(e(strip_tags((string) $rawContent))) !!}</p>

@@ -130,14 +130,18 @@ return new class extends Migration
     /**
      * Determine if a given index exists on the table.
      */
-    private function indexExists(string $table, string $indexName): bool
-    {
-        $database = DB::getDatabaseName();
-
-        return DB::table('information_schema.STATISTICS')
-            ->where('TABLE_SCHEMA', $database)
-            ->where('TABLE_NAME', $table)
-            ->where('INDEX_NAME', $indexName)
-            ->exists();
+private function indexExists(string $table, string $indexName): bool
+{
+    if (DB::getDriverName() !== 'mysql') {
+        return false;
     }
+
+    $database = DB::getDatabaseName();
+
+    return DB::table('information_schema.STATISTICS')
+        ->where('TABLE_SCHEMA', $database)
+        ->where('TABLE_NAME', $table)
+        ->where('INDEX_NAME', $indexName)
+        ->exists();
+}
 };

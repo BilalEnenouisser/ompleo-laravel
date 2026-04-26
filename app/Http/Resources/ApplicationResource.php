@@ -19,7 +19,12 @@ class ApplicationResource extends JsonResource
             'job_id' => $this->job_id,
             'candidate_id' => $this->candidate_id,
             'cover_letter' => $this->cover_letter,
-            'resume_path' => $this->resume_path,
+            'resume_url' => $this->when(
+    auth()->user()?->isAdmin()
+    || auth()->id() === $this->candidate_id
+    || auth()->id() === optional($this->job)->recruiter_id,
+    fn () => $this->resume_path
+),
             'status' => $this->status,
             'applied_at' => $this->applied_at,
             'reviewed_at' => $this->reviewed_at,

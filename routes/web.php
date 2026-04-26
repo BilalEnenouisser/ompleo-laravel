@@ -79,7 +79,9 @@ Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create'
 // Companies routes
 Route::prefix('companies')->group(function () {
     Route::get('/', [CompanyController::class, 'index'])->name('companies.index');
-    Route::get('/search', [CompanyController::class, 'search'])->name('companies.search');
+    Route::get('/search', [CompanyController::class, 'search'])
+    ->middleware('auth')
+    ->name('companies.search');
     Route::get('/candidates/{id}', [CompanyController::class, 'show'])->name('companies.candidates.show');
     Route::get('/{company:slug}', [CompanyController::class, 'showCompany'])->name('companies.show');
     Route::post('/{id}/message', [CompanyController::class, 'sendMessage'])->middleware('auth')->name('companies.sendMessage');

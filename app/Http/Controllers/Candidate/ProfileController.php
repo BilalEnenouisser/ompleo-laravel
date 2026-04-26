@@ -33,33 +33,38 @@ class ProfileController extends Controller
     /**
      * Display the candidate profile
      */
-    public function show($user = null)
-    {
-        // If user parameter is provided, show that user's profile (for recruiters)
-        if ($user) {
-            $candidate = \App\Models\User::findOrFail($user);
-            $profile = $candidate->candidateProfile;
-            
-            if (!$profile) {
-                abort(404, 'Profil candidat non trouvé');
-            }
-            
-            return view('dashboard.candidate.profile', compact('candidate', 'profile'));
+ public function show($user = null)
+{
+    $auth = Auth::user();
+
+    if ($user) {
+        // ✅ فقط recruiter أو admin يشوف بروفايل غيره
+        if ($auth->user_type !== 'recruiter' && $auth->user_type !== 'admin') {
+            abort(403, 'Accès non autorisé');
         }
-        
-        // Otherwise, show current user's profile
-        $candidate = Auth::user();
+
+        $candidate = \App\Models\User::where('user_type', 'candidate')->findOrFail($user);
         $profile = $candidate->candidateProfile;
-        
-        // If no profile exists, create one
+
         if (!$profile) {
-            $profile = CandidateProfile::create([
-                'user_id' => $candidate->id,
-            ]);
+            abort(404, 'Profil candidat non trouvé');
         }
-        
+
         return view('dashboard.candidate.profile', compact('candidate', 'profile'));
     }
+
+    // Otherwise, show current user's profile
+    $candidate = $auth;
+    $profile = $candidate->candidateProfile;
+
+    if (!$profile) {
+        $profile = CandidateProfile::create([
+            'user_id' => $candidate->id,
+        ]);
+    }
+
+    return view('dashboard.candidate.profile', compact('candidate', 'profile'));
+}
 
     /**
      * Display a public candidate profile (for recruiters)

@@ -40,9 +40,17 @@
                     @elseif($element['type'] === 'text')
                         <div style="{{ $baseStyle }}">{{ $element['content'] ?? '' }}</div>
                     @elseif($element['type'] === 'button')
-                        @if(!empty($element['url']))
-                            <a href="{{ $element['url'] }}" target="_blank" rel="noopener noreferrer" style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px; text-decoration: none; cursor: pointer;">{{ $element['content'] ?? '' }}</a>
-                        @else
+    @if(!empty($element['url']))
+        @php
+            $url = filter_var($element['url'] ?? '', FILTER_VALIDATE_URL);
+            $isSafe = $url && in_array(parse_url($url, PHP_URL_SCHEME), ['http', 'https'], true);
+        @endphp
+        @if($isSafe)
+            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px; text-decoration: none; cursor: pointer;">{{ $element['content'] ?? '' }}</a>
+        @else
+            <div style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px;">{{ $element['content'] ?? '' }}</div>
+        @endif
+    @else
                             <div style="{{ $baseStyle }} background-color: {{ $element['backgroundColor'] ?? '#00b6b4' }}; color: {{ $element['color'] ?? '#ffffff' }}; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-top: 8px;">{{ $element['content'] ?? '' }}</div>
                         @endif
                     @elseif($element['type'] === 'image')

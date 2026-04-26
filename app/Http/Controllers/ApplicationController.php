@@ -13,9 +13,18 @@ use Illuminate\Support\Facades\Auth;
 class ApplicationController extends Controller
 {
     protected $fileUploadService;
-    protected $notificationService;
+   protected $notificationService;
 
-    public function __construct(FileUploadService $fileUploadService, NotificationService $notificationService)
+protected const STATUS_MAP = [
+    'En cours'       => 'pending',
+    'Accepté'        => 'accepted',
+    'Refusé'         => 'rejected',
+    'En attente'     => 'pending',
+    'Présélectionné' => 'shortlisted',
+    'Examiné'        => 'reviewed',
+];
+
+public function __construct(FileUploadService $fileUploadService, NotificationService $notificationService)
     {
         $this->fileUploadService = $fileUploadService;
         $this->notificationService = $notificationService;
@@ -49,18 +58,9 @@ class ApplicationController extends Controller
             if ($request->filled('status')) {
                 $status = $request->status;
                 // Map French status to English database values
-                $statusMap = [
-                    'En cours' => 'pending',
-                    'Accepté' => 'accepted', 
-                    'Refusé' => 'rejected',
-                    'En attente' => 'pending',
-                    'Présélectionné' => 'shortlisted',
-                    'Examiné' => 'reviewed'
-                ];
-                
-                if (isset($statusMap[$status])) {
-                    $query->where('status', $statusMap[$status]);
-                }
+                if (isset(self::STATUS_MAP[$status])) {
+    $query->where('status', self::STATUS_MAP[$status]);
+}
             }
             
             $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
@@ -96,18 +96,9 @@ class ApplicationController extends Controller
             // Status filter for recruiter
             if ($request->filled('status')) {
                 $status = $request->status;
-                $statusMap = [
-                    'En cours' => 'pending',
-                    'Accepté' => 'accepted', 
-                    'Refusé' => 'rejected',
-                    'En attente' => 'pending',
-                    'Présélectionné' => 'shortlisted',
-                    'Examiné' => 'reviewed'
-                ];
-                
-                if (isset($statusMap[$status])) {
-                    $query->where('status', $statusMap[$status]);
-                }
+                if (isset(self::STATUS_MAP[$status])) {
+    $query->where('status', self::STATUS_MAP[$status]);
+}
             }
             
             $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
@@ -148,18 +139,9 @@ class ApplicationController extends Controller
         
         if ($request->filled('status')) {
             $status = $request->status;
-            $statusMap = [
-                'En cours' => 'pending',
-                'Accepté' => 'accepted', 
-                'Refusé' => 'rejected',
-                'En attente' => 'pending',
-                'Présélectionné' => 'shortlisted',
-                'Examiné' => 'reviewed'
-            ];
-            
-            if (isset($statusMap[$status])) {
-                $query->where('status', $statusMap[$status]);
-            }
+            if (isset(self::STATUS_MAP[$status])) {
+    $query->where('status', self::STATUS_MAP[$status]);
+}
         }
         
         $applications = $query->orderBy('applied_at', 'desc')->get();
@@ -269,12 +251,16 @@ class ApplicationController extends Controller
      * Update application status (for recruiters)
      */
     public function updateStatus(Request $request, Application $application)
-    {
-        $user = Auth::user();
-        
-        if (!$user->isRecruiter() && !$user->isAdmin()) {
-            abort(403, 'Access denied.');
-        }
+{
+    $user = Auth::user();
+
+    if (!$user->isRecruiter() && !$user->isAdmin()) {
+        abort(403, 'Access denied.');
+    }
+
+    if ($user->isRecruiter() && $application->job->recruiter_id !== $user->id) {
+        abort(403, 'Access denied.');
+    }
 
         $request->validate([
             'status' => 'required|in:pending,reviewed,shortlisted,rejected,accepted'

@@ -7,6 +7,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class BlogController extends Controller
 {
@@ -70,8 +71,7 @@ class BlogController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Validation failed: ' . implode(', ', array_flatten($e->errors()))
-            ], 422);
+                'error' => 'Validation failed: ' . implode(', ', Arr::flatten($e->errors()))            ], 422);
         }
 
         try {
@@ -153,8 +153,7 @@ class BlogController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Validation failed: ' . implode(', ', array_flatten($e->errors()))
-            ], 422);
+                'error' => 'Validation failed: ' . implode(', ', Arr::flatten($e->errors()))            ], 422);
         }
 
         try {
