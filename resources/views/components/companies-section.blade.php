@@ -124,7 +124,7 @@ $companies = $companies ?? collect();
                                     </div>
 
                                     {{-- Button at Bottom --}}
-                                    <a href="{{ route('company.detail', $company->slug ?? $company->id) }}" class="ompleo-btn w-full bg-[#646464] text-white" style="font-size: 16px !important; font-weight: 400 !important;">
+                                    <a href="{{ route('companies.show', $company->slug ?? $company->id) }}" class="ompleo-btn w-full bg-[#646464] text-white" style="font-size: 16px !important; font-weight: 400 !important;">
                                         Voir les offres
                                     </a>
                                 </div>

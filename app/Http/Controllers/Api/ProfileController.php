@@ -190,7 +190,7 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error updating profile: ' . $e->getMessage()
+                'message' => 'Une erreur est survenue lors de la mise à jour du profil.'
             ], 500);
         }
     }
@@ -242,7 +242,7 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error updating profile: ' . $e->getMessage()
+                'message' => 'Une erreur est survenue lors de la mise à jour du profil.'
             ], 500);
         }
     }

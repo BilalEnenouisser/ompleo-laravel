@@ -81,10 +81,7 @@ Route::get('/jobs/{job:slug}', [JobController::class, 'show'])->name('jobs.show'
 // Companies routes
 Route::prefix('companies')->group(function () {
     Route::get('/', [CompanyController::class, 'index'])->name('companies.index');
-    Route::get('/search', [CompanyController::class, 'search'])
-    ->middleware('auth')
-    ->name('companies.search');
-    Route::get('/candidates/{id}', [CompanyController::class, 'show'])->name('companies.candidates.show');
+
     Route::get('/{company:slug}', [CompanyController::class, 'showCompany'])->name('companies.show');
     Route::post('/{id}/message', [CompanyController::class, 'sendMessage'])->middleware('auth')->name('companies.sendMessage');
 
@@ -102,8 +99,6 @@ Route::prefix('companies')->group(function () {
     });
 });
 
-// Backward-compatible company detail alias
-Route::get('/company/{slug}', [CompanyController::class, 'showCompany'])->name('company.detail');
 
 // About Page
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -127,6 +122,9 @@ Route::get('/candidates', function () {
     $totalPublishedJobs = \App\Models\Job::where('status', 'published')->count();
     return view('candidates.index', compact('totalPublishedJobs'));
 })->name('candidates');
+
+Route::get('/candidates/search', [CompanyController::class, 'search'])->middleware('auth')->name('candidates.search');
+Route::get('/candidates/profile/{id}', [CompanyController::class, 'show'])->name('candidates.show');
 
 // Pricing Page
 Route::get('/pricing', function () {

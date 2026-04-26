@@ -113,7 +113,7 @@ class SecurityTest extends TestCase
 
     public function test_companies_search_requires_authentication(): void
     {
-        $response = $this->get('/companies/search?q=dev');
+        $response = $this->get('/candidates/search?q=dev');
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
@@ -144,7 +144,7 @@ class SecurityTest extends TestCase
 
         $response = $this
             ->actingAs($recruiter)
-            ->get('/companies/search?q=Ali');
+            ->get('/candidates/search?q=Ali');
 
         $response->assertOk();
 
