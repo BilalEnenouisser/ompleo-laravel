@@ -30,13 +30,13 @@ class LoginController extends Controller
             $user = Auth::user();
             switch ($user->user_type) {
                 case 'admin':
-                    return redirect()->intended(route('admin.dashboard'));
+                    return redirect(route('admin.dashboard'));
                 case 'recruiter':
-                    return redirect()->intended(route('recruiter.dashboard'));
+                    return redirect(route('recruiter.dashboard'));
                 case 'candidate':
-                    return redirect()->intended(route('candidate.dashboard'));
+                    return redirect(route('candidate.dashboard'));
                 default:
-                    return redirect()->intended(route('candidate.dashboard'));
+                    return redirect(route('candidate.dashboard'));
             }
         }
 
