@@ -62,7 +62,7 @@ use Illuminate\Support\Facades\Storage;
                                 $output .= '<span style="white-space:nowrap; font-size: 0;">';
                                 $chars = mb_str_split($word);
                                 foreach ($chars as $char) {
-                                    $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                    $output .= '<span class="hero-char" style="display: inline-block;">' . e($char) . '</span>';
                                 }
                                 $output .= '</span>';
                                 if ($wIndex < count($words) - 1) {

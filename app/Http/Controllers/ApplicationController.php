@@ -9,20 +9,13 @@ use App\Services\FileUploadService;
 use App\Services\NotificationService;
 use App\Http\Requests\StoreApplicationRequest;
 use Illuminate\Support\Facades\Auth;
-
+use App\Enums\ApplicationStatus;
 class ApplicationController extends Controller
 {
     protected $fileUploadService;
    protected $notificationService;
 
-protected const STATUS_MAP = [
-    'En cours'       => 'pending',
-    'Accepté'        => 'accepted',
-    'Refusé'         => 'rejected',
-    'En attente'     => 'pending',
-    'Présélectionné' => 'shortlisted',
-    'Examiné'        => 'reviewed',
-];
+
 
 public function __construct(FileUploadService $fileUploadService, NotificationService $notificationService)
     {
@@ -57,10 +50,9 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
             // Status filter
             if ($request->filled('status')) {
                 $status = $request->status;
-                // Map French status to English database values
-                if (isset(self::STATUS_MAP[$status])) {
-    $query->where('status', self::STATUS_MAP[$status]);
-}
+                if ($enumStatus = ApplicationStatus::fromLabel($status)) {
+                    $query->where('status', $enumStatus->value);
+                }
             }
             
             $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
@@ -68,9 +60,9 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
             // Calculate statistics for candidate
             $stats = [
                 'total' => $user->applications()->count(),
-                'pending' => $user->applications()->where('status', 'pending')->count(),
-                'accepted' => $user->applications()->where('status', 'accepted')->count(),
-                'rejected' => $user->applications()->where('status', 'rejected')->count(),
+                'pending' => $user->applications()->where('status', ApplicationStatus::PENDING->value)->count(),
+                'accepted' => $user->applications()->where('status', ApplicationStatus::ACCEPTED->value)->count(),
+                'rejected' => $user->applications()->where('status', ApplicationStatus::REJECTED->value)->count(),
             ];
             
             return view('dashboard.candidate.applications', compact('applications', 'stats'));
@@ -96,9 +88,9 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
             // Status filter for recruiter
             if ($request->filled('status')) {
                 $status = $request->status;
-                if (isset(self::STATUS_MAP[$status])) {
-    $query->where('status', self::STATUS_MAP[$status]);
-}
+                if ($enumStatus = ApplicationStatus::fromLabel($status)) {
+                    $query->where('status', $enumStatus->value);
+                }
             }
             
             $applications = $query->orderBy('applied_at', 'desc')->paginate(10);
@@ -139,9 +131,9 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
         
         if ($request->filled('status')) {
             $status = $request->status;
-            if (isset(self::STATUS_MAP[$status])) {
-    $query->where('status', self::STATUS_MAP[$status]);
-}
+            if ($enumStatus = ApplicationStatus::fromLabel($status)) {
+                $query->where('status', $enumStatus->value);
+            }
         }
         
         $applications = $query->orderBy('applied_at', 'desc')->get();
@@ -149,9 +141,9 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
         // Calculate statistics
         $stats = [
             'total' => $user->applications()->count(),
-            'pending' => $user->applications()->where('status', 'pending')->count(),
-            'accepted' => $user->applications()->where('status', 'accepted')->count(),
-            'rejected' => $user->applications()->where('status', 'rejected')->count(),
+            'pending' => $user->applications()->where('status', ApplicationStatus::PENDING->value)->count(),
+            'accepted' => $user->applications()->where('status', ApplicationStatus::ACCEPTED->value)->count(),
+            'rejected' => $user->applications()->where('status', ApplicationStatus::REJECTED->value)->count(),
         ];
         
         // Generate PDF
@@ -201,7 +193,7 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
                 'candidate_id' => $user->id,
                 'cover_letter' => $request->cover_letter,
                 'resume_path' => $resumePath,
-                'status' => 'pending',
+                'status' => ApplicationStatus::PENDING->value,
                 'applied_at' => now(),
             ]);
 
@@ -263,7 +255,7 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
     }
 
         $request->validate([
-            'status' => 'required|in:pending,reviewed,shortlisted,rejected,accepted'
+            'status' => 'required|' . ApplicationStatus::validationRule()
         ]);
 
         try {
@@ -274,7 +266,7 @@ public function __construct(FileUploadService $fileUploadService, NotificationSe
             $application->load(['job.company', 'candidate']);
 
             // Send notification to candidate if status changed
-            if ($oldStatus !== $request->status && in_array($request->status, ['accepted', 'rejected', 'shortlisted'])) {
+            if ($oldStatus !== $request->status && in_array($request->status, [ApplicationStatus::ACCEPTED->value, ApplicationStatus::REJECTED->value, ApplicationStatus::SHORTLISTED->value])) {
                 try {
                     $this->notificationService->notifyApplicationStatusUpdate($application, $request->status);
                 } catch (\Exception $e) {

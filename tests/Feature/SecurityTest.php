@@ -284,4 +284,38 @@ class SecurityTest extends TestCase
         $response->assertDontSee('onerror=alert(1)', false);
         $response->assertDontSee('javascript:alert(2)', false);
     }
+
+    public function test_guest_cannot_access_job_create_route(): void
+    {
+        $response = $this->get('/jobs/create');
+
+        // Should be redirected to login
+        $response->assertStatus(302);
+        $response->assertRedirect('/login');
+    }
+
+    public function test_candidate_cannot_create_company(): void
+    {
+        $candidate = User::create([
+            'name' => 'Candidate User',
+            'email' => 'candidate.company.test@example.test',
+            'password' => Hash::make('password'),
+            'user_type' => 'candidate',
+        ]);
+
+        $response = $this
+            ->actingAs($candidate)
+            ->post('/companies', [
+                'name' => 'Hacked Company',
+                'description' => 'Should not be created',
+                'location' => 'Paris',
+            ]);
+
+        // Should be forbidden because check.user.type:recruiter,admin prevents it
+        $response->assertForbidden();
+
+        $this->assertDatabaseMissing('companies', [
+            'name' => 'Hacked Company',
+        ]);
+    }
 }

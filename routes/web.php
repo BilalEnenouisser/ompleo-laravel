@@ -72,8 +72,10 @@ Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordControlle
 // Jobs Routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/api/jobs/search', [JobController::class, 'searchApi'])->name('jobs.api.search');
+// ISSUE 1 fix: static route /jobs/create MUST come before the dynamic /jobs/{job:slug}
+// otherwise Laravel resolves "create" as a slug parameter and the create page is never reached.
+Route::get('/jobs/create', [JobController::class, 'create'])->middleware('auth')->name('jobs.create');
 Route::get('/jobs/{job:slug}', [JobController::class, 'show'])->name('jobs.show');
-Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 
 
 // Companies routes
@@ -88,10 +90,15 @@ Route::prefix('companies')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::get('/create', [CompanyController::class, 'create'])->name('companies.create');
-        Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
         Route::get('/{company}/edit', [CompanyController::class, 'edit'])->name('companies.edit');
-        Route::put('/{company}', [CompanyController::class, 'update'])->name('companies.update');
-        Route::delete('/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+
+        // ISSUE 2 fix: restrict mutation routes to recruiter/admin only.
+        // auth middleware alone allowed any authenticated user (incl. candidates) to create/modify companies.
+        Route::middleware('check.user.type:recruiter,admin')->group(function () {
+            Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
+            Route::put('/{company}', [CompanyController::class, 'update'])->name('companies.update');
+            Route::delete('/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+        });
     });
 });
 
