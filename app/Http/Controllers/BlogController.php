@@ -31,6 +31,10 @@ class BlogController extends Controller
             ->limit(3)
             ->get();
 
-        return view('blog.show', compact('blog', 'relatedBlogs'));
+        if (is_string($blog->content) && str_contains($blog->content, '<')) {
+    $blog->content = \Mews\Purifier\Facades\Purifier::clean($blog->content);
+}
+
+return view('blog.show', compact('blog', 'relatedBlogs'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationResource extends JsonResource
 {
@@ -23,7 +24,9 @@ class ApplicationResource extends JsonResource
     auth()->user()?->isAdmin()
     || auth()->id() === $this->candidate_id
     || auth()->id() === optional($this->job)->recruiter_id,
-    fn () => $this->resume_path
+    fn () => $this->resume_path 
+    ? Storage::disk('public')->url($this->resume_path) 
+    : null
 ),
             'status' => $this->status,
             'applied_at' => $this->applied_at,
