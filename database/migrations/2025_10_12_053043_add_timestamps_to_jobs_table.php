@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Canonical table is job_postings; legacy jobs patch should no-op.
+        if (Schema::hasTable('job_postings')) {
+            return;
+        }
+
         // Check if the jobs table exists, if not, skip this migration
         if (!Schema::hasTable('jobs')) {
             return;
@@ -18,7 +23,7 @@ return new class extends Migration
 
         Schema::table('jobs', function (Blueprint $table) {
             // Only add timestamps if they don't already exist
-            if (!Schema::hasColumn('jobs', 'created_at')) {
+            if (!Schema::hasColumn('jobs', 'created_at') && !Schema::hasColumn('jobs', 'updated_at')) {
                 $table->timestamps();
             }
         });
@@ -29,8 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            $table->dropTimestamps();
-        });
+        // Legacy compatibility migration: never rollback schema changes.
+        return;
     }
 };

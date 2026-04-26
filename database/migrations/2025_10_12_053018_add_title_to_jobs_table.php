@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Canonical table is job_postings; legacy jobs patch should no-op.
+        if (Schema::hasTable('job_postings')) {
+            return;
+        }
+
         // Check if the jobs table exists, if not, skip this migration
         if (!Schema::hasTable('jobs')) {
             return;
@@ -29,8 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            $table->dropColumn('title');
-        });
+        // Legacy compatibility migration: never rollback schema changes.
+        return;
     }
 };

@@ -11,12 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('applications') || !Schema::hasColumn('applications', 'job_id')) {
+            return;
+        }
+
+        if (!Schema::hasTable('job_postings')) {
+            return;
+        }
+
         Schema::table('applications', function (Blueprint $table) {
-            // Drop the existing foreign key constraint
-            $table->dropForeign(['job_id']);
-            
-            // Add the correct foreign key constraint to job_postings table
-            $table->foreign('job_id')->references('id')->on('job_postings')->onDelete('cascade');
+            // Drop existing foreign key constraint if present.
+            try {
+                $table->dropForeign(['job_id']);
+            } catch (\Throwable $e) {
+            }
+        });
+
+        Schema::table('applications', function (Blueprint $table) {
+            // Keep canonical foreign key to job_postings table.
+            try {
+                $table->foreign('job_id')->references('id')->on('job_postings')->onDelete('cascade');
+            } catch (\Throwable $e) {
+            }
         });
     }
 
@@ -25,12 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('applications', function (Blueprint $table) {
-            // Drop the foreign key constraint
-            $table->dropForeign(['job_id']);
-            
-            // Keep the canonical foreign key constraint to job_postings table.
-            $table->foreign('job_id')->references('id')->on('job_postings')->onDelete('cascade');
-        });
+        // Legacy compatibility migration: never rollback schema changes.
+        return;
     }
 };

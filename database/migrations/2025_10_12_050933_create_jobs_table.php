@@ -42,6 +42,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_postings');
+        if (!Schema::hasTable('job_postings')) {
+            return;
+        }
+
+        Schema::drop('job_postings');
     }
 };
