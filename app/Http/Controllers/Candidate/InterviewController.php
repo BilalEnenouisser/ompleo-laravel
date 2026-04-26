@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Candidate;
 
+use App\Enums\InterviewStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Interview;
 use App\Services\NotificationService;
@@ -53,7 +54,7 @@ class InterviewController extends Controller
             abort(403, 'Accès non autorisé à cet entretien.');
         }
 
-        $interview->update(['status' => 'confirme']);
+        $interview->update(['status' => InterviewStatus::Confirme->value]);
         $interview->load(['recruiter', 'job.company']);
 
         // Send notification to recruiter
@@ -79,7 +80,7 @@ class InterviewController extends Controller
         ]);
 
         $interview->update([
-            'status' => 'annule',
+            'status' => InterviewStatus::Annule->value,
             'notes' => ($interview->notes ?? '') . "\n\n[Annulé par candidat] " . $request->cancellation_reason,
         ]);
         $interview->load(['recruiter', 'job.company']);

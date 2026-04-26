@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Recruiter;
 
+use App\Enums\InterviewStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Interview;
 use App\Models\Application;
@@ -52,11 +53,11 @@ class InterviewsController extends Controller
         if ($request->filled('status')) {
             $status = $request->status;
             $statusMap = [
-                'Programmé' => 'programme',
-                'Confirmé' => 'confirme',
-                'En attente' => 'en_attente',
-                'Terminé' => 'termine',
-                'Annulé' => 'annule'
+                'Programmé'  => InterviewStatus::Programme->value,
+                'Confirmé'   => InterviewStatus::Confirme->value,
+                'En attente' => InterviewStatus::EnAttente->value,
+                'Terminé'    => InterviewStatus::Termine->value,
+                'Annulé'     => InterviewStatus::Annule->value,
             ];
             
             if (isset($statusMap[$status])) {
@@ -151,12 +152,12 @@ class InterviewsController extends Controller
 
         // Calculate statistics
         $stats = [
-            'total' => Interview::forRecruiter($user->id)->count(),
-            'programme' => Interview::forRecruiter($user->id)->withStatus('programme')->count(),
-            'confirme' => Interview::forRecruiter($user->id)->withStatus('confirme')->count(),
-            'en_attente' => Interview::forRecruiter($user->id)->withStatus('en_attente')->count(),
-            'termine' => Interview::forRecruiter($user->id)->withStatus('termine')->count(),
-            'annule' => Interview::forRecruiter($user->id)->withStatus('annule')->count(),
+            'total'      => Interview::forRecruiter($user->id)->count(),
+            'programme'  => Interview::forRecruiter($user->id)->withStatus(InterviewStatus::Programme->value)->count(),
+            'confirme'   => Interview::forRecruiter($user->id)->withStatus(InterviewStatus::Confirme->value)->count(),
+            'en_attente' => Interview::forRecruiter($user->id)->withStatus(InterviewStatus::EnAttente->value)->count(),
+            'termine'    => Interview::forRecruiter($user->id)->withStatus(InterviewStatus::Termine->value)->count(),
+            'annule'     => Interview::forRecruiter($user->id)->withStatus(InterviewStatus::Annule->value)->count(),
         ];
 
         return view('dashboard.recruiter.interviews', compact('interviews', 'stats'));
@@ -215,7 +216,7 @@ class InterviewsController extends Controller
         $conflictExists = Interview::forRecruiter($user->id)
             ->where('interview_date', $request->interview_date)
             ->where('start_time', $request->start_time)
-            ->where('status', '!=', 'annule')
+            ->where('status', '!=', InterviewStatus::Annule->value)
             ->exists();
 
         if ($conflictExists) {
@@ -237,7 +238,7 @@ class InterviewsController extends Controller
             'meeting_link' => $request->meeting_link,
             'meeting_id' => $request->meeting_id,
             'meeting_password' => $request->meeting_password,
-            'status' => 'programme',
+            'status' => InterviewStatus::Programme->value,
         ]);
 
         // Load relationships needed for notification
@@ -311,7 +312,7 @@ class InterviewsController extends Controller
         $conflictExists = Interview::forRecruiter(Auth::id())
             ->where('interview_date', $request->interview_date)
             ->where('start_time', $request->start_time)
-            ->where('status', '!=', 'annule')
+            ->where('status', '!=', InterviewStatus::Annule->value)
             ->where('id', '!=', $interview->id)
             ->exists();
 
@@ -354,7 +355,7 @@ class InterviewsController extends Controller
         }
 
         $request->validate([
-            'status' => 'required|in:programme,confirme,en_attente,annule,termine',
+            'status' => 'required|in:' . InterviewStatus::validationRule(),
         ]);
 
         $oldStatus = $interview->status;
@@ -366,15 +367,9 @@ class InterviewsController extends Controller
         // Send notification to candidate about status change
         $this->sendStatusChangeNotification($interview, $oldStatus, $request->status);
 
-        $statusMap = [
-            'programme' => 'Programmé',
-            'confirme' => 'Confirmé',
-            'en_attente' => 'En attente',
-            'annule' => 'Annulé',
-            'termine' => 'Terminé',
-        ];
+        $statusLabel = InterviewStatus::from($request->status)->label();
 
-        return back()->with('success', "Statut de l'entretien mis à jour: {$statusMap[$request->status]}");
+        return back()->with('success', "Statut de l'entretien mis à jour: {$statusLabel}");
     }
 
     /**
@@ -592,15 +587,6 @@ class InterviewsController extends Controller
             
             $notificationService = new NotificationService();
             
-            // Status mapping
-            $statusMap = [
-                'programme' => 'Programmé',
-                'confirme' => 'Confirmé',
-                'en_attente' => 'En attente',
-                'annule' => 'Annulé',
-                'termine' => 'Terminé',
-            ];
-            
             // Create notification title
             $title = "Mise à jour de votre entretien - {$interview->job->title}";
             
@@ -608,16 +594,16 @@ class InterviewsController extends Controller
             $companyName = $interview->job->company->name ?? 'l\'entreprise';
             
             switch ($newStatus) {
-                case 'confirme':
+                case InterviewStatus::Confirme->value:
                     $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été confirmé. Consultez les détails ci-dessous.";
                     break;
-                case 'annule':
+                case InterviewStatus::Annule->value:
                     $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} a été annulé. Consultez les détails ci-dessous.";
                     break;
-                case 'termine':
+                case InterviewStatus::Termine->value:
                     $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} est terminé. Merci pour votre participation !";
                     break;
-                case 'en_attente':
+                case InterviewStatus::EnAttente->value:
                     $message = "Votre entretien pour le poste \"{$interview->job->title}\" chez {$companyName} est en attente de confirmation. Consultez les détails ci-dessous.";
                     break;
                 default:
