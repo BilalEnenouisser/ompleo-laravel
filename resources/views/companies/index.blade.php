@@ -51,8 +51,29 @@ use Illuminate\Support\Facades\Storage;
         </style>
         <div class="platform-container">
             <h1 class="font-bold mb-6 leading-tight tracking-tighter companies-hero-title" style="font-size: 0;">
-                @php $heroTitle = "Découvrez les entreprises qui recrutent"; if (!function_exists('renderAnimateTextCompanies')) { function renderAnimateTextCompanies($text) { $words = explode(' ', $text); $output = ''; foreach ($words as $wIndex => $word) { $output .= '<span style="white-space:nowrap; font-size: 0;">'; $chars = mb_str_split($word); foreach ($chars as $char) { $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>'; } $output .= '</span>'; if ($wIndex < count($words) - 1) { $output .= '<span class="hero-space">&nbsp;</span>'; } } return $output; } } @endphp
-                {{ clean(renderAnimateTextCompanies($heroTitle)) }}
+                @php
+                    $heroTitle = "Découvrez les entreprises qui recrutent";
+                    
+                    if (!function_exists('renderAnimateTextCompanies')) {
+                        function renderAnimateTextCompanies($text) {
+                            $words = explode(' ', $text);
+                            $output = '';
+                            foreach ($words as $wIndex => $word) {
+                                $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                $chars = mb_str_split($word);
+                                foreach ($chars as $char) {
+                                    $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                }
+                                $output .= '</span>';
+                                if ($wIndex < count($words) - 1) {
+                                    $output .= '<span class="hero-space">&nbsp;</span>';
+                                }
+                            }
+                            return $output;
+                        }
+                    }
+                @endphp
+                {!! renderAnimateTextCompanies($heroTitle) !!}
             </h1>
             
             <style>
@@ -524,7 +545,21 @@ use Illuminate\Support\Facades\Storage;
 
                 {{-- Page Numbers (Circular Buttons) --}}
                 <div class="flex items-center gap-2">
-                    @php $currentPage = $companies->currentPage(); $lastPage = $companies->lastPage(); $startPage = max(1, $currentPage - 2); $endPage = min($lastPage, $currentPage + 2); // Adjust if we're near the start or end if ($endPage - $startPage < 4) { if ($startPage == 1) { $endPage = min($lastPage, $startPage + 4); } else { $startPage = max(1, $endPage - 4); } } @endphp
+                    @php
+                        $currentPage = $companies->currentPage();
+                        $lastPage = $companies->lastPage();
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+                        
+                        // Adjust if we're near the start or end
+                        if ($endPage - $startPage < 4) {
+                            if ($startPage == 1) {
+                                $endPage = min($lastPage, $startPage + 4);
+                            } else {
+                                $startPage = max(1, $endPage - 4);
+                            }
+                        }
+                    @endphp
 
                     @if($startPage > 1)
                         <a href="{{ $companies->url(1) }}" class="w-10 h-10 rounded-full flex items-center justify-center text-white bg-[#00b6b4]/30 hover:bg-[#00b6b4]/50 transition-colors font-medium">

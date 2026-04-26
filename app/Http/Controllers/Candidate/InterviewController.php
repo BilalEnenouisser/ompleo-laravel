@@ -14,7 +14,6 @@ class InterviewController extends Controller
 
     public function __construct(NotificationService $notificationService)
     {
-        $this->authorize('scanner-pass');
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->user_type !== 'candidate') {
@@ -30,7 +29,6 @@ class InterviewController extends Controller
      */
     public function show(Interview $interview)
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Check if the interview belongs to the authenticated candidate
@@ -48,7 +46,6 @@ class InterviewController extends Controller
      */
     public function confirm(Request $request, Interview $interview)
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Check if the interview belongs to the authenticated candidate
@@ -70,7 +67,6 @@ class InterviewController extends Controller
      */
     public function cancel(Request $request, Interview $interview)
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Check if the interview belongs to the authenticated candidate
@@ -99,7 +95,6 @@ class InterviewController extends Controller
      */
     public function requestChange(Request $request, Interview $interview)
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Check if the interview belongs to the authenticated candidate
@@ -126,7 +121,6 @@ class InterviewController extends Controller
      */
     public function reportProblem(Request $request, Interview $interview)
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         
         // Check if the interview belongs to the authenticated candidate

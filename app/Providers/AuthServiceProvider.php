@@ -14,7 +14,6 @@ use App\Policies\CompanyPolicy;
 use App\Policies\JobPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\UserNotificationPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -39,9 +38,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        Gate::define('scanner-pass', function (?User $user = null): bool {
-            return $user !== null;
-        });
     }
 }

@@ -12,7 +12,65 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Company::where('is_active', true) ->withCount(['jobs' => function($query) { $query->where('status', 'published'); }]); if ($request->filled('company_name')) { $query->where('name', 'like', "%{$request->company_name}%"); } if ($request->filled('location')) { $query->where('location', 'like', "%{$request->location}%"); } if ($request->filled('industry')) { $query->where('industry', 'like', "%{$request->industry}%"); } $companies = $query->orderBy('jobs_count', 'desc') ->orderBy('created_at', 'desc') ->paginate(6); $companyCount = Company::where('is_active', true)->count(); $companyNames = Company::where('is_active', true) ->orderBy('name') ->pluck('name') ->unique() ->values(); $locations = Company::where('is_active', true) ->whereNotNull('location') ->orderBy('location') ->pluck('location') ->unique() ->values(); $industries = Company::where('is_active', true) ->whereNotNull('industry') ->orderBy('industry') ->pluck('industry') ->unique() ->values(); if ($request->ajax()) { return api_json([ 'html' => view('companies.companies-partial', compact('companies'))->render(), 'has_more' => $companies->hasMorePages(), 'next_page' => $companies->currentPage() + 1 ]); } return view('companies.index', compact('companies', 'companyCount', 'companyNames', 'locations', 'industries'));
+        // Get all active companies with their job counts
+        $query = Company::where('is_active', true)
+            ->withCount(['jobs' => function($query) {
+                $query->where('status', 'published');
+            }]);
+
+        // Company name filter
+        if ($request->filled('company_name')) {
+            $query->where('name', 'like', "%{$request->company_name}%");
+        }
+
+        // Location filter
+        if ($request->filled('location')) {
+            $query->where('location', 'like', "%{$request->location}%");
+        }
+
+        // Industry filter
+        if ($request->filled('industry')) {
+            $query->where('industry', 'like', "%{$request->industry}%");
+        }
+
+        $companies = $query->orderBy('jobs_count', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+        
+        // Get company count for stats
+        $companyCount = Company::where('is_active', true)->count();
+
+        // Get unique values for filters
+        $companyNames = Company::where('is_active', true)
+            ->orderBy('name')
+            ->pluck('name')
+            ->unique()
+            ->values();
+        
+        $locations = Company::where('is_active', true)
+            ->whereNotNull('location')
+            ->orderBy('location')
+            ->pluck('location')
+            ->unique()
+            ->values();
+        
+        $industries = Company::where('is_active', true)
+            ->whereNotNull('industry')
+            ->orderBy('industry')
+            ->pluck('industry')
+            ->unique()
+            ->values();
+
+        // Handle AJAX load more request
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('companies.companies-partial', compact('companies'))->render(),
+                'has_more' => $companies->hasMorePages(),
+                'next_page' => $companies->currentPage() + 1
+            ]);
+        }
+
+        return view('companies.index', compact('companies', 'companyCount', 'companyNames', 'locations', 'industries'));
     }
 
     public function search(Request $request)
@@ -20,7 +78,7 @@ class CompanyController extends Controller
         $query = $request->get('q', '');
         
         if (strlen($query) < 2) {
-            return api_json([]);
+            return response()->json([]);
         }
 
         $candidates = User::where('user_type', 'candidate')
@@ -38,7 +96,7 @@ class CompanyController extends Controller
             ->limit(8)
             ->get(['id', 'name', 'email']);
 
-        return api_json($candidates);
+        return response()->json($candidates);
     }
 
     public function show($id)
@@ -78,6 +136,36 @@ class CompanyController extends Controller
 
     public function sendMessage(Request $request, $id)
     {
-        $this->authorize('scanner-pass'); $request->validate([ 'message' => 'required|string|min:10|max:1000', ]); $this->authorize('sendMessage', Company::class); $recruiter = auth()->user(); $candidate = User::where('user_type', 'candidate')->findOrFail($id); $recruiter->load('recruiterProfile.company'); $recruiterName = $recruiter->name ?? 'Un recruteur'; $companyName = $recruiter->recruiterProfile?->company?->name ?? 'une entreprise'; $notificationService = app(\App\Services\NotificationService::class); $title = "Nouveau message de {$recruiterName}"; $message = "{$recruiterName} de {$companyName} vous a envoyé un message:\n\n{$request->message}"; try { $notificationService->createNotification( $title, $message, 'info', [$candidate->id] ); return api_json(['success' => true, 'message' => 'Message envoyé avec succès']); } catch (\Exception $e) { \Log::error('Failed to send message: ' . $e->getMessage()); return api_json(['error' => 'Erreur lors de l\'envoi du message'], 500); }
+        $request->validate([
+            'message' => 'required|string|min:10|max:1000',
+        ]);
+
+        $this->authorize('sendMessage', Company::class);
+
+        $recruiter = auth()->user();
+        $candidate = User::where('user_type', 'candidate')->findOrFail($id);
+
+        $recruiter->load('recruiterProfile.company');
+        $recruiterName = $recruiter->name ?? 'Un recruteur';
+        $companyName = $recruiter->recruiterProfile?->company?->name ?? 'une entreprise';
+
+        $notificationService = app(\App\Services\NotificationService::class);
+        
+        $title = "Nouveau message de {$recruiterName}";
+        $message = "{$recruiterName} de {$companyName} vous a envoyé un message:\n\n{$request->message}";
+
+        try {
+            $notificationService->createNotification(
+                $title,
+                $message,
+                'info',
+                [$candidate->id]
+            );
+
+            return response()->json(['success' => true, 'message' => 'Message envoyé avec succès']);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send message: ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de l\'envoi du message'], 500);
+        }
     }
 }

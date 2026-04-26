@@ -133,7 +133,7 @@
                 @php
                     $safeContent = strip_tags((string) $blog->content, '<p><br><strong><em><ul><ol><li><blockquote><h2><h3><h4><h5><h6>');
                 @endphp
-                {{ clean($safeContent) }}
+                {!! $safeContent !!}
             </div>
         </div>
 

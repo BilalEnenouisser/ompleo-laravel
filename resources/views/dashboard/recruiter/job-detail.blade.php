@@ -99,7 +99,7 @@
             <div class="mb-6">
                 <h3 class="text-lg font-bold text-[#f5f5f5] mb-3">Description du poste</h3>
                 <div class="text-[#d1d5db] leading-relaxed">
-                    {{ clean(nl2br(e($job->description))) }}
+                    {!! nl2br(e($job->description)) !!}
                 </div>
             </div>
 

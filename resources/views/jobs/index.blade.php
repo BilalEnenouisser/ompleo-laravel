@@ -7,7 +7,36 @@
 <!-- Header -->
 @include('components.header')
 
-@php $tabTitles = [ 'all' => 'Toutes les offres', 'category' => 'Catégorie', 'location' => 'Lieu', 'type' => 'Type' ]; $sidebarTitle = ''; $sidebarItems = []; $allLabel = ''; $currentFilter = ''; if ($tab === 'category') { $sidebarTitle = 'Catégories'; $sidebarItems = $categories; $allLabel = 'Toutes les catégories'; $currentFilter = request('category') ?: request('search'); } elseif ($tab === 'location') { $sidebarTitle = 'Lieux'; $sidebarItems = $locations; $allLabel = 'Tous les lieux'; $currentFilter = request('location'); } elseif ($tab === 'type') { $sidebarTitle = 'Types'; $sidebarItems = $types; $allLabel = 'Tous les types'; $currentFilter = request('type'); } @endphp
+@php
+    $tabTitles = [
+        'all' => 'Toutes les offres',
+        'category' => 'Catégorie',
+        'location' => 'Lieu',
+        'type' => 'Type'
+    ];
+    
+    $sidebarTitle = '';
+    $sidebarItems = [];
+    $allLabel = '';
+    $currentFilter = '';
+    
+    if ($tab === 'category') {
+        $sidebarTitle = 'Catégories';
+        $sidebarItems = $categories;
+        $allLabel = 'Toutes les catégories';
+        $currentFilter = request('category') ?: request('search');
+    } elseif ($tab === 'location') {
+        $sidebarTitle = 'Lieux';
+        $sidebarItems = $locations;
+        $allLabel = 'Tous les lieux';
+        $currentFilter = request('location');
+    } elseif ($tab === 'type') {
+        $sidebarTitle = 'Types';
+        $sidebarItems = $types;
+        $allLabel = 'Tous les types';
+        $currentFilter = request('type');
+    }
+@endphp
 
 <div class="min-h-screen bg-[#212221] relative overflow-hidden">
     <!-- Hero Section -->
@@ -40,12 +69,42 @@
         <div class="platform-container">
             <div class="mb-4 md:mb-6">
                 <h1 class="font-bold text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter" style="font-size: 0;">
-                    @php $title = "Parcourir les offres"; if (request('work_type') === 'remote') { $title = "Offres à distance"; } elseif (request('type') === 'Stage') { $title = "Offres de Stages"; } elseif (request('search')) { $title = "Résultats pour \"" . request('search') . "\""; } $tabText = $tab !== 'all' ? " - par " . $tabTitles[$tab] : ""; if (!function_exists('renderAnimateText')) { function renderAnimateText($text) { $words = explode(' ', $text); $output = ''; foreach ($words as $wIndex => $word) { $output .= '<span style="white-space:nowrap; font-size: 0;">'; $chars = mb_str_split($word); foreach ($chars as $char) { $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">' . $char . '</span>'; } $output .= '</span>'; if ($wIndex < count($words) - 1) { $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">&nbsp;</span>'; } } return $output; } } @endphp
-                    {{ clean(renderAnimateText($title)) }}
+                    @php
+                        $title = "Parcourir les offres";
+                        if (request('work_type') === 'remote') {
+                            $title = "Offres à distance";
+                        } elseif (request('type') === 'Stage') {
+                            $title = "Offres de Stages";
+                        } elseif (request('search')) {
+                            $title = "Résultats pour \"" . request('search') . "\"";
+                        }
+                        
+                        $tabText = $tab !== 'all' ? " - par " . $tabTitles[$tab] : "";
+                        
+                        if (!function_exists('renderAnimateText')) {
+                            function renderAnimateText($text) {
+                                $words = explode(' ', $text);
+                                $output = '';
+                                foreach ($words as $wIndex => $word) {
+                                    $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                    $chars = mb_str_split($word);
+                                    foreach ($chars as $char) {
+                                        $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">' . $char . '</span>';
+                                    }
+                                    $output .= '</span>';
+                                    if ($wIndex < count($words) - 1) {
+                                        $output .= '<span class="hero-char md:text-6xl xl:text-8xl" style="display: inline-block;">&nbsp;</span>';
+                                    }
+                                }
+                                return $output;
+                            }
+                        }
+                    @endphp
+                    {!! renderAnimateText($title) !!}
                     <br>
                     @if($tab !== 'all')
                         <span class="text-[#f5f5f5] opacity-90" style="font-size: 0;">
-                            {{ clean(renderAnimateText($tabText)) }}
+                            {!! renderAnimateText($tabText) !!}
                         </span>
                     @endif
                 </h1>
@@ -87,7 +146,24 @@
                                 {{ $allLabel }}
                             </a>
                             @foreach($sidebarItems as $key => $item)
-                                @php $itemLabel = is_string($item) ? $item : $item; $itemValue = is_string($key) ? $key : $item; $isActive = false; $urlParams = ['tab' => $tab]; if ($tab === 'category') { $isActive = request('search') === $item || request('category') === $item; $urlParams['category'] = $item; } elseif ($tab === 'location') { $isActive = request('location') === $itemValue; $urlParams['location'] = $itemValue; } elseif ($tab === 'type') { $isActive = request('type') === $itemValue; $urlParams['type'] = $itemValue; } @endphp
+                                @php
+                                    $itemLabel = is_string($item) ? $item : $item;
+                                    $itemValue = is_string($key) ? $key : $item;
+                                    
+                                    $isActive = false;
+                                    $urlParams = ['tab' => $tab];
+                                    
+                                    if ($tab === 'category') {
+                                        $isActive = request('search') === $item || request('category') === $item;
+                                        $urlParams['category'] = $item;
+                                    } elseif ($tab === 'location') {
+                                        $isActive = request('location') === $itemValue;
+                                        $urlParams['location'] = $itemValue;
+                                    } elseif ($tab === 'type') {
+                                        $isActive = request('type') === $itemValue;
+                                        $urlParams['type'] = $itemValue;
+                                    }
+                                @endphp
                                 <a href="{{ route('jobs.index', $urlParams) }}" 
                                    class="block text-base transition-colors {{ $isActive ? 'text-[#00b6b4] font-bold' : 'text-gray-400 hover:text-white' }}">
                                     {{ $itemLabel }}

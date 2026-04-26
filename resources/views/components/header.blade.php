@@ -525,13 +525,8 @@ function loadNotifications() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('[header notifications] raw dropdown payload', data);
-
-        const payload = data.data || data;
-        const notificationsData = payload.notifications || [];
-
-        if (notificationsData.length >= 0) {
-            const notifications = notificationsData.map(notification => ({
+        if (data.notifications) {
+            const notifications = data.notifications.map(notification => ({
                 id: notification.id,
                 title: notification.title,
                 message: notification.message,
@@ -542,19 +537,12 @@ function loadNotifications() {
                 background_color: notification.background_color,
                 interview: notification.interview || null
             }));
-
-            console.log('[header notifications] normalized dropdown payload', {
-                count: notifications.length,
-                unreadCount: payload.unread_count,
-                firstItem: notifications[0] || null
-            });
             
             renderNotifications(notifications);
             updateNotificationBadge(notifications);
         }
     })
     .catch(error => {
-        console.error('[header notifications] dropdown load failed', error);
         // Show empty state on error
         renderNotifications([]);
         updateNotificationBadge([]);
@@ -879,15 +867,11 @@ function loadNotificationCount() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('[header notifications] raw badge payload', data);
-
-        const payload = data.data || data;
         const badge = document.getElementById('notificationBadge');
         const markAllBtn = document.getElementById('markAllReadBtn');
         
-        if (payload.unread_count !== undefined) {
-            const unreadCount = payload.unread_count;
-            console.log('[header notifications] badge count', unreadCount);
+        if (data.unread_count !== undefined) {
+            const unreadCount = data.unread_count;
             
             if (unreadCount > 0) {
                 if (badge) {
@@ -908,7 +892,6 @@ function loadNotificationCount() {
         }
     })
     .catch(error => {
-        console.error('[header notifications] badge load failed', error);
         // Silently fail - badge will remain hidden
     });
 }

@@ -627,28 +627,6 @@
         font-size: 7px !important;
         display: block !important;
     }
-
-    #calendarView {
-        position: relative;
-        z-index: 10;
-        overflow: visible !important;
-        isolation: isolate;
-    }
-
-    #calendar {
-        position: relative;
-        z-index: 11;
-    }
-
-    .fc-theme-standard .fc-toolbar,
-    .fc-header-toolbar,
-    .fc-toolbar-chunk,
-    .fc-button-group,
-    .fc-button {
-        position: relative;
-        z-index: 20;
-        pointer-events: auto !important;
-    }
     
     /* Hide some buttons on mobile */
     .fc-timeGridWeek-button,
@@ -850,23 +828,21 @@
         </form>
     </div>
 
-    <div id="interviewsList">
-        {{-- Interviews List --}}
-        @include('dashboard.recruiter.partials.interviews.list', ['interviews' => $interviews])
-                            
-        {{-- Pagination --}}
-        @if($interviews->hasPages())
-            <div class="mt-6 sm:mt-8">
-                {{ $interviews->appends(request()->query())->links() }}
-            </div>
-        @endif
-    </div>
+    {{-- Interviews List --}}
+    @include('dashboard.recruiter.partials.interviews.list', ['interviews' => $interviews])
+                        
+    {{-- Pagination --}}
+    @if($interviews->hasPages())
+        <div class="mt-6 sm:mt-8">
+            {{ $interviews->appends(request()->query())->links() }}
+                            </div>
+    @endif
 
 
     {{-- Calendar View --}}
-    <div id="calendarView" class="rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8 hidden overflow-visible">
-        <div id="calendar" class="min-w-[300px] sm:min-w-full min-h-[700px] bg-[#1f1f1f] rounded-xl"></div>
-    </div>
+    <div id="calendarView" class=" rounded-2xl p-2 sm:p-4 md:p-6 lg:p-8  hidden overflow-x-auto">
+        <div id="calendar" class="min-w-[300px] sm:min-w-full p-8">    </div>
+        </div>
 
     @include('dashboard.recruiter.partials.interviews.delete-modal')
 
@@ -881,5 +857,6 @@ window.recruiterInterviewsConfig = {
 </script>
 <script src="{{ asset('js/recruiter-interviews.js') }}"></script>
 @endsection
+</div>
 @endsection
 

@@ -11,14 +11,12 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->authorize('scanner-pass');
         $this->middleware('auth');
         $this->middleware('check.user.type:recruiter');
     }
 
     public function index()
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         $recruiterProfile = $user->recruiterProfile;
         
@@ -38,7 +36,6 @@ class JobsController extends Controller
 
     public function show(Job $job)
     {
-        $this->authorize('scanner-pass');
         // Check if the job belongs to the authenticated recruiter
         if ($job->recruiter_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this job.');
@@ -51,7 +48,6 @@ class JobsController extends Controller
 
     public function applications(Job $job)
     {
-        $this->authorize('scanner-pass');
         // Check if the job belongs to the authenticated recruiter
         if ($job->recruiter_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this job.');
@@ -79,7 +75,6 @@ class JobsController extends Controller
 
     public function destroy(Job $job)
     {
-        $this->authorize('scanner-pass');
         // Check if the job belongs to the authenticated recruiter
         if ($job->recruiter_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this job.');

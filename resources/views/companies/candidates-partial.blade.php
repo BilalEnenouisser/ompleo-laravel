@@ -1,6 +1,53 @@
 @foreach($candidates as $candidate)
     @if($candidate->candidateProfile)
-        @php $profile = $candidate->candidateProfile; $initials = ''; if ($candidate->name) { $nameParts = explode(' ', $candidate->name); $initials = strtoupper(substr($nameParts[0], 0, 1)); if (count($nameParts) > 1) { $initials .= strtoupper(substr($nameParts[1], 0, 1)); } } // Parse skills - they are already cast as array in the model $skills = []; if ($profile && $profile->skills && is_array($profile->skills)) { $skills = array_filter(array_map(function($skill) { return is_string($skill) ? trim($skill) : (string) $skill; }, $profile->skills)); } // Parse experience $experienceText = $profile->experience_years ?? 'Non spécifié'; // Parse education $educationText = 'Non spécifié'; if ($profile && isset($profile->education) && is_array($profile->education) && !empty($profile->education)) { try { $firstEducation = $profile->education[0]; if (is_array($firstEducation)) { $educationText = $firstEducation['degree'] ?? $firstEducation['title'] ?? $firstEducation['diploma'] ?? $firstEducation['name'] ?? 'Non spécifié'; $educationText = trim($educationText); if (empty($educationText)) { $educationText = 'Non spécifié'; } } elseif (is_string($firstEducation)) { $educationText = trim($firstEducation); if (empty($educationText)) { $educationText = 'Non spécifié'; } } } catch (Exception $e) { $educationText = 'Non spécifié'; } } @endphp
+        @php
+            $profile = $candidate->candidateProfile;
+            $initials = '';
+            if ($candidate->name) {
+                $nameParts = explode(' ', $candidate->name);
+                $initials = strtoupper(substr($nameParts[0], 0, 1));
+                if (count($nameParts) > 1) {
+                    $initials .= strtoupper(substr($nameParts[1], 0, 1));
+                }
+            }
+        
+            // Parse skills - they are already cast as array in the model
+            $skills = [];
+            if ($profile && $profile->skills && is_array($profile->skills)) {
+                $skills = array_filter(array_map(function($skill) {
+                    return is_string($skill) ? trim($skill) : (string) $skill;
+                }, $profile->skills));
+            }
+        
+            // Parse experience
+            $experienceText = $profile->experience_years ?? 'Non spécifié';
+        
+            // Parse education
+            $educationText = 'Non spécifié';
+            if ($profile && isset($profile->education) && is_array($profile->education) && !empty($profile->education)) {
+                try {
+                    $firstEducation = $profile->education[0];
+                    if (is_array($firstEducation)) {
+                        $educationText = $firstEducation['degree'] ?? 
+                                       $firstEducation['title'] ?? 
+                                       $firstEducation['diploma'] ?? 
+                                       $firstEducation['name'] ?? 
+                                       'Non spécifié';
+                        $educationText = trim($educationText);
+                        if (empty($educationText)) {
+                            $educationText = 'Non spécifié';
+                        }
+                    } elseif (is_string($firstEducation)) {
+                        $educationText = trim($firstEducation);
+                        if (empty($educationText)) {
+                            $educationText = 'Non spécifié';
+                        }
+                    }
+                } catch (Exception $e) {
+                    $educationText = 'Non spécifié';
+                }
+            }
+        @endphp
         
         <div class="bg-white dark:bg-[#2b2b2b] rounded-xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-[#333333] flex flex-col">
             {{-- Top Section: Image on Left, Compétences on Right --}}

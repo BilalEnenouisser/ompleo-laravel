@@ -129,7 +129,17 @@
                     </label>
                     <div class="relative">
                         <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9ca3af] w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                        @php $currentType = old('type', $interview->type); $placeholder = ''; if ($currentType == 'visioconference') { $placeholder = 'https://meet.google.com/... ou https://zoom.us/j/...'; } elseif ($currentType == 'presentiel') { $placeholder = 'Bureau Chéraga'; } elseif ($currentType == 'telephonique') { $placeholder = '+213 XXX XXX XXX'; } @endphp
+                        @php
+                            $currentType = old('type', $interview->type);
+                            $placeholder = '';
+                            if ($currentType == 'visioconference') {
+                                $placeholder = 'https://meet.google.com/... ou https://zoom.us/j/...';
+                            } elseif ($currentType == 'presentiel') {
+                                $placeholder = 'Bureau Chéraga';
+                            } elseif ($currentType == 'telephonique') {
+                                $placeholder = '+213 XXX XXX XXX';
+                            }
+                        @endphp
                         <input type="text" id="location" name="location" value="{{ old('location', $interview->location) }}" 
                                placeholder="{{ $placeholder }}"
                                class="w-full pl-10 pr-4 py-3 border border-[#444444] rounded-lg focus:ring-2 focus:ring-[#00b6b4] focus:border-[#00b6b4] outline-none bg-[#333333] text-[#f5f5f5] @error('location') border-red-500 @enderror" required>

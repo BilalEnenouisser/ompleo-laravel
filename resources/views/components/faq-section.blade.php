@@ -27,7 +27,30 @@
 
             <!-- Right Section: Accordion -->
             <div class="space-y-4">
-                @php $faqs = [ [ 'question' => 'OMPLEO est-il gratuit pour les candidats ?', 'answer' => 'Oui. OMPLEO est entièrement gratuit pour les candidats. Vous pouvez consulter les offres, configurer des alertes emploi et postuler directement, sans frais cachés.', 'expanded' => true ], [ 'question' => 'Comment postuler à une offre d\'emploi ?', 'answer' => 'Pour postuler à une offre d\'emploi sur OMPLEO, il vous suffit de créer un compte candidat, de consulter les offres disponibles, et de cliquer sur le bouton "Postuler" sur l\'offre qui vous intéresse. Vous pourrez ensuite télécharger votre CV et lettre de motivation.', 'expanded' => false ], [ 'question' => 'Les entreprises peuvent-elles publier des offres sur OMPLEO ?', 'answer' => 'Oui, les entreprises peuvent publier leurs offres d\'emploi sur OMPLEO. Il suffit de créer un compte recruteur, de remplir les informations de votre entreprise, et de publier vos offres d\'emploi. Notre plateforme vous permet de gérer vos offres et de recevoir des candidatures directement.', 'expanded' => false ], [ 'question' => 'Comment rester informé des nouvelles offres d\'emploi ?', 'answer' => 'Vous pouvez configurer des alertes emploi personnalisées en fonction de vos critères (localisation, secteur, type de contrat, etc.). Vous recevrez une notification par email dès qu\'une nouvelle offre correspondant à vos critères est publiée.', 'expanded' => false ] ]; @endphp
+                @php
+                $faqs = [
+                    [
+                        'question' => 'OMPLEO est-il gratuit pour les candidats ?',
+                        'answer' => 'Oui. OMPLEO est entièrement gratuit pour les candidats. Vous pouvez consulter les offres, configurer des alertes emploi et postuler directement, sans frais cachés.',
+                        'expanded' => true
+                    ],
+                    [
+                        'question' => 'Comment postuler à une offre d\'emploi ?',
+                        'answer' => 'Pour postuler à une offre d\'emploi sur OMPLEO, il vous suffit de créer un compte candidat, de consulter les offres disponibles, et de cliquer sur le bouton "Postuler" sur l\'offre qui vous intéresse. Vous pourrez ensuite télécharger votre CV et lettre de motivation.',
+                        'expanded' => false
+                    ],
+                    [
+                        'question' => 'Les entreprises peuvent-elles publier des offres sur OMPLEO ?',
+                        'answer' => 'Oui, les entreprises peuvent publier leurs offres d\'emploi sur OMPLEO. Il suffit de créer un compte recruteur, de remplir les informations de votre entreprise, et de publier vos offres d\'emploi. Notre plateforme vous permet de gérer vos offres et de recevoir des candidatures directement.',
+                        'expanded' => false
+                    ],
+                    [
+                        'question' => 'Comment rester informé des nouvelles offres d\'emploi ?',
+                        'answer' => 'Vous pouvez configurer des alertes emploi personnalisées en fonction de vos critères (localisation, secteur, type de contrat, etc.). Vous recevrez une notification par email dès qu\'une nouvelle offre correspondant à vos critères est publiée.',
+                        'expanded' => false
+                    ]
+                ];
+                @endphp
 
                 @foreach($faqs as $index => $faq)
                 <div class="faq-item group" data-index="{{ $index }}">

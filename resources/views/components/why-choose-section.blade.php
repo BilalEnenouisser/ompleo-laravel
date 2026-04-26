@@ -1,4 +1,27 @@
-@php $features = [ [ 'icon' => 'target', 'title' => 'Plateforme intelligente', 'description' => 'L’IA vous connecte aux emplois qui vous conviennent.', ], [ 'icon' => 'shield', 'title' => 'Service équitable', 'description' => 'Juste, quel que soit votre parcours.', ], [ 'icon' => 'briefcase', 'title' => 'Écosystème complet', 'description' => 'Offres, formation, assistance centralisées.', ], [ 'icon' => 'clock', 'title' => 'Profils vérifiés', 'description' => 'Candidatures sérieuses, certifiées.', ], ]; @endphp
+@php
+$features = [
+    [
+        'icon' => 'target',
+        'title' => 'Plateforme intelligente',
+        'description' => 'L’IA vous connecte aux emplois qui vous conviennent.',
+    ],
+    [
+        'icon' => 'shield',
+        'title' => 'Service équitable',
+        'description' => 'Juste, quel que soit votre parcours.',
+    ],
+    [
+        'icon' => 'briefcase',
+        'title' => 'Écosystème complet',
+        'description' => 'Offres, formation, assistance centralisées.',
+    ],
+    [
+        'icon' => 'clock',
+        'title' => 'Profils vérifiés',
+        'description' => 'Candidatures sérieuses, certifiées.',
+    ],
+];
+@endphp
 
 <section class="relative py-28 px-4 bg-[#e0e3df] dark:bg-[#1f1f1f] overflow-hidden">
     <!-- Background bubbles -->

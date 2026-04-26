@@ -11,7 +11,6 @@ class SubscriptionController extends Controller
 {
     public function __construct()
     {
-        $this->authorize('scanner-pass');
         $this->middleware('auth');
         $this->middleware('check.user.type:recruiter');
     }
@@ -21,7 +20,6 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $this->authorize('scanner-pass');
         $user = Auth::user();
         $recruiterProfile = $user->recruiterProfile;
         $company = $recruiterProfile->company ?? null;

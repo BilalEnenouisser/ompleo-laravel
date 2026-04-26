@@ -15,7 +15,34 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([ 'email' => 'required|email', 'password' => 'required', ]); $credentials = $request->only('email', 'password'); $remember = $request->boolean('remember'); if (Auth::attempt($credentials, $remember)) { $request->session()->regenerate(); $user = Auth::user(); switch ($user->user_type) { case 'admin': return redirect()->intended(route('admin.dashboard')); case 'recruiter': return redirect()->intended(route('recruiter.dashboard')); case 'candidate': return redirect()->intended(route('candidate.dashboard')); default: return redirect()->intended(route('candidate.dashboard')); } } return back()->withErrors([ 'email' => 'Les identifiants fournis ne correspondent pas à nos enregistrements.', ])->onlyInput('email');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            
+            // Redirect based on user type
+            $user = Auth::user();
+            switch ($user->user_type) {
+                case 'admin':
+                    return redirect()->intended(route('admin.dashboard'));
+                case 'recruiter':
+                    return redirect()->intended(route('recruiter.dashboard'));
+                case 'candidate':
+                    return redirect()->intended(route('candidate.dashboard'));
+                default:
+                    return redirect()->intended(route('candidate.dashboard'));
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'Les identifiants fournis ne correspondent pas à nos enregistrements.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)

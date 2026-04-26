@@ -20,6 +20,55 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $this->authorize('scanner-pass'); $user = Auth::user(); $recruiterProfile = $user->recruiterProfile; $company = $recruiterProfile ? $recruiterProfile->company : null; $jobs = $recruiterProfile && $recruiterProfile->company ? Job::where('recruiter_id', $user->id)->orderBy('created_at', 'desc')->get() : collect(); $applications = $jobs->isNotEmpty() ? Application::whereIn('job_id', $jobs->pluck('id'))->with(['candidate', 'job'])->get() : collect(); $upcomingInterviews = Interview::where('recruiter_id', $user->id) ->where('interview_date', '>=', now()->startOfDay()) ->whereIn('status', ['programme', 'confirme', 'en_attente']) ->with(['candidate', 'job', 'application']) ->orderBy('interview_date') ->orderBy('start_time') ->get(); $stats = [ 'active_jobs' => $jobs->where('status', 'published')->count(), 'total_applications' => $applications->count(), 'recent_applications' => $applications->where('created_at', '>=', now()->subDays(7))->count(), 'scheduled_interviews' => $upcomingInterviews->count(), 'profiles_viewed' => $applications->count() * 2, 'pending_applications' => $applications->where('status', 'pending')->count(), 'accepted_applications' => $applications->where('status', 'accepted')->count(), 'rejected_applications' => $applications->where('status', 'rejected')->count(), ]; $recentApplications = $applications->sortByDesc('created_at')->take(5); $activeJobs = $jobs->where('status', 'published')->sortByDesc('created_at')->take(3); return view('dashboard.recruiter.index', compact( 'stats', 'recentApplications', 'activeJobs', 'upcomingInterviews', 'company' ));
+        $user = Auth::user();
+        $recruiterProfile = $user->recruiterProfile;
+        
+        // Get company if exists
+        $company = $recruiterProfile ? $recruiterProfile->company : null;
+        
+        // Get recruiter's jobs (newest first)
+        $jobs = $recruiterProfile && $recruiterProfile->company 
+            ? Job::where('recruiter_id', $user->id)->orderBy('created_at', 'desc')->get()
+            : collect();
+        
+        // Get applications for recruiter's jobs with relationships
+        $applications = $jobs->isNotEmpty() 
+            ? Application::whereIn('job_id', $jobs->pluck('id'))->with(['candidate', 'job'])->get()
+            : collect();
+        
+        // Get upcoming interviews for this recruiter
+        $upcomingInterviews = Interview::where('recruiter_id', $user->id)
+            ->where('interview_date', '>=', now()->startOfDay())
+            ->whereIn('status', ['programme', 'confirme', 'en_attente'])
+            ->with(['candidate', 'job', 'application'])
+            ->orderBy('interview_date')
+            ->orderBy('start_time')
+            ->get();
+        
+        // Calculate statistics
+        $stats = [
+            'active_jobs' => $jobs->where('status', 'published')->count(),
+            'total_applications' => $applications->count(),
+            'recent_applications' => $applications->where('created_at', '>=', now()->subDays(7))->count(),
+            'scheduled_interviews' => $upcomingInterviews->count(),
+            'profiles_viewed' => $applications->count() * 2, // Estimate: 2 profile views per application
+            'pending_applications' => $applications->where('status', 'pending')->count(),
+            'accepted_applications' => $applications->where('status', 'accepted')->count(),
+            'rejected_applications' => $applications->where('status', 'rejected')->count(),
+        ];
+        
+        // Get recent applications (last 5) with relationships
+        $recentApplications = $applications->sortByDesc('created_at')->take(5);
+        
+        // Get active jobs (last 3) with application counts
+        $activeJobs = $jobs->where('status', 'published')->sortByDesc('created_at')->take(3);
+        
+        return view('dashboard.recruiter.index', compact(
+            'stats',
+            'recentApplications', 
+            'activeJobs',
+            'upcomingInterviews',
+            'company'
+        ));
     }
 }

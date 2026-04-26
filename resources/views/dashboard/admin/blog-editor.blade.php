@@ -949,7 +949,7 @@ document.addEventListener('DOMContentLoaded', function() {
     @endif
     
     // Parse and load content blocks from existing blog content
-    loadContentBlocks({{ clean(json_encode($blog->content)) }});
+    loadContentBlocks({!! json_encode($blog->content) !!});
     
     // Update page title
     document.querySelector('h1').textContent = 'Modifier l\'article';

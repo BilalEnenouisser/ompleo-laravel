@@ -60,8 +60,29 @@
         </style>
         <div class="platform-container">
             <h1 class="font-bold mb-6 leading-tight tracking-tighter blog-hero-title" style="font-size: 0;">
-                @php $heroTitle = "Blog - Guides et Ressources"; if (!function_exists('renderAnimateTextBlog')) { function renderAnimateTextBlog($text) { $words = explode(' ', $text); $output = ''; foreach ($words as $wIndex => $word) { $output .= '<span style="white-space:nowrap; font-size: 0;">'; $chars = mb_str_split($word); foreach ($chars as $char) { $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>'; } $output .= '</span>'; if ($wIndex < count($words) - 1) { $output .= '<span class="hero-space">&nbsp;</span>'; } } return $output; } } @endphp
-                {{ clean(renderAnimateTextBlog($heroTitle)) }}
+                @php
+                    $heroTitle = "Blog - Guides et Ressources";
+                    
+                    if (!function_exists('renderAnimateTextBlog')) {
+                        function renderAnimateTextBlog($text) {
+                            $words = explode(' ', $text);
+                            $output = '';
+                            foreach ($words as $wIndex => $word) {
+                                $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                $chars = mb_str_split($word);
+                                foreach ($chars as $char) {
+                                    $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                }
+                                $output .= '</span>';
+                                if ($wIndex < count($words) - 1) {
+                                    $output .= '<span class="hero-space">&nbsp;</span>';
+                                }
+                            }
+                            return $output;
+                        }
+                    }
+                @endphp
+                {!! renderAnimateTextBlog($heroTitle) !!}
             </h1>
             
             <style>

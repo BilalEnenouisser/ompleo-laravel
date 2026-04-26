@@ -1,4 +1,55 @@
-@php $categories = [ [ 'name' => 'Design & Création', 'slug' => 'design-creation', 'search' => 'design', 'icon' => 'storage/home_page/cate/01-design-creation.svg', ], [ 'name' => 'Développement & Informatique', 'slug' => 'developpement-informatique', 'search' => 'développement', 'icon' => 'storage/home_page/cate/02-developpement-informatique.svg', ], [ 'name' => 'Finance & Comptabilité', 'slug' => 'finance-comptabilite', 'search' => 'finance', 'icon' => 'storage/home_page/cate/03-finance-comptabilite.svg', ], [ 'name' => 'Marketing & Croissance', 'slug' => 'marketing-croissance', 'search' => 'marketing', 'icon' => 'storage/home_page/cate/04-marketing-croissance.svg', ], [ 'name' => 'Ressources Humaines', 'slug' => 'ressources-humaines', 'search' => 'rh', 'icon' => 'storage/home_page/cate/05-ressources-humaines.svg', ], [ 'name' => 'Management & Direction', 'slug' => 'management-direction', 'search' => 'management', 'icon' => 'storage/home_page/cate/06-management-direction.svg', ], [ 'name' => 'Opérations & Logistique', 'slug' => 'operations-logistique', 'search' => 'opérations', 'icon' => 'storage/home_page/cate/07-operations-logistique.svg', ], [ 'name' => 'Support & Service Client', 'slug' => 'support-service-client', 'search' => 'support', 'icon' => 'storage/home_page/cate/08-support-service-client.svg', ], ]; @endphp
+@php
+$categories = [
+    [
+        'name' => 'Design & Création',
+        'slug' => 'design-creation',
+        'search' => 'design',
+        'icon' => 'storage/home_page/cate/01-design-creation.svg',
+    ],
+    [
+        'name' => 'Développement & Informatique',
+        'slug' => 'developpement-informatique',
+        'search' => 'développement',
+        'icon' => 'storage/home_page/cate/02-developpement-informatique.svg',
+    ],
+    [
+        'name' => 'Finance & Comptabilité',
+        'slug' => 'finance-comptabilite',
+        'search' => 'finance',
+        'icon' => 'storage/home_page/cate/03-finance-comptabilite.svg',
+    ],
+    [
+        'name' => 'Marketing & Croissance',
+        'slug' => 'marketing-croissance',
+        'search' => 'marketing',
+        'icon' => 'storage/home_page/cate/04-marketing-croissance.svg',
+    ],
+    [
+        'name' => 'Ressources Humaines',
+        'slug' => 'ressources-humaines',
+        'search' => 'rh',
+        'icon' => 'storage/home_page/cate/05-ressources-humaines.svg',
+    ],
+    [
+        'name' => 'Management & Direction',
+        'slug' => 'management-direction',
+        'search' => 'management',
+        'icon' => 'storage/home_page/cate/06-management-direction.svg',
+    ],
+    [
+        'name' => 'Opérations & Logistique',
+        'slug' => 'operations-logistique',
+        'search' => 'opérations',
+        'icon' => 'storage/home_page/cate/07-operations-logistique.svg',
+    ],
+    [
+        'name' => 'Support & Service Client',
+        'slug' => 'support-service-client',
+        'search' => 'support',
+        'icon' => 'storage/home_page/cate/08-support-service-client.svg',
+    ],
+];
+@endphp
 
 <section class="platform-section relative bg-[#212221] overflow-hidden categories-section">
     <!-- Background Image -->

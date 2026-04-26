@@ -3,7 +3,52 @@
 @section('content')
 @include('components.header')
 
-@php $benefits = [ [ 'title' => 'Profil Valorisé', 'description' => 'Créez un profil professionnel qui met en valeur vos compétences et votre expérience.', 'color' => 'text-[#00b6b4]', 'bgColor' => 'bg-[#00b6b4]/10', ], [ 'title' => 'Accès Prioritaire', 'description' => 'Soyez les premiers informés des nouvelles opportunités correspondant à votre profil.', 'color' => 'text-[#00b6b4]', 'bgColor' => 'bg-[#00b6b4]/10', ], [ 'title' => 'Alertes Personnalisées', 'description' => 'Recevez des notifications pour les offres qui correspondent à vos critères.', 'color' => 'text-[#00b6b4]', 'bgColor' => 'bg-[#00b6b4]/10', ], [ 'title' => 'Un emploi adapté à vous', 'description' => 'Notre technologie intelligente identifie les offres qui correspondent le mieux à votre parcours.', 'color' => 'text-[#00b6b4]', 'bgColor' => 'bg-[#00b6b4]/10', ], ]; $steps = [ [ 'number' => '01', 'title' => 'Création Rapide', 'description' => 'Inscrivez-vous en quelques minutes et créez votre profil professionnel.', ], [ 'number' => '02', 'title' => 'Candidature 1-Clic', 'description' => 'Postulez aux offres qui vous intéressent d\'un simple clic.', ], [ 'number' => '03', 'title' => 'Suivi & Alertes', 'description' => 'Recevez des alertes personnalisées et suivez vos candidatures.', ], ]; @endphp
+@php
+$benefits = [
+    [
+        'title' => 'Profil Valorisé',
+        'description' => 'Créez un profil professionnel qui met en valeur vos compétences et votre expérience.',
+        'color' => 'text-[#00b6b4]',
+        'bgColor' => 'bg-[#00b6b4]/10',
+    ],
+    [
+        'title' => 'Accès Prioritaire',
+        'description' => 'Soyez les premiers informés des nouvelles opportunités correspondant à votre profil.',
+        'color' => 'text-[#00b6b4]',
+        'bgColor' => 'bg-[#00b6b4]/10',
+    ],
+    [
+        'title' => 'Alertes Personnalisées',
+        'description' => 'Recevez des notifications pour les offres qui correspondent à vos critères.',
+        'color' => 'text-[#00b6b4]',
+        'bgColor' => 'bg-[#00b6b4]/10',
+    ],
+    [
+        'title' => 'Un emploi adapté à vous',
+        'description' => 'Notre technologie intelligente identifie les offres qui correspondent le mieux à votre parcours.',
+        'color' => 'text-[#00b6b4]',
+        'bgColor' => 'bg-[#00b6b4]/10',
+    ],
+];
+
+$steps = [
+    [
+        'number' => '01',
+        'title' => 'Création Rapide',
+        'description' => 'Inscrivez-vous en quelques minutes et créez votre profil professionnel.',
+    ],
+    [
+        'number' => '02',
+        'title' => 'Candidature 1-Clic',
+        'description' => 'Postulez aux offres qui vous intéressent d\'un simple clic.',
+    ],
+    [
+        'number' => '03',
+        'title' => 'Suivi & Alertes',
+        'description' => 'Recevez des alertes personnalisées et suivez vos candidatures.',
+    ],
+];
+@endphp
 
 <div class="min-h-screen bg-white dark:bg-[#1f1f1f] pt-20 relative overflow-hidden">
     <!-- Background Shapes -->

@@ -1,4 +1,52 @@
-@php use App\Models\Partner; use Illuminate\Support\Facades\Storage; // Get featured partners from database $partners = Partner::where('is_featured', true) ->orderBy('sort_order') ->orderBy('name') ->get() ->map(function($partner) { return [ 'id' => $partner->id, 'name' => $partner->name, 'logo' => $partner->logo ? Storage::url($partner->logo) : asset('partners/default.png'), 'is_featured' => $partner->is_featured, ]; }) ->toArray(); // Fallback partners if no featured partners exist if (empty($partners)) { $partners = [ [ 'id' => 1, 'name' => 'Air Algérie', 'logo' => asset('partners/air-algerie.png'), 'is_featured' => true, ], [ 'id' => 2, 'name' => 'Algérie Télécom', 'logo' => asset('partners/algerie-telecom.png'), 'is_featured' => true, ], [ 'id' => 3, 'name' => 'Mobilis', 'logo' => asset('partners/mobilis.png'), 'is_featured' => true, ], [ 'id' => 4, 'name' => 'Sonelgaz', 'logo' => asset('partners/sonelgaz.png'), 'is_featured' => true, ], ]; } @endphp
+@php
+use App\Models\Partner;
+use Illuminate\Support\Facades\Storage;
+
+// Get featured partners from database
+$partners = Partner::where('is_featured', true)
+    ->orderBy('sort_order')
+    ->orderBy('name')
+    ->get()
+    ->map(function($partner) {
+        return [
+            'id' => $partner->id,
+            'name' => $partner->name,
+            'logo' => $partner->logo ? Storage::url($partner->logo) : asset('partners/default.png'),
+            'is_featured' => $partner->is_featured,
+        ];
+    })
+    ->toArray();
+
+// Fallback partners if no featured partners exist
+if (empty($partners)) {
+    $partners = [
+        [
+            'id' => 1,
+            'name' => 'Air Algérie',
+            'logo' => asset('partners/air-algerie.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Algérie Télécom',
+            'logo' => asset('partners/algerie-telecom.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 3,
+            'name' => 'Mobilis',
+            'logo' => asset('partners/mobilis.png'),
+            'is_featured' => true,
+        ],
+        [
+            'id' => 4,
+            'name' => 'Sonelgaz',
+            'logo' => asset('partners/sonelgaz.png'),
+            'is_featured' => true,
+        ],
+    ];
+}
+@endphp
 
 @if(!empty($partners))
 <section class="relative py-16 overflow-hidden bg-[#e0e3df] dark:bg-[#1f1f1f]">

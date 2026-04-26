@@ -96,8 +96,29 @@
             <div class="nos-solutions-hero">
                 <!-- Title -->
                 <h1 class="font-bold mb-8 leading-tight text-white tracking-tighter nos-solutions-hero-title" style="font-size: 0;">
-                    @php $heroTitle = "Recrutez plus vite, avec les bons profils"; if (!function_exists('renderAnimateTextNos')) { function renderAnimateTextNos($text) { $words = explode(' ', $text); $output = ''; foreach ($words as $wIndex => $word) { $output .= '<span style="white-space:nowrap; font-size: 0;">'; $chars = mb_str_split($word); foreach ($chars as $char) { $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>'; } $output .= '</span>'; if ($wIndex < count($words) - 1) { $output .= '<span class="hero-space">&nbsp;</span>'; } } return $output; } } @endphp
-                    {{ clean(renderAnimateTextNos($heroTitle)) }}
+                    @php
+                        $heroTitle = "Recrutez plus vite, avec les bons profils";
+                        
+                        if (!function_exists('renderAnimateTextNos')) {
+                            function renderAnimateTextNos($text) {
+                                $words = explode(' ', $text);
+                                $output = '';
+                                foreach ($words as $wIndex => $word) {
+                                    $output .= '<span style="white-space:nowrap; font-size: 0;">';
+                                    $chars = mb_str_split($word);
+                                    foreach ($chars as $char) {
+                                        $output .= '<span class="hero-char" style="display: inline-block;">' . $char . '</span>';
+                                    }
+                                    $output .= '</span>';
+                                    if ($wIndex < count($words) - 1) {
+                                        $output .= '<span class="hero-space">&nbsp;</span>';
+                                    }
+                                }
+                                return $output;
+                            }
+                        }
+                    @endphp
+                    {!! renderAnimateTextNos($heroTitle) !!}
                 </h1>
                 
                 <style>
