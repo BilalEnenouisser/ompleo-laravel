@@ -757,10 +757,19 @@ document.addEventListener('DOMContentLoaded', function() {
              }
          })
          .then(response => {
-             
              if (!response.ok) {
-                 return response.text().then(text => {
-                     throw new Error(`HTTP ${response.status}: ${text}`);
+                 return response.json().then(data => {
+                     if (response.status === 422 && data.errors) {
+                         let errorMessages = [];
+                         for (const key in data.errors) {
+                             errorMessages.push(data.errors[key][0]);
+                         }
+                         throw new Error(errorMessages.join('\\n'));
+                     }
+                     throw new Error(data.message || 'Erreur serveur');
+                 }).catch(e => {
+                     if (e.message) throw e;
+                     throw new Error('Erreur de connexion');
                  });
              }
              return response.json();
@@ -769,11 +778,11 @@ document.addEventListener('DOMContentLoaded', function() {
              if (data.success) {
                  showSuccessModal();
              } else {
-                 showErrorModal('Erreur lors de la sauvegarde: ' + (data.message || 'Erreur inconnue'));
+                 showErrorModal(data.message || 'Erreur inconnue');
              }
          })
          .catch(error => {
-             showErrorModal('Erreur lors de la sauvegarde: ' + error.message);
+             showErrorModal(error.message);
          });
     });
     

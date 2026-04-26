@@ -101,6 +101,11 @@ class ProfileController extends Controller
             'twitter_url' => 'nullable|url|max:255',
             'avatar' => 'nullable|file|max:2048',
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+        ], [
+            'linkedin_url.url' => 'L\'URL LinkedIn doit être valide.',
+            'portfolio_url.url' => 'L\'URL du portfolio doit être valide.',
+            'facebook_url.url' => 'L\'URL Facebook doit être valide.',
+            'twitter_url.url' => 'L\'URL Twitter doit être valide.',
         ]);
 
         try {
